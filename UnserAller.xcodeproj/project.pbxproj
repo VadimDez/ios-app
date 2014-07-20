@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
 		D5812288197C08B600E3573C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
 		D581228A197C08B600E3573C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812289197C08B600E3573C /* ViewController.swift */; };
 		D581228D197C08B600E3573C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D581228B197C08B600E3573C /* Main.storyboard */; };
@@ -25,6 +26,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.xcconfig"; path = "Pods/Pods-UnserAller.xcconfig"; sourceTree = "<group>"; };
+		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812282197C08B600E3573C /* UnserAller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnserAller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812286197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5812287197C08B600E3573C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -34,6 +37,7 @@
 		D5812294197C08B600E3573C /* UnserAllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnserAllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812299197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D581229A197C08B600E3573C /* UnserAllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnserAllerTests.swift; sourceTree = "<group>"; };
+		D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnserAller-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +65,8 @@
 				D5812284197C08B600E3573C /* UnserAller */,
 				D5812297197C08B600E3573C /* UnserAllerTests */,
 				D5812283197C08B600E3573C /* Products */,
+				726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */,
+				EA69EAB27E124453A0FB0AC3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,6 +87,7 @@
 				D581228B197C08B600E3573C /* Main.storyboard */,
 				D581228E197C08B600E3573C /* Images.xcassets */,
 				D5812285197C08B600E3573C /* Supporting Files */,
+				D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */,
 			);
 			path = UnserAller;
 			sourceTree = "<group>";
@@ -109,6 +117,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		EA69EAB27E124453A0FB0AC3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C35093133BCA4887915E8666 /* libPods-UnserAller.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,9 +132,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D581229E197C08B600E3573C /* Build configuration list for PBXNativeTarget "UnserAller" */;
 			buildPhases = (
+				D0C268D6EC3A4982BBEA5F1B /* Check Pods Manifest.lock */,
 				D581227E197C08B600E3573C /* Sources */,
 				D581227F197C08B600E3573C /* Frameworks */,
 				D5812280197C08B600E3573C /* Resources */,
+				C8B95B34AE36406C9A8AE977 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,6 +220,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C8B95B34AE36406C9A8AE977 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-UnserAller-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0C268D6EC3A4982BBEA5F1B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D581227E197C08B600E3573C /* Sources */ = {
@@ -322,23 +373,32 @@
 		};
 		D581229F197C08B600E3573C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = UnserAller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnserAller/UnserAller-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		D58122A0197C08B600E3573C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = UnserAller/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UnserAller/UnserAller-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -395,6 +455,7 @@
 				D58122A0197C08B600E3573C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D58122A1197C08B600E3573C /* Build configuration list for PBXNativeTarget "UnserAllerTests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +464,7 @@
 				D58122A3197C08B600E3573C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
