@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 Andrea Mazzini. All rights reserved.
 //
 
+@import Foundation;
+@import UIKit;
+
 @interface UIViewController (ScrollingNavbar) <UIGestureRecognizerDelegate>
 
 /**-----------------------------------------------------------------------------
@@ -58,6 +61,13 @@
  * Set this property to NO to disable the scrolling of the navbar.
  */
 - (void)setScrollingEnabled:(BOOL)enabled;
+
+/** Enable or disable the scrolling when the content size is smaller than the bounds
+ *
+ * Set this property to YES to enable the scrolling of the navbar even when the
+ * content size of the scroll view is smaller than its height.
+ */
+- (void)setShouldScrollWhenContentFits:(BOOL)enabled;
 
 @end
 

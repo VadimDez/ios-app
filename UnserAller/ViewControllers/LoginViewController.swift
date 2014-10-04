@@ -11,8 +11,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    @IBOutlet var username: UITextField;
-    @IBOutlet var password: UITextField;
+    @IBOutlet var username: UITextField!;
+    @IBOutlet var password: UITextField!;
 //    @IBOutlet var loginButtonView: CSAnimationView!
     
     override func viewDidLoad()  {

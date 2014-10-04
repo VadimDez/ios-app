@@ -235,6 +235,9 @@
 }
 
 - (id<UIViewControllerTransitionCoordinator>)transitionCoordinator {
+    if (!self.transitionInProgress){
+        return [super transitionCoordinator];
+    }
     return self;
 }
 
@@ -747,9 +750,8 @@
         [self.view endEditing:YES];
         _isInteractive = YES;
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.defaultInteractiveTransition updateTopViewHorizontalCenterWithRecognizer:recognizer];
-    });
+    
+    [self.defaultInteractiveTransition updateTopViewHorizontalCenterWithRecognizer:recognizer];
     _isInteractive = NO;
 }
 
