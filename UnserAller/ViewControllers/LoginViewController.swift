@@ -47,7 +47,7 @@ class LoginViewController: UIViewController {
     
     func loadRootView() {
         
-        var root: UIViewController! = self.storyboard?.instantiateViewControllerWithIdentifier("initVC") as ECSlidingViewController
+        var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
         
         self.presentViewController(root, animated: false, completion: nil);
     }

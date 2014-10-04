@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
+		D511715219E030D2007675EE /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715019E030D2007675EE /* ENSideMenu.swift */; };
+		D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */; };
+		D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715419E034F8007675EE /* MenuTableViewController.swift */; };
+		D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715619E0364F007675EE /* InitNavigationViewController.swift */; };
 		D5291667197C210C0038A048 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291666197C210C0038A048 /* LoginViewController.swift */; };
 		D529166B197C2B5C0038A048 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* User.swift */; };
 		D5812288197C08B600E3573C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
@@ -34,9 +38,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D511716B19E03DCD007675EE /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.xcconfig"; path = "Pods/Pods-UnserAller.xcconfig"; sourceTree = "<group>"; };
 		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D511715019E030D2007675EE /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
+		D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
+		D511715419E034F8007675EE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		D511715619E0364F007675EE /* InitNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitNavigationViewController.swift; path = ViewControllers/InitNavigationViewController.swift; sourceTree = "<group>"; };
 		D5291666197C210C0038A048 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewControllers/LoginViewController.swift; sourceTree = "<group>"; };
 		D529166A197C2B5C0038A048 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		D5812282197C08B600E3573C /* UnserAller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnserAller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +104,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D511714F19E030D2007675EE /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				D511715019E030D2007675EE /* ENSideMenu.swift */,
+				D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		D5291668197C27700038A048 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +123,8 @@
 				D5812289197C08B600E3573C /* InitViewController.swift */,
 				D5291666197C210C0038A048 /* LoginViewController.swift */,
 				D584D595197C47E000E1CAB3 /* HomeViewController.swift */,
+				D511715419E034F8007675EE /* MenuTableViewController.swift */,
+				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -128,6 +160,7 @@
 		D5812284197C08B600E3573C /* UnserAller */ = {
 			isa = PBXGroup;
 			children = (
+				D511714F19E030D2007675EE /* Library */,
 				D5291669197C2B180038A048 /* Models */,
 				D5291668197C27700038A048 /* ViewControllers */,
 				D5812287197C08B600E3573C /* AppDelegate.swift */,
@@ -200,6 +233,7 @@
 				D581227F197C08B600E3573C /* Frameworks */,
 				D5812280197C08B600E3573C /* Resources */,
 				C8B95B34AE36406C9A8AE977 /* Copy Pods Resources */,
+				D511716B19E03DCD007675EE /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D511715219E030D2007675EE /* ENSideMenu.swift in Sources */,
 				D584D594197C46DC00E1CAB3 /* SideMenuViewController.m in Sources */,
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
@@ -330,9 +365,12 @@
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
 				D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */,
 				D584D599197C4B1B00E1CAB3 /* HomeViewController.m in Sources */,
+				D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */,
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
+				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
 				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
+				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
