@@ -32,7 +32,6 @@ PODS:
   - pop (1.0.7)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.4)
   - AMScrollingNavbar (HEAD)
   - Canvas (~> 0.1)
   - DACircularProgress (~> 2.2)
