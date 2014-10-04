@@ -41,11 +41,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func goBackToLogin(sender: AnyObject) {
-        self.navigationController.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true);
+//        self.navigationController.popViewControllerAnimated(true)
     }
     
     func loadRootView() {
-        var root: UIViewController! = self.storyboard.instantiateViewControllerWithIdentifier("initVC") as ECSlidingViewController;
+        
+        var root: UIViewController! = self.storyboard?.instantiateViewControllerWithIdentifier("initVC") as ECSlidingViewController
         
         self.presentViewController(root, animated: false, completion: nil);
     }

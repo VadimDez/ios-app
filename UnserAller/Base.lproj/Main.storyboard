@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8tL-83-snq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8tL-83-snq">
     <dependencies>
         <deployment defaultVersion="1808" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Init View Controller-->
@@ -191,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vzm-7J-QyX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1444" y="-78"/>
+            <point key="canvasLocation" x="1616" y="-78"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="WYc-Ey-YK2">
@@ -211,13 +211,22 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3c9-FQ-CMb">
+                                <rect key="frame" x="26" y="52" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showMenu:" destination="OsV-ro-I6Q" eventType="touchUpInside" id="BkF-5E-pq6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ok-1J-pI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2185" y="-78"/>
+            <point key="canvasLocation" x="2475" y="-78"/>
         </scene>
         <!--Register-->
         <scene sceneID="UXf-Bt-IZx">
@@ -378,7 +387,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fga-kJ-hgM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1803" y="-78"/>
+            <point key="canvasLocation" x="2051" y="-78"/>
         </scene>
     </scenes>
     <resources>
@@ -387,9 +396,6 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination">
-            <size key="portraitSize" width="320" height="480"/>
-            <size key="landscapeSize" width="480" height="320"/>
-        </simulatedScreenMetrics>
+        <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
 </document>

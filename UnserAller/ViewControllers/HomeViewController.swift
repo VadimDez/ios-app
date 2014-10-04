@@ -22,15 +22,18 @@ class HomeViewController : UIViewController, ECSlidingViewControllerDelegate {
         self.slidingViewController().delegate = transition;
         self.transitions.dynamicTransition.slidingViewController = self.slidingViewController();
         self.slidingViewController().topViewAnchoredGesture = ECSlidingViewControllerAnchoredGesture.Tapping | ECSlidingViewControllerAnchoredGesture.Custom;
-        self.slidingViewController().customAnchoredGestures = [self.dynamicTransitionPanGestureFunction()];
+        self.slidingViewController().customAnchoredGestures = [self.dynamicTransitionPanGestureFunction()]
         
-        self.navigationController.view.addGestureRecognizer(self.dynamicTransitionPanGestureFunction());
+//        [self.navigationController.view removeGestureRecognizer:self.slidingViewController.panGesture];
+        
+        self.navigationController?.view.addGestureRecognizer(self.dynamicTransitionPanGestureFunction());
+//        self.navigationController.view.addGestureRecognizer(self.dynamicTransitionPanGestureFunction());
     }
     
     
     
     func transition() -> METransitions {
-        if(transitions) {
+        if((transitions) != nil) {
             return transitions;
         }
         
@@ -39,21 +42,28 @@ class HomeViewController : UIViewController, ECSlidingViewControllerDelegate {
     }
     
     func dynamicTransitionPanGestureFunction() -> UIPanGestureRecognizer {
-        if self.dynamicTransitionPanGesture {
+        if (self.dynamicTransitionPanGesture != nil) {
             return self.dynamicTransitionPanGesture;
         }
         
-        self.dynamicTransitionPanGesture = UIPanGestureRecognizer(target: self.dynamicTransitionPanGesture, action:Selector("handlePanGesture:"));
+        NSLog("\(self.dynamicTransitionPanGesture)")
+        
+        self.dynamicTransitionPanGesture = UIPanGestureRecognizer(target: self.view, action: "handlePanGesture:") //UIPanGestureRecognizer(target: self.dynamicTransitionPanGesture, action:Selector("handlePanGesture:"))
+        
+        NSLog("\(self.dynamicTransitionPanGesture)")
         NSLog("here2");
         return self.dynamicTransitionPanGesture;
     }
     
-//    func handlePanGesture(recognizer: UIPanGestureRecognizer) -> UIPanGestureRecognizer {
-//        NSLog("here");
-//        var d = MEDynamicTransition();
-//        d.handlePanGesture(recognizer);
-//        
-//        return recognizer;
-//    }
+    func handlePanGesture(recognizer: UIPanGestureRecognizer) -> UIPanGestureRecognizer {
+        NSLog("here");
+        var d = MEDynamicTransition();
+        d.handlePanGesture(recognizer);
+        
+        return recognizer;
+    }
+    @IBAction func showMenu(sender: AnyObject) {
+        self.slidingViewController().anchorTopViewToLeftAnimated(true)
+    }
     
 }
