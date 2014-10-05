@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class User {
     var userId: Int!
@@ -31,5 +32,45 @@ class User {
         } else {
             return true
         }
+    }
+    
+    /**
+     * Validate user email and password
+     *
+     */
+    func getUserCrederntials(email: String, password: String, success: () -> Void, error: () -> Void ) {
+        let url: String = "https://\(APIURL)/api/mobile/auth/login"
+        
+        Alamofire.request(.GET, url, parameters: ["username": email, "password": password])
+            .authenticate(user: email, password: password)
+            .responseJSON { (request, response, JSON, errorr) in
+                
+                // check if no error and correct email and pass
+                if ((errorr != nil) || JSON == nil || JSON?.objectForKey("auth")?.intValue != 200) {
+                    error()
+                } else {
+                    success()
+                }
+                
+        }
+    }
+    
+    func saveEmailAndPasswordToKeychain(email: String, password: String) {
+        Keychain.save("UserAuthUserToken", data: self.encode(email))
+        Keychain.save("UserAuthPasswordToken", data: self.encode(password))
+    }
+    
+    func encode(string: String) -> NSData {
+        let utf8str: NSData = string.dataUsingEncoding(NSUTF8StringEncoding)!
+        
+        let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.fromRaw(0)!)
+        
+        let data: NSData = NSData(base64EncodedString: base64Encoded, options: NSDataBase64DecodingOptions.fromRaw(0)!)
+        
+        return data
+    }
+    
+    func decode(data: NSData) -> String {
+        return NSString(data: data, encoding: NSUTF8StringEncoding)
     }
 }

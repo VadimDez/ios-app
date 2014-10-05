@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad()  {
         super.viewDidLoad();
+        
     }
     
     override func didReceiveMemoryWarning()  {
@@ -29,19 +30,16 @@ class LoginViewController: UIViewController {
 //        loginButtonView.backgroundColor = UIColor.clearColor()
 //        self.loginButtonView.type = "CSAnimationTypeShake"
 //        self.loginButtonView.duration = 0.4
+        
+        
     }
     
     @IBAction func loginAction(sender: UIButton) {
-        var userService = User();
-        
-        if(userService.checkStringsWithString(username.text) && userService.checkStringsWithString(password.text)) {
-            println("right");
-            self.loadRootView();
-        }
+        self.auth(self.username.text, password: self.password.text)
     }
     
     @IBAction func goBackToLogin(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true);
+        self.navigationController?.popViewControllerAnimated(true)
 //        self.navigationController.popViewControllerAnimated(true)
     }
     
@@ -50,5 +48,21 @@ class LoginViewController: UIViewController {
         var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
         
         self.presentViewController(root, animated: false, completion: nil);
+    }
+    
+    func auth(email: String, password: String) {
+        var userService = User();
+        if(userService.checkStringsWithString(email) && userService.checkStringsWithString(password)) {
+            
+            userService.getUserCrederntials(email, password: password,
+                success: {
+                    userService.saveEmailAndPasswordToKeychain(email, password: password)
+                    self.loadRootView();
+                },error: {
+                    println("Login error")
+            })
+        } else {
+            println("empty login string(s)")
+        }
     }
 }

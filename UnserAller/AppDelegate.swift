@@ -8,11 +8,13 @@
 
 import UIKit
 
+// GLOBAL URL FOR API
+var APIURL: String = "local.ig.lc"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
                             
     var window: UIWindow?
-
 
     func application(application: UIApplication!, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         // Override point for customization after application launch.

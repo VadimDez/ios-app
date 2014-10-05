@@ -16,13 +16,6 @@ class HomeViewController : UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
 
-        
-        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
-            .response { (request, response, data, error) in
-                println(request)
-                println(response)
-                println(error)
-        }
     }
     
 

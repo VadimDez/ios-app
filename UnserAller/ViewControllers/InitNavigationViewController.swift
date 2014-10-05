@@ -13,6 +13,8 @@ class InitNavigationViewController: ENSideMenuNavigationController, ENSideMenuDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.hidesBarsOnSwipe = true
+        
         let menu: MenuTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Menu") as MenuTableViewController
         
         sideMenu = ENSideMenu(sourceView: self.view, menuTableViewController: menu)
