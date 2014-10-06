@@ -17,66 +17,52 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var refreshControl:UIRefreshControl!
     var rowsLoaded: Int = 0
     var loadMoreStatus = false
+    var page: Int = 0
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
 
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
+        
+        // adjust table
         self.automaticallyAdjustsScrollViewInsets = false
         self.edgesForExtendedLayout = UIRectEdge.None
+        
         // hide nav bar
         self.navigationController?.hidesBarsOnSwipe = true
         
-        //
-        rowsLoaded = 20
-        
-//        var footer = UIView()
-//        footer.frame.size.height = 100.0
-//        
-//        var activity = UIActivityIndicatorView()
-//        activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-//        activity.startAnimating()
-//        activity.autoresizingMask = (UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight)
-//        activity.frame.origin.y = 50
-//        
-//        footer.addSubview(activity)
-//        
-//        self.mainTable.tableFooterView = footer
-        
+        self.getEntries({
+            
+        }, error: { () -> Void in
+            
+        })
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.refreshControl = UIRefreshControl()
-//        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
-//        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-//        self.mainTable.addSubview(refreshControl)
-//        
-//        self.mainTable.tableFooterView?.hidden = true
-        
-        // setup pull-to-refresh
-//        [self.mainTable addPullToRefreshWithActionHandler:^{
-//            [weakSelf insertRowAtTop];
-//            }];
-        
-        
-        // setup infinite scrolling
+        // setup pull to refresh
         self.mainTable.addPullToRefreshWithActionHandler { () -> Void in
             self.refresh()
         }
+        
+        // setup infinite scrolling
+        self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
+            self.infiniteLoad()
+        }
+        
     }
     
     func refresh() {
+        sleep(1)
         println("ok")
         self.mainTable.pullToRefreshView.stopAnimating()
     }
-    
-//    func refresh(sender:AnyObject) {
-//        rowsLoaded = 20
-//        println("refreshed")
-//        self.refreshControl.endRefreshing()
-//    }
+    func infiniteLoad() {
+        sleep(1)
+        println("finished loading")
+        self.mainTable.infiniteScrollingView.stopAnimating();
+    }
     
 
     @IBAction func showMenu(sender: AnyObject) {
@@ -97,50 +83,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return 1
     }
     
-//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        if(indexPath.row > rowsLoaded - 7) {
-//            println("more")
-//            rowsLoaded = rowsLoaded + 10
-//            self.mainTable.reloadData()
-//        }
-//    }
-    
-//    func scrollViewDidScroll(scrollView: UIScrollView!) {
-//        let currentOffset = scrollView.contentOffset.y
-//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-//        let deltaOffset = maximumOffset - currentOffset
-//        
-//        if deltaOffset <= 0 {
-//            loadMore()
-//        }
-//    }
-//    
-//    func loadMore() {
-//        if ( !loadMoreStatus ) {
-//            self.loadMoreStatus = true
-////            self.activityIndicator.startAnimating()
-//            self.mainTable.tableFooterView?.hidden = false
-//            loadMoreBegin("Load more",
-//                loadMoreEnd: {(x:Int) -> () in
-//                    self.mainTable.reloadData()
-//                    self.loadMoreStatus = false
-////                    self.activityIndicator.stopAnimating()
-//                    self.mainTable.tableFooterView?.hidden = true
-//            })
-//        }
-//    }
-//    
-//    func loadMoreBegin(newtext:String, loadMoreEnd:(Int) -> ()) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-//            println("loadmore")
-////            self.text = newtext
-//            self.rowsLoaded += 20
-//            sleep(2)
-//            
-//            dispatch_async(dispatch_get_main_queue()) {
-//                loadMoreEnd(0)
-//            }
-//        }
-//    }
+    func getEntries(success:() -> Void, error: () -> Void) {
+        // build URL
+        let url: String = "http://\(APIURL)/api/mobile/profile/getwall"
+        
+        // get entries
+        Alamofire.request(.GET, url, parameters: ["page": page])
+        .responseJSON { (_,_,JSON,errors) in
+            if(errors != nil) {
+                // print error
+                println(errors)
+                // error block
+                error()
+            } else {
+                if(JSON?.count > 0 && JSON?.objectAtIndex(0).count > 0) {
+                    
+                    let SuggestionModelView = UASuggestionViewModel()
+                    
+                    // get get objects from JSON
+                    var array = SuggestionModelView.getSuggestionsFromJSON(JSON as [Dictionary<String, AnyObject>])
+                    
+                    success()
+                }
+            }
+        }
+    }
 }

@@ -14,6 +14,8 @@
 		D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715619E0364F007675EE /* InitNavigationViewController.swift */; };
 		D5291667197C210C0038A048 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291666197C210C0038A048 /* LoginViewController.swift */; };
 		D529166B197C2B5C0038A048 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* User.swift */; };
+		D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */; };
+		D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF94519E3229F006139E2 /* UASuggestion.swift */; };
 		D56C462219E04DDE0059735A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D581228E197C08B600E3573C /* Images.xcassets */; };
 		D56C462419E04DFC0059735A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D56C462319E04DFC0059735A /* Media.xcassets */; };
 		D5812288197C08B600E3573C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
@@ -77,6 +79,8 @@
 		D511715619E0364F007675EE /* InitNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitNavigationViewController.swift; path = ViewControllers/InitNavigationViewController.swift; sourceTree = "<group>"; };
 		D5291666197C210C0038A048 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewControllers/LoginViewController.swift; sourceTree = "<group>"; };
 		D529166A197C2B5C0038A048 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UASuggestionViewModel.swift; sourceTree = "<group>"; };
+		D52FF94519E3229F006139E2 /* UASuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UASuggestion.swift; sourceTree = "<group>"; };
 		D56C462319E04DFC0059735A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
 		D5812282197C08B600E3573C /* UnserAller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnserAller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812286197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -147,8 +151,17 @@
 			isa = PBXGroup;
 			children = (
 				D529166A197C2B5C0038A048 /* User.swift */,
+				D52FF94519E3229F006139E2 /* UASuggestion.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		D52FF94019E3218C006139E2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		D555CCA519E1CEC200AB0F5F /* Views */ = {
@@ -198,6 +211,7 @@
 		D5812284197C08B600E3573C /* UnserAller */ = {
 			isa = PBXGroup;
 			children = (
+				D52FF94019E3218C006139E2 /* ViewModels */,
 				D555CCA519E1CEC200AB0F5F /* Views */,
 				D511714F19E030D2007675EE /* Library */,
 				D5291669197C2B180038A048 /* Models */,
@@ -449,7 +463,9 @@
 				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
 				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
+				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
+				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
 			);
