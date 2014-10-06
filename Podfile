@@ -8,6 +8,7 @@ pod 'IDMPhotoBrowser', '~> 1.3'
 pod 'AMScrollingNavbar', :head
 pod 'ECSlidingViewController', '~> 2.0'
 pod 'Canvas', '~> 0.1'
+pod 'SVPullToRefresh', '~> 0.4'
 end
 
 target "UnserAllerTests" do

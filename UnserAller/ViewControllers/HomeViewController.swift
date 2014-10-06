@@ -10,6 +10,7 @@
 import UIKit
 import Alamofire
 
+
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mainTable: UITableView!
@@ -22,43 +23,60 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
-        
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.edgesForExtendedLayout = UIRectEdge.None
         // hide nav bar
         self.navigationController?.hidesBarsOnSwipe = true
         
         //
         rowsLoaded = 20
         
-        var footer = UIView()
-        footer.frame.size.height = 100.0
-        
-        var activity = UIActivityIndicatorView()
-        activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        activity.startAnimating()
-        activity.autoresizingMask = (UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight)
-        activity.frame.origin.y = 50
-        
-        footer.addSubview(activity)
-        
-        self.mainTable.tableFooterView = footer
+//        var footer = UIView()
+//        footer.frame.size.height = 100.0
+//        
+//        var activity = UIActivityIndicatorView()
+//        activity.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+//        activity.startAnimating()
+//        activity.autoresizingMask = (UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight)
+//        activity.frame.origin.y = 50
+//        
+//        footer.addSubview(activity)
+//        
+//        self.mainTable.tableFooterView = footer
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
-        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        self.mainTable.addSubview(refreshControl)
+//        self.refreshControl = UIRefreshControl()
+//        self.refreshControl.attributedTitle = NSAttributedString(string: "Pull to refersh")
+//        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+//        self.mainTable.addSubview(refreshControl)
+//        
+//        self.mainTable.tableFooterView?.hidden = true
         
-        self.mainTable.tableFooterView?.hidden = true
+        // setup pull-to-refresh
+//        [self.mainTable addPullToRefreshWithActionHandler:^{
+//            [weakSelf insertRowAtTop];
+//            }];
+        
+        
+        // setup infinite scrolling
+        self.mainTable.addPullToRefreshWithActionHandler { () -> Void in
+            self.refresh()
+        }
     }
     
-    func refresh(sender:AnyObject) {
-        rowsLoaded = 20
-        println("refreshed")
-        self.refreshControl.endRefreshing()
+    func refresh() {
+        println("ok")
+        self.mainTable.pullToRefreshView.stopAnimating()
     }
+    
+//    func refresh(sender:AnyObject) {
+//        rowsLoaded = 20
+//        println("refreshed")
+//        self.refreshControl.endRefreshing()
+//    }
     
 
     @IBAction func showMenu(sender: AnyObject) {
@@ -88,41 +106,41 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        }
 //    }
     
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
-        let currentOffset = scrollView.contentOffset.y
-        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
-        let deltaOffset = maximumOffset - currentOffset
-        
-        if deltaOffset <= 0 {
-            loadMore()
-        }
-    }
-    
-    func loadMore() {
-        if ( !loadMoreStatus ) {
-            self.loadMoreStatus = true
-//            self.activityIndicator.startAnimating()
-            self.mainTable.tableFooterView?.hidden = false
-            loadMoreBegin("Load more",
-                loadMoreEnd: {(x:Int) -> () in
-                    self.mainTable.reloadData()
-                    self.loadMoreStatus = false
-//                    self.activityIndicator.stopAnimating()
-                    self.mainTable.tableFooterView?.hidden = true
-            })
-        }
-    }
-    
-    func loadMoreBegin(newtext:String, loadMoreEnd:(Int) -> ()) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            println("loadmore")
-//            self.text = newtext
-            self.rowsLoaded += 20
-            sleep(2)
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                loadMoreEnd(0)
-            }
-        }
-    }
+//    func scrollViewDidScroll(scrollView: UIScrollView!) {
+//        let currentOffset = scrollView.contentOffset.y
+//        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+//        let deltaOffset = maximumOffset - currentOffset
+//        
+//        if deltaOffset <= 0 {
+//            loadMore()
+//        }
+//    }
+//    
+//    func loadMore() {
+//        if ( !loadMoreStatus ) {
+//            self.loadMoreStatus = true
+////            self.activityIndicator.startAnimating()
+//            self.mainTable.tableFooterView?.hidden = false
+//            loadMoreBegin("Load more",
+//                loadMoreEnd: {(x:Int) -> () in
+//                    self.mainTable.reloadData()
+//                    self.loadMoreStatus = false
+////                    self.activityIndicator.stopAnimating()
+//                    self.mainTable.tableFooterView?.hidden = true
+//            })
+//        }
+//    }
+//    
+//    func loadMoreBegin(newtext:String, loadMoreEnd:(Int) -> ()) {
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+//            println("loadmore")
+////            self.text = newtext
+//            self.rowsLoaded += 20
+//            sleep(2)
+//            
+//            dispatch_async(dispatch_get_main_queue()) {
+//                loadMoreEnd(0)
+//            }
+//        }
+//    }
 }
