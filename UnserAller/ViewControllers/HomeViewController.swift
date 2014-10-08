@@ -14,10 +14,9 @@ import Alamofire
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mainTable: UITableView!
-    var refreshControl:UIRefreshControl!
-    var rowsLoaded: Int = 0
-    var loadMoreStatus = false
     var page: Int = 0
+    var entries: [UASuggestion] = []
+    let maxResponse: UInt = 10
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
@@ -25,12 +24,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         
-        // adjust table
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.edgesForExtendedLayout = UIRectEdge.None
+        // adjust table Or use didMoveToParentViewController
+//        self.automaticallyAdjustsScrollViewInsets = false
+//        self.edgesForExtendedLayout = UIRectEdge.None
         
         // hide nav bar
-        self.navigationController?.hidesBarsOnSwipe = true
+//        self.navigationController?.hidesBarsOnSwipe = true
         
         self.getEntries({
             
@@ -41,30 +40,76 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup pull to refresh
-        self.mainTable.addPullToRefreshWithActionHandler { () -> Void in
-            self.refresh()
-        }
-        
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
         
+        self.mainTable.triggerInfiniteScrolling()
+        
+    }
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        super.didMoveToParentViewController(parent)
+        
+        if (self.mainTable.pullToRefreshView == nil) {
+            // setup pull to refresh
+            self.mainTable.addPullToRefreshWithActionHandler { () -> Void in
+                
+                // active activity indicator
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                self.refresh()
+            }
+        }
     }
     
     func refresh() {
-        sleep(1)
-        println("ok")
-        self.mainTable.pullToRefreshView.stopAnimating()
+        self.page = 0
+        self.entries = []
+        
+        self.getEntries({ () -> Void in
+            self.mainTable.reloadData()
+            
+            self.mainTable.pullToRefreshView.stopAnimating()
+            
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }, error: { () -> Void in
+            println("Homepage error")
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
+    
+    /**
+     *  Load next page
+     */
     func infiniteLoad() {
-        sleep(1)
-        println("finished loading")
-        self.mainTable.infiniteScrollingView.stopAnimating();
+        // increment page
+        self.page += 1
+        
+        self.getEntries({ () -> Void in
+            // reload data
+            self.mainTable.reloadData()
+            
+            self.mainTable.infiniteScrollingView.stopAnimating()
+            
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }, error: { () -> Void in
+            println("Homepage error")
+            
+            self.mainTable.infiniteScrollingView.stopAnimating()
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
     
 
+    /**
+     *  Hide menu button
+     */
     @IBAction func showMenu(sender: AnyObject) {
         toggleSideMenuView()
     }
@@ -76,7 +121,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rowsLoaded
+        return self.entries.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -90,21 +135,21 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page])
         .responseJSON { (_,_,JSON,errors) in
-            if(errors != nil) {
+            if(errors != nil || JSON?.count == 0 || JSON?.objectAtIndex(0).count == 0) {
                 // print error
                 println(errors)
                 // error block
                 error()
             } else {
-                if(JSON?.count > 0 && JSON?.objectAtIndex(0).count > 0) {
-                    
-                    let SuggestionModelView = UASuggestionViewModel()
-                    
-                    // get get objects from JSON
-                    var array = SuggestionModelView.getSuggestionsFromJSON(JSON as [Dictionary<String, AnyObject>])
-                    
-                    success()
-                }
+                let SuggestionModelView = UASuggestionViewModel()
+
+                // get get objects from JSON
+                var array = SuggestionModelView.getSuggestionsFromJSON(JSON as [Dictionary<String, AnyObject>])
+            
+                // merge two arrays
+                self.entries = self.entries + array
+                
+                success()
             }
         }
     }

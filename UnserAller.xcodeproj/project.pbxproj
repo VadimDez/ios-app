@@ -27,6 +27,7 @@
 		D584D58F197C451300E1CAB3 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58A197C451300E1CAB3 /* METransitions.m */; };
 		D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */; };
 		D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584D595197C47E000E1CAB3 /* HomeViewController.swift */; };
+		D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */; };
 		D5BFB9E019E044E6006B03DB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; };
 		D5BFB9E119E044ED006B03DB /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D9E65B19E15A2500537FBD /* Keychain.swift */; };
@@ -100,6 +101,7 @@
 		D584D58B197C451300E1CAB3 /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
 		D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
 		D584D595197C47E000E1CAB3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ViewControllers/HomeViewController.swift; sourceTree = "<group>"; };
+		D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAMedia.swift; sourceTree = "<group>"; };
 		D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnserAller-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5BFB9D719E044DE006B03DB /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = UnserAller/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		D5D9E65B19E15A2500537FBD /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			children = (
 				D529166A197C2B5C0038A048 /* User.swift */,
 				D52FF94519E3229F006139E2 /* UASuggestion.swift */,
+				D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
 				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
+				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,

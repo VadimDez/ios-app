@@ -26,10 +26,389 @@ class UASuggestion {
     var cellType: String
     var media: [AnyObject]
     
+    init() {
+        self.suggestionId = 0
+        self.projectId = 0
+        self.likeCount = 0
+        self.commentCount = 0
+        self.userId = 0
+        self.userVotes = 0
+        self.userName = ""
+        self.projectName = ""
+        self.content = ""
+        self.updated = NSDate()
+        self.deleted = NSDate()
+        self.type = ""
+        self.cellType = ""
+        self.media = []
+    }
     
+    
+    /**
+     * Initialization of suggestion
+     */
     func initSuggestion(jsonObject: AnyObject)-> UASuggestion {
-        println("test")
+        
+        // set id
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+            self.suggestionId = suggestionId
+        }
+        
+        // set content
+//        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+
+        // set project id
+        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+            self.projectId = projectId
+        }
+
+        // set like count
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+            self.likeCount = likeCount
+        }
+
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+            self.commentCount = commentCount
+        }
+        
+        // set updated
+        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
+            self.updated = self.getDateFromString(updated)
+        }
+        
+        // set user id
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+            self.userId = userId
+        }
+
+        // set user name
+        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
+            self.userName = userName
+        }
+
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+            self.userVotes = userVotes
+        }
+
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+
+        // set type
+        if let type = jsonObject.objectForKey("type") as? NSString {
+            self.type = type
+        }
+        
+        // set cell class type
+        self.cellType = "SuggestionCell";
         
         return self
+    }
+    
+    func initVote(jsonObject: AnyObject) -> UASuggestion {
+        
+        // set id
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+            self.suggestionId = suggestionId
+        }
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+        
+        // set like count
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+            self.likeCount = likeCount
+        }
+        
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+            self.commentCount = commentCount
+        }
+        
+        // set updated
+        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
+            self.updated = self.getDateFromString(updated)
+        }
+        
+        // set user id
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+            self.userId = userId
+        }
+        
+        // set user name
+        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
+            self.userName = userName
+        }
+        
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("liked") as? NSNumber {
+            self.userVotes = userVotes
+        }
+        
+        // set project id
+        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+            self.projectId = projectId
+        }
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+        
+        // set type
+        if let type = jsonObject.objectForKey("type") as? NSString {
+            self.type = type
+        }
+        
+        // set cell class type
+        self.cellType = "VoteSuggestionCell";
+        
+        return self
+    }
+    
+    func initNews(jsonObject: AnyObject) -> UASuggestion {
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+        
+        // set project id
+//        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+//            self.projectId = projectId
+//        }
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+
+        // set cell class type
+        self.cellType = "NewsCell";
+        
+        return self
+    }
+    
+    func initNewsIncludeImages(jsonObject: AnyObject) -> UASuggestion {
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+        
+        // set project id
+        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+            self.projectId = projectId
+        }
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+        
+        // set type
+        if let type = jsonObject.objectForKey("type") as? NSString {
+            self.type = type
+        }
+        
+        // set cell class type
+        self.cellType = "NewsContainerTableCell";
+        
+        // add media
+        if let media = jsonObject.objectForKey("media") as? [AnyObject] {
+            self.addMediaToSuggestionWithJSON(media)
+        }
+        
+        return self
+    }
+    
+    func initSuggestIncludingImages(jsonObject: AnyObject) -> UASuggestion {
+        
+        // set id
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+            self.suggestionId = suggestionId
+        }
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+        
+        // set project id
+        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+            self.projectId = projectId
+        }
+        
+        // set like count
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+            self.likeCount = likeCount
+        }
+        
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+            self.commentCount = commentCount
+        }
+        
+        // set updated
+        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
+            self.updated = self.getDateFromString(updated)
+        }
+        
+        // set user id
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+            self.userId = userId
+        }
+        
+        // set user name
+        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
+            self.userName = userName
+        }
+        
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+            self.userVotes = userVotes
+        }
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+        
+        // set type
+        if let type = jsonObject.objectForKey("type") as? NSString {
+            self.type = type
+        }
+        
+        // set cell class type
+        self.cellType = "ContainerTableCell";
+        
+        // set type
+        self.type = "suggestion";
+        
+        // add media
+        if let media = jsonObject.objectForKey("media") as? [AnyObject] {
+            self.addMediaToSuggestionWithJSON(media)
+        }
+        
+        return self
+    }
+    
+    func initVoteIncludingImages(jsonObject: AnyObject) -> UASuggestion {
+        
+        // set id
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+            self.suggestionId = suggestionId
+        }
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content
+        }
+        
+        // set project id
+        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+            self.projectId = projectId
+        }
+        
+        // set like count
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+            self.likeCount = likeCount
+        }
+        
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+            self.commentCount = commentCount
+        }
+        
+        // set updated
+        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
+            self.updated = self.getDateFromString(updated)
+        }
+        
+        // set user id
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+            self.userId = userId
+        }
+        
+        // set user name
+        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
+            self.userName = userName
+        }
+        
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+            self.userVotes = userVotes
+        }
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName
+        }
+        
+        // set type
+        if let type = jsonObject.objectForKey("type") as? NSString {
+            self.type = type
+        }
+        
+        // set cell class type
+        self.cellType = "VoteSuggestionTableCell";
+        
+        // add media
+        if let media = jsonObject.objectForKey("media") as? [AnyObject] {
+            self.addMediaToSuggestionWithJSON(media)
+        }
+        
+        return self
+    }
+    
+    /**
+    *  Get NSDate from string
+    *
+    */
+    func getDateFromString(string: NSString) -> NSDate {
+        var formatter:NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return formatter.dateFromString(string)!
+    }
+    
+    /**
+    *  Add media object in media array
+    */
+    func addMediaToSuggestionWithJSON(json: [AnyObject]) {
+        self.media = []
+        
+        for object in json {
+            var mediaObject: UAMedia = UAMedia()
+    
+            // set height
+            if let height = object.objectForKey("height") as? NSNumber {
+                mediaObject.height = height
+            }
+            
+            if let width = object.objectForKey("width") as? NSNumber {
+                mediaObject.width = width
+            }
+            
+            if let hash = object.objectForKey("hash") as? NSString {
+                mediaObject.hash = hash
+            }
+    
+            // add
+            self.media.append(mediaObject);
+        }
     }
 }
