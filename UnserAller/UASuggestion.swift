@@ -19,7 +19,7 @@ class UASuggestion {
     var userVotes: Int
     var userName: String
     var projectName: String
-    var content: String
+    var content: String!
     var updated: NSDate
     var deleted: NSDate
     var type: String
