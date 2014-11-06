@@ -13,11 +13,6 @@ class ENSideMenuNavigationController: UINavigationController, ENSideMenuProtocol
     internal var sideMenu : ENSideMenu?
     internal var sideMenuAnimationType : ENSideMenuAnimation = .Default
     
-    internal var sideMenuWidth : NSNumber? {
-        didSet {
-            sideMenu?.menuWidth = sideMenuWidth!
-        }
-    }
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -30,11 +25,11 @@ class ENSideMenuNavigationController: UINavigationController, ENSideMenuProtocol
         if (contentViewController != nil) {
             self.viewControllers = [contentViewController!]
         }
-
-        sideMenu = ENSideMenu(sourceView: self.view, menuTableViewController: menuTableViewController)
+        
+        sideMenu = ENSideMenu(sourceView: self.view, menuTableViewController: menuTableViewController, menuPosition:.Left)
         view.bringSubviewToFront(navigationBar)
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -58,5 +53,5 @@ class ENSideMenuNavigationController: UINavigationController, ENSideMenuProtocol
         }
         
     }
-
+    
 }

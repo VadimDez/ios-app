@@ -17,7 +17,7 @@ class InitNavigationViewController: ENSideMenuNavigationController, ENSideMenuDe
         
         let menu: MenuTableViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("Menu") as MenuTableViewController
         
-        sideMenu = ENSideMenu(sourceView: self.view, menuTableViewController: menu)
+        sideMenu = ENSideMenu(sourceView: self.view, menuTableViewController: menu, menuPosition: .Left)
         
         sideMenu?.delegate = self //optional
         sideMenu?.menuWidth = 250.0 // optional, default is 160

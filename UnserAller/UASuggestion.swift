@@ -50,7 +50,7 @@ class UASuggestion {
     func initSuggestion(jsonObject: AnyObject)-> UASuggestion {
         
         // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
             self.suggestionId = suggestionId
         }
         
@@ -61,17 +61,17 @@ class UASuggestion {
         }
 
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+        if let projectId = jsonObject.objectForKey("project") as? UInt {
             self.projectId = projectId
         }
 
         // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
             self.likeCount = likeCount
         }
 
         // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
             self.commentCount = commentCount
         }
         
@@ -81,7 +81,7 @@ class UASuggestion {
         }
         
         // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
         }
 
@@ -91,7 +91,7 @@ class UASuggestion {
         }
 
         // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
             self.userVotes = userVotes
         }
 
@@ -114,7 +114,7 @@ class UASuggestion {
     func initVote(jsonObject: AnyObject) -> UASuggestion {
         
         // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
             self.suggestionId = suggestionId
         }
         
@@ -125,12 +125,12 @@ class UASuggestion {
         }
         
         // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
             self.likeCount = likeCount
         }
         
         // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
             self.commentCount = commentCount
         }
         
@@ -140,7 +140,7 @@ class UASuggestion {
         }
         
         // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
         }
         
@@ -150,12 +150,12 @@ class UASuggestion {
         }
         
         // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("liked") as? NSNumber {
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("liked") as? Int {
             self.userVotes = userVotes
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+        if let projectId = jsonObject.objectForKey("project") as? UInt {
             self.projectId = projectId
         }
         
@@ -208,7 +208,7 @@ class UASuggestion {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+        if let projectId = jsonObject.objectForKey("project") as? UInt {
             self.projectId = projectId
         }
         
@@ -236,7 +236,7 @@ class UASuggestion {
     func initSuggestIncludingImages(jsonObject: AnyObject) -> UASuggestion {
         
         // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
             self.suggestionId = suggestionId
         }
         
@@ -247,17 +247,17 @@ class UASuggestion {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+        if let projectId = jsonObject.objectForKey("project") as? UInt {
             self.projectId = projectId
         }
         
         // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
             self.likeCount = likeCount
         }
         
         // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
             self.commentCount = commentCount
         }
         
@@ -267,7 +267,7 @@ class UASuggestion {
         }
         
         // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
         }
         
@@ -277,7 +277,7 @@ class UASuggestion {
         }
         
         // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
             self.userVotes = userVotes
         }
         
@@ -308,7 +308,7 @@ class UASuggestion {
     func initVoteIncludingImages(jsonObject: AnyObject) -> UASuggestion {
         
         // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? NSNumber {
+        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
             self.suggestionId = suggestionId
         }
         
@@ -319,17 +319,17 @@ class UASuggestion {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
+        if let projectId = jsonObject.objectForKey("project") as? UInt {
             self.projectId = projectId
         }
         
         // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? NSNumber {
+        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
             self.likeCount = likeCount
         }
         
         // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? NSNumber {
+        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
             self.commentCount = commentCount
         }
         
@@ -339,7 +339,7 @@ class UASuggestion {
         }
         
         // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? NSNumber {
+        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
         }
         
@@ -349,7 +349,7 @@ class UASuggestion {
         }
         
         // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? NSNumber {
+        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
             self.userVotes = userVotes
         }
         
@@ -395,11 +395,11 @@ class UASuggestion {
             var mediaObject: UAMedia = UAMedia()
     
             // set height
-            if let height = object.objectForKey("height") as? NSNumber {
+            if let height = object.objectForKey("height") as? UInt {
                 mediaObject.height = height
             }
             
-            if let width = object.objectForKey("width") as? NSNumber {
+            if let width = object.objectForKey("width") as? UInt {
                 mediaObject.width = width
             }
             

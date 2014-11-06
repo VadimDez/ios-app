@@ -136,7 +136,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = self.getSuggestCellForHome(entries[indexPath.row])
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "\(indexPath.row)"
+            cell.textLabel.text = "\(indexPath.row)"
         }
         
         return cell

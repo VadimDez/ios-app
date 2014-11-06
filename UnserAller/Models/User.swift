@@ -63,14 +63,14 @@ class User {
     func encode(string: String) -> NSData {
         let utf8str: NSData = string.dataUsingEncoding(NSUTF8StringEncoding)!
         
-        let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.fromRaw(0)!)
+        let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)) //NSDataBase64EncodingOptions.fromRaw(0)!)
         
-        let data: NSData = NSData(base64EncodedString: base64Encoded, options: NSDataBase64DecodingOptions.fromRaw(0)!)
+        let data: NSData = NSData(base64EncodedString: base64Encoded, options: NSDataBase64DecodingOptions(rawValue: 0))!
         
         return data
     }
     
     func decode(data: NSData) -> String {
-        return NSString(data: data, encoding: NSUTF8StringEncoding)
+        return NSString(data: data, encoding: NSUTF8StringEncoding)!
     }
 }
