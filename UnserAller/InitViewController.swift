@@ -23,37 +23,32 @@ class InitViewController: UIViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+//        Locksmith.deleteData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
         let (dictionary, error) = Locksmith.loadData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
         
         
         // if an error
         if let error = error {
-            println("Error: \(error)")
-            
+            println("Keychain Error: \(error)")
+    
             super.viewWillAppear(animated)
         }
         
         if let dictionary = dictionary {
-            println("Dictionary: \(dictionary)")
+            if (dictionary["UserAuthEmailToken"] != nil && dictionary["UserAuthPasswordToken"] != nil) {
+                let userService: User = User()
+                
+                userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as String, password: dictionary["UserAuthPasswordToken"] as String, success: { () -> Void in
+                    var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+                    
+                    self.presentViewController(root, animated: false, completion: nil)
+                }, error: { () -> Void in
+                    
+                })
+            } else {
+                super.viewWillAppear(animated)
+            }
         }
-        
-//        if(Keychain.load("UserAuthUserToken") != nil && Keychain.load("UserAuthPasswordToken") != nil) {
-//            
-//            let dataEmail: NSData = Keychain.load("UserAuthUserToken")!
-//            let dataPassword: NSData = Keychain.load("UserAuthPasswordToken")!
-//            let UserService: User = User()
-//            
-//            UserService.getUserCrederntials(UserService.decode(dataEmail), password: UserService.decode(dataPassword), success: { () -> Void in
-//                
-//                var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-//                
-//                self.presentViewController(root, animated: false, completion: nil);
-//            }, error: { () -> Void in
-//                
-//            })
-//        } else {
-//            super.viewWillAppear(animated)
-//        }
     }
 }
 

@@ -56,7 +56,7 @@ class User {
     }
     
     func saveEmailAndPasswordToKeychain(email: String, password: String) {
-        Locksmith.saveData(["UserAuthUserToken": email, "UserAuthPasswordToken": password], forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser");
+        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser");
 //        Keychain.save("UserAuthUserToken", data: self.encode(email))
 //        Keychain.save("UserAuthPasswordToken", data: self.encode(password))
     }
