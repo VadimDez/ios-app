@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-class User {
+class UAUser {
     var userId: Int!
     var fullname: String!
     var profileImageURL: String!
@@ -23,9 +23,12 @@ class User {
     }
     
     init() {
-        
+    
     }
     
+    /**
+     * Check if string is empty
+     */
     func checkStringsWithString(value: String) -> Bool {
         if value == "" || value == " " {
             return false
@@ -43,10 +46,10 @@ class User {
         
         Alamofire.request(.GET, url, parameters: ["username": email, "password": password])
             .authenticate(user: email, password: password)
-            .responseJSON { (request, response, JSON, errorr) in
-                
+            .responseJSON { (request, response, JSON, _error) in
+                print(_error)
                 // check if no error and correct email and pass
-                if ((errorr != nil) || JSON == nil || JSON?.objectForKey("auth")?.intValue != 200) {
+                if ((_error != nil) || JSON == nil || JSON?.objectForKey("auth")?.intValue != 200) {
                     error()
                 } else {
                     success()

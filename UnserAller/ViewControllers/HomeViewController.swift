@@ -14,7 +14,7 @@ import Alamofire
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mainTable: UITableView!
-    var page: Int = 0
+    var page: Int = -1 // -1 for initial infinite load
     var entries: [UASuggestion] = []
     let maxResponse: UInt = 10
     var countEntries: Int = 0
@@ -80,11 +80,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             self.mainTable.pullToRefreshView.stopAnimating()
             
-            
             // active activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }, error: { () -> Void in
-            println("Homepage error")
+            println("Homepage refresh error")
+            
+            self.mainTable.pullToRefreshView.stopAnimating()
             
             // active activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -107,7 +108,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             // active activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }, error: { () -> Void in
-            println("Homepage error")
+            println("Homepage infiniteload error")
             
             self.mainTable.infiniteScrollingView.stopAnimating()
             // active activity indicator
@@ -190,11 +191,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func getEntries(success:() -> Void, error: () -> Void) {
         // build URL
-        let url: String = "http://\(APIURL)/api/mobile/profile/getwall"
+        let url: String = "https://\(APIURL)/api/mobile/profile/getwall"
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page])
         .responseJSON { (_,_,JSON,errors) in
+            
             if(errors != nil || JSON?.count == 0 || JSON?.objectAtIndex(0).count == 0) {
                 // print error
                 println(errors)

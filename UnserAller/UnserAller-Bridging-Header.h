@@ -3,7 +3,7 @@
 //
 
 #import <CSAnimationView.h>
-#import <AFNetworking.h>
+//#import <AFNetworking.h>
 //#import "UIViewController+ECSlidingViewController.h"
 //#import "MEDynamicTransition.h"
 //#import "MEFoldAnimationController.h"

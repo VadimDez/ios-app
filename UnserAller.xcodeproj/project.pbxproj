@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
 		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
+		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
+		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
+		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
 		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
 		D511715219E030D2007675EE /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715019E030D2007675EE /* ENSideMenu.swift */; };
 		D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */; };
 		D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715419E034F8007675EE /* MenuTableViewController.swift */; };
 		D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715619E0364F007675EE /* InitNavigationViewController.swift */; };
 		D5291667197C210C0038A048 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291666197C210C0038A048 /* LoginViewController.swift */; };
-		D529166B197C2B5C0038A048 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* User.swift */; };
+		D529166B197C2B5C0038A048 /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
 		D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */; };
 		D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF94519E3229F006139E2 /* UASuggestion.swift */; };
 		D56C462219E04DDE0059735A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D581228E197C08B600E3573C /* Images.xcassets */; };
@@ -77,8 +81,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
+		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
+		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
+		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
 		726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.xcconfig"; path = "Pods/Pods-UnserAller.xcconfig"; sourceTree = "<group>"; };
 		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D511715019E030D2007675EE /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
@@ -86,7 +94,7 @@
 		D511715419E034F8007675EE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		D511715619E0364F007675EE /* InitNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitNavigationViewController.swift; path = ViewControllers/InitNavigationViewController.swift; sourceTree = "<group>"; };
 		D5291666197C210C0038A048 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewControllers/LoginViewController.swift; sourceTree = "<group>"; };
-		D529166A197C2B5C0038A048 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		D529166A197C2B5C0038A048 /* UAUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAUser.swift; path = Models/UAUser.swift; sourceTree = "<group>"; };
 		D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UASuggestionViewModel.swift; sourceTree = "<group>"; };
 		D52FF94519E3229F006139E2 /* UASuggestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UASuggestion.swift; sourceTree = "<group>"; };
 		D56C462319E04DFC0059735A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
@@ -165,6 +173,7 @@
 				D584D595197C47E000E1CAB3 /* HomeViewController.swift */,
 				D511715419E034F8007675EE /* MenuTableViewController.swift */,
 				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
+				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -172,9 +181,10 @@
 		D5291669197C2B180038A048 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D529166A197C2B5C0038A048 /* User.swift */,
+				D529166A197C2B5C0038A048 /* UAUser.swift */,
 				D52FF94519E3229F006139E2 /* UASuggestion.swift */,
 				D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */,
+				12C528A31A0FD9A100B8A50C /* UAProject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -184,6 +194,7 @@
 			children = (
 				D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */,
 				D5FE701D19E6F22F00582B84 /* UACellViewModel.swift */,
+				12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -265,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				D581229A197C08B600E3573C /* UnserAllerTests.swift */,
+				1229AAC41A0EDD5A002887E6 /* UserTests.swift */,
 				D5812298197C08B600E3573C /* Supporting Files */,
 			);
 			path = UnserAllerTests;
@@ -481,10 +493,13 @@
 			files = (
 				124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */,
 				D511715219E030D2007675EE /* ENSideMenu.swift in Sources */,
+				1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */,
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
-				D529166B197C2B5C0038A048 /* User.swift in Sources */,
+				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
+				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
+				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
 				124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */,
 				D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */,
@@ -507,6 +522,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */,
 				D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -618,6 +634,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = UnserAller/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -635,6 +652,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = UnserAller/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

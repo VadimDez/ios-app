@@ -23,7 +23,10 @@ class InitViewController: UIViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
+
+        // delete email and pass from keychain
 //        Locksmith.deleteData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
+        
         let (dictionary, error) = Locksmith.loadData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
         
         
@@ -36,7 +39,7 @@ class InitViewController: UIViewController {
         
         if let dictionary = dictionary {
             if (dictionary["UserAuthEmailToken"] != nil && dictionary["UserAuthPasswordToken"] != nil) {
-                let userService: User = User()
+                let userService: UAUser = UAUser()
                 
                 userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as String, password: dictionary["UserAuthPasswordToken"] as String, success: { () -> Void in
                     var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController

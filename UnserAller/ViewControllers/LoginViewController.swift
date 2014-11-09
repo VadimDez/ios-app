@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
     }
     
     func auth(email: String, password: String) {
-        var userService = User();
+        var userService: UAUser = UAUser();
         if(userService.checkStringsWithString(email) && userService.checkStringsWithString(password)) {
             
             userService.getUserCrederntials(email, password: password,
