@@ -33,6 +33,9 @@
 		D584D58F197C451300E1CAB3 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58A197C451300E1CAB3 /* METransitions.m */; };
 		D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */; };
 		D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584D595197C47E000E1CAB3 /* HomeViewController.swift */; };
+		D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
+		D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
+		D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
 		D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */; };
 		D5BFB9E019E044E6006B03DB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; };
 		D5BFB9E119E044ED006B03DB /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -522,7 +525,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */,
 				1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */,
+				D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */,
+				D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */,
 				D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,7 +680,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = UnserAllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -690,7 +696,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = UnserAllerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";

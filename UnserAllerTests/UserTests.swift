@@ -21,8 +21,9 @@ class UserTests: XCTestCase {
         super.tearDown()
     }
     
-    func testCheckStringsWithString() {
-        
+    func testUAUserInit() {
+        var user: UAUser = UAUser()
+        XCTAssert(true, "ok")
     }
 
 }

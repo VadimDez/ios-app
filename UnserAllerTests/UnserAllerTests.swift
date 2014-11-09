@@ -10,6 +10,7 @@ import UIKit
 import XCTest
 
 class UnserAllerTests: XCTestCase {
+    var APIURL
     
     override func setUp() {
         super.setUp()
@@ -32,5 +33,4 @@ class UnserAllerTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
 }
