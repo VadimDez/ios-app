@@ -10,7 +10,6 @@ import UIKit
 import XCTest
 
 class UnserAllerTests: XCTestCase {
-    var APIURL
     
     override func setUp() {
         super.setUp()

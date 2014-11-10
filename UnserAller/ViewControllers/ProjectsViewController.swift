@@ -24,6 +24,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
+        
+        
+        // take first
+        self.mainTable.triggerInfiniteScrolling()
     }
     
     override func didMoveToParentViewController(parent: UIViewController?) {
@@ -63,7 +67,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.countEntries
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -71,7 +75,18 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+
+        var cell:UAProjectCell? = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as? UAProjectCell
+        
+        if (cell == nil) {
+            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UAProjectCell", owner: self, options: nil)
+            
+            cell = nib.objectAtIndex(0) as? UAProjectCell
+        }
+        
+        cell?.setCell(self.entries[indexPath.row])
+        
+        return cell!
     }
     
     /*
@@ -81,6 +96,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         self.page += 1
         
         self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
         }, {() -> Void in
@@ -94,8 +111,21 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
      *  Pull to refresh implementation
      */
     func refresh() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.mainTable.pullToRefreshView.stopAnimating()
+        self.page = 0
+        self.entries = []
+        self.countEntries = 0
+        
+        self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.pullToRefreshView.stopAnimating()
+        }, {() -> Void in
+            println("Projects pull to refresh load error")
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.pullToRefreshView.stopAnimating()
+        })
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
@@ -115,7 +145,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     // get get objects from JSON
                     var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as [Dictionary<String, AnyObject>])
-                        
+                    
                     // merge two arrays
                     self.entries = self.entries + array
                     self.countEntries = self.entries.count

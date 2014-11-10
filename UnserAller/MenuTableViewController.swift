@@ -86,6 +86,9 @@ class MenuTableViewController: UITableViewController {
         case 1:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Projects") as UIViewController
             break
+        case 3:
+            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Bookmarks") as UIViewController
+            break
         default:
             destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Home") as UIViewController
             break

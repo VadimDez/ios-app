@@ -10,9 +10,15 @@
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
 		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
+		125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
+		126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE221A115A9200E22070 /* BookmarksViewController.swift */; };
+		126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE261A1160E500E22070 /* UABookmarkCell.swift */; };
+		126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126CBE281A1160FF00E22070 /* UABookmarkCell.xib */; };
 		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
 		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
 		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
+		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
+		12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12FCF47D1A11536A008B74AA /* UAProjectCell.xib */; };
 		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
 		D511715219E030D2007675EE /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715019E030D2007675EE /* ENSideMenu.swift */; };
 		D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */; };
@@ -87,9 +93,14 @@
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
+		126CBE221A115A9200E22070 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarksViewController.swift; path = ViewControllers/BookmarksViewController.swift; sourceTree = "<group>"; };
+		126CBE261A1160E500E22070 /* UABookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UABookmarkCell.swift; path = Views/Cells/UABookmarkCell.swift; sourceTree = "<group>"; };
+		126CBE281A1160FF00E22070 /* UABookmarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UABookmarkCell.xib; sourceTree = "<group>"; };
 		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
 		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
 		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
+		12FCF4791A11534C008B74AA /* UAProjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectCell.swift; path = Views/Cells/UAProjectCell.swift; sourceTree = "<group>"; };
+		12FCF47D1A11536A008B74AA /* UAProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UAProjectCell.xib; sourceTree = "<group>"; };
 		726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.xcconfig"; path = "Pods/Pods-UnserAller.xcconfig"; sourceTree = "<group>"; };
 		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D511715019E030D2007675EE /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
@@ -177,6 +188,7 @@
 				D511715419E034F8007675EE /* MenuTableViewController.swift */,
 				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
 				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
+				126CBE221A115A9200E22070 /* BookmarksViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -214,8 +226,12 @@
 		D555CCA819E1CED300AB0F5F /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				D5FE702119E6F33600582B84 /* UASuggestCell.xib */,
 				D5FE702319E6FA6300582B84 /* UASuggestionCell.swift */,
+				D5FE702119E6F33600582B84 /* UASuggestCell.xib */,
+				12FCF4791A11534C008B74AA /* UAProjectCell.swift */,
+				12FCF47D1A11536A008B74AA /* UAProjectCell.xib */,
+				126CBE261A1160E500E22070 /* UABookmarkCell.swift */,
+				126CBE281A1160FF00E22070 /* UABookmarkCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -444,6 +460,8 @@
 				D56C462419E04DFC0059735A /* Media.xcassets in Resources */,
 				D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */,
 				D56C462219E04DDE0059735A /* Images.xcassets in Resources */,
+				12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */,
+				126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,12 +518,14 @@
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
+				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
 				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
 				124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */,
 				D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */,
+				12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */,
 				D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */,
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
@@ -517,6 +537,7 @@
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
+				126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */,
 				D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */,
 				1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */,
 				D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */,

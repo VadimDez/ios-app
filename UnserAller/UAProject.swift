@@ -12,6 +12,8 @@ class UAProject
 {
     var id: Int!
     var name: String!
+    var title: String!
+    var company: String!
     
     init() {
         
