@@ -24,6 +24,10 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         
+        var nib = UINib(nibName: "UABookmarkCell", bundle: nil)
+        
+        self.mainTable.registerNib(nib, forCellReuseIdentifier: "UABookmarkCell")
+        
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
@@ -61,17 +65,23 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     */
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UABookmarkCell? = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as? UABookmarkCell
+//        var cell:UABookmarkCell? = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as? UABookmarkCell
+//        
+//        if (cell == nil) {
+//            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UABookmarkCell", owner: self, options: nil)
+//            
+//            cell = nib.objectAtIndex(0) as? UABookmarkCell
+//        }
+//        
+//        cell?.setCell(self.entries[indexPath.row])
+//        
+//        return cell!
         
-        if (cell == nil) {
-            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UABookmarkCell", owner: self, options: nil)
-            
-            cell = nib.objectAtIndex(0) as? UABookmarkCell
-        }
+        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as UABookmarkCell
         
-        cell?.setCell(self.entries[indexPath.row])
+        cell.setCell(self.entries[indexPath.row])
         
-        return cell!
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -80,6 +90,12 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var cell: UABookmarkCell = tableView.cellForRowAtIndexPath(indexPath) as UABookmarkCell
+        cell.frame.size.height = 500
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {

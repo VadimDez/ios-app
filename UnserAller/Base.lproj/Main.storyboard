@@ -471,6 +471,40 @@
             </objects>
             <point key="canvasLocation" x="2078" y="1544"/>
         </scene>
+        <!--Credits View Controller-->
+        <scene sceneID="rLJ-vT-uQ6">
+            <objects>
+                <viewController storyboardIdentifier="Credits" id="vmt-R8-DAc" customClass="CreditsViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mt1-az-Fbj"/>
+                        <viewControllerLayoutGuide type="bottom" id="sJe-8e-vjh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NFG-ld-A8N">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="pLr-bC-us5">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sJe-8e-vjh" firstAttribute="top" secondItem="pLr-bC-us5" secondAttribute="bottom" id="6Mb-f7-cih"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pLr-bC-us5" secondAttribute="trailing" constant="-16" id="U9y-80-1mv"/>
+                            <constraint firstItem="pLr-bC-us5" firstAttribute="top" secondItem="NFG-ld-A8N" secondAttribute="topMargin" id="d8c-lG-mmw"/>
+                            <constraint firstItem="pLr-bC-us5" firstAttribute="leading" secondItem="NFG-ld-A8N" secondAttribute="leadingMargin" constant="-16" id="dxU-xs-Dxp"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="jSf-bf-7FP"/>
+                    <connections>
+                        <outlet property="mainTable" destination="pLr-bC-us5" id="qmY-IY-tgU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AYK-7a-JCD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2078" y="2090"/>
+        </scene>
         <!--Init Navigation View Controller-->
         <scene sceneID="eTp-Mq-5ie">
             <objects>
@@ -483,6 +517,7 @@
                         <segue destination="pew-1z-OPc" kind="relationship" relationship="rootViewController" id="QNi-Kg-rSJ"/>
                         <segue destination="PlW-xW-eDP" kind="push" id="55L-Se-fOD"/>
                         <segue destination="sgA-Cv-vta" kind="push" id="X6P-6z-Xaj"/>
+                        <segue destination="vmt-R8-DAc" kind="push" id="Qc8-V1-HXr"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mf0-FX-2eV" userLabel="First Responder" sceneMemberID="firstResponder"/>
