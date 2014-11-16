@@ -17,8 +17,16 @@
 		126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2A1A116D2700E22070 /* CreditsViewController.swift */; };
 		126CBE2D1A11732300E22070 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
 		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
+		129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */; };
+		129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */; };
+		12A172851A1944DA000FAA54 /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
+		12A172891A19470F000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
+		12A1728A1A194739000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
+		12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */; };
 		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
 		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
+		12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA195C1A1939C000259B68 /* UACreditTests.swift */; };
+		12EA19601A193A7400259B68 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
 		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
 		12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12FCF47D1A11536A008B74AA /* UAProjectCell.xib */; };
 		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
@@ -101,8 +109,13 @@
 		126CBE2A1A116D2700E22070 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreditsViewController.swift; path = ViewControllers/CreditsViewController.swift; sourceTree = "<group>"; };
 		126CBE2C1A11732300E22070 /* UACredit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACredit.swift; sourceTree = "<group>"; };
 		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
+		129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACreditCell.swift; path = Views/Cells/UACreditCell.swift; sourceTree = "<group>"; };
+		129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACreditCell.xib; sourceTree = "<group>"; };
+		12A172881A19470F000FAA54 /* UACompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACompany.swift; sourceTree = "<group>"; };
+		12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditViewModel.swift; sourceTree = "<group>"; };
 		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
 		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
+		12EA195C1A1939C000259B68 /* UACreditTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditTests.swift; sourceTree = "<group>"; };
 		12FCF4791A11534C008B74AA /* UAProjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectCell.swift; path = Views/Cells/UAProjectCell.swift; sourceTree = "<group>"; };
 		12FCF47D1A11536A008B74AA /* UAProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UAProjectCell.xib; sourceTree = "<group>"; };
 		726EBB4EFD4946C89DE72AE0 /* Pods-UnserAller.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.xcconfig"; path = "Pods/Pods-UnserAller.xcconfig"; sourceTree = "<group>"; };
@@ -206,6 +219,7 @@
 				D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */,
 				12C528A31A0FD9A100B8A50C /* UAProject.swift */,
 				126CBE2C1A11732300E22070 /* UACredit.swift */,
+				12A172881A19470F000FAA54 /* UACompany.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -216,6 +230,7 @@
 				D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */,
 				D5FE701D19E6F22F00582B84 /* UACellViewModel.swift */,
 				12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */,
+				12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -238,6 +253,8 @@
 				12FCF47D1A11536A008B74AA /* UAProjectCell.xib */,
 				126CBE261A1160E500E22070 /* UABookmarkCell.swift */,
 				126CBE281A1160FF00E22070 /* UABookmarkCell.xib */,
+				129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */,
+				129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -302,6 +319,7 @@
 			children = (
 				D581229A197C08B600E3573C /* UnserAllerTests.swift */,
 				1229AAC41A0EDD5A002887E6 /* UserTests.swift */,
+				12EA195C1A1939C000259B68 /* UACreditTests.swift */,
 				D5812298197C08B600E3573C /* Supporting Files */,
 			);
 			path = UnserAllerTests;
@@ -465,6 +483,7 @@
 				D581228D197C08B600E3573C /* Main.storyboard in Resources */,
 				D56C462419E04DFC0059735A /* Media.xcassets in Resources */,
 				D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */,
+				129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */,
 				D56C462219E04DDE0059735A /* Images.xcassets in Resources */,
 				12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */,
 				126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */,
@@ -526,6 +545,7 @@
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
 				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
+				12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */,
 				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
@@ -547,6 +567,8 @@
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
 				126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
+				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
+				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,11 +577,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */,
+				12A172851A1944DA000FAA54 /* UAProject.swift in Sources */,
+				12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */,
+				12EA19601A193A7400259B68 /* UACredit.swift in Sources */,
 				D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */,
 				1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */,
 				D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */,
 				D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */,
 				D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */,
+				12A1728A1A194739000FAA54 /* UACompany.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

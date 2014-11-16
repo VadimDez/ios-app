@@ -17,9 +17,13 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
+        
+        // register nibs
+        var UACreditCellNib = UINib(nibName: "UACreditCell", bundle: nil)
+        self.mainTable.registerNib(UACreditCellNib, forCellReuseIdentifier: "UACreditCell")
 
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -63,24 +67,56 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        var cell:UACreditCell = self.mainTable.dequeueReusableCellWithIdentifier("UACreditCell") as UACreditCell
+        
+        cell.setCell(self.entries[indexPath.row])
+        
+        return cell
     }
     
+    /*
+    * Infite load implementation
+    */
     func infiniteLoad() {
+        self.page += 1
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.mainTable.infiniteScrollingView.stopAnimating()
+        self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.infiniteScrollingView.stopAnimating()
+            }, {() -> Void in
+                println("Credit infinite load error")
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.mainTable.infiniteScrollingView.stopAnimating()
+        })
     }
+    /*
+    *  Pull to refresh implementation
+    */
     func refresh() {
+        self.page = 0
+        self.entries = []
+        self.countEntries = 0
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.mainTable.pullToRefreshView.stopAnimating()
+        self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.pullToRefreshView.stopAnimating()
+            }, {() -> Void in
+                println("Credit pull to refresh load error")
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.mainTable.pullToRefreshView.stopAnimating()
+        })
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
         // /api/mobile/profile/getbookmarks/
         let url: String = "https://\(APIURL)/api/mobile/profile/getcredits"
-        
+
         Alamofire.request(.GET, url, parameters: ["page": page])
             .responseJSON { (_, _, JSON, errors) -> Void in
                 if(errors != nil || JSON?.count == 0) {
@@ -89,14 +125,13 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
                     // error block
                     error()
                 } else {
-//                    let ProjectModelView = UAProjectViewModel()
-//                    
-//                    // get get objects from JSON
-//                    var array = ProjectModelView.getBookmarksFromJSON(JSON as [Dictionary<String, AnyObject>])
-//                    
-//                    // merge two arrays
-//                    self.entries = self.entries + array
-//                    self.countEntries = self.entries.count
+                    let CreditViewModel = UACreditViewModel()
+
+                    // get get objects from JSON
+                    var array = CreditViewModel.getCreditsFromJSON(JSON as [Dictionary<String, AnyObject>])
+                    // merge two arrays
+                    self.entries = self.entries + array
+                    self.countEntries = self.entries.count
                     
                     success()
                 }

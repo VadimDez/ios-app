@@ -24,9 +24,9 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         
-        var nib = UINib(nibName: "UABookmarkCell", bundle: nil)
+        var UABookmarkCellNib = UINib(nibName: "UABookmarkCell", bundle: nil)
         
-        self.mainTable.registerNib(nib, forCellReuseIdentifier: "UABookmarkCell")
+        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
         
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -93,8 +93,6 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var cell: UABookmarkCell = tableView.cellForRowAtIndexPath(indexPath) as UABookmarkCell
-        cell.frame.size.height = 500
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     

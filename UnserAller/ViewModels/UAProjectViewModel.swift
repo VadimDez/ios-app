@@ -41,24 +41,28 @@ class UAProjectViewModel: NSObject {
         var projects: [UAProject] = []
         
         for object in data {
-            var project = UAProject()
-            
-            if let id = object["id"] as? Int {
-                project.id = id
-            }
-            if let name = object["name"] as? String {
-                project.name = name
-            }
-            if let title = object["title"] as? String {
-                project.title = title
-            }
-            if let company = object["company"] as? String {
-                project.company = company
-            }
-            
-            projects.append(project)
+            projects.append(self.projectFromJSON(object))
         }
         
         return projects
+    }
+    
+    func projectFromJSON(object:Dictionary<String, AnyObject>) -> UAProject {
+        var project = UAProject()
+        
+        if let id = object["id"] as? Int {
+            project.id = id
+        }
+        if let name = object["name"] as? String {
+            project.name = name
+        }
+        if let title = object["title"] as? String {
+            project.title = title
+        }
+        if let company = object["company"] as? String {
+            project.company = company
+        }
+        
+        return project
     }
 }
