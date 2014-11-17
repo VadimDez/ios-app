@@ -56,8 +56,6 @@ class UASuggestionViewModel {
             suggestions.append(suggestion)
         }
         
-        println(suggestions.count)
-        
         return suggestions
     }
     
@@ -82,4 +80,55 @@ class UASuggestionViewModel {
         suggestion = UASuggestion().initVoteIncludingImages(object)
     }
     
+    
+    func getSuggestionsForActivityFromJSON(data: [Dictionary<String, AnyObject>]) -> [UASuggestion] {
+        var suggestions: [UASuggestion] = []
+        
+        for object in data {
+            // clean
+            suggestion = UASuggestion()
+            
+            // check if empty
+            // TODO: needs to be validated
+            if object["suggestion"] != nil {
+                
+                if object["mediaSuggestion"] != nil {
+                    
+                    if (object["suggestionType"]?.isEqualToString("suggest") == true) {
+                        self.getSuggestIncludeImagesForActivityWithObject(object)
+                    } else {
+                        self.getVoteIncludeImagesForActivityWithObject(object)
+                    }
+                } else {
+                    
+                    if (object["suggestionType"]?.isEqualToString("suggest") == true) {
+                        self.getSuggestForActivityWithObject(object)
+                    } else {
+                        self.getVoteForActivityWithObject(object)
+                    }
+                }
+                
+            }
+            
+            // add suggestion object to array
+            suggestions.append(suggestion)
+        }
+        
+        
+        return suggestions
+    }
+    
+    // activity
+    func getSuggestIncludeImagesForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initSuggestForActivity(object)
+    }
+    func getVoteIncludeImagesForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion()
+    }
+    func getSuggestForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion()
+    }
+    func getVoteForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion()
+    }
 }

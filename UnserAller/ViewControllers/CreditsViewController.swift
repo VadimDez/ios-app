@@ -32,6 +32,9 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         self.mainTable.triggerInfiniteScrolling()
     }
+    @IBAction func showMenu(sender: AnyObject) {
+        toggleSideMenuView()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

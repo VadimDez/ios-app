@@ -425,7 +425,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1Ks-7m-LRb">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="Jfi-nt-21h"/>
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="Jfi-nt-21h">
+                            <connections>
+                                <action selector="showMenu:" destination="PlW-xW-eDP" id="pHu-Wg-lfC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mainTable" destination="lOj-xn-0Qh" id="hmJ-b8-cxp"/>
@@ -496,14 +500,53 @@
                             <constraint firstItem="pLr-bC-us5" firstAttribute="leading" secondItem="NFG-ld-A8N" secondAttribute="leadingMargin" constant="-16" id="dxU-xs-Dxp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jSf-bf-7FP"/>
+                    <navigationItem key="navigationItem" id="jSf-bf-7FP">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="3Ml-bl-xkf">
+                            <connections>
+                                <action selector="showMenu:" destination="vmt-R8-DAc" id="1GD-9i-cmu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mainTable" destination="pLr-bC-us5" id="qmY-IY-tgU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYK-7a-JCD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078" y="2090"/>
+            <point key="canvasLocation" x="2078" y="2084"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="8Mm-gY-y7p">
+            <objects>
+                <viewController storyboardIdentifier="Settings" id="nat-xn-Uer" customClass="SettingsViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fIm-0o-vC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="2JM-0t-vlf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AH1-9j-mvr">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="HoX-ta-G98">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2JM-0t-vlf" firstAttribute="top" secondItem="HoX-ta-G98" secondAttribute="bottom" id="26x-Hd-4MU"/>
+                            <constraint firstItem="HoX-ta-G98" firstAttribute="top" secondItem="AH1-9j-mvr" secondAttribute="topMargin" id="Hhm-7z-bPp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HoX-ta-G98" secondAttribute="trailing" constant="-16" id="nX3-H5-qCD"/>
+                            <constraint firstItem="HoX-ta-G98" firstAttribute="leading" secondItem="AH1-9j-mvr" secondAttribute="leadingMargin" constant="-16" id="y9B-RH-Asi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="dog-CS-gmJ">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="hdZ-SW-yOV"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jNC-IB-Vxb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2078" y="3197"/>
         </scene>
         <!--Init Navigation View Controller-->
         <scene sceneID="eTp-Mq-5ie">
@@ -518,11 +561,49 @@
                         <segue destination="PlW-xW-eDP" kind="push" id="55L-Se-fOD"/>
                         <segue destination="sgA-Cv-vta" kind="push" id="X6P-6z-Xaj"/>
                         <segue destination="vmt-R8-DAc" kind="push" id="Qc8-V1-HXr"/>
+                        <segue destination="nat-xn-Uer" kind="push" id="9c2-aB-3jl"/>
+                        <segue destination="ekC-sk-C9m" kind="push" id="mTb-GT-tFk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mf0-FX-2eV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1561" y="448"/>
+        </scene>
+        <!--Activity View Controller-->
+        <scene sceneID="U4l-Uq-zpd">
+            <objects>
+                <viewController storyboardIdentifier="Activity" id="ekC-sk-C9m" customClass="ActivityViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lgi-BG-gko"/>
+                        <viewControllerLayoutGuide type="bottom" id="wn0-8v-KPX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="knM-0R-UgA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tXV-qN-1Rr">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tXV-qN-1Rr" firstAttribute="top" secondItem="knM-0R-UgA" secondAttribute="topMargin" id="AHy-4M-QIA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tXV-qN-1Rr" secondAttribute="trailing" constant="-16" id="D33-pW-wBS"/>
+                            <constraint firstItem="wn0-8v-KPX" firstAttribute="top" secondItem="tXV-qN-1Rr" secondAttribute="bottom" id="aEf-0i-IcI"/>
+                            <constraint firstItem="tXV-qN-1Rr" firstAttribute="leading" secondItem="knM-0R-UgA" secondAttribute="leadingMargin" constant="-16" id="uXt-3P-GeA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4De-VB-L7s">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="IIQ-2r-Oax"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mainTable" destination="tXV-qN-1Rr" id="4PP-Mi-8nP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y0U-c6-Gvi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2078" y="2634"/>
         </scene>
     </scenes>
     <resources>

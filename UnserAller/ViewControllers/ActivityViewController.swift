@@ -1,34 +1,49 @@
 //
-//  ProjectsViewController.swift
+//  ActivityViewController.swift
 //  UnserAller
 //
-//  Created by Vadim Dez on 09/11/14.
+//  Created by Vadim Dez on 17/11/14.
 //  Copyright (c) 2014 Vadym Yatsyuk. All rights reserved.
 //
 
 import UIKit
 import Alamofire
 
-class ProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var mainTable: UITableView!
-    var page: Int = -1
-    var entries: [UAProject] = []
-    var countEntries: Int = 0
+class ActivityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var mainTable: UITableView!
+    var entries: [UASuggestion] = []
+    var countEntries: Int = 0
+    var page: Int = -1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // add infinite load
+        self.mainTable.dataSource = self
+        self.mainTable.delegate = self
+        
+        
+        // register nibs
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
-            // activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
         
-        
-        // take first
         self.mainTable.triggerInfiniteScrolling()
     }
+    
+    @IBAction func showMenu(sender: AnyObject) {
+        toggleSideMenuView()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
     
     override func didMoveToParentViewController(parent: UIViewController?) {
         super.didMoveToParentViewController(parent)
@@ -42,20 +57,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.mainTable.delegate = self
-        self.mainTable.dataSource = self
-    }
     
-
     /*
     // MARK: - Navigation
 
@@ -65,33 +67,26 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         // Pass the selected object to the new view controller.
     }
     */
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.countEntries
     }
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
 
-        var cell:UAProjectCell? = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as? UAProjectCell
-        
-        if (cell == nil) {
-            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UAProjectCell", owner: self, options: nil)
-            
-            cell = nib.objectAtIndex(0) as? UAProjectCell
-        }
-        
-        cell?.setCell(self.entries[indexPath.row])
-        
-        return cell!
+        cell.setCellForHome(self.entries[indexPath.row])
+
+        return cell
+//        return UITableViewCell()
     }
     
     /*
-     * Infite load implementation
-     */
+    * Infite load implementation
+    */
     func infiniteLoad() {
         self.page += 1
         
@@ -100,16 +95,16 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-        }, {() -> Void in
-            println("Projects infinite load error")
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.mainTable.infiniteScrollingView.stopAnimating()
+            }, {() -> Void in
+                println("Activity infinite load error")
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.mainTable.infiniteScrollingView.stopAnimating()
         })
     }
     /*
-     *  Pull to refresh implementation
-     */
+    *  Pull to refresh implementation
+    */
     func refresh() {
         self.page = 0
         self.entries = []
@@ -120,32 +115,30 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-        }, {() -> Void in
-            println("Projects pull to refresh load error")
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.mainTable.pullToRefreshView.stopAnimating()
+            }, {() -> Void in
+                println("Activity pull to refresh load error")
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.mainTable.pullToRefreshView.stopAnimating()
         })
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
-        // url
-        let url: String = "https://\(APIURL)/api/mobile/project/"
-
-        // get entries
+        // /api/mobile/profile/getbookmarks/
+        let url: String = "https://\(APIURL)/api/mobile/profile/getactivity"
+        
         Alamofire.request(.GET, url, parameters: ["page": page])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_, _, JSON, errors) -> Void in
                 if(errors != nil || JSON?.count == 0) {
                     // print error
                     println(errors)
                     // error block
                     error()
                 } else {
-                    let ProjectModelView = UAProjectViewModel()
-                    
+                    let SuggestionViewModel = UASuggestionViewModel()
+
                     // get get objects from JSON
-                    var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as [Dictionary<String, AnyObject>])
-                    
+                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as [Dictionary<String, AnyObject>])
                     // merge two arrays
                     self.entries = self.entries + array
                     self.countEntries = self.entries.count
@@ -153,8 +146,5 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     success()
                 }
         }
-    }
-    @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
     }
 }

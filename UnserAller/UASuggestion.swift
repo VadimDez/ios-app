@@ -378,7 +378,7 @@ class UASuggestion {
     *  Get NSDate from string
     *
     */
-    func getDateFromString(string: NSString) -> NSDate {
+    func getDateFromString(string: String) -> NSDate {
         var formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
@@ -410,5 +410,58 @@ class UASuggestion {
             // add
             self.media.append(mediaObject);
         }
+    }
+    
+    func initSuggestForActivity(jsonObject: AnyObject) -> UASuggestion {
+        // set user name
+        if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            // set suggestion id
+            self.suggestionId = suggestion["id"] as UInt
+            
+            // set user name
+            if let user = suggestion["user"] as? Dictionary<String,String> {
+                let firstname = user["firstname"]
+                let lastname = user["lastname"]
+                
+                self.userName = "\(firstname) \(lastname)"
+            }
+            
+            // set project name
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            
+            // set project id
+            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            
+            // set content
+            self.content = suggestion["suggestion"]?.objectForKey("content") as String
+            
+            // set updated
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            
+        }
+        // set comment count
+        self.commentCount = jsonObject.objectForKey("comments") as UInt
+        
+        // set like count
+        self.likeCount = jsonObject.objectForKey("votes") as Int
+        
+        
+        
+        // set cell type
+        self.cellType = "SuggestionCell"
+
+        return self
+    }
+    
+    /**
+    *  Get value from string
+    *  in case it's null instead 0
+    */
+    func getValueFromString(string: String) -> String {
+        if (string.isEmpty) {
+            return "0"
+        }
+        return string
+        //return [NSString stringWithFormat:@"%@", ([string isKindOfClass:[NSNull class]]) ? @"0" : string];
     }
 }

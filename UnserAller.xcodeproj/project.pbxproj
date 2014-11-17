@@ -10,6 +10,8 @@
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
 		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
+		124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */; };
+		124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C211A1A94E7000A5812 /* ActivityViewController.swift */; };
 		125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
 		126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE221A115A9200E22070 /* BookmarksViewController.swift */; };
 		126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE261A1160E500E22070 /* UABookmarkCell.swift */; };
@@ -103,6 +105,8 @@
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
+		124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
+		124F8C211A1A94E7000A5812 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ViewControllers/ActivityViewController.swift; sourceTree = "<group>"; };
 		126CBE221A115A9200E22070 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarksViewController.swift; path = ViewControllers/BookmarksViewController.swift; sourceTree = "<group>"; };
 		126CBE261A1160E500E22070 /* UABookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UABookmarkCell.swift; path = Views/Cells/UABookmarkCell.swift; sourceTree = "<group>"; };
 		126CBE281A1160FF00E22070 /* UABookmarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UABookmarkCell.xib; sourceTree = "<group>"; };
@@ -207,6 +211,8 @@
 				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
 				126CBE221A115A9200E22070 /* BookmarksViewController.swift */,
 				126CBE2A1A116D2700E22070 /* CreditsViewController.swift */,
+				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
+				124F8C211A1A94E7000A5812 /* ActivityViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 			files = (
 				124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */,
 				D511715219E030D2007675EE /* ENSideMenu.swift in Sources */,
+				124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */,
 				1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */,
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
@@ -557,6 +564,7 @@
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
+				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
 				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
