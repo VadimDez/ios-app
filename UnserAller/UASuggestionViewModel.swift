@@ -114,21 +114,20 @@ class UASuggestionViewModel {
             suggestions.append(suggestion)
         }
         
-        
         return suggestions
     }
     
     // activity
     func getSuggestIncludeImagesForActivityWithObject(object: AnyObject) {
-        suggestion = UASuggestion().initSuggestForActivity(object)
+        suggestion = UASuggestion().initSuggestIncludeImagesForActivity(object)
     }
     func getVoteIncludeImagesForActivityWithObject(object: AnyObject) {
-        suggestion = UASuggestion()
+        suggestion = UASuggestion().initVoteIncludeImagesForActivity(object)
     }
     func getSuggestForActivityWithObject(object: AnyObject) {
-        suggestion = UASuggestion()
+        suggestion = UASuggestion().initSuggestForActivity(object)
     }
     func getVoteForActivityWithObject(object: AnyObject) {
-        suggestion = UASuggestion()
+        suggestion = UASuggestion().initVoteForActivity(object)
     }
 }

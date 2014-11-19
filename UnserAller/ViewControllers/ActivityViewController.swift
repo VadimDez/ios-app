@@ -81,7 +81,24 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         cell.setCellForHome(self.entries[indexPath.row])
 
         return cell
-//        return UITableViewCell()
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let base: CGFloat = 110.0
+        
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = 290
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = entries[indexPath.row].content
+        label.font = UIFont(name: "Helvetica Neue", size: 14)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        return base + label.frame.size.height
     }
     
     /*
