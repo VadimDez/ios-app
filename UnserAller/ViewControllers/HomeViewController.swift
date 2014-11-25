@@ -42,6 +42,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    
+        // register nibs
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             // active activity indicator
@@ -133,8 +140,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
         
+        println("cell is: \(entries[indexPath.row].cellType)")
         if ("SuggestionCell" == entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
+        } else if ("SuggestImageCell" == entries[indexPath.row].cellType) {
+            cell = self.getSuggestImageCellForHome(entries[indexPath.row])
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
             cell.textLabel.text = "\(indexPath.row)"
@@ -148,19 +158,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      *  Get suggestion cell with suggestion object
      */
     func getSuggestCellForHome(suggestion: UASuggestion) -> UASuggestionCell {
-//        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell//UASuggestionCell()
-        
-        var cell:UASuggestionCell? = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as? UASuggestionCell
-        
-        if (cell == nil) {
-            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UASuggestCell", owner: self, options: nil)
-            
-            cell = nib.objectAtIndex(0) as? UASuggestionCell
-        }
-        
-        cell?.setCellForHome(suggestion)
-        
-        return cell!
+        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
+        cell.setCellForHome(suggestion)
+        return cell
+    }
+    
+    func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
+        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        cell.setCellForHome(suggestion)
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -186,7 +192,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
         label.sizeToFit()
         
-        return base + label.frame.size.height
+        var media:CGFloat = 0.0
+        if (entries[indexPath.row].media.count > 0) {
+            media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
+        }
+        
+        return base + label.frame.size.height + media
     }
     
     func getEntries(success:() -> Void, error: () -> Void) {

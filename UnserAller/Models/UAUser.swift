@@ -78,4 +78,22 @@ class UAUser {
     func decode(data: NSData) -> String {
         return NSString(data: data, encoding: NSUTF8StringEncoding)!
     }
+    
+//    func getImage(URLString: String, imageView: UIImageView) {
+//        let request: NSURLRequest = NSURLRequest(URL: NSURL(string: URLString)!)
+//        let getImage: NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+//            if error == nil {
+//                println("Error: \(error.localizedDescription)")
+//            } else {
+//                image = UIImage(data: data)
+//                
+//                // Store the image in to our cache
+//                self.imageCache[urlString] = image
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    imageView.image = image
+//                })
+//            }
+//        })
+//        getImage.resume()
+//    }
 }

@@ -24,7 +24,7 @@ class UASuggestion {
     var deleted: NSDate
     var type: String
     var cellType: String
-    var media: [AnyObject]
+    var media: [UAMedia]
     
     init() {
         self.suggestionId = 0
@@ -292,7 +292,7 @@ class UASuggestion {
         }
         
         // set cell class type
-        self.cellType = "ContainerTableCell";
+        self.cellType = "SuggestImageCell";
         
         // set type
         self.type = "suggestion";
