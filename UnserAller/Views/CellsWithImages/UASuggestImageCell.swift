@@ -115,7 +115,7 @@ class UASuggestImageCell: UITableViewCell, UICollectionViewDataSource, UICollect
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.medias]
-        println("Post")
+
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
     }
 }

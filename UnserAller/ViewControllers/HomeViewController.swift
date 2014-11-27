@@ -234,14 +234,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      * MWPhotoBrowser delegates
      */
     func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        println(self.photos.count)
         return UInt(self.photos.count)
     }
     
     func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        println("here")
         if (Int(index) < self.photos.count) {
-            println("asd")
             return self.photos[Int(index)];
         }
         return nil;
@@ -252,7 +249,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if (!cellData.isEmpty) {
             
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
-                println(medias.count)
+
                 for media: UAMedia in medias {
                     let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
                     self.photos.append(photo)
