@@ -27,6 +27,10 @@ class UASuggestImageCell: UITableViewCell, UICollectionViewDataSource, UICollect
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // register nibs
+        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
+        self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
+        
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
     }
@@ -104,8 +108,14 @@ class UASuggestImageCell: UITableViewCell, UICollectionViewDataSource, UICollect
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        var cell: UICollectionViewCell = UICollectionViewCell()
-//        cell.backgroundColor = UIColor.redColor()
-        return UICollectionViewCell()
+        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as UACollectionViewCell
+        cell.setCell(self.medias[indexPath.row])
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.medias]
+        println("Post")
+        NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
     }
 }

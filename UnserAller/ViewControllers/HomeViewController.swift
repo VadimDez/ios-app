@@ -11,13 +11,14 @@ import UIKit
 import Alamofire
 
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1 // -1 for initial infinite load
     var entries: [UASuggestion] = []
     let maxResponse: UInt = 10
     var countEntries: Int = 0
+    var photos: [MWPhotoObj] = []
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
@@ -62,6 +63,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.mainTable.triggerInfiniteScrolling()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
     }
     override func didMoveToParentViewController(parent: UIViewController?) {
         super.didMoveToParentViewController(parent)
@@ -224,6 +226,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.countEntries = self.entries.count
                 
                 success()
+            }
+        }
+    }
+    
+    /**
+     * MWPhotoBrowser delegates
+     */
+    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
+        println(self.photos.count)
+        return UInt(self.photos.count)
+    }
+    
+    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
+        println("here")
+        if (Int(index) < self.photos.count) {
+            println("asd")
+            return self.photos[Int(index)];
+        }
+        return nil;
+    }
+    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
+        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
+        self.photos = []
+        if (!cellData.isEmpty) {
+            
+            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
+                println(medias.count)
+                for media: UAMedia in medias {
+                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    self.photos.append(photo)
+                }
+
+                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
+
+                browser.showPreviousPhotoAnimated(true)
+                browser.showNextPhotoAnimated(true)
+                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
+                self.navigationController?.pushViewController(browser, animated: false)
             }
         }
     }
