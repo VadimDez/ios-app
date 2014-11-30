@@ -16,6 +16,7 @@ class UASuggestionCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var mainImage: UIImageView!
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0
@@ -47,7 +48,22 @@ class UASuggestionCell: UITableViewCell {
         dateFormatter.dateFormat = "HH:mm dd/MM/yyyy"
         // set date
         self.dateLabel?.text = dateFormatter.stringFromDate(suggestion.updated)
+
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(suggestion.userId)/35/35")!)
+        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            // test
+            if let weakSelf = self {
+                weakSelf.mainImage.image = image
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+                
+        }
         
+        // change shape of image
+        var imageLayer:CALayer = self.mainImage.layer
+        imageLayer.cornerRadius = 20
+        imageLayer.masksToBounds = true
     }
 
 }

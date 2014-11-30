@@ -592,6 +592,7 @@
                 <outlet property="contentLabel" destination="iIr-P9-A1G" id="tg1-fh-ZLg"/>
                 <outlet property="dateLabel" destination="2P6-eq-8pO" id="DpG-qM-3sd"/>
                 <outlet property="likeLabel" destination="rxG-xl-lI4" id="yKD-e8-iow"/>
+                <outlet property="mainImage" destination="EtG-NU-J97" id="Thc-UG-DeN"/>
                 <outlet property="subtitleLabel" destination="ZqH-ru-89H" id="Jag-Ax-vQ5"/>
                 <outlet property="titleLabel" destination="nHh-MP-0KW" id="dPH-Cc-eWr"/>
             </connections>

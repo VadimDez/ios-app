@@ -142,7 +142,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
         
-        println("cell is: \(entries[indexPath.row].cellType)")
         if ("SuggestionCell" == entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
         } else if ("SuggestImageCell" == entries[indexPath.row].cellType) {

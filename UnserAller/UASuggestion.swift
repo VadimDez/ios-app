@@ -426,6 +426,9 @@ class UASuggestion {
                 self.userName += " \(lastname)"
             }
             
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
             // set project name
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
             
@@ -469,6 +472,9 @@ class UASuggestion {
             if let lastname = suggestion["iser"]?.objectForKey("lastname") as? String {
                 self.userName = " \(lastname)"
             }
+            
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
             self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
@@ -516,6 +522,9 @@ class UASuggestion {
                 self.userName = " \(lastname)"
             }
             
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
             // set project id
             self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
             
@@ -527,9 +536,9 @@ class UASuggestion {
             
             // set updated
             self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
-            
+
             // add media
-            if let media = suggestion["suggestionMedia"] as? [AnyObject] {
+            if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }
@@ -547,7 +556,7 @@ class UASuggestion {
         self.type = "suggestionMedia";
         
         // set cell type
-        self.cellType = "UASuggestionWithImageCell";
+        self.cellType = "UASuggestImageCell";
 
         return self
     }
@@ -581,7 +590,7 @@ class UASuggestion {
             self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
             
             // add media
-            if let media = suggestion["suggestionMedia"] as? [AnyObject] {
+            if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }

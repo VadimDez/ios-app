@@ -91,8 +91,7 @@ class UASuggestionViewModel {
             // check if empty
             // TODO: needs to be validated
             if object["suggestion"] != nil {
-                
-                if object["mediaSuggestion"] != nil {
+                if object["suggestion"]?.objectForKey("mediaSuggestion") != nil && object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0 {
                     
                     if (object["suggestionType"]?.isEqualToString("suggest") == true) {
                         self.getSuggestIncludeImagesForActivityWithObject(object)
