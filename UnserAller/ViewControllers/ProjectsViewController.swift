@@ -81,6 +81,9 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
         
+        // set project id
+        projectViewController.projectId = self.entries[indexPath.row].id
+        
         self.navigationController?.pushViewController(projectViewController, animated: true)
     }
     
