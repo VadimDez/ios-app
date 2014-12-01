@@ -60,7 +60,7 @@ class UACreditViewModel: NSObject {
             
             if let projectJSON = object["project"] as? Dictionary<String, AnyObject> {
                 
-                if let projectId = projectJSON["id"] as? Int {
+                if let projectId = projectJSON["id"] as? UInt {
                     credit.project.id = projectId
                 }
                 

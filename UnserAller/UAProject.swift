@@ -10,7 +10,7 @@ import Foundation
 
 class UAProject
 {
-    var id: Int!
+    var id: UInt!
     var name: String!
     var title: String!
     var company: String!
@@ -19,7 +19,7 @@ class UAProject
         
     }
     
-    func initWithParams(id: Int, name: String) {
+    func initWithParams(id: UInt, name: String) {
         self.id = id
         self.name = name
     }

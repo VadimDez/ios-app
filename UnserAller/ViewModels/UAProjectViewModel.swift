@@ -19,7 +19,7 @@ class UAProjectViewModel: NSObject {
             var project: UAProject = UAProject()
             
             // check if has id
-            if let id = object["id"] as? Int {
+            if let id = object["id"] as? UInt {
                 // check if has a name
                 if let name = object["name"] as? String {
                     // set params
@@ -50,7 +50,7 @@ class UAProjectViewModel: NSObject {
     func projectFromJSON(object:Dictionary<String, AnyObject>) -> UAProject {
         var project = UAProject()
         
-        if let id = object["id"] as? Int {
+        if let id = object["id"] as? UInt {
             project.id = id
         }
         if let name = object["name"] as? String {

@@ -17,6 +17,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // nibs
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
 
         // add infinite load
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -63,8 +67,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+    }*/
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.countEntries
@@ -74,19 +78,18 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         return 1
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        
+        self.navigationController?.pushViewController(projectViewController, animated: true)
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
-        var cell:UAProjectCell? = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as? UAProjectCell
+        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
         
-        if (cell == nil) {
-            var nib:NSArray = NSBundle.mainBundle().loadNibNamed("UAProjectCell", owner: self, options: nil)
-            
-            cell = nib.objectAtIndex(0) as? UAProjectCell
-        }
+        cell.setCell(self.entries[indexPath.row])
         
-        cell?.setCell(self.entries[indexPath.row])
-        
-        return cell!
+        return cell
     }
     
     /*

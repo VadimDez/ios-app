@@ -99,6 +99,10 @@
 		D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
 		D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
+		D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780CC1A2B799600CEC181 /* ProjectViewController.swift */; };
+		D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */; };
+		D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59780D41A2B919300CEC181 /* UAPhaseCell.xib */; };
+		D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D61A2B94CE00CEC181 /* UAPhase.swift */; };
 		D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */; };
 		D5BFB9E019E044E6006B03DB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; };
 		D5BFB9E119E044ED006B03DB /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = D5BFB9DD19E044DE006B03DB /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -296,6 +300,10 @@
 		D584D58B197C451300E1CAB3 /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
 		D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
 		D584D595197C47E000E1CAB3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ViewControllers/HomeViewController.swift; sourceTree = "<group>"; };
+		D59780CC1A2B799600CEC181 /* ProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectViewController.swift; path = ViewControllers/ProjectViewController.swift; sourceTree = "<group>"; };
+		D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhaseCell.swift; path = Views/CollectionCells/UAPhaseCell.swift; sourceTree = "<group>"; };
+		D59780D41A2B919300CEC181 /* UAPhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAPhaseCell.xib; path = Views/CollectionCells/UAPhaseCell.xib; sourceTree = "<group>"; };
+		D59780D61A2B94CE00CEC181 /* UAPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhase.swift; path = Models/UAPhase.swift; sourceTree = "<group>"; };
 		D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAMedia.swift; sourceTree = "<group>"; };
 		D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnserAller-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5BFB9D719E044DE006B03DB /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = UnserAller/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
@@ -514,6 +522,7 @@
 				D511715419E034F8007675EE /* MenuTableViewController.swift */,
 				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
 				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
+				D59780CC1A2B799600CEC181 /* ProjectViewController.swift */,
 				126CBE221A115A9200E22070 /* BookmarksViewController.swift */,
 				126CBE2A1A116D2700E22070 /* CreditsViewController.swift */,
 				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
@@ -531,6 +540,7 @@
 				12C528A31A0FD9A100B8A50C /* UAProject.swift */,
 				126CBE2C1A11732300E22070 /* UACredit.swift */,
 				12A172881A19470F000FAA54 /* UACompany.swift */,
+				D59780D61A2B94CE00CEC181 /* UAPhase.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -549,6 +559,7 @@
 		D555CCA519E1CEC200AB0F5F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D59780D11A2B914000CEC181 /* CollectionCells */,
 				D555CCA919E1CEE100AB0F5F /* CellsWithImages */,
 				D555CCA819E1CED300AB0F5F /* Cells */,
 			);
@@ -661,6 +672,15 @@
 				D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */,
 			);
 			name = Transitions;
+			sourceTree = "<group>";
+		};
+		D59780D11A2B914000CEC181 /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */,
+				D59780D41A2B919300CEC181 /* UAPhaseCell.xib */,
+			);
+			name = CollectionCells;
 			sourceTree = "<group>";
 		};
 		D5BFB9D819E044DE006B03DB /* Products */ = {
@@ -818,6 +838,7 @@
 				12AE1BD81A209FD600BFE3D2 /* UACollectionViewCell.xib in Resources */,
 				D581228D197C08B600E3573C /* Main.storyboard in Resources */,
 				D56C462419E04DFC0059735A /* Media.xcassets in Resources */,
+				D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */,
 				12AE1BD41A20881400BFE3D2 /* UASuggestImageCell.xib in Resources */,
 				12172CC61A267B000049DC34 /* LICENSE in Resources */,
 				D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */,
@@ -891,6 +912,7 @@
 				1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */,
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
+				D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */,
 				12172CFC1A2680A40049DC34 /* PSTCollectionView.m in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
 				12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */,
@@ -944,10 +966,12 @@
 				12172D021A2680A40049DC34 /* PSTCollectionViewLayout.m in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
 				12172CCA1A267B000049DC34 /* SDImageCache.m in Sources */,
+				D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */,
 				12172CB31A267B000049DC34 /* MWTapDetectingImageView.m in Sources */,
 				126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */,
 				12172CB61A267B000049DC34 /* DACircularProgressView.m in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
+				D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */,
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
 				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,
 				12172CB21A267B000049DC34 /* MWPhotoBrowser.m in Sources */,
