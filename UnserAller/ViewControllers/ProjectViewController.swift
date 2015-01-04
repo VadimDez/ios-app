@@ -31,6 +31,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     var phasesArray: [UAPhase] = []
     var companyId: UInt = 0
     var bookmarked: Bool = false
+    var stepId: UInt = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +64,47 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.phaseCollection.showsVerticalScrollIndicator = false
         
         //
-        self.loadProject()
+        self.loadProject({ (json) -> Void in
+            // update project info
+            self.updateProjectInfoWithDictionary(json.objectForKey("project") as Dictionary<String, AnyObject>)
+            
+            // get phases
+            self.loadPhases({ () -> Void in
+                
+                // check if there's at least one phase
+                if (self.phasesArray.count > 0) {
+                    // reload collection
+                    self.phaseCollection.reloadData()
+                    
+                    // set first phase as actial one
+                    self.actualPhaseId = self.phasesArray[0].id
+                    
+                    // load phase
+                    self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
+                        //
+                        self.page = 0
+                        // get step id
+                        if let id = jsonResponse.objectForKey("id") as? UInt {
+                            self.stepId = id
+                        }
+                        // get step text
+                        var tempText = ""
+                        if let shortText = jsonResponse.objectForKey("shortText") as? String {
+                            if let text = jsonResponse.objectForKey("text") as? String {
+                                tempText = "\(shortText)\n\n\(text)"
+                            }
+                        }
+                    }, failure: { () -> Void in
+                        
+                    })
+                }
+                
+            }, error: { () -> Void in
+                
+            })
+        }, error: { () -> Void in
+            
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,30 +143,30 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return UIEdgeInsetsMake(0, 0, 0, 0)
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        var cell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-//        cell.backgroundColor = UIColor.redColor()
-//        return cell
-    
         
         var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as UAPhaseCell
-        println(cell)
-        cell.setPhaseName("asd")
-//        cell.setPhaseName(self.entries[indexPath.row - 1].name)
         
-        let totalPhases = self.phasesArray.count
-        if ((totalPhases - indexPath.row) == 0) {
-            // last element
-            cell.lastElement()
-        }
-        if ((totalPhases - indexPath.row + 1) == totalPhases) {
-            // first element
-            cell.firstElement()
+        if (indexPath.row == 0) {
+            cell.setNewsCell()
+        } else {
+            cell.setPhaseName(phasesArray[indexPath.row - 1].name)
+            
+            let totalPhases = self.phasesArray.count
+            if ((totalPhases - indexPath.row) == 0) {
+                // last element
+                cell.lastElement()
+            }
+            if ((totalPhases - indexPath.row + 1) == totalPhases) {
+                // first element
+                cell.firstElement()
+            }
         }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        // +1 for "NEWS"
+        return phasesArray.count + 1
     }
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -143,7 +184,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             frame.size.width = CGFloat(MAXFLOAT)
             var label: UILabel = UILabel(frame: frame)
             
-            label.text = "asd"
+            label.text = self.phasesArray[indexPath.row - 1].name
             label.font = UIFont(name: "Helvetica Neue", size: 14)
             label.numberOfLines = 1
             label.sizeToFit()
@@ -155,7 +196,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return size;
     }
     
-    func loadProject() {
+    /**
+     *  Get project info
+     */
+    func loadProject(success: (json: AnyObject) -> Void, error: () -> Void) {
         // build URL
         let url: String = "https://\(APIURL)/api/mobile/project/get/\(self.projectId)"
         
@@ -165,15 +209,19 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 if(errors != nil || JSON?.count == 0) {
                     // print error
+                    println("load project error")
                     println(errors)
+                    
+                    error()
                 } else {
-                    // update project info
-                    self.updateProjectInfoWithDictionary(JSON?.objectForKey("project") as Dictionary<String, AnyObject>)
+                    success(json: JSON!)
                 }
         }
     }
     
-    // set update project info
+    /**
+     * Set update project info
+     */
     func updateProjectInfoWithDictionary(dictionary: Dictionary<String, AnyObject>) {
         //set the data
         if let company = dictionary["company"] as? Dictionary<String, AnyObject> {
@@ -183,11 +231,16 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         self.projectName.text = dictionary["name"] as? String
         self.navigationItem.title = dictionary["name"] as? String
-
+        
         // project image
-        let imageHash: String = dictionary["image"] as String
+        var imageHash: String = "new"
+        if let img = dictionary["image"] as? String {
+            imageHash = img
+        }
         let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(imageHash)/320/188")!)
+
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            
             // test
             if let weakSelf = self {
                 weakSelf.projectImage.image = image
@@ -203,32 +256,51 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     /**
     *  Load phases
     */
-    func loadPhases() {
+    func loadPhases(success: () -> Void, error: () -> Void) {
+        // build url
+        let url: String = "https://\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
         
-//    NSString *url = [NSString stringWithFormat:@"https://%@/api/mobile/project/getphases/%u",APIIP,_projectId];
-//    //    NSLog(@"%@",self.projectId);
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager GET:url parameters:Nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//    // typecast an array and list its
-//    
-//    //
-//    UAProjectViewModel *projectViewModel = [[UAProjectViewModel alloc] init];
-//    phasesArray     = [projectViewModel getPhasesFromJson:[responseObject objectForKey:@"phases"]];
-//    
-//    _phasesQuantity = [phasesArray count];
-//    actualPhaseId = [[phasesArray objectAtIndex:0] phaseId];
-//    
-//    // reload table
-//    [_phasesList reloadData];
-//    [_phaseCollection reloadData];
-//    
-//    [self loadPhaseInfoWithPhaseId:actualPhaseId WithSuccess:^{
-//    
-//    } failure:^(NSError *error) {
-//    
-//    }];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//    NSLog(@"error: %@",error);
-//    }];
+        // get entries
+        Alamofire.request(.GET, url)
+            .responseJSON { (_,_,JSON,errors) in
+
+                if(errors != nil || JSON?.count == 0) {
+                    // print error
+                    println("Load phases error")
+                    println(errors)
+                    
+                    error()
+                } else {
+                    let projectViewModel: UAProjectViewModel = UAProjectViewModel()
+
+                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as [Dictionary<String, AnyObject>])
+                    self.phasesArray = self.phasesArray + array
+                    
+                    success()
+                }
+        }
+    }
+    
+    /**
+     *  Load phase
+     */
+    func loadPhase(id: UInt, success: (jsonResponse: AnyObject) -> Void, failure: () -> Void) -> Void {
+        // build url
+        let url: String = "https://\(APIURL)/api/mobile/project/getstep/\(id)"
+        
+        // GET
+        Alamofire.request(.GET, url)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    // print error
+                    println("Load phase error")
+                    println(errors)
+                    
+                    failure()
+                } else {
+                    success(jsonResponse: JSON!)
+                }
+        }
     }
 }

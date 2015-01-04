@@ -65,4 +65,29 @@ class UAProjectViewModel: NSObject {
         
         return project
     }
+    
+    /**
+     *  Get object phases array from json
+     */
+    func getPhasesFromJSON(json: [Dictionary<String, AnyObject>]) -> [UAPhase] {
+        var phases: [UAPhase] = []
+        
+        for object in json {
+            var phase: UAPhase = UAPhase()
+            println(object)
+            if let id = object["id"] as? UInt {
+                phase.id = id
+            }
+            if let name = object["name"] as? String {
+                phase.name = name
+            }
+            if let type = object["type"] as? String {
+                phase.type = type
+            }
+            
+            phases.append(phase)
+        }
+        
+        return phases
+    }
 }

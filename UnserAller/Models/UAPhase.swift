@@ -9,11 +9,11 @@
 import Foundation
 
 class UAPhase {
-    var id: UInt
-    var name: String
+    var id: UInt!
+    var name: String!
+    var type: String!
     
-    init(id: UInt, name: String) {
-        self.id = id
-        self.name = name
+    init() {
+        
     }
 }

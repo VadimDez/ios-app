@@ -32,5 +32,15 @@ class UAPhaseCell: UICollectionViewCell {
     func lastElement () {
         self.rightLine.backgroundColor = UIColor.clearColor()
     }
+    
+    /**
+     *  Set news cell
+     */
+    func setNewsCell() {
+        self.setPhaseName("News")
+        self.leftLine.hidden = true
+        self.centerBox.hidden = true
+        self.rightLine.hidden = true
+    }
 
 }
