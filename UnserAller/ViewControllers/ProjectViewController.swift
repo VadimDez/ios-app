@@ -25,13 +25,16 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     
     var projectId: UInt = 0
-    var entries: [UASuggestion] = []
+    var entries: [AnyObject] = []
     var page: UInt = 0
     var actualPhaseId: UInt = 0
     var phasesArray: [UAPhase] = []
     var companyId: UInt = 0
     var bookmarked: Bool = false
     var stepId: UInt = 0
+    var type: String = ""
+    var active: Bool = false
+    var news = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,13 +66,19 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.phaseCollection.showsHorizontalScrollIndicator = false
         self.phaseCollection.showsVerticalScrollIndicator = false
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         //
         self.loadProject({ (json) -> Void in
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             // update project info
             self.updateProjectInfoWithDictionary(json.objectForKey("project") as Dictionary<String, AnyObject>)
             
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             // get phases
             self.loadPhases({ () -> Void in
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
                 
                 // check if there's at least one phase
                 if (self.phasesArray.count > 0) {
@@ -79,21 +88,12 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // set first phase as actial one
                     self.actualPhaseId = self.phasesArray[0].id
                     
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                     // load phase
                     self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-                        //
-                        self.page = 0
-                        // get step id
-                        if let id = jsonResponse.objectForKey("id") as? UInt {
-                            self.stepId = id
-                        }
-                        // get step text
-                        var tempText = ""
-                        if let shortText = jsonResponse.objectForKey("shortText") as? String {
-                            if let text = jsonResponse.objectForKey("text") as? String {
-                                tempText = "\(shortText)\n\n\(text)"
-                            }
-                        }
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        self.updatePhase(jsonResponse)
                     }, failure: { () -> Void in
                         
                     })
@@ -114,14 +114,58 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     
 
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+    *   Update phase info
     */
+    func updatePhase(jsonResponse: AnyObject) {
+        //
+        self.page = 0
+        // get step id
+        if let id = jsonResponse.objectForKey("id") as? UInt {
+            self.stepId = id
+        }
+        
+        // get step text
+        var phaseText = ""
+        if let shortText = jsonResponse.objectForKey("shortText") as? String {
+            phaseText = "\(shortText)"
+        }
+        if let text = jsonResponse.objectForKey("text") as? String {
+            phaseText = "\(phaseText)\(text)asd asd asd asd asd asd asd asd asda sdasd asd"
+        }
+        
+        self.phaseContent.text = phaseText
+        self.adjustTableHeader()
+        
+        // type
+        if let type_ = jsonResponse.objectForKey("type") as? String {
+            self.type = type_
+        }
+        
+        var startDate: String = ""
+        var endDate: String = ""
+        
+        // end date
+        if (!(jsonResponse.objectForKey("endDate") is NSNull)) {
+            endDate = jsonResponse.objectForKey("endDate")?.objectForKey("date") as String!
+        }
+        // start date
+        if let start: AnyObject = jsonResponse.objectForKey("startDate") {
+            startDate = start.objectForKey("date") as String!
+        }
+        // check active
+        self.active = self.checkActive(startDate, end: endDate)
+        
+        // disable or enable posting suggestion
+        self.sendSuggestionBtn.enabled = self.active
+        self.sendSuggestionInput.enabled = self.active
+        
+        self.entries = []
+        self.loadSuggestions({ () -> Void in
+            
+            }, failure: { () -> Void in
+                
+        })
+    }
 
     /**
      *  Table view delegates
@@ -133,7 +177,9 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return self.entries.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        var cell = UITableViewCell()
+        cell.backgroundColor = UIColor.redColor()
+        return cell
     }
     
     /**
@@ -192,8 +238,31 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             size.width = 20.0 + label.frame.width;
         }
-        println(size)
         return size;
+    }
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.row == 0) {
+            // news
+            self.news = true
+            self.entries = []
+            
+            self.loadNews({ () -> Void in
+                self.mainTable.reloadData()
+            })
+            
+        } else {
+            // suggestions
+            self.news = false
+            // set active phase id
+            self.actualPhaseId = self.phasesArray[indexPath.row - 1].id
+            
+            // load phase/step info
+            self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
+                self.updatePhase(jsonResponse)
+            }, failure: { () -> Void in
+                
+            })
+        }
     }
     
     /**
@@ -285,6 +354,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      *  Load phase
      */
     func loadPhase(id: UInt, success: (jsonResponse: AnyObject) -> Void, failure: () -> Void) -> Void {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         // build url
         let url: String = "https://\(APIURL)/api/mobile/project/getstep/\(id)"
         
@@ -297,9 +367,139 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     println("Load phase error")
                     println(errors)
                     
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
                 } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(jsonResponse: JSON!)
+                }
+        }
+    }
+    
+    /**
+    *  Get NSDate from string
+    *
+    */
+    func getDateFromString(string: String) -> NSDate {
+        var formatter:NSDateFormatter = NSDateFormatter()
+        formatter.timeZone = NSTimeZone(name: "Europe/Berlin")
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        return formatter.dateFromString(string)!
+    }
+    
+    /**
+     * Check active
+     *
+     * 3 Cases
+     */
+    func checkActive(start: String, end: String) -> Bool {
+        let endDate: NSDate = (end.isEmpty) ? NSDate(timeIntervalSinceNow: 1000) : self.getDateFromString(end)
+        let startDate: NSDate = self.getDateFromString(start)
+        let now: NSDate = NSDate()
+        
+        if (endDate.compare(now) == NSComparisonResult.OrderedDescending && now.compare(startDate) == NSComparisonResult.OrderedDescending) {
+            // end date is later than now
+            return true
+        } else if (endDate.compare(now) == NSComparisonResult.OrderedAscending || startDate.compare(now) == NSComparisonResult.OrderedAscending) {
+            // endDate is earlier than now
+            return false
+        }
+        // dates are the same
+        return false
+    }
+    
+    /**
+     *  Adjust table view header height
+     *
+     */
+    func adjustTableHeader() {
+        var mainFrame = self.mainTable.tableHeaderView?.frame
+
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = self.phaseContent.frame.width
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = self.phaseContent.text
+        label.font = UIFont(name: "Helvetica Neue", size: 15)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        // set frame height
+        mainFrame?.size.height = label.frame.size.height + 290.0
+        self.mainTable.tableHeaderView?.frame = mainFrame!
+        self.mainTable.tableHeaderView = self.mainTable.tableHeaderView
+    }
+    
+    /**
+     * Load suggestions
+     */
+    func loadSuggestions(success: () -> Void, failure: () -> Void) -> Void {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        // build url
+        let url: String = "https://\(APIURL)/api/mobile/project/suggestions"
+        
+        // GET
+        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "top", "page": self.page])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    // print error
+                    println("Load suggestions error")
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    failure()
+                } else {
+                    let suggestionVM = UASuggestionViewModel()
+                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
+                    
+                    //
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    // reload table data
+                    self.mainTable.reloadData()
+                    
+                    success()
+                }
+        }
+    }
+    
+    /**
+     *  Load project news
+     */
+    func loadNews(success: () -> Void) -> Void {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        // build url
+        let url: String = "https://\(APIURL)/api/mobile/project/getnews"
+        
+        // GET
+        Alamofire.request(.GET, url, parameters: ["id": self.projectId])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    // print error
+                    println("Load project news error")
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                } else {
+                    let newsViewModel = UANewsViewModel()
+                    
+                    // get news
+                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as [Dictionary<String, AnyObject>])
+                    //
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    // reload table data
+                    self.mainTable.reloadData()
+                    
+                    success()
                 }
         }
     }

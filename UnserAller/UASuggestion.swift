@@ -615,6 +615,214 @@ class UASuggestion {
         return self
     }
     
+    // project
+    func initNewsForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
+        // project name
+        if let title = jsonObject.objectForKey("title") as? String {
+            self.projectName = title
+        }
+        // created
+        if let created = jsonObject.objectForKey("created") as? String {
+            self.updated = self.getDateFromString(created)
+        }
+        // content
+        if let content = jsonObject.objectForKey("content") as? String {
+            self.content = content
+        }
+        
+        self.cellType = "NewsCell"
+        
+        return self
+    }
+    func initSuggestForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
+        // set user name
+        if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            // set suggestion id
+            self.suggestionId = suggestion["id"] as UInt
+            
+            // set user name
+            if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
+                self.userName += firstname
+            }
+            if let lastname = suggestion["user"]?.objectForKey("lastname") as? String {
+                self.userName += " \(lastname)"
+            }
+            
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
+            // set project id
+            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            
+            // set content
+            self.content = suggestion["content"] as String
+            
+            // set updated
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            
+        }
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
+            self.commentCount = commentCount
+        }
+        
+        // set like count
+        if let votes = jsonObject.objectForKey("votes") as? Int {
+            self.likeCount = votes
+        }
+        
+        // set cell type
+        self.cellType = "SuggestionCell"
+        
+        return self
+    }
+    
+    func initVoteForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
+        
+        if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String,AnyObject> {
+            
+            // set suggestion id
+            self.suggestionId = suggestion["id"] as UInt
+            
+            // set user name
+            if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
+                self.userName = firstname
+            }
+            if let lastname = suggestion["iser"]?.objectForKey("lastname") as? String {
+                self.userName = " \(lastname)"
+            }
+            
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
+            // set project id
+            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            
+            // set content
+            self.content = suggestion["content"] as String
+            
+            // set updated
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+        }
+        
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
+            self.userVotes = userVotes
+        }
+        
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
+            self.commentCount = commentCount
+        }
+        // set like count
+        if let likeCount = jsonObject.objectForKey("votes") as? Int {
+            self.likeCount = likeCount
+        }
+        
+        // set cell type
+        self.cellType = "VoteSuggestionCell";
+        return self
+    }
+    func initSuggestIncludeImagesForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
+        
+        if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            
+            // set suggestion id
+            self.suggestionId = suggestion["id"] as UInt
+            // set user name
+            if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
+                self.userName = firstname
+            }
+            if let lastname = suggestion["iser"]?.objectForKey("lastname") as? String {
+                self.userName = " \(lastname)"
+            }
+            
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
+            // set project id
+            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            
+            // set content
+            self.content = suggestion["content"] as String
+            
+            // set updated
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            
+            // add media
+            if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
+                self.addMediaToSuggestionWithJSON(media)
+            }
+        }
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
+            self.commentCount = commentCount
+        }
+        // set like count
+        if let likeCount = jsonObject.objectForKey("votes") as? Int {
+            self.likeCount = likeCount
+        }
+        
+        
+        // set type
+        self.type = "suggestionMedia";
+        
+        // set cell type
+        self.cellType = "UASuggestImageCell";
+        
+        return self
+    }
+    func initVoteIncludeImagesForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
+        if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            
+            // set suggestion id
+            self.suggestionId = suggestion["id"] as UInt
+            // set user name
+            if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
+                self.userName = firstname
+            }
+            if let lastname = suggestion["iser"]?.objectForKey("lastname") as? String {
+                self.userName = " \(lastname)"
+            }
+            
+            // set user id
+            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            
+            // set project id
+            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            
+            // set content
+            self.content = suggestion["content"] as String
+            
+            // set updated
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            
+            // add media
+            if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
+                self.addMediaToSuggestionWithJSON(media)
+            }
+        }
+        // set comment count
+        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
+            self.commentCount = commentCount
+        }
+        // set like count
+        if let likeCount = jsonObject.objectForKey("votes") as? Int {
+            self.likeCount = likeCount
+        }
+        // set user votes
+        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
+            self.userVotes = userVotes
+        }
+        // set type
+        self.type = "project";
+        
+        // set cell class type
+        self.cellType = "VoteSuggestionTableCell";
+        
+        return self
+    }
+    
     /**
     *  Get value from string
     *  in case it's null instead 0

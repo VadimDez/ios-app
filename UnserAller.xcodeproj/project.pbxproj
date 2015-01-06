@@ -72,6 +72,8 @@
 		12AE1BD81A209FD600BFE3D2 /* UACollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */; };
 		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
 		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
+		12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */; };
+		12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F111A5C2ABF007CA3B5 /* UANews.swift */; };
 		12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA195C1A1939C000259B68 /* UACreditTests.swift */; };
 		12EA19601A193A7400259B68 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
 		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
@@ -268,6 +270,8 @@
 		12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACollectionViewCell.xib; sourceTree = "<group>"; };
 		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
 		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
+		12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsViewModel.swift; path = ViewModels/UANewsViewModel.swift; sourceTree = "<group>"; };
+		12DF1F111A5C2ABF007CA3B5 /* UANews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANews.swift; path = Models/UANews.swift; sourceTree = "<group>"; };
 		12EA195C1A1939C000259B68 /* UACreditTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditTests.swift; sourceTree = "<group>"; };
 		12FCF4791A11534C008B74AA /* UAProjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectCell.swift; path = Views/Cells/UAProjectCell.swift; sourceTree = "<group>"; };
 		12FCF47D1A11536A008B74AA /* UAProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UAProjectCell.xib; sourceTree = "<group>"; };
@@ -544,6 +548,7 @@
 				126CBE2C1A11732300E22070 /* UACredit.swift */,
 				12A172881A19470F000FAA54 /* UACompany.swift */,
 				D59780D61A2B94CE00CEC181 /* UAPhase.swift */,
+				12DF1F111A5C2ABF007CA3B5 /* UANews.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				D5FE701D19E6F22F00582B84 /* UACellViewModel.swift */,
 				12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */,
 				12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */,
+				12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -931,6 +937,7 @@
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
 				12172CCB1A267B000049DC34 /* SDWebImageCompat.m in Sources */,
 				12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */,
+				12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */,
 				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				12172CC81A267B000049DC34 /* MKAnnotationView+WebCache.m in Sources */,
@@ -947,6 +954,7 @@
 				12172CFF1A2680A40049DC34 /* PSTCollectionViewData.m in Sources */,
 				12172CB71A267B000049DC34 /* MBProgressHUD.m in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
+				12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */,
 				12172D031A2680A40049DC34 /* PSTCollectionViewUpdateItem.m in Sources */,
 				D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */,
 				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
