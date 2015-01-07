@@ -49,6 +49,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
         var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
+        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
         
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -142,13 +144,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
         
-        if ("SuggestionCell" == entries[indexPath.row].cellType) {
+        if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
         } else if ("SuggestImageCell" == entries[indexPath.row].cellType) {
             cell = self.getSuggestImageCellForHome(entries[indexPath.row])
+        } else if ("NewsCell" == self.entries[indexPath.row].cellType) {
+            cell = self.getNewsCellForHome(self.entries[indexPath.row])
         } else {
+            println(self.entries[indexPath.row].cellType)
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "\(indexPath.row)"
+            cell.textLabel?.text = "cell not defined"
         }
         
         return cell
@@ -166,6 +171,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        cell.setCellForHome(suggestion)
+        return cell
+    }
+    
+    /**
+     *  Get news cell without images
+     */
+    func getNewsCellForHome(suggestion: UASuggestion) -> UANewsCell {
+        var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as UANewsCell
         cell.setCellForHome(suggestion)
         return cell
     }
@@ -201,6 +215,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return base + label.frame.size.height + media
     }
     
+    /**
+     *  Get entries
+     */
     func getEntries(success:() -> Void, error: () -> Void) {
         // build URL
         let url: String = "https://\(APIURL)/api/mobile/profile/getwall"

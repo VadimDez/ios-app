@@ -25,7 +25,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     
     var projectId: UInt = 0
-    var entries: [AnyObject] = []
+    var entries: [UACellObject] = []
     var page: UInt = 0
     var actualPhaseId: UInt = 0
     var phasesArray: [UAPhase] = []
@@ -50,6 +50,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         // nib
         var PhaseCellNib = UINib(nibName: "UAPhaseCell", bundle: nil)
         self.phaseCollection.registerNib(PhaseCellNib, forCellWithReuseIdentifier: "UAPhaseCell")
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
+        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
         
         // configure layout
         var flowLayout = UICollectionViewFlowLayout()
@@ -130,7 +134,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             phaseText = "\(shortText)"
         }
         if let text = jsonResponse.objectForKey("text") as? String {
-            phaseText = "\(phaseText)\(text)asd asd asd asd asd asd asd asd asda sdasd asd"
+            phaseText = "\(phaseText)\(text)"
         }
         
         self.phaseContent.text = phaseText
@@ -177,9 +181,63 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return self.entries.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        cell.backgroundColor = UIColor.redColor()
+
+        switch self.entries[indexPath.row].cellType {
+            case "SuggestionCell":      return self.getSuggestCellForRow(indexPath.row)
+            case "UAProjectNewsCell":   return self.getNewsCellForRow(indexPath.row)
+        default: return self.defaultCell()
+        }
+    }
+    
+    /**
+     *  Get suggest cell without images
+     */
+    func getSuggestCellForRow(row: Int) -> UASuggestionCell {
+        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
+        cell.setCellForPhase(self.entries[row] as UASuggestion)
         return cell
+    }
+    
+    /**
+     *
+     */
+    func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
+        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as UAProjectNewsCell
+        cell.setCellForProjectPhase(self.entries[row] as UANews)
+        return cell
+    }
+    
+    func defaultCell() -> UITableViewCell {
+        var cell:UITableViewCell = UITableViewCell()
+        cell.backgroundColor = UIColor.redColor()
+        cell.textLabel?.text = "cell is not defined"
+        return cell
+    }
+    
+    /**
+     * Define height for cell
+     */
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let base: CGFloat = (news) ? 45.0 : 110.0
+        
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = 290
+        frame.size.height = CGFloat(MAXFLOAT)
+        
+        var label: UILabel = UILabel(frame: frame)
+        label.text = self.entries[indexPath.row].content
+        label.font = UIFont(name: "Helvetica Neue", size: 14)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        var media:CGFloat = 0.0
+        if (self.entries[indexPath.row].media.count > 0) {
+            media = 50.0 + CGFloat((self.entries[indexPath.row].media.count/5) * 50)
+        }
+        
+        return base + label.frame.size.height + media
     }
     
     /**

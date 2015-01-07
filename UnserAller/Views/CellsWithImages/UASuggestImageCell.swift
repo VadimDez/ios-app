@@ -8,16 +8,11 @@
 
 import UIKit
 
-class UASuggestImageCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    @IBOutlet weak var mainImage: UIImageView!
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0

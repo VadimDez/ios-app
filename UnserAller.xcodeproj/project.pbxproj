@@ -72,6 +72,12 @@
 		12AE1BD81A209FD600BFE3D2 /* UACollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */; };
 		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
 		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
+		12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD63221A5DBE3900E2EDC4 /* UANewsCell.swift */; };
+		12CD63281A5DBF7700E2EDC4 /* UANewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12CD63271A5DBF7700E2EDC4 /* UANewsCell.xib */; };
+		12CD632A1A5DD37A00E2EDC4 /* UACell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD63291A5DD37A00E2EDC4 /* UACell.swift */; };
+		12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */; };
+		12CD632E1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */; };
+		12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */; };
 		12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */; };
 		12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F111A5C2ABF007CA3B5 /* UANews.swift */; };
 		12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA195C1A1939C000259B68 /* UACreditTests.swift */; };
@@ -270,6 +276,12 @@
 		12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACollectionViewCell.xib; sourceTree = "<group>"; };
 		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
 		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
+		12CD63221A5DBE3900E2EDC4 /* UANewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsCell.swift; path = Views/Cells/UANewsCell.swift; sourceTree = "<group>"; };
+		12CD63271A5DBF7700E2EDC4 /* UANewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UANewsCell.xib; path = Views/Cells/UANewsCell.xib; sourceTree = "<group>"; };
+		12CD63291A5DD37A00E2EDC4 /* UACell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACell.swift; path = Views/Cells/UACell.swift; sourceTree = "<group>"; };
+		12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACellObject.swift; path = Models/UACellObject.swift; sourceTree = "<group>"; };
+		12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectNewsCell.swift; path = Views/Cells/UAProjectNewsCell.swift; sourceTree = "<group>"; };
+		12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAProjectNewsCell.xib; path = Views/Cells/UAProjectNewsCell.xib; sourceTree = "<group>"; };
 		12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsViewModel.swift; path = ViewModels/UANewsViewModel.swift; sourceTree = "<group>"; };
 		12DF1F111A5C2ABF007CA3B5 /* UANews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANews.swift; path = Models/UANews.swift; sourceTree = "<group>"; };
 		12EA195C1A1939C000259B68 /* UACreditTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditTests.swift; sourceTree = "<group>"; };
@@ -549,6 +561,7 @@
 				12A172881A19470F000FAA54 /* UACompany.swift */,
 				D59780D61A2B94CE00CEC181 /* UAPhase.swift */,
 				12DF1F111A5C2ABF007CA3B5 /* UANews.swift */,
+				12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -586,8 +599,11 @@
 				126CBE281A1160FF00E22070 /* UABookmarkCell.xib */,
 				129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */,
 				129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */,
-				12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */,
-				12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */,
+				12CD63221A5DBE3900E2EDC4 /* UANewsCell.swift */,
+				12CD63271A5DBF7700E2EDC4 /* UANewsCell.xib */,
+				12CD63291A5DD37A00E2EDC4 /* UACell.swift */,
+				12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */,
+				12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -688,6 +704,8 @@
 			children = (
 				D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */,
 				D59780D41A2B919300CEC181 /* UAPhaseCell.xib */,
+				12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */,
+				12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */,
 			);
 			name = CollectionCells;
 			sourceTree = "<group>";
@@ -850,12 +868,14 @@
 				D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */,
 				12AE1BD41A20881400BFE3D2 /* UASuggestImageCell.xib in Resources */,
 				12172CC61A267B000049DC34 /* LICENSE in Resources */,
+				12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */,
 				D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */,
 				12172CD81A267B000049DC34 /* MWPhotoBrowser.bundle in Resources */,
 				129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */,
 				D56C462219E04DDE0059735A /* Images.xcassets in Resources */,
 				12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */,
 				126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */,
+				12CD63281A5DBF7700E2EDC4 /* UANewsCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,11 +950,13 @@
 				12172CD51A267B000049DC34 /* UIImageView+HighlightedWebCache.m in Sources */,
 				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
 				12172CD21A267B000049DC34 /* UIImage+GIF.m in Sources */,
+				12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */,
 				12172CCC1A267B000049DC34 /* SDWebImageDecoder.m in Sources */,
 				12172CFB1A2680A40049DC34 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				12172D061A2680A40049DC34 /* PSTGridLayoutRow.m in Sources */,
 				12172D051A2680A40049DC34 /* PSTGridLayoutItem.m in Sources */,
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
+				12CD632A1A5DD37A00E2EDC4 /* UACell.swift in Sources */,
 				12172CCB1A267B000049DC34 /* SDWebImageCompat.m in Sources */,
 				12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */,
 				12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */,
@@ -950,6 +972,7 @@
 				D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */,
 				126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */,
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
+				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
 				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
 				12172CFF1A2680A40049DC34 /* PSTCollectionViewData.m in Sources */,
 				12172CB71A267B000049DC34 /* MBProgressHUD.m in Sources */,
@@ -983,6 +1006,7 @@
 				126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */,
 				12172CB61A267B000049DC34 /* DACircularProgressView.m in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
+				12CD632E1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift in Sources */,
 				D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */,
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
 				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,

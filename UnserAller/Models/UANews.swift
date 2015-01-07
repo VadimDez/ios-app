@@ -8,17 +8,14 @@
 
 import Foundation
 
-class UANews {
+class UANews: UACellObject {
     var id: UInt!
-    var content: String!
     var projectId: Int!
-    var projectName: String!
-    var created: NSDate!
-    var media: [UAMedia]
-    var cellType: String!
+    var title: String!
+    var created: String!
     
-    init() {
-        media = []
+    override init() {
+        super.init()
     }
     
     func initNewsForProjectWithObject(object: AnyObject) -> UANews {
@@ -30,6 +27,17 @@ class UANews {
         if let newsContent = object.objectForKey("content") as? String {
             self.content = newsContent
         }
+        
+        // title
+        if let newsTitle = object.objectForKey("title") as? String {
+            self.title = newsTitle
+        }
+        
+        // created
+        if let newsCreated = object.objectForKey("created") as? String {
+            self.created = newsCreated
+        }
+        
         // set cell type
         self.cellType = "UAProjectNewsCell"
         

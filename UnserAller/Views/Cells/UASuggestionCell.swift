@@ -8,15 +8,10 @@
 
 import UIKit
 
-class UASuggestionCell: UITableViewCell {
-
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+class UASuggestionCell: UACell {
+    
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var mainImage: UIImageView!
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0
@@ -33,6 +28,12 @@ class UASuggestionCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func makeRoundCorners() {
+        var imageLayer:CALayer = self.mainImage.layer
+        imageLayer.cornerRadius = 20
+        imageLayer.masksToBounds = true
+    }
+    
     func setCellForHome(suggestion: UASuggestion) {
         
         self.contentLabel?.text     = suggestion.content
@@ -42,12 +43,7 @@ class UASuggestionCell: UITableViewCell {
         self.commentLabel?.text     = "\(suggestion.commentCount)"
         self.suggestionId           = suggestion.suggestionId
         self.projectId              = suggestion.projectId
-        
-        // date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm dd/MM/yyyy"
-        // set date
-        self.dateLabel?.text = dateFormatter.stringFromDate(suggestion.updated)
+        self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
 
         // load profile image
         let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(suggestion.userId)/35/35")!)
@@ -61,9 +57,31 @@ class UASuggestionCell: UITableViewCell {
         }
         
         // change shape of image
-        var imageLayer:CALayer = self.mainImage.layer
-        imageLayer.cornerRadius = 20
-        imageLayer.masksToBounds = true
+        self.makeRoundCorners()
     }
 
+    func setCellForPhase(suggestion: UASuggestion) {
+        self.contentLabel.text      = suggestion.content
+        self.titleLabel.text        = suggestion.userName
+        self.likeLabel.text         = "\(suggestion.likeCount)"
+        self.commentLabel.text      = "\(suggestion.commentCount)"
+        self.subtitleLabel.text     = self.getStringFromDate(suggestion.updated)
+        self.dateLabel.text         = ""
+        self.suggestionId           = suggestion.suggestionId
+        
+        // change shape of image
+        self.makeRoundCorners()
+        
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(suggestion.userId)/35/35")!)
+        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            // test
+            if let weakSelf = self {
+                weakSelf.mainImage.image = image
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+                
+        }
+        
+    }
 }

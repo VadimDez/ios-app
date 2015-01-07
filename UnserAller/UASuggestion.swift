@@ -8,39 +8,23 @@
 
 import Foundation
 
-class UASuggestion {
+class UASuggestion: UACellObject {
     
     // attributes
-    var suggestionId: UInt
-    var projectId: UInt
-    var likeCount: Int
-    var commentCount: UInt
-    var userId: UInt
-    var userVotes: Int
-    var userName: String
-    var projectName: String
-    var content: String!
-    var updated: NSDate
-    var deleted: NSDate
-    var type: String
-    var cellType: String
-    var media: [UAMedia]
+    var suggestionId: UInt  = 0
+    var projectId: UInt     = 0
+    var likeCount: Int      = 0
+    var commentCount: UInt  = 0
+    var userId: UInt        = 0
+    var userVotes: Int      = 0
+    var userName: String    = ""
+    var projectName: String = ""
+    var updated: NSDate     = NSDate()
+    var deleted: NSDate     = NSDate()
+    var type: String        = ""
     
-    init() {
-        self.suggestionId = 0
-        self.projectId = 0
-        self.likeCount = 0
-        self.commentCount = 0
-        self.userId = 0
-        self.userVotes = 0
-        self.userName = ""
-        self.projectName = ""
-        self.content = ""
-        self.updated = NSDate()
-        self.deleted = NSDate()
-        self.type = ""
-        self.cellType = ""
-        self.media = []
+    override init() {
+        super.init()
     }
     
     
@@ -372,17 +356,6 @@ class UASuggestion {
         }
         
         return self
-    }
-    
-    /**
-    *  Get NSDate from string
-    *
-    */
-    func getDateFromString(string: String) -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        return formatter.dateFromString(string)!
     }
     
     /**
