@@ -51,6 +51,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
         var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
         
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -150,10 +152,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = self.getSuggestImageCellForHome(entries[indexPath.row])
         } else if ("NewsCell" == self.entries[indexPath.row].cellType) {
             cell = self.getNewsCellForHome(self.entries[indexPath.row])
+        } else if ("UASuggestionVoteCell" == self.entries[indexPath.row].cellType) {
+            cell = self.getVoteCellForHome(self.entries[indexPath.row])
         } else {
-            println(self.entries[indexPath.row].cellType)
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "cell not defined"
+            cell.textLabel?.text = "\(self.entries[indexPath.row].cellType) cell not defined"
         }
         
         return cell
@@ -180,6 +183,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      */
     func getNewsCellForHome(suggestion: UASuggestion) -> UANewsCell {
         var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as UANewsCell
+        cell.setCellForHome(suggestion)
+        return cell
+    }
+    
+    /**
+    *  Get suggestion vote cell
+    */
+    func getVoteCellForHome(suggestion: UASuggestion) -> UASuggestionVoteCell {
+        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
         cell.setCellForHome(suggestion)
         return cell
     }

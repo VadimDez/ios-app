@@ -154,7 +154,7 @@ class UASuggestion: UACellObject {
         }
         
         // set cell class type
-        self.cellType = "VoteSuggestionCell";
+        self.cellType = "UASuggestionVoteCell";
         
         return self
     }
@@ -348,7 +348,7 @@ class UASuggestion: UACellObject {
         }
         
         // set cell class type
-        self.cellType = "VoteSuggestionTableCell";
+        self.cellType = "UASuggestionVoteImageCell";
         
         // add media
         if let media = jsonObject.objectForKey("media") as? [AnyObject] {
@@ -477,7 +477,7 @@ class UASuggestion: UACellObject {
         }
         
         // set cell type
-        self.cellType = "VoteSuggestionCell";
+        self.cellType = "UASuggestionVoteCell";
         return self
     }
     
@@ -583,7 +583,7 @@ class UASuggestion: UACellObject {
         self.type = "project";
         
         // set cell class type
-        self.cellType = "VoteSuggestionTableCell";
+        self.cellType = "UASuggestionVoteImageCell";
         
         return self
     }
@@ -693,7 +693,7 @@ class UASuggestion: UACellObject {
         }
         
         // set cell type
-        self.cellType = "VoteSuggestionCell";
+        self.cellType = "UASuggestionVoteCell";
         return self
     }
     func initSuggestIncludeImagesForProjectWithObject(jsonObject: AnyObject) -> UASuggestion {
@@ -791,7 +791,7 @@ class UASuggestion: UACellObject {
         self.type = "project";
         
         // set cell class type
-        self.cellType = "VoteSuggestionTableCell";
+        self.cellType = "UASuggestionVoteImageCell";
         
         return self
     }

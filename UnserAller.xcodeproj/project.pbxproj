@@ -60,6 +60,10 @@
 		126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2A1A116D2700E22070 /* CreditsViewController.swift */; };
 		126CBE2D1A11732300E22070 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
 		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
+		129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */; };
+		129CD1341A613E1E00434D67 /* UASuggestionVoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */; };
+		129CD1361A6140D400434D67 /* UALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD1351A6140D400434D67 /* UALabel.swift */; };
+		129CD13A1A61431F00434D67 /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 129CD1391A61431F00434D67 /* RatingView.m */; };
 		129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */; };
 		129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */; };
 		12A172851A1944DA000FAA54 /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
@@ -266,6 +270,11 @@
 		126CBE2A1A116D2700E22070 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreditsViewController.swift; path = ViewControllers/CreditsViewController.swift; sourceTree = "<group>"; };
 		126CBE2C1A11732300E22070 /* UACredit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACredit.swift; sourceTree = "<group>"; };
 		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
+		129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteCell.swift; path = Views/Cells/UASuggestionVoteCell.swift; sourceTree = "<group>"; };
+		129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteCell.xib; path = Views/Cells/UASuggestionVoteCell.xib; sourceTree = "<group>"; };
+		129CD1351A6140D400434D67 /* UALabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UALabel.swift; sourceTree = "<group>"; };
+		129CD1381A61431F00434D67 /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
+		129CD1391A61431F00434D67 /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
 		129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACreditCell.swift; path = Views/Cells/UACreditCell.swift; sourceTree = "<group>"; };
 		129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACreditCell.xib; sourceTree = "<group>"; };
 		12A172881A19470F000FAA54 /* UACompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACompany.swift; sourceTree = "<group>"; };
@@ -519,15 +528,26 @@
 			name = Locksmith;
 			sourceTree = "<group>";
 		};
+		129CD1371A61431F00434D67 /* RatingView */ = {
+			isa = PBXGroup;
+			children = (
+				129CD1381A61431F00434D67 /* RatingView.h */,
+				129CD1391A61431F00434D67 /* RatingView.m */,
+			);
+			path = RatingView;
+			sourceTree = "<group>";
+		};
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				129CD1371A61431F00434D67 /* RatingView */,
 				12172C4A1A267B000049DC34 /* MWPhotoBrowser */,
 				124B0CCB1A0E7F22005EA92E /* Locksmith */,
 				D5D9E65719E158AE00537FBD /* Keychain */,
 				D511715019E030D2007675EE /* ENSideMenu.swift */,
 				D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */,
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
+				129CD1351A6140D400434D67 /* UALabel.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -604,6 +624,8 @@
 				12CD63291A5DD37A00E2EDC4 /* UACell.swift */,
 				12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */,
 				12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */,
+				129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */,
+				129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -876,6 +898,7 @@
 				12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */,
 				126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */,
 				12CD63281A5DBF7700E2EDC4 /* UANewsCell.xib in Resources */,
+				129CD1341A613E1E00434D67 /* UASuggestionVoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -981,6 +1004,7 @@
 				12172D031A2680A40049DC34 /* PSTCollectionViewUpdateItem.m in Sources */,
 				D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */,
 				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
+				129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */,
 				12172D041A2680A40049DC34 /* PSTGridLayoutInfo.m in Sources */,
 				12172CB11A267B000049DC34 /* MWPhoto.m in Sources */,
 				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
@@ -992,9 +1016,11 @@
 				12172CD41A267B000049DC34 /* UIImage+WebP.m in Sources */,
 				12AE1BD61A209FBE00BFE3D2 /* UACollectionViewCell.swift in Sources */,
 				12172CCD1A267B000049DC34 /* SDWebImageDownloader.m in Sources */,
+				129CD1361A6140D400434D67 /* UALabel.swift in Sources */,
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				12172CD71A267B000049DC34 /* UIView+WebCacheOperation.m in Sources */,
 				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
+				129CD13A1A61431F00434D67 /* RatingView.m in Sources */,
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
 				12172CB41A267B000049DC34 /* MWTapDetectingView.m in Sources */,

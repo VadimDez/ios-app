@@ -16,8 +16,6 @@ class UANewsCell: UACell {
         self.subtitleLabel.text = ""
         
         // make round corners
-        var imageLayer: CALayer = self.mainImage.layer
-        imageLayer.cornerRadius = 20
-        imageLayer.masksToBounds = true
+        self.makeRoundCorners()
     }
 }

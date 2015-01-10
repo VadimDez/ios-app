@@ -28,12 +28,6 @@ class UASuggestionCell: UACell {
         // Configure the view for the selected state
     }
     
-    func makeRoundCorners() {
-        var imageLayer:CALayer = self.mainImage.layer
-        imageLayer.cornerRadius = 20
-        imageLayer.masksToBounds = true
-    }
-    
     func setCellForHome(suggestion: UASuggestion) {
         
         self.contentLabel?.text     = suggestion.content
@@ -46,15 +40,7 @@ class UASuggestionCell: UACell {
         self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
 
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(suggestion.userId)/35/35")!)
-        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-            // test
-            if let weakSelf = self {
-                weakSelf.mainImage.image = image
-            }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
-                
-        }
+        self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
         // change shape of image
         self.makeRoundCorners()
@@ -73,15 +59,7 @@ class UASuggestionCell: UACell {
         self.makeRoundCorners()
         
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(suggestion.userId)/35/35")!)
-        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-            // test
-            if let weakSelf = self {
-                weakSelf.mainImage.image = image
-            }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
-                
-        }
+        self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
     }
 }

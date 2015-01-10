@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate {
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -35,6 +35,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     var type: String = ""
     var active: Bool = false
     var news = false
+    var photos: [MWPhotoObj] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +53,14 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.phaseCollection.registerNib(PhaseCellNib, forCellWithReuseIdentifier: "UAPhaseCell")
         var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
         var UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
         // configure layout
         var flowLayout = UICollectionViewFlowLayout()
@@ -183,9 +190,11 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         switch self.entries[indexPath.row].cellType {
-            case "SuggestionCell":      return self.getSuggestCellForRow(indexPath.row)
-            case "UAProjectNewsCell":   return self.getNewsCellForRow(indexPath.row)
-        default: return self.defaultCell()
+            case "SuggestionCell":          return self.getSuggestCellForRow(indexPath.row)
+            case "UAProjectNewsCell":       return self.getNewsCellForRow(indexPath.row)
+            case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
+            case "UASuggestionVoteCell":    return self.getVoteCellForRow(indexPath.row)
+        default: return self.defaultCell(indexPath.row)
         }
     }
     
@@ -199,7 +208,16 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     /**
-     *
+    *  Get suggest cell with image
+    */
+    func getSuggestImageCellForRow(row: Int) -> UASuggestImageCell {
+        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        return cell
+    }
+    
+    /**
+     *  Get project news cell
      */
     func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
         var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as UAProjectNewsCell
@@ -207,10 +225,19 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    func defaultCell() -> UITableViewCell {
+    /**
+    *  Get suggestion vote cell
+    */
+    func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
+        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        return cell
+    }
+    
+    func defaultCell(row: Int) -> UITableViewCell {
         var cell:UITableViewCell = UITableViewCell()
         cell.backgroundColor = UIColor.redColor()
-        cell.textLabel?.text = "cell is not defined"
+        cell.textLabel?.text = "\(self.entries[row].cellType) cell is not defined"
         return cell
     }
     
@@ -320,6 +347,40 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             }, failure: { () -> Void in
                 
             })
+        }
+    }
+    /**
+    * MWPhotoBrowser delegates
+    */
+    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
+        return UInt(self.photos.count)
+    }
+    
+    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
+        if (Int(index) < self.photos.count) {
+            return self.photos[Int(index)];
+        }
+        return nil;
+    }
+    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
+        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
+        self.photos = []
+        if (!cellData.isEmpty) {
+            
+            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
+                
+                for media: UAMedia in medias {
+                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    self.photos.append(photo)
+                }
+                
+                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
+                
+                browser.showPreviousPhotoAnimated(true)
+                browser.showNextPhotoAnimated(true)
+                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
+                self.navigationController?.pushViewController(browser, animated: false)
+            }
         }
     }
     

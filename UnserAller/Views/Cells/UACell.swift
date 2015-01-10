@@ -33,4 +33,22 @@ class UACell: UITableViewCell {
         return dateFormatter.stringFromDate(date)
     }
 
+    func makeRoundCorners() {
+        var imageLayer:CALayer = self.mainImage.layer
+        imageLayer.cornerRadius = 20
+        imageLayer.masksToBounds = true
+    }
+    
+    func loadMainImage(hash: UInt, width: UInt, height: UInt) {
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")!)
+        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            // test
+            if let weakSelf = self {
+                weakSelf.mainImage.image = image
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+                
+        }
+    }
 }
