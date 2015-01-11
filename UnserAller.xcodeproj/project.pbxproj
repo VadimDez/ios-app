@@ -54,6 +54,7 @@
 		124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */; };
 		124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C211A1A94E7000A5812 /* ActivityViewController.swift */; };
 		125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
+		12620B5D1A6182A800C54124 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12620B5C1A6182A800C54124 /* FloatRatingView.swift */; };
 		126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE221A115A9200E22070 /* BookmarksViewController.swift */; };
 		126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE261A1160E500E22070 /* UABookmarkCell.swift */; };
 		126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126CBE281A1160FF00E22070 /* UABookmarkCell.xib */; };
@@ -63,7 +64,6 @@
 		129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */; };
 		129CD1341A613E1E00434D67 /* UASuggestionVoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */; };
 		129CD1361A6140D400434D67 /* UALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD1351A6140D400434D67 /* UALabel.swift */; };
-		129CD13A1A61431F00434D67 /* RatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 129CD1391A61431F00434D67 /* RatingView.m */; };
 		129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */; };
 		129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */; };
 		12A172851A1944DA000FAA54 /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
@@ -264,6 +264,7 @@
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
 		124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		124F8C211A1A94E7000A5812 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ViewControllers/ActivityViewController.swift; sourceTree = "<group>"; };
+		12620B5C1A6182A800C54124 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		126CBE221A115A9200E22070 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BookmarksViewController.swift; path = ViewControllers/BookmarksViewController.swift; sourceTree = "<group>"; };
 		126CBE261A1160E500E22070 /* UABookmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UABookmarkCell.swift; path = Views/Cells/UABookmarkCell.swift; sourceTree = "<group>"; };
 		126CBE281A1160FF00E22070 /* UABookmarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UABookmarkCell.xib; sourceTree = "<group>"; };
@@ -273,8 +274,6 @@
 		129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteCell.swift; path = Views/Cells/UASuggestionVoteCell.swift; sourceTree = "<group>"; };
 		129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteCell.xib; path = Views/Cells/UASuggestionVoteCell.xib; sourceTree = "<group>"; };
 		129CD1351A6140D400434D67 /* UALabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UALabel.swift; sourceTree = "<group>"; };
-		129CD1381A61431F00434D67 /* RatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingView.h; sourceTree = "<group>"; };
-		129CD1391A61431F00434D67 /* RatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingView.m; sourceTree = "<group>"; };
 		129E9A8A1A19518F00EBF8BF /* UACreditCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACreditCell.swift; path = Views/Cells/UACreditCell.swift; sourceTree = "<group>"; };
 		129E9A8E1A19519D00EBF8BF /* UACreditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACreditCell.xib; sourceTree = "<group>"; };
 		12A172881A19470F000FAA54 /* UACompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACompany.swift; sourceTree = "<group>"; };
@@ -528,19 +527,10 @@
 			name = Locksmith;
 			sourceTree = "<group>";
 		};
-		129CD1371A61431F00434D67 /* RatingView */ = {
-			isa = PBXGroup;
-			children = (
-				129CD1381A61431F00434D67 /* RatingView.h */,
-				129CD1391A61431F00434D67 /* RatingView.m */,
-			);
-			path = RatingView;
-			sourceTree = "<group>";
-		};
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				129CD1371A61431F00434D67 /* RatingView */,
+				12620B5C1A6182A800C54124 /* FloatRatingView.swift */,
 				12172C4A1A267B000049DC34 /* MWPhotoBrowser */,
 				124B0CCB1A0E7F22005EA92E /* Locksmith */,
 				D5D9E65719E158AE00537FBD /* Keychain */,
@@ -980,6 +970,7 @@
 				12172D051A2680A40049DC34 /* PSTGridLayoutItem.m in Sources */,
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
 				12CD632A1A5DD37A00E2EDC4 /* UACell.swift in Sources */,
+				12620B5D1A6182A800C54124 /* FloatRatingView.swift in Sources */,
 				12172CCB1A267B000049DC34 /* SDWebImageCompat.m in Sources */,
 				12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */,
 				12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */,
@@ -1020,7 +1011,6 @@
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				12172CD71A267B000049DC34 /* UIView+WebCacheOperation.m in Sources */,
 				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
-				129CD13A1A61431F00434D67 /* RatingView.m in Sources */,
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
 				12172CB41A267B000049DC34 /* MWTapDetectingView.m in Sources */,

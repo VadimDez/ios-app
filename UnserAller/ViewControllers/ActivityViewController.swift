@@ -9,13 +9,14 @@
 import UIKit
 import Alamofire
 
-class ActivityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate {
+class ActivityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     var entries: [UASuggestion] = []
     var countEntries: Int = 0
     var page: Int = -1
     var photos: [MWPhotoObj] = []
+    var votingDisabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,8 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
         var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
@@ -63,17 +66,8 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     
+    // MARK: - Table Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.countEntries
     }
@@ -81,16 +75,18 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
 
-        if ("SuggestionCell" == entries[indexPath.row].cellType) {
-            cell = self.getSuggestCellForActivity(entries[indexPath.row])
-        } else if ("UASuggestImageCell" == entries[indexPath.row].cellType) {
-            cell = self.getSuggestImageCellForActivity(entries[indexPath.row])
-        } else {
+
+        switch (entries[indexPath.row].cellType) {
+            case "SuggestionCell": return self.getSuggestCellForActivity(self.entries[indexPath.row])
+            case "UASuggestImageCell": return self.getSuggestImageCellForActivity(self.entries[indexPath.row])
+            case "UASuggestionVoteCell": return self.getVoteCellForActivity(indexPath.row)
+        default:
+            var cell: UITableViewCell
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
+            cell.textLabel?.text = "\(entries[indexPath.row].cellType) cell is not defined"
+            return cell
         }
-        return cell
     }
         
     /**
@@ -105,6 +101,15 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     func getSuggestImageCellForActivity(suggestion: UASuggestion) -> UASuggestImageCell {
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
         cell.setCellForHome(suggestion)
+        return cell
+    }
+    
+    func getVoteCellForActivity(row: Int) -> UASuggestionVoteCell {
+        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        cell.ratingView.delegate = self
+        cell.ratingView.editable = false
+        cell.ratingView.tag = row
+        cell.setCellForActivity(self.entries[row])
         return cell
     }
     
@@ -195,9 +200,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    /**
-    * MWPhotoBrowser delegates
-    */
+    // MARK: MWPhotoBrowser delegates
     func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
         return UInt(self.photos.count)
     }
@@ -227,6 +230,40 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
                 browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
                 self.navigationController?.pushViewController(browser, animated: false)
             }
+        }
+    }
+    
+    // MARK: rating delegates
+    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
+        
+    }
+    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
+        
+        if (!self.votingDisabled) {
+//            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+//            let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
+            
+            // disable for a moment
+            self.votingDisabled = true
+            
+            // TODO: check if it's own suggestion before send
+            
+//            self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
+//                
+//                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+//                
+//                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+//                
+                // update only changed row
+                let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+                self.mainTable.beginUpdates()
+                self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                self.mainTable.endUpdates()
+
+                self.votingDisabled = false
+//                }) { () -> Void in
+//                    self.votingDisabled = false
+//            }
         }
     }
 }

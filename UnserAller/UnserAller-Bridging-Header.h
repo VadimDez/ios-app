@@ -20,4 +20,3 @@
 #import "DACircularProgressView.h"
 #import "MBProgressHUD.h"
 #import "PSTCollectionView.h"
-#import "RatingView.h"

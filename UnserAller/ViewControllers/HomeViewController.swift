@@ -11,7 +11,7 @@ import UIKit
 import Alamofire
 
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1 // -1 for initial infinite load
@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let maxResponse: UInt = 10
     var countEntries: Int = 0
     var photos: [MWPhotoObj] = []
+    var votingDisabled = false
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
@@ -137,14 +138,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         toggleSideMenuView()
     }
     
+    // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
         
-        // idk why this happening!
+        // TODO: check why it's empty
         if(self.entries.count == 0) {
             println("accessing with no elements")
             return UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
         }
+        
         
         if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
@@ -153,7 +156,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else if ("NewsCell" == self.entries[indexPath.row].cellType) {
             cell = self.getNewsCellForHome(self.entries[indexPath.row])
         } else if ("UASuggestionVoteCell" == self.entries[indexPath.row].cellType) {
-            cell = self.getVoteCellForHome(self.entries[indexPath.row])
+            cell = self.getVoteCellForHome(self.entries[indexPath.row], row: indexPath.row)
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
             cell.textLabel?.text = "\(self.entries[indexPath.row].cellType) cell not defined"
@@ -190,8 +193,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /**
     *  Get suggestion vote cell
     */
-    func getVoteCellForHome(suggestion: UASuggestion) -> UASuggestionVoteCell {
+    func getVoteCellForHome(suggestion: UASuggestion, row: Int) -> UASuggestionVoteCell {
         var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        
+        // rating delegate 
+        cell.ratingView.delegate = self
+        cell.ratingView.tag = row
         cell.setCellForHome(suggestion)
         return cell
     }
@@ -205,26 +212,31 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = 110.0
+        // TODO: check why it's empty
+        if (self.entries.count > 0) {
+            let base: CGFloat = 110.0
+
+            // count text
+            var frame: CGRect = CGRect()
+            frame.size.width = 290
+            frame.size.height = CGFloat(MAXFLOAT)
+            var label: UILabel = UILabel(frame: frame)
+            
+            label.text = entries[indexPath.row].content
+            label.font = UIFont(name: "Helvetica Neue", size: 14)
+            label.numberOfLines = 0
+            label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            label.sizeToFit()
+            
+            var media:CGFloat = 0.0
+            if (entries[indexPath.row].media.count > 0) {
+                media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
+            }
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = 290
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
-        var media:CGFloat = 0.0
-        if (entries[indexPath.row].media.count > 0) {
-            media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
+            return base + label.frame.size.height + media
+        } else {
+            return 0;
         }
-        
-        return base + label.frame.size.height + media
     }
     
     /**
@@ -258,6 +270,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    // MARK: MWPhotoBrowser delegates
     /**
      * MWPhotoBrowser delegates
      */
@@ -290,6 +303,64 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
                 self.navigationController?.pushViewController(browser, animated: false)
             }
+        }
+    }
+    
+    
+    // MARK: rating delegates
+    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
+        
+    }
+    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
+        
+        if (!self.votingDisabled) {
+            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+            let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
+            
+            // disable for a moment
+            self.votingDisabled = true
+            
+            // TODO: check if it's own suggestion before send
+            
+            self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
+                
+                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                
+                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+                
+                // update only changed row
+                let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+                self.mainTable.beginUpdates()
+                self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                self.mainTable.endUpdates()
+                
+                self.votingDisabled = false
+                }) { () -> Void in
+                    self.votingDisabled = false
+            }
+        }
+    }
+    /**
+     *  Send rating
+     */
+    func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+
+        var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
+
+        Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
+            .responseJSON { (_,_,JSON,errors) in
+
+                if(errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
         }
     }
 }

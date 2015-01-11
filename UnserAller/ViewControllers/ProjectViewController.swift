@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate {
+class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -36,6 +36,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     var active: Bool = false
     var news = false
     var photos: [MWPhotoObj] = []
+    var votingDisabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -230,7 +231,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     */
     func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
         var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        cell.ratingView.delegate = self
+        cell.ratingView.tag = row
         cell.setCellForPhase(self.entries[row] as UASuggestion)
+        println("user votes: \((self.entries[row] as UASuggestion).userVotes)")
         return cell
     }
     
@@ -488,7 +492,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
-                } else {
+                } else {println(JSON)
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(jsonResponse: JSON!)
                 }
@@ -618,6 +622,63 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // reload table data
                     self.mainTable.reloadData()
                     
+                    success()
+                }
+        }
+    }
+    
+    // MARK: rating delegates
+    func floatRatingView(ratingView: FloatRatingView, isUpdating rating:Float) {
+        
+    }
+    func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
+        
+        if (!self.votingDisabled) {
+            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+            let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
+
+            // disable for a moment
+            self.votingDisabled = true
+            
+            // TODO: check if it's own suggestion before send
+            
+            self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
+                
+                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                
+                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+                
+                // update only changed row
+                let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+                self.mainTable.beginUpdates()
+                self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                self.mainTable.endUpdates()
+                
+                self.votingDisabled = false
+                }) { () -> Void in
+                self.votingDisabled = false
+            }
+        }
+    }
+    /**
+    *  Send rating
+    */
+    func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
+        
+        Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
                 }
         }

@@ -23,21 +23,23 @@ class UASuggestionViewModel {
         for object in data {
             // clean
             suggestion = UASuggestion()
-            
+            println(object)
             // check if empty
             // TODO: needs to be validated
             if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
+
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
                 
                 if object["media"] != nil {
                     
-                    if (object["type"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestIncludingImages(object)
                     } else {
                         self.getVoteIncludeImagesWithObject(object)
                     }
                 } else {
                     
-                    if (object["type"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestion(object)
                     } else {
                         self.getVote(object)
@@ -92,16 +94,18 @@ class UASuggestionViewModel {
             // check if empty
             // TODO: needs to be validated
             if object["suggestion"] != nil {
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
+                
                 if object["suggestion"]?.objectForKey("mediaSuggestion") != nil && object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0 {
                     
-                    if (object["suggestionType"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestIncludeImagesForActivityWithObject(object)
                     } else {
                         self.getVoteIncludeImagesForActivityWithObject(object)
                     }
                 } else {
                     
-                    if (object["suggestionType"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestForActivityWithObject(object)
                     } else {
                         self.getVoteForActivityWithObject(object)
