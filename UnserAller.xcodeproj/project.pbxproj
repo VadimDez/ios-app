@@ -49,6 +49,8 @@
 		12172D061A2680A40049DC34 /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172CF81A2680A40049DC34 /* PSTGridLayoutRow.m */; };
 		12172D071A2680A40049DC34 /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172CFA1A2680A40049DC34 /* PSTGridLayoutSection.m */; };
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
+		1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */; };
+		1241E3E21A646E460068678D /* UASuggestionVoteImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */; };
 		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
 		124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */; };
@@ -260,6 +262,8 @@
 		12172CF91A2680A40049DC34 /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
 		12172CFA1A2680A40049DC34 /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteImageCell.swift; path = Views/CellsWithImages/UASuggestionVoteImageCell.swift; sourceTree = "<group>"; };
+		1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteImageCell.xib; path = Views/CellsWithImages/UASuggestionVoteImageCell.xib; sourceTree = "<group>"; };
 		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
 		124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
@@ -625,6 +629,8 @@
 			children = (
 				12AE1BD11A20880200BFE3D2 /* UASuggestImageCell.swift */,
 				12AE1BD31A20881400BFE3D2 /* UASuggestImageCell.xib */,
+				1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */,
+				1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */,
 			);
 			name = CellsWithImages;
 			sourceTree = "<group>";
@@ -887,6 +893,7 @@
 				D56C462219E04DDE0059735A /* Images.xcassets in Resources */,
 				12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */,
 				126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */,
+				1241E3E21A646E460068678D /* UASuggestionVoteImageCell.xib in Resources */,
 				12CD63281A5DBF7700E2EDC4 /* UANewsCell.xib in Resources */,
 				129CD1341A613E1E00434D67 /* UASuggestionVoteCell.xib in Resources */,
 			);
@@ -975,6 +982,7 @@
 				12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */,
 				12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */,
 				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
+				1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				12172CC81A267B000049DC34 /* MKAnnotationView+WebCache.m in Sources */,
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,

@@ -54,6 +54,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
         var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
         
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -157,6 +159,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = self.getNewsCellForHome(self.entries[indexPath.row])
         } else if ("UASuggestionVoteCell" == self.entries[indexPath.row].cellType) {
             cell = self.getVoteCellForHome(self.entries[indexPath.row], row: indexPath.row)
+        } else if ("UASuggestionVoteImageCell" == self.entries[indexPath.row].cellType) {
+            cell = self.getVoteImageCellForHome(indexPath.row)
         } else {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
             cell.textLabel?.text = "\(self.entries[indexPath.row].cellType) cell not defined"
@@ -200,6 +204,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
         cell.setCellForHome(suggestion)
+        return cell
+    }
+    
+    /**
+     *  Get vote image cell
+     */
+    func getVoteImageCellForHome(row: Int) -> UASuggestionVoteImageCell {
+        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        
+        // rating delegate
+        cell.ratingView.delegate = self
+        cell.ratingView.tag = row
+        cell.setCellForHome(self.entries[row])
         return cell
     }
     

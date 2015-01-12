@@ -60,6 +60,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
         var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
@@ -194,7 +196,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             case "SuggestionCell":          return self.getSuggestCellForRow(indexPath.row)
             case "UAProjectNewsCell":       return self.getNewsCellForRow(indexPath.row)
             case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
-            case "UASuggestionVoteCell":    return self.getVoteCellForRow(indexPath.row)
+            case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
+            case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
         default: return self.defaultCell(indexPath.row)
         }
     }
@@ -235,6 +238,17 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.ratingView.tag = row
         cell.setCellForPhase(self.entries[row] as UASuggestion)
         println("user votes: \((self.entries[row] as UASuggestion).userVotes)")
+        return cell
+    }
+    
+    /**
+    *  Get suggestion vote cell
+    */
+    func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
+        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        cell.ratingView.delegate = self
+        cell.ratingView.tag = row
+        cell.setCellForHome(self.entries[row] as UASuggestion)
         return cell
     }
     
@@ -660,6 +674,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
     }
+    
     /**
     *  Send rating
     */
@@ -671,7 +686,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
                     println(errors)
