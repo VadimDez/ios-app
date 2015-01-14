@@ -808,6 +808,47 @@ class UASuggestion: UACellObject {
         return self
     }
     
+    
+    // MARK: SuggestionViewController
+    func getSuggestionFromJSONForSuggestionVC(json: Dictionary<String, AnyObject>) -> UASuggestion {
+        
+        if let _suggestion = json["0"] as? Dictionary<String, AnyObject> {
+            
+            if let _user = _suggestion["user"] as? Dictionary<String, AnyObject> {
+                // user id
+                self.userId = _user["id"] as UInt
+                
+                self.userName = (_user["firstname"] as String) + " " + (_user["lastname"] as String)
+            }
+            
+            self.content = _suggestion["content"] as String
+            
+            if let _media = _suggestion["mediaSuggestion"] as? [Dictionary<String, String>] {
+                self.addMediaToSuggestionWithJSON(_media)
+            }
+            
+            if let _created = _suggestion["created"] as? Dictionary<String, String> {
+                self.updated = self.getDateFromString(_created["date"]!)
+            }
+        }
+        
+        self.type = json["suggestionType"] as String
+        
+        if (!(json["votes"] is NSNull)) {
+            if let _votes: Int = json["votes"] as? Int {
+                self.likeCount = _votes
+            }
+        }
+        
+        if (!(json["userVotes"] is NSNull)) {
+            if let _userVotes: Int = json["userVotes"] as? Int {
+                self.likeCount = _userVotes
+            }
+        }
+        
+        return self
+    }
+    
     /**
     *  Get value from string
     *  in case it's null instead 0

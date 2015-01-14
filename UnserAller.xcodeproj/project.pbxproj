@@ -51,6 +51,7 @@
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
 		1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */; };
 		1241E3E21A646E460068678D /* UASuggestionVoteImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */; };
+		124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124331F81A6703F500B7190A /* UASuggestionViewController.swift */; };
 		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
 		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
 		124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */; };
@@ -264,6 +265,7 @@
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
 		1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteImageCell.swift; path = Views/CellsWithImages/UASuggestionVoteImageCell.swift; sourceTree = "<group>"; };
 		1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteImageCell.xib; path = Views/CellsWithImages/UASuggestionVoteImageCell.xib; sourceTree = "<group>"; };
+		124331F81A6703F500B7190A /* UASuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionViewController.swift; path = ViewControllers/UASuggestionViewController.swift; sourceTree = "<group>"; };
 		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
 		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
 		124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
 				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
 				D59780CC1A2B799600CEC181 /* ProjectViewController.swift */,
+				124331F81A6703F500B7190A /* UASuggestionViewController.swift */,
 				126CBE221A115A9200E22070 /* BookmarksViewController.swift */,
 				126CBE2A1A116D2700E22070 /* CreditsViewController.swift */,
 				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
@@ -962,6 +965,7 @@
 				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
 				D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */,
+				124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */,
 				12172CFC1A2680A40049DC34 /* PSTCollectionView.m in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
 				12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */,

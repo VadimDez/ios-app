@@ -23,7 +23,7 @@ class UASuggestionViewModel {
         for object in data {
             // clean
             suggestion = UASuggestion()
-            println(object)
+
             // check if empty
             // TODO: needs to be validated
             if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {

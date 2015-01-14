@@ -80,6 +80,48 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.phaseCollection.showsHorizontalScrollIndicator = false
         self.phaseCollection.showsVerticalScrollIndicator = false
         
+        self.startLoad { () -> Void in
+            // check if there's at least one phase
+            if (self.phasesArray.count > 0) {
+                // reload collection
+                self.phaseCollection.reloadData()
+                
+                // set first phase as actial one
+                self.actualPhaseId = self.phasesArray[0].id
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                // load phase
+                self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
+                    
+                    self.updatePhase(jsonResponse, success: { () -> Void in
+                        
+                        self.entries = []
+                        self.loadSuggestions({ () -> Void in
+                            
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            }, failure: { () -> Void in
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        })
+                    })
+                    }, failure: { () -> Void in
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                })
+            }
+        }
+        
+        // setup infinite scrolling
+        self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
+            // active activity indicator
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            self.infiniteLoad()
+        }
+    }
+    
+    /**
+     *  Load and update project info, load phases
+     */
+    func startLoad(success: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         //
         self.loadProject({ (json) -> Void in
@@ -93,32 +135,106 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.loadPhases({ () -> Void in
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
+                success()
                 
-                // check if there's at least one phase
-                if (self.phasesArray.count > 0) {
-                    // reload collection
-                    self.phaseCollection.reloadData()
+                }, error: { () -> Void in
                     
-                    // set first phase as actial one
-                    self.actualPhaseId = self.phasesArray[0].id
-                    
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-                    // load phase
-                    self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-                        
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                        self.updatePhase(jsonResponse)
-                    }, failure: { () -> Void in
-                        
-                    })
-                }
-                
+            })
             }, error: { () -> Void in
                 
-            })
-        }, error: { () -> Void in
-            
         })
+    }
+    
+    // MARK: INFINITE LOAD & REFRESH
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        super.didMoveToParentViewController(parent)
+        
+        if (self.mainTable.pullToRefreshView == nil) {
+            // setup pull to refresh
+            self.mainTable.addPullToRefreshWithActionHandler { () -> Void in
+                
+                // active activity indicator
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                self.refresh()
+            }
+        }
+    }
+    
+    func refresh() {
+        self.page = 0
+        
+        self.startLoad { () -> Void in
+            if (!self.news) {
+                
+                // load phase
+                self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
+                    
+                        self.updatePhase(jsonResponse, success: { () -> Void in
+                            self.entries = []
+                            self.loadSuggestions({ () -> Void in
+                                
+                                self.mainTable.pullToRefreshView.stopAnimating()
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            }, failure: { () -> Void in
+                                
+                                self.mainTable.pullToRefreshView.stopAnimating()
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            })
+                        })
+                    }, failure: { () -> Void in
+                        
+                })
+                
+                
+            } else {
+                self.loadNews({ () -> Void in
+                    self.mainTable.reloadData()
+                    
+                    self.mainTable.pullToRefreshView.stopAnimating()
+                    
+                    // active activity indicator
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                })
+            }
+        }
+        
+    }
+    
+    /**
+    *  Load next page
+    */
+    func infiniteLoad() {
+        // increment page
+        self.page += 1
+        
+        if (!self.news) {
+            self.loadSuggestions({ () -> Void in
+                // reload data
+                self.mainTable.reloadData()
+                
+                self.mainTable.infiniteScrollingView.stopAnimating()
+                
+                // active activity indicator
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                }, failure: { () -> Void in
+                    println("Project infiniteload error")
+                    
+                    self.mainTable.infiniteScrollingView.stopAnimating()
+                    // active activity indicator
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            })
+        } else {
+            self.loadNews({ () -> Void in
+                self.mainTable.reloadData()
+                
+                self.mainTable.pullToRefreshView.stopAnimating()
+                
+                // active activity indicator
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,7 +246,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     /*
     *   Update phase info
     */
-    func updatePhase(jsonResponse: AnyObject) {
+    func updatePhase(jsonResponse: AnyObject, success:() -> Void) {
         //
         self.page = 0
         // get step id
@@ -173,22 +289,24 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.sendSuggestionBtn.enabled = self.active
         self.sendSuggestionInput.enabled = self.active
         
-        self.entries = []
-        self.loadSuggestions({ () -> Void in
-            
-            }, failure: { () -> Void in
-                
-        })
+        success()
     }
 
     /**
-     *  Table view delegates
+     *  MARK: Table view delegates
      */
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.entries.count
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
+        
+        self.navigationController?.pushViewController(suggestionVC, animated: true)
+        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
@@ -198,8 +316,9 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
             case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
             case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
-        default: return self.defaultCell(indexPath.row)
+        default: break;
         }
+        return self.defaultCell(indexPath.row)
     }
     
     /**
@@ -237,7 +356,6 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
         cell.setCellForPhase(self.entries[row] as UASuggestion)
-        println("user votes: \((self.entries[row] as UASuggestion).userVotes)")
         return cell
     }
     
@@ -264,6 +382,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = (news) ? 45.0 : 110.0
+        
+        if (self.entries.count == 0) {
+            return base
+        }
         
         // count text
         var frame: CGRect = CGRect()
@@ -361,7 +483,15 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-                self.updatePhase(jsonResponse)
+                self.updatePhase(jsonResponse, success: { () -> Void in
+                    
+                    self.entries = []
+                    self.loadSuggestions({ () -> Void in
+                        
+                        }, failure: { () -> Void in
+                            
+                    })
+                })
             }, failure: { () -> Void in
                 
             })
@@ -506,7 +636,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
-                } else {println(JSON)
+                } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(jsonResponse: JSON!)
                 }
@@ -616,7 +746,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         let url: String = "https://\(APIURL)/api/mobile/project/getnews"
         
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId])
+        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
@@ -689,6 +819,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if (errors != nil) {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
+                    println("send rating error")
                     println(errors)
                     // error block
                     failure()

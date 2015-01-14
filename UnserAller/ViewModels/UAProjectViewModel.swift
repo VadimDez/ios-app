@@ -74,7 +74,7 @@ class UAProjectViewModel: NSObject {
         
         for object in json {
             var phase: UAPhase = UAPhase()
-            println(object)
+
             if let id = object["id"] as? UInt {
                 phase.id = id
             }
