@@ -10,7 +10,7 @@ import UIKit
 
 class UANewsCell: UACell {
     
-    func setCellForHome(suggestion: UASuggestion) { println(suggestion)
+    func setCellForHome(suggestion: UASuggestion) {
         self.titleLabel.text = suggestion.projectName
         self.contentLabel.text = suggestion.content
         self.subtitleLabel.text = ""

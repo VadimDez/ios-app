@@ -43,11 +43,9 @@ class UASuggestion: UACellObject {
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content
         }
-
+        
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? UInt {
-            self.projectId = projectId
-        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
 
         // set like count
         if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
@@ -96,7 +94,7 @@ class UASuggestion: UACellObject {
     }
     
     func initVote(jsonObject: AnyObject) -> UASuggestion {
-        println(jsonObject)
+        
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set id
@@ -145,9 +143,7 @@ class UASuggestion: UACellObject {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? UInt {
-            self.projectId = projectId
-        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
@@ -198,9 +194,7 @@ class UASuggestion: UACellObject {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? UInt {
-            self.projectId = projectId
-        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
@@ -237,9 +231,7 @@ class UASuggestion: UACellObject {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? UInt {
-            self.projectId = projectId
-        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set like count
         if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
@@ -309,9 +301,7 @@ class UASuggestion: UACellObject {
         }
         
         // set project id
-        if let projectId = jsonObject.objectForKey("project") as? UInt {
-            self.projectId = projectId
-        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set like count
         if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
@@ -364,33 +354,6 @@ class UASuggestion: UACellObject {
         return self
     }
     
-    /**
-    *  Add media object in media array
-    */
-    func addMediaToSuggestionWithJSON(json: [AnyObject]) {
-        self.media = []
-        
-        for object in json {
-            var mediaObject: UAMedia = UAMedia()
-    
-            // set height
-            if let height = object.objectForKey("height") as? UInt {
-                mediaObject.height = height
-            }
-            
-            if let width = object.objectForKey("width") as? UInt {
-                mediaObject.width = width
-            }
-            
-            if let hash = object.objectForKey("hash") as? NSString {
-                mediaObject.hash = hash
-            }
-    
-            // add
-            self.media.append(mediaObject);
-        }
-    }
-    
     func initSuggestForActivity(jsonObject: AnyObject) -> UASuggestion {
         // set user name
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
@@ -412,7 +375,7 @@ class UASuggestion: UACellObject {
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
             self.content = suggestion["content"] as String
@@ -456,7 +419,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
@@ -507,7 +470,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
@@ -559,7 +522,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
@@ -633,7 +596,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
             self.content = suggestion["content"] as String
@@ -677,7 +640,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
             self.content = suggestion["content"] as String
@@ -726,7 +689,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
             self.content = suggestion["content"] as String
@@ -774,7 +737,7 @@ class UASuggestion: UACellObject {
             self.userId = suggestion["user"]?.objectForKey("id") as UInt
             
             // set project id
-            self.projectId = suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as UInt
+            self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
             self.content = suggestion["content"] as String
@@ -831,6 +794,16 @@ class UASuggestion: UACellObject {
                 self.updated = self.getDateFromString(_created["date"]!)
             }
         }
+        
+        // set project id
+//        if (!(json["project"] is NSNull)) {
+//            if let _projectId = json["project"] as? UInt {
+//                self.projectId = _projectId
+//            }
+//        }
+        
+        // set project name
+//        self.projectName = json["projectName"] as String
         
         self.type = json["suggestionType"] as String
         

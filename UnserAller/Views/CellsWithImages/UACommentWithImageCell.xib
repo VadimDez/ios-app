@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="UACommentWithImageCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="UACommentWithImageCell" rowHeight="124" id="dUc-To-GCa" customClass="UACommentWithImageCell" customModule="UnserAller" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dUc-To-GCa" id="5Me-mn-X00">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ql-HD-R26" customClass="CSAnimationView">
+                        <rect key="frame" x="0.0" y="1" width="320" height="122"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ku0-ke-eRy" userLabel="mainImage">
+                                <rect key="frame" x="6" y="6" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1lV-2I-jCw"/>
+                                    <constraint firstAttribute="width" constant="40" id="ZDF-5B-Lnm"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRp-Ho-bNi" userLabel="titleLabel">
+                                <rect key="frame" x="54" y="6" width="255" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="St7-6I-pFF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="EBA-va-PLL" userLabel="dateLabel">
+                                <rect key="frame" x="54" y="28" width="255" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="CCn-Iy-amW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKg-zK-rHg" userLabel="content" customClass="UALabel" customModule="UnserAller" customModuleProvider="target">
+                                <rect key="frame" x="54" y="48" width="258" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="jGo-a3-zjh">
+                                <rect key="frame" x="54" y="65" width="258" height="50"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="0DQ-V6-JkF">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="eRp-Ho-bNi" secondAttribute="trailing" constant="11" id="4Ms-ZL-eRe"/>
+                            <constraint firstItem="jGo-a3-zjh" firstAttribute="top" secondItem="mKg-zK-rHg" secondAttribute="bottom" constant="1" id="6Rz-ag-Rk0"/>
+                            <constraint firstAttribute="trailing" secondItem="mKg-zK-rHg" secondAttribute="trailing" constant="8" id="6oq-Up-xuZ"/>
+                            <constraint firstItem="ku0-ke-eRy" firstAttribute="leading" secondItem="5ql-HD-R26" secondAttribute="leading" constant="6" id="A68-nK-hW4"/>
+                            <constraint firstItem="EBA-va-PLL" firstAttribute="top" secondItem="eRp-Ho-bNi" secondAttribute="bottom" constant="1" id="AFo-UG-NHU"/>
+                            <constraint firstItem="ku0-ke-eRy" firstAttribute="top" secondItem="5ql-HD-R26" secondAttribute="top" constant="6" id="HFA-IJ-Rm0"/>
+                            <constraint firstItem="mKg-zK-rHg" firstAttribute="top" secondItem="EBA-va-PLL" secondAttribute="bottom" constant="3" id="JNw-G3-2FH"/>
+                            <constraint firstItem="EBA-va-PLL" firstAttribute="leading" secondItem="ku0-ke-eRy" secondAttribute="trailing" constant="8" id="NBJ-Se-XZx"/>
+                            <constraint firstItem="jGo-a3-zjh" firstAttribute="leading" secondItem="5ql-HD-R26" secondAttribute="leading" constant="54" id="XDv-yC-mCl"/>
+                            <constraint firstItem="mKg-zK-rHg" firstAttribute="leading" secondItem="5ql-HD-R26" secondAttribute="leading" constant="54" id="XV8-A4-Bvh"/>
+                            <constraint firstAttribute="trailing" secondItem="EBA-va-PLL" secondAttribute="trailing" constant="11" id="fZ7-9H-cUC"/>
+                            <constraint firstAttribute="trailing" secondItem="jGo-a3-zjh" secondAttribute="trailing" constant="8" id="kcJ-gs-RSv"/>
+                            <constraint firstItem="eRp-Ho-bNi" firstAttribute="leading" secondItem="ku0-ke-eRy" secondAttribute="trailing" constant="8" id="uui-SD-OeG"/>
+                            <constraint firstAttribute="bottom" secondItem="jGo-a3-zjh" secondAttribute="bottom" constant="7" id="wGA-mo-UTi"/>
+                            <constraint firstItem="eRp-Ho-bNi" firstAttribute="top" secondItem="5ql-HD-R26" secondAttribute="top" constant="6" id="x8i-gs-3B1"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="type" value="fadeIn"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="5ql-HD-R26" firstAttribute="leading" secondItem="5Me-mn-X00" secondAttribute="leadingMargin" constant="-8" id="0SK-ZS-FxB"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="5ql-HD-R26" secondAttribute="trailing" constant="-8" id="TOC-ek-to9"/>
+                    <constraint firstItem="5ql-HD-R26" firstAttribute="top" secondItem="5Me-mn-X00" secondAttribute="topMargin" constant="-7" id="TfP-8k-cj9"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="5ql-HD-R26" secondAttribute="bottom" constant="-8" id="WNI-Qq-I8U"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentLabel" destination="mKg-zK-rHg" id="S8t-N2-0uH"/>
+                <outlet property="dateLabel" destination="EBA-va-PLL" id="3ly-86-swv"/>
+                <outlet property="imageCollectionView" destination="jGo-a3-zjh" id="KN5-G1-6bR"/>
+                <outlet property="mainImage" destination="ku0-ke-eRy" id="J7l-6l-wpr"/>
+                <outlet property="titleLabel" destination="eRp-Ho-bNi" id="Yen-05-27B"/>
+            </connections>
+            <point key="canvasLocation" x="373" y="409"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -594,7 +594,6 @@
         <!--Suggestion View Controller-->
         <scene sceneID="Qep-4P-AhJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KgJ-KX-P4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SuggestionVC" id="oe3-zW-hZP" customClass="UASuggestionViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MMg-vi-Yik"/>
@@ -621,6 +620,7 @@
                         <outlet property="mainTable" destination="ABQ-en-PYB" id="GVH-xZ-7fa"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KgJ-KX-P4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2854" y="1010"/>
         </scene>

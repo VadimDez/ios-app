@@ -43,19 +43,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     
         // register nibs
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
-        var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
-        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
-        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
+        self.registerNibs()
         
         // setup infinite scrolling
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -72,6 +62,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
     }
+    
+    func registerNibs() {
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
+        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
+    }
+    
     override func didMoveToParentViewController(parent: UIViewController?) {
         super.didMoveToParentViewController(parent)
         
@@ -254,6 +258,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         } else {
             return 0;
         }
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
+        
+        self.navigationController?.pushViewController(suggestionVC, animated: true)
+        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
     /**

@@ -23,11 +23,18 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         super.awakeFromNib()
         
         // register nibs
-        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
-        self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
+        self.registerNibs()
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+    }
+    
+    /**
+    Register all nibs
+    */
+    func registerNibs() {
+        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
+        self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

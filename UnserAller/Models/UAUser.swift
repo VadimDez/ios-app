@@ -11,20 +11,25 @@ import Foundation
 import Alamofire
 
 class UAUser {
-    var userId: Int!
-    var fullname: String!
+    var id: UInt!
+    var fullName: String!
     var profileImageURL: String!
     var profileImageView: UIImageView!
     
-    func initWithParams(usrId: Int, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
-        userId = usrId
-        fullname = usrFullname
-        profileImageURL = usrProfileImageUrl
-        profileImageView = usrProfileImageView
+    func initWithParams(id: UInt, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
+        self.id = id
+        self.fullName = usrFullname
+        self.profileImageURL = usrProfileImageUrl
+        self.profileImageView = usrProfileImageView
     }
     
     init() {
     
+    }
+    
+    init(id: UInt, fullName: String) {
+        self.id = id
+        self.fullName = fullName
     }
     
     /**

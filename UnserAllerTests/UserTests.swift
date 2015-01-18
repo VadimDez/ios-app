@@ -23,14 +23,14 @@ class UserTests: XCTestCase {
     
     func testUserInitWithParams() {
         var user: UAUser = UAUser()
-        let id = 1
+        let id: UInt = 1
         let fullname = "First last"
         let profileImageURL = "profileImageURL"
         let profileImageView = UIImageView()
         
         user.initWithParams(id, usrFullname: fullname, usrProfileImageUrl: profileImageURL, usrProfileImageView: profileImageView)
         
-        XCTAssertTrue((user.userId == id && user.fullname == fullname && user.profileImageURL == profileImageURL), "test initWithParams")
+        XCTAssertTrue((user.id == id && user.fullName == fullname && user.profileImageURL == profileImageURL), "test initWithParams")
     }
     
     func testCheckStringsWithSpace() {
