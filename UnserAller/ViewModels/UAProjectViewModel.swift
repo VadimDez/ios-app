@@ -49,6 +49,7 @@ class UAProjectViewModel: NSObject {
     
     func projectFromJSON(object:Dictionary<String, AnyObject>) -> UAProject {
         var project = UAProject()
+        project.company = UACompany()
         
         if let id = object["id"] as? UInt {
             project.id = id
@@ -60,7 +61,7 @@ class UAProjectViewModel: NSObject {
             project.title = title
         }
         if let company = object["company"] as? String {
-            project.company = company
+            project.company.name = company
         }
         
         return project
@@ -89,5 +90,42 @@ class UAProjectViewModel: NSObject {
         }
         
         return phases
+    }
+    
+    /**
+    Get project object for project view controller
+    
+    :param: json - Json
+    
+    :returns: UAProject object
+    */
+    func getProjectForProject(json: Dictionary<String, AnyObject>) -> UAProject {
+        var project = UAProject()
+        
+        // set id
+        project.id = json["id"] as UInt
+        
+        // set name
+        project.name = json["name"] as? String
+        
+        // set image hash
+        if let img = json["image"] as? String {
+            project.imageHash = img
+        }
+        
+        // set bookmarked value
+        project.bookmarked = ((json["bookmarked"] as? Int) == 1)
+        
+        // closed community
+        project.closedCommunity = ((json["closedCommunity"] as? Int) == 1)
+        
+        // set company
+        project.company = UACompany()
+        if let company = json["company"] as? Dictionary<String, AnyObject> {
+            project.company.id = company["id"] as UInt
+            project.company.name = company["name"] as? String
+        }
+        
+        return project
     }
 }

@@ -157,7 +157,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
-        } else if ("SuggestImageCell" == entries[indexPath.row].cellType) {
+        } else if ("UASuggestImageCell" == entries[indexPath.row].cellType) {
             cell = self.getSuggestImageCellForHome(entries[indexPath.row])
         } else if ("NewsCell" == self.entries[indexPath.row].cellType) {
             cell = self.getNewsCellForHome(self.entries[indexPath.row])
@@ -312,6 +312,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         return nil;
     }
+    
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
         let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
         self.photos = []

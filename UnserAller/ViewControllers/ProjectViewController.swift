@@ -23,14 +23,12 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var bookmarkImage: UIImageView!
 
-    
+    var project: UAProject!
     var projectId: UInt = 0
     var entries: [UACellObject] = []
     var page: UInt = 0
     var actualPhaseId: UInt = 0
     var phasesArray: [UAPhase] = []
-    var companyId: UInt = 0
-    var bookmarked: Bool = false
     var stepId: UInt = 0
     var type: String = ""
     var active: Bool = false
@@ -41,44 +39,14 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // table delegates & data source
-        self.mainTable.delegate = self
-        self.mainTable.dataSource = self
-        
-        // collection dalegate & data source
-        self.phaseCollection.delegate = self
-        self.phaseCollection.dataSource = self
-        
+        self.setDelegates()
         // nib
-        var PhaseCellNib = UINib(nibName: "UAPhaseCell", bundle: nil)
-        self.phaseCollection.registerNib(PhaseCellNib, forCellWithReuseIdentifier: "UAPhaseCell")
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
-        var UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
-        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
-        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
+        self.registerNibs()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
-        // configure layout
-        var flowLayout = UICollectionViewFlowLayout()
-
-        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        flowLayout.itemSize = CGSize(width: 320, height: 50)// CGSizeMake(320, 50)
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        flowLayout.minimumInteritemSpacing = 0
-        flowLayout.minimumLineSpacing = 0
+        self.configureLayout()
         
-        self.flowLayout = flowLayout
-        self.phaseCollection.collectionViewLayout = flowLayout
-        self.phaseCollection.bounces = true
-        self.phaseCollection.showsHorizontalScrollIndicator = false
-        self.phaseCollection.showsVerticalScrollIndicator = false
         
         self.startLoad { () -> Void in
             // check if there's at least one phase
@@ -119,6 +87,58 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     /**
+    Set delegates and datasources
+    */
+    func setDelegates() {
+        // table delegates & data source
+        self.mainTable.delegate = self
+        self.mainTable.dataSource = self
+        
+        // collection dalegate & data source
+        self.phaseCollection.delegate = self
+        self.phaseCollection.dataSource = self
+    }
+    
+    /**
+    Register all nibs
+    */
+    func registerNibs() {
+        var PhaseCellNib = UINib(nibName: "UAPhaseCell", bundle: nil)
+        self.phaseCollection.registerNib(PhaseCellNib, forCellWithReuseIdentifier: "UAPhaseCell")
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        var UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
+        self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
+
+    }
+    
+    /**
+    Configure layour for phases collection view
+    */
+    func configureLayout() {
+        // configure layout
+        var flowLayout = UICollectionViewFlowLayout()
+        
+        flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        flowLayout.itemSize = CGSize(width: 320, height: 50)// CGSizeMake(320, 50)
+        flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.minimumLineSpacing = 0
+        
+        self.flowLayout = flowLayout
+        self.phaseCollection.collectionViewLayout = flowLayout
+        self.phaseCollection.bounces = true
+        self.phaseCollection.showsHorizontalScrollIndicator = false
+        self.phaseCollection.showsVerticalScrollIndicator = false
+    }
+    
+    /**
      *  Load and update project info, load phases
      */
     func startLoad(success: () -> Void) {
@@ -126,8 +146,12 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         //
         self.loadProject({ (json) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            let projectViewModel = UAProjectViewModel()
+            self.project = projectViewModel.getProjectForProject(json.objectForKey("project") as Dictionary<String, AnyObject>)
+            
             // update project info
-            self.updateProjectInfoWithDictionary(json.objectForKey("project") as Dictionary<String, AnyObject>)
+            self.updateProjectInfo()
             
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -558,22 +582,13 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     /**
      * Set update project info
      */
-    func updateProjectInfoWithDictionary(dictionary: Dictionary<String, AnyObject>) {
-        //set the data
-        if let company = dictionary["company"] as? Dictionary<String, AnyObject> {
-            self.companyId = company["id"] as UInt
+    func updateProjectInfo() {
             
-            self.projectCompanyName.setTitle(company["name"] as? String, forState: UIControlState.Normal)
-        }
-        self.projectName.text = dictionary["name"] as? String
-        self.navigationItem.title = dictionary["name"] as? String
+        self.projectCompanyName.setTitle(self.project.company.name, forState: UIControlState.Normal)
+        self.projectName.text = self.project.name
+        self.navigationItem.title = self.project.name
         
-        // project image
-        var imageHash: String = "new"
-        if let img = dictionary["image"] as? String {
-            imageHash = img
-        }
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(imageHash)/320/188")!)
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
 
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
@@ -585,8 +600,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         // bookmark
-        self.bookmarked = dictionary["bookmarked"] as Bool
-        self.bookmarkImage.image = UIImage(named: "bookmark_32")?.tintedImageWithColor((self.bookmarked) ? UIColor.redColor() : UIColor.grayColor(), blendMode: kCGBlendModeHue)
+        self.bookmarkImage.image = UIImage(named: "bookmark_32")?.tintedImageWithColor((self.project.bookmarked) ? UIColor.redColor() : UIColor.grayColor(), blendMode: kCGBlendModeHue)
     }
     
     /**
@@ -828,5 +842,16 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     success()
                 }
         }
+    }
+    
+    /**
+    On company button pressed
+    
+    :param: sender
+    */
+    @IBAction func showCompanyView(sender: AnyObject) {
+        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as UACompanyViewController
+        companyVC.company = self.project.company
+        self.navigationController?.pushViewController(companyVC, animated: true)
     }
 }

@@ -487,6 +487,9 @@
                                             <state key="normal" title="Button">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="showCompanyView:" destination="EC2-4E-ZyR" eventType="touchUpInside" id="Mm9-wn-aR9"/>
+                                            </connections>
                                         </button>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fHv-ei-JvJ">
                                             <rect key="frame" x="6" y="265" width="262" height="30"/>
@@ -507,6 +510,7 @@
                                         </button>
                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xCP-H7-6W4">
                                             <rect key="frame" x="0.0" y="185" width="320" height="50"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="zLk-Zg-Fft"/>
                                             </constraints>
@@ -664,6 +668,62 @@
             </objects>
             <point key="canvasLocation" x="2078" y="1544"/>
         </scene>
+        <!--Company View Controller-->
+        <scene sceneID="BmG-KT-HVs">
+            <objects>
+                <viewController storyboardIdentifier="CompanyVC" id="9KK-OG-OZo" customClass="UACompanyViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dqe-pa-HC6"/>
+                        <viewControllerLayoutGuide type="bottom" id="V75-64-8qI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Sal-2M-j5A">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-oG-lmn">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lPM-uw-uvJ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GAL-jg-b9r">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="V75-64-8qI" firstAttribute="top" secondItem="QFG-oG-lmn" secondAttribute="bottom" id="IxT-Gv-Ezp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QFG-oG-lmn" secondAttribute="trailing" constant="-16" id="Krh-qg-HGa"/>
+                            <constraint firstItem="QFG-oG-lmn" firstAttribute="top" secondItem="Sal-2M-j5A" secondAttribute="topMargin" id="Xcr-JQ-cEc"/>
+                            <constraint firstItem="QFG-oG-lmn" firstAttribute="leading" secondItem="Sal-2M-j5A" secondAttribute="leadingMargin" constant="-16" id="ix5-oG-mzS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="aVJ-xs-MbY">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="d5S-8U-33R">
+                            <connections>
+                                <action selector="showMenu:" destination="9KK-OG-OZo" id="UAA-Ir-ygO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="projectCollectionView" destination="QFG-oG-lmn" id="S36-nc-XoX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="geQ-jP-c4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2473" y="1544"/>
+        </scene>
         <!--Credits View Controller-->
         <scene sceneID="rLJ-vT-uQ6">
             <objects>
@@ -756,6 +816,7 @@
                         <segue destination="vmt-R8-DAc" kind="push" id="Qc8-V1-HXr"/>
                         <segue destination="nat-xn-Uer" kind="push" id="9c2-aB-3jl"/>
                         <segue destination="ekC-sk-C9m" kind="push" id="mTb-GT-tFk"/>
+                        <segue destination="9KK-OG-OZo" kind="push" id="EnF-d3-gex"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mf0-FX-2eV" userLabel="First Responder" sceneMemberID="firstResponder"/>

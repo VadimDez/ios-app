@@ -46,9 +46,7 @@ class UASuggestionHeaderView: UIView {
         if (imageQuantity > 0) {
             media = 51.0 + CGFloat((imageQuantity/5) * 51)
         }
-        println(base)
-        println(label.frame.height)
-        println(media)
+
         self.frame.size.height = base + label.frame.height + media
     }
 

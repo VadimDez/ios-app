@@ -13,7 +13,10 @@ class UAProject
     var id: UInt!
     var name: String!
     var title: String!
-    var company: String!
+    var company: UACompany!
+    var imageHash: String = "new"
+    var bookmarked: Bool = false
+    var closedCommunity: Bool = false
     
     init() {
         

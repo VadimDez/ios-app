@@ -21,17 +21,11 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.mainTable.dataSource = self
-        self.mainTable.delegate = self
-        
+        // set delegates
+        self.setDelegates()
         
         // register nibs
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
-        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        self.registerNibs()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
@@ -41,6 +35,25 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         self.mainTable.triggerInfiniteScrolling()
+    }
+    
+    /**
+    Register nibs
+    */
+    func registerNibs() {
+        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
+    }
+    
+    func setDelegates() {
+        self.mainTable.dataSource = self
+        self.mainTable.delegate = self
     }
     
     @IBAction func showMenu(sender: AnyObject) {
@@ -81,6 +94,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
             case "SuggestionCell": return self.getSuggestCellForActivity(self.entries[indexPath.row])
             case "UASuggestImageCell": return self.getSuggestImageCellForActivity(self.entries[indexPath.row])
             case "UASuggestionVoteCell": return self.getVoteCellForActivity(indexPath.row)
+            case "UASuggestionVoteImageCell": return self.getVoteWithImageCellForActivity(indexPath.row)
         default:
             var cell: UITableViewCell
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
@@ -88,7 +102,14 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
             return cell
         }
     }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
         
+        self.navigationController?.pushViewController(suggestionVC, animated: true)
+        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+    
     /**
     *  Get suggestion cell with suggestion object
     */
@@ -110,6 +131,15 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         cell.ratingView.editable = false
         cell.ratingView.tag = row
         cell.setCellForActivity(self.entries[row])
+        return cell
+    }
+    
+    func getVoteWithImageCellForActivity(row: Int) -> UASuggestionVoteImageCell {
+        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        cell.ratingView.delegate = self
+        cell.ratingView.editable = false
+        cell.ratingView.tag = row
+        cell.setCellForHome(self.entries[row])
         return cell
     }
     
@@ -154,6 +184,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
                 self.mainTable.infiniteScrollingView.stopAnimating()
         })
     }
+    
     /*
     *  Pull to refresh implementation
     */
@@ -211,9 +242,11 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return nil;
     }
+    
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
         let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
         self.photos = []
+        
         if (!cellData.isEmpty) {
             
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {

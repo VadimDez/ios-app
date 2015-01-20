@@ -190,7 +190,9 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         switch (self.suggestion.cellType) {
             case "SuggestionCell": self.mainTable.tableHeaderView = self.getSuggestionView()
                 break
-            case "SuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
+            case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
+                break
+            case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
                 break
             case "UASuggestionVoteCell": self.mainTable.tableHeaderView = self.getSuggestionVoteView()
                 break

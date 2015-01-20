@@ -274,7 +274,7 @@ class UASuggestion: UACellObject {
         }
         
         // set cell class type
-        self.cellType = "SuggestImageCell";
+        self.cellType = "UASuggestImageCell";
         
         // set type
         self.type = "suggestion";
