@@ -1,4 +1,4 @@
-// Alamofire.h
+// MasterViewController.swift
 //
 // Copyright (c) 2014–2015 Alamofire (http://alamofire.org)
 //
@@ -20,7 +20,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import Foundation
+import Alamofire
 
-FOUNDATION_EXPORT double AlamofireVersionNumber;
-FOUNDATION_EXPORT const unsigned char AlamofireVersionString[];
+enum HTTPBinRoute: URLStringConvertible {
+    case Method(Alamofire.Method)
+    case BasicAuth(String, String)
+
+    var URLString: String {
+        let baseURLString = "http://httpbin.org/"
+        let path: String = {
+            switch self {
+            case .Method(let method):
+                return "/\(method.rawValue.lowercaseString)"
+            case .BasicAuth(let user, let password):
+                return "/basic-auth/\(user)/\(password)"
+            }
+        }()
+
+        return NSURL(string: path, relativeToURL: NSURL(string: baseURLString))!.absoluteString!
+    }
+}
+

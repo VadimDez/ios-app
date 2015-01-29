@@ -720,6 +720,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="companyImage" destination="S2A-FM-7E6" id="tMr-rz-xim"/>
                         <outlet property="projectsTable" destination="HKt-TS-x0B" id="ZOS-B3-sas"/>
                     </connections>
                 </viewController>

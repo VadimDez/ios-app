@@ -24,6 +24,8 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
 
         self.getCompanyWithProjects({ () -> Void in
             self.loadCompanyImage()
+            
+            self.projectsTable.reloadData()
         }, error: { () -> Void in
             
         })
@@ -52,7 +54,8 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        var cell = UITableViewCell()
+        cell.textLabel?.text = self.company.projects[indexPath.row].name
         return cell
     }
     
@@ -96,45 +99,17 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     func loadCompanyImage() {
         // load profile image
-        
-        var url = "https://\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
+        let url = "https://\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
-//        self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { (_request, _response, _image) -> Void in
-//            // code
-//            self.companyImage.image = _image
-//        }) { (_req, _res, _error) -> Void in
-//            // code
-//        }
-//        println(request)
-//        self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-//            // test
-//            if let weakSelf = self {
-//                weakSelf.companyImage.image = image
-//            }
-//            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
-//                
-//        }
+        self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in
+            if let _weak = self {
+                _weak.companyImage.image = image
+            }
+            }, failure: { [weak self]
+                (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
+                
+        })
         
-//        Alamofire.request(.GET, url).responseImage() {
-//            (request, _, image, error) in
-//            if error == nil && image != nil {
-//                if request.URLString == cell.request?.request.URLString {
-//                    cell.imageView.image = image
-//                }
-//            }
-//        
-//        Alamofire.request(.GET, url).validate().responseImage() {
-//            (_, _, image, error) in
-//            
-//            if error == nil && image != nil {
-//                self.imageView.image = image
-//                self.imageView.frame = self.centerFrameFromImage(image)
-//                
-//                self.spinner.stopAnimating()
-//                
-//                self.centerScrollViewContents()
-//            }
-//        }
     }
 }
