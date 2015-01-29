@@ -680,33 +680,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="QFG-oG-lmn">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="HKt-TS-x0B">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lPM-uw-uvJ">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GAL-jg-b9r">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="R75-NS-Qvu">
+                                    <rect key="frame" x="0.0" y="64" width="320" height="180"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S2A-FM-7E6">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="180" id="8JO-hO-TgM"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="S2A-FM-7E6" secondAttribute="bottom" id="9PU-lF-Xea"/>
+                                        <constraint firstAttribute="trailing" secondItem="S2A-FM-7E6" secondAttribute="trailing" id="Is8-9C-I1f"/>
+                                        <constraint firstItem="S2A-FM-7E6" firstAttribute="top" secondItem="R75-NS-Qvu" secondAttribute="top" id="WfC-SE-8Qk"/>
+                                        <constraint firstItem="S2A-FM-7E6" firstAttribute="leading" secondItem="R75-NS-Qvu" secondAttribute="leading" id="dku-3N-kSC"/>
+                                    </constraints>
+                                </view>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="V75-64-8qI" firstAttribute="top" secondItem="QFG-oG-lmn" secondAttribute="bottom" id="IxT-Gv-Ezp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="QFG-oG-lmn" secondAttribute="trailing" constant="-16" id="Krh-qg-HGa"/>
-                            <constraint firstItem="QFG-oG-lmn" firstAttribute="top" secondItem="Sal-2M-j5A" secondAttribute="topMargin" id="Xcr-JQ-cEc"/>
-                            <constraint firstItem="QFG-oG-lmn" firstAttribute="leading" secondItem="Sal-2M-j5A" secondAttribute="leadingMargin" constant="-16" id="ix5-oG-mzS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HKt-TS-x0B" secondAttribute="trailing" constant="-16" id="Ijy-Vu-lJO"/>
+                            <constraint firstItem="HKt-TS-x0B" firstAttribute="leading" secondItem="Sal-2M-j5A" secondAttribute="leadingMargin" constant="-16" id="gUT-NY-H2W"/>
+                            <constraint firstItem="V75-64-8qI" firstAttribute="top" secondItem="HKt-TS-x0B" secondAttribute="bottom" id="kSl-x7-qXo"/>
+                            <constraint firstItem="HKt-TS-x0B" firstAttribute="top" secondItem="Sal-2M-j5A" secondAttribute="topMargin" id="pMk-5h-UfO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aVJ-xs-MbY">
@@ -717,7 +720,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="projectCollectionView" destination="QFG-oG-lmn" id="S36-nc-XoX"/>
+                        <outlet property="projectsTable" destination="HKt-TS-x0B" id="ZOS-B3-sas"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="geQ-jP-c4q" userLabel="First Responder" sceneMemberID="firstResponder"/>
