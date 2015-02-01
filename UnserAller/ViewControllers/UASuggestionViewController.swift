@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class UASuggestionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FloatRatingViewDelegate {
+class UASuggestionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FloatRatingViewDelegate, UAEditorDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     
@@ -18,6 +18,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     var entries: [UAComment] = []
     var tableWidth: CGFloat!
     var votingDisabled = false
+    var newCommentContent: String!
     
     override func viewWillAppear(animated: Bool) {
         
@@ -29,7 +30,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         // register nibs
         self.registerNibs()
         
-
+        self.newCommentContent = ""
     }
     
     override func viewDidLoad() {
@@ -123,7 +124,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     func getSuggestion(success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "http://\(APIURL)/api/mobile/suggestion/suggestion"
+        var url: String = "https://\(APIURL)/api/mobile/suggestion/suggestion"
 
         Alamofire.request(.GET, url, parameters: ["id": self.suggestion.suggestionId])
             .responseJSON { (_,_,JSON,errors) in
@@ -212,6 +213,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         var suggestionView: UASuggestionView = nib[0] as UASuggestionView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return suggestionView
     }
@@ -226,6 +229,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         var suggestionView: UASuggestionWithImageView = nib[0] as UASuggestionWithImageView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return suggestionView
     }
@@ -241,6 +246,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         
         suggestionView.setUp(self.suggestion)
         suggestionView.ratingView.delegate = self
+        suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return suggestionView
     }
@@ -256,6 +263,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         
         suggestionView.setUp(self.suggestion)
         suggestionView.ratingView.delegate = self
+        suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return suggestionView
     }
@@ -307,7 +316,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "https://\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
@@ -321,6 +330,73 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
                 } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
+                }
+        }
+    }
+    
+    // MARK: editor
+    
+    /**
+    Open editor
+    
+    :param: sender
+    */
+    @IBAction func openEditor(sender: AnyObject) {
+        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as UAEditorViewController
+        
+        editor.delegate = self
+        editor.string = (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text
+        
+//        1)
+//        self.navigationController?.pushViewController(editor, animated: true)
+//        2)
+//        self.showViewController(editor, sender: self)
+//        3)
+        self.presentViewController(editor, animated: true, completion: nil)
+    }
+    
+    func passTextBack(controller: UAEditorViewController, string: String) {
+        (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text = string
+    }
+    
+    @IBAction func sendNewComment(sender: AnyObject) {
+        let newComment: String = (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text
+
+        self.sendNewComment(newComment, success: { (json) -> () in
+            (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text = ""
+            
+            let comment = UAComment().initCommentWithJSON(json as Dictionary<String, AnyObject>)
+            let array = [comment]
+            
+            // prepend new comment
+            self.entries = array + self.entries
+            
+            // reload table
+            self.mainTable.reloadData()
+        }) { () -> () in
+            
+        }
+    }
+    
+    func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "https://\(APIURL)/api/mobile/comment/add"
+
+        Alamofire.request(.POST, url, parameters: [
+            "comment": comment,
+            "suggestion": self.suggestion.suggestionId])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil && JSON == nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(json: JSON!)
                 }
         }
     }

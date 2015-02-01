@@ -13,8 +13,6 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var ratingView: FloatRatingView!
     
-    var suggestion: UASuggestion!
-    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

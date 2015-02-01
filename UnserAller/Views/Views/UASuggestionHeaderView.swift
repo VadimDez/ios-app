@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class UASuggestionHeaderView: UIView {
     
@@ -18,6 +19,12 @@ class UASuggestionHeaderView: UIView {
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    var suggestion: UASuggestion!
+    
+    @IBOutlet weak var newCommentButton: UIButton!
+    @IBOutlet weak var newCommentInput: UITextField!
+    @IBOutlet weak var sendNewCommentButton: UIButton!
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -28,7 +35,7 @@ class UASuggestionHeaderView: UIView {
     
     func adjustHeight(content: String, imageQuantity: Int) {
 //        var frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 90.0)
-        let base = CGFloat(76.0)
+        let base = CGFloat(105.0)//CGFloat(76.0)
         
         // count text height
         var frame: CGRect = CGRect()
@@ -65,6 +72,45 @@ class UASuggestionHeaderView: UIView {
             }
             }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
+        }
+    }
+    
+    /**
+    Like suggestion
+    
+    :param: sender
+    */
+    @IBAction func like(sender: AnyObject) {
+        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
+            let increment = (active) ? 1 : -1;
+            self.suggestion.likeCount = self.suggestion.likeCount + increment;
+            self.likeLabel.text = "\(self.suggestion.likeCount)"
+            }) { () -> Void in
+                
+        }
+    }
+    
+    /**
+    *  Send like
+    */
+    func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "https://\(APIURL)/api/v1/suggestion/like"
+        
+        Alamofire.request(.GET, url, parameters: ["id": id])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(active: ((JSON?.objectForKey("status") as String!) == "active"))
+                }
         }
     }
 }

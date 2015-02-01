@@ -11,6 +11,8 @@ import UIKit
 class UASuggestionView: UASuggestionHeaderView {
 
     func setUp(suggestion: UASuggestion) {
+        self.suggestion = suggestion
+        
         self.titleLabel.text = suggestion.userName
         self.subtitleLabel.text = suggestion.projectName
         self.contentLabel.text = suggestion.content

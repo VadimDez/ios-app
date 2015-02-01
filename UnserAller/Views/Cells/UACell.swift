@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class UACell: UITableViewCell {
     
@@ -49,6 +50,30 @@ class UACell: UITableViewCell {
             }
             }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
+        }
+    }
+    
+    /**
+    *  Send like
+    */
+    func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "https://\(APIURL)/api/v1/suggestion/like"
+        
+        Alamofire.request(.GET, url, parameters: ["id": id])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(active: ((JSON?.objectForKey("status") as String!) == "active"))
+                }
         }
     }
 }

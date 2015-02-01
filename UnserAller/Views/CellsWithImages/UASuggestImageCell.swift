@@ -18,6 +18,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
     var projectId: UInt = 0
     var type:String = "suggestion"
     var medias: [UAMedia] = []
+    var suggestion: UASuggestion!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,7 +44,24 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         // Configure the view for the selected state
     }
     
+    /**
+    Like suggestion
+    
+    :param: sender
+    */
+    @IBAction func like(sender: AnyObject) {
+        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
+            let increment = (active) ? 1 : -1;
+            self.suggestion.likeCount = self.suggestion.likeCount + increment;
+            self.likeLabel.text = "\(self.suggestion.likeCount)"
+            }) { () -> Void in
+                
+        }
+    }
+    
     func setCellForHome(suggestion: UASuggestion) {
+        self.suggestion = suggestion
+        
         self.type = "suggestion";
         //    _collectionDataDictionary = data;
         
@@ -86,6 +104,8 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
     
     
     func setCellForPhase(suggestion: UASuggestion) {
+        self.suggestion = suggestion
+        
         self.type = "suggestion";
         //    _collectionDataDictionary = data;
         

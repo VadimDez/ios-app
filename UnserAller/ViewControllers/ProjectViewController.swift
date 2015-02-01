@@ -825,7 +825,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "https://\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in

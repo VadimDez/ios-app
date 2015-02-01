@@ -21,6 +21,9 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         super.viewDidLoad()
         self.projectsTable.delegate = self
         self.projectsTable.dataSource = self
+        
+        // register all nibs
+        self.registerNibs()
 
         self.getCompanyWithProjects({ () -> Void in
             self.loadCompanyImage()
@@ -39,6 +42,15 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     @IBAction func showMenu(sender: AnyObject) {
         toggleSideMenuView()
     }
+    
+    
+    /**
+    Register nibs
+    */
+    func registerNibs() {
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.projectsTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
+    }
 
     /*
     // MARK: - Navigation
@@ -54,9 +66,9 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        cell.textLabel?.text = self.company.projects[indexPath.row].name
-        return cell
+        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
+        projectCell.setCell(self.company.projects[indexPath.row])
+        return projectCell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -65,6 +77,21 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.company.projects.count
+    }
+    
+    /**
+    Did select project row
+    
+    :param: tableView
+    :param: indexPath
+    */
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        
+        // set project id
+        projectViewController.projectId = self.company.projects[indexPath.row].id
+        
+        self.navigationController?.pushViewController(projectViewController, animated: true)
     }
     
     

@@ -87,6 +87,8 @@
 		12A172891A19470F000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
 		12A1728A1A194739000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
 		12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */; };
+		12A7AB9B1A7E371400D50BE7 /* UAEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */; };
+		12A7ABA21A7E3C2F00D50BE7 /* UAEditorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A7ABA11A7E3C2F00D50BE7 /* UAEditorDelegate.swift */; };
 		12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AE1BD11A20880200BFE3D2 /* UASuggestImageCell.swift */; };
 		12AE1BD41A20881400BFE3D2 /* UASuggestImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12AE1BD31A20881400BFE3D2 /* UASuggestImageCell.xib */; };
 		12AE1BD61A209FBE00BFE3D2 /* UACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */; };
@@ -334,6 +336,8 @@
 		129F4BC61A6C3D0800F5420D /* UASuggestionVoteWithImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteWithImageView.xib; path = Views/Views/UASuggestionVoteWithImageView.xib; sourceTree = "<group>"; };
 		12A172881A19470F000FAA54 /* UACompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACompany.swift; sourceTree = "<group>"; };
 		12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditViewModel.swift; sourceTree = "<group>"; };
+		12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAEditorViewController.swift; path = ViewControllers/UAEditorViewController.swift; sourceTree = "<group>"; };
+		12A7ABA11A7E3C2F00D50BE7 /* UAEditorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAEditorDelegate.swift; path = Delegates/UAEditorDelegate.swift; sourceTree = "<group>"; };
 		12AE1BD11A20880200BFE3D2 /* UASuggestImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestImageCell.swift; path = Views/CellsWithImages/UASuggestImageCell.swift; sourceTree = "<group>"; };
 		12AE1BD31A20881400BFE3D2 /* UASuggestImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UASuggestImageCell.xib; sourceTree = "<group>"; };
 		12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACollectionViewCell.swift; path = Views/Cells/UACollectionViewCell.swift; sourceTree = "<group>"; };
@@ -595,6 +599,14 @@
 			name = Locksmith;
 			sourceTree = "<group>";
 		};
+		12A7ABA01A7E3BEA00D50BE7 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				12A7ABA11A7E3C2F00D50BE7 /* UAEditorDelegate.swift */,
+			);
+			name = Delegates;
+			sourceTree = "<group>";
+		};
 		12D74B8B1A685921006CE23D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -642,6 +654,7 @@
 				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
 				124F8C211A1A94E7000A5812 /* ActivityViewController.swift */,
 				12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */,
+				12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -748,6 +761,7 @@
 		D5812284197C08B600E3573C /* UnserAller */ = {
 			isa = PBXGroup;
 			children = (
+				12A7ABA01A7E3BEA00D50BE7 /* Delegates */,
 				D52FF94019E3218C006139E2 /* ViewModels */,
 				D555CCA519E1CEC200AB0F5F /* Views */,
 				D511714F19E030D2007675EE /* Library */,
@@ -1120,6 +1134,7 @@
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
 				12172CD11A267B000049DC34 /* UIButton+WebCache.m in Sources */,
+				12A7ABA21A7E3C2F00D50BE7 /* UAEditorDelegate.swift in Sources */,
 				12172CD41A267B000049DC34 /* UIImage+WebP.m in Sources */,
 				12AE1BD61A209FBE00BFE3D2 /* UACollectionViewCell.swift in Sources */,
 				12172CCD1A267B000049DC34 /* SDWebImageDownloader.m in Sources */,
@@ -1130,6 +1145,7 @@
 				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
+				12A7AB9B1A7E371400D50BE7 /* UAEditorViewController.swift in Sources */,
 				12172CB41A267B000049DC34 /* MWTapDetectingView.m in Sources */,
 				12172D021A2680A40049DC34 /* PSTCollectionViewLayout.m in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,

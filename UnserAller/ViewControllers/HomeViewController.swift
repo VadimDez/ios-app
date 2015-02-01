@@ -267,6 +267,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
+    
     /**
      *  Get entries
      */
@@ -377,7 +378,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
 
-        Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
+        Alamofire.request(.POST, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
 
                 if(errors != nil) {

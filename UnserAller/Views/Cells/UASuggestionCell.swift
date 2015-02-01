@@ -15,6 +15,7 @@ class UASuggestionCell: UACell {
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0
+    var suggestion: UASuggestion!
     
     
     override func awakeFromNib() {
@@ -28,7 +29,24 @@ class UASuggestionCell: UACell {
         // Configure the view for the selected state
     }
     
+    /**
+    Like suggestion
+    
+    :param: sender
+    */
+    @IBAction func like(sender: AnyObject) {
+        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
+            let increment = (active) ? 1 : -1;
+            self.suggestion.likeCount = self.suggestion.likeCount + increment;
+            self.likeLabel.text = "\(self.suggestion.likeCount)"
+        }) { () -> Void in
+            
+        }
+    }
+    
     func setCellForHome(suggestion: UASuggestion) {
+        // set suggestion
+        self.suggestion = suggestion
         
         self.contentLabel?.text     = suggestion.content
         self.titleLabel?.text       = suggestion.userName
@@ -47,6 +65,9 @@ class UASuggestionCell: UACell {
     }
 
     func setCellForPhase(suggestion: UASuggestion) {
+        // set suggestion
+        self.suggestion = suggestion
+        
         self.contentLabel.text      = suggestion.content
         self.titleLabel.text        = suggestion.userName
         self.likeLabel.text         = "\(suggestion.likeCount)"

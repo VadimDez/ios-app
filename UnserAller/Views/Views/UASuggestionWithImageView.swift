@@ -12,8 +12,6 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    var suggestion: UASuggestion!
-    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
