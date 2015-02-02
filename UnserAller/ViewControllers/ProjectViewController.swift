@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
+class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate, FloatRatingViewDelegate, UAEditorDelegate {
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -853,5 +853,74 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as UACompanyViewController
         companyVC.company = self.project.company
         self.navigationController?.pushViewController(companyVC, animated: true)
+    }
+    
+    
+    /**
+    Open editor
+    
+    :param: sender
+    */
+    @IBAction func openEditor(sender: AnyObject) {
+        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as UAEditorViewController
+        
+        editor.delegate = self
+        editor.string = self.sendSuggestionInput.text
+        self.presentViewController(editor, animated: true, completion: nil)
+
+    }
+    
+    func passTextBack(controller: UAEditorViewController, string: String) {
+        self.sendSuggestionInput.text = string
+    }
+    
+    @IBAction func sendNewSuggestion() {
+        self.sendSuggestion({ (json) -> () in
+            
+            var suggestion = UASuggestion()
+            self.sendSuggestionInput.text = ""
+            println(json)
+            if (self.type == "vote") {
+                suggestion = UASuggestion().initVoteForProjectFromJSON(json, project: self.project)
+            } else {
+                suggestion = UASuggestion().initSuggestForProjectFromJSON(json, project: self.project)
+            }
+            
+            var array = [suggestion]
+            
+            self.entries = array + self.entries
+            self.mainTable.reloadData()
+            
+        }, failure: { () -> () in
+            
+        })
+    }
+    
+    /**
+    Send new suggestion
+    
+    :param: success func
+    :param: failure func
+    */
+    func sendSuggestion(success: (json: AnyObject) -> (), failure: () -> ()) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "https://\(APIURL)/api/v1/suggestion/post"
+        
+        Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text, "phase": self.actualPhaseId])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println("send rating error")
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(json: JSON!)
+                }
+        }
     }
 }

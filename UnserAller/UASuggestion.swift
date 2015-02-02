@@ -837,6 +837,81 @@ class UASuggestion: UACellObject {
         return self
     }
     
+    func initSuggestForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
+        // set suggestion id
+        self.suggestionId = jsonObject.objectForKey("id") as UInt
+        
+        // set user name
+        if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
+            self.userName += firstname
+        }
+        if let lastname = jsonObject.objectForKey("user")?.objectForKey("lastname") as? String {
+            self.userName += " \(lastname)"
+        }
+        
+        // set user id
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
+        
+        // set project id
+        self.projectId = project.id
+        
+        // set content
+        self.content = jsonObject.objectForKey("content") as String
+        
+        // set updated
+        self.updated = self.getDateFromLongString(jsonObject.objectForKey("updated") as String)
+
+        // set comment count
+        self.commentCount = 0
+        
+        // set like count
+        self.likeCount = 0
+        
+        // set cell type
+        self.cellType = "SuggestionCell"
+        
+        return self
+    }
+    
+    func initVoteForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
+            
+        // set suggestion id
+        self.suggestionId = jsonObject.objectForKey("id") as UInt
+            
+        // set user name
+        if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
+            self.userName = firstname
+        }
+        if let lastname = jsonObject.objectForKey("user")?.objectForKey("lastname") as? String {
+            self.userName = " \(lastname)"
+        }
+            
+        // set user id
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
+            
+        // set project id
+        self.projectId = project.id
+        
+        // set content
+        self.content = jsonObject.objectForKey("content") as String
+        
+        // set updated
+        self.updated = self.getDateFromLongString(jsonObject.objectForKey("created") as String)
+
+        // set user votes
+        self.userVotes = 0
+        
+        // set comment count
+        self.commentCount = 0
+        
+        // set like count
+        self.likeCount = 0
+        
+        // set cell type
+        self.cellType = "UASuggestionVoteCell";
+        return self
+    }
+    
     /**
     *  Get value from string
     *  in case it's null instead 0

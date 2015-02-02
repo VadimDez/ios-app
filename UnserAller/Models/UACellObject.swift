@@ -32,6 +32,16 @@ class UACellObject {
         return formatter.dateFromString(string)!
     }
     
+    /**
+    *  Get NSDate from string
+    *
+    */
+    func getDateFromLongString(string: String) -> NSDate {
+        var formatter:NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        
+        return formatter.dateFromString(string)!
+    }
     
     /**
     *  Add media object in media array
