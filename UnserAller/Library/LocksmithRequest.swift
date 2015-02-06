@@ -1,53 +1,62 @@
 //
 //  LocksmithRequest.swift
-//  Locksmith-Demo
 //
 //  Created by Matthew Palmer on 26/10/2014.
 //  Copyright (c) 2014 Colour Coding. All rights reserved.
 //
 
-enum SecurityClass: Int {
-  case GenericPassword
-}
-
 import UIKit
+import Security
 
-enum MatchLimit: Int {
-  case One, Many
+public enum SecurityClass: Int {
+    case GenericPassword, InternetPassword, Certificate, Key, Identity
 }
 
-enum RequestType: Int {
-  case Create, Read, Update, Delete
+public enum MatchLimit: Int {
+    case One, Many
 }
 
-class LocksmithRequest: NSObject {
-  // Keychain Options
-  // Required
-  var service: String
-  var key: String
-  var userAccount: String
-  var type: RequestType = .Read  // Default to non-destructive
-  
-  // Optional
-  // var securityClass: SecurityClass = .GenericPassword  // Default to password lookup
-  var group: String?
-  var data: NSDictionary?
-  var matchLimit: MatchLimit = .One  // Default to one
-  
-  required init(service: String, userAccount: String, key: String) {
-    self.service = service
-    self.userAccount = userAccount
-    self.key = key
-  }
-  
-  convenience init(service: String, userAccount: String, key: String, data: NSDictionary) {
-    self.init(service: service, userAccount: userAccount, key: key)
-    self.data = data
-    self.type = .Create
-  }
-  
-  convenience init(service: String, userAccount: String, key: String, requestType: RequestType) {
-    self.init(service: service, userAccount: userAccount, key: key)
-    self.type = requestType
-  }
+public enum RequestType: Int {
+    case Create, Read, Update, Delete
+}
+
+public enum Accessible: Int {
+    case WhenUnlock, AfterFirstUnlock, Always, WhenPasscodeSetThisDeviceOnly,
+    WhenUnlockedThisDeviceOnly, AfterFirstUnlockThisDeviceOnly, AlwaysThisDeviceOnly
+}
+
+public class LocksmithRequest: NSObject, DebugPrintable {
+    // Keychain Options
+    // Required
+    public var service: String = NSBundle.mainBundle().infoDictionary![kCFBundleIdentifierKey] as String // Default to Bundle Identifier
+    public var userAccount: String
+    public var type: RequestType = .Read  // Default to non-destructive
+    
+    // Optional
+    public var securityClass: SecurityClass = .GenericPassword  // Default to password lookup
+    public var group: String?
+    public var data: NSDictionary?
+    public var matchLimit: MatchLimit = .One
+    public var synchronizable = false
+    public var accessible: Accessible?
+    
+    // Debugging
+    override public var debugDescription: String {
+        return "service: \(self.service), type: \(self.type.rawValue), userAccount: \(self.userAccount)"
+    }
+    
+    required public init(userAccount: String, service: String = LocksmithDefaultService) {
+        self.service = service
+        self.userAccount = userAccount
+    }
+    
+    public convenience init(userAccount: String, requestType: RequestType, service: String = LocksmithDefaultService) {
+        self.init(userAccount: userAccount, service: service)
+        self.type = requestType
+    }
+    
+    public convenience init(userAccount: String, requestType: RequestType, data: NSDictionary, service: String = LocksmithDefaultService) {
+        self.init(userAccount: userAccount, requestType: requestType, service: service)
+        self.data = data
+    }
 }
