@@ -10,14 +10,19 @@ import Foundation
 
 class UAProject
 {
-    var id: Int!
+    var id: UInt!
     var name: String!
+    var title: String!
+    var company: UACompany!
+    var imageHash: String = "new"
+    var bookmarked: Bool = false
+    var closedCommunity: Bool = false
     
     init() {
         
     }
     
-    func initWithParams(id: Int, name: String) {
+    func initWithParams(id: UInt, name: String) {
         self.id = id
         self.name = name
     }

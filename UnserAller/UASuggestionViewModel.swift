@@ -23,21 +23,23 @@ class UASuggestionViewModel {
         for object in data {
             // clean
             suggestion = UASuggestion()
-            
+
             // check if empty
             // TODO: needs to be validated
-            if object["suggestion"] != nil {
+            if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
+
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
                 
                 if object["media"] != nil {
                     
-                    if (object["type"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestIncludingImages(object)
                     } else {
                         self.getVoteIncludeImagesWithObject(object)
                     }
                 } else {
                     
-                    if (object["type"]?.isEqualToString("suggest") == true) {
+                    if (isSuggest) {
                         self.getSuggestion(object)
                     } else {
                         self.getVote(object)
@@ -45,6 +47,7 @@ class UASuggestionViewModel {
                 }
                 
             } else {
+                
                 if (object["media"] != nil) {
                     self.getNewsIncludeImages(object)
                 } else {
@@ -55,8 +58,6 @@ class UASuggestionViewModel {
             // add suggestion object to array
             suggestions.append(suggestion)
         }
-        
-        println(suggestions.count)
         
         return suggestions
     }
@@ -82,4 +83,109 @@ class UASuggestionViewModel {
         suggestion = UASuggestion().initVoteIncludingImages(object)
     }
     
+    
+    func getSuggestionsForActivityFromJSON(data: [Dictionary<String, AnyObject>]) -> [UASuggestion] {
+        var suggestions: [UASuggestion] = []
+        
+        for object in data {
+            // clean
+            suggestion = UASuggestion()
+            
+            // check if empty
+            // TODO: needs to be validated
+            if object["suggestion"] != nil {
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
+                
+                if object["suggestion"]?.objectForKey("mediaSuggestion") != nil && object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0 {
+                    
+                    if (isSuggest) {
+                        self.getSuggestIncludeImagesForActivityWithObject(object)
+                    } else {
+                        self.getVoteIncludeImagesForActivityWithObject(object)
+                    }
+                } else {
+                    
+                    if (isSuggest) {
+                        self.getSuggestForActivityWithObject(object)
+                    } else {
+                        self.getVoteForActivityWithObject(object)
+                    }
+                }
+                
+            }
+            
+            // add suggestion object to array
+            suggestions.append(suggestion)
+        }
+        
+        return suggestions
+    }
+    
+    // activity
+    func getSuggestIncludeImagesForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initSuggestIncludeImagesForActivity(object)
+    }
+    func getVoteIncludeImagesForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initVoteIncludeImagesForActivity(object)
+    }
+    func getSuggestForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initSuggestForActivity(object)
+    }
+    func getVoteForActivityWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initVoteForActivity(object)
+    }
+    
+    func getSuggestionsForProjectFromJSON(data: [Dictionary<String, AnyObject>], isNews: Bool, type: String) -> [UASuggestion] {
+        var suggestions: [UASuggestion] = []
+        
+        for object in data {
+            
+            if (isNews) {
+                self.getNewsForProjectWithObject(object)
+            } else {
+                // media check
+                if (object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0) {
+                    // there're medias
+                    if let suggestionType = object["suggestionType"] as? String {
+                        
+                        if (suggestionType == "suggest") {
+                            self.getSuggestIncludeImagesForProjectWithObject(object)
+                        } else {
+                            self.getVoteIncludeImagesForProjectWithObject(object)
+                        }
+                    }
+                } else {
+                    // no medias
+                    if (type == "suggest") {
+                        self.getSuggestForProjectWithObject(object)
+                    } else {
+                        self.getVoteForProjectWithObject(object)
+                    }
+                }
+            }
+            
+            // add suggestion to list
+            suggestions.append(suggestion)
+        }
+        
+        
+        return suggestions
+    }
+    
+    // project
+    func getNewsForProjectWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initNewsForProjectWithObject(object)
+    }
+    func getSuggestForProjectWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initSuggestForProjectWithObject(object)
+    }
+    func getVoteForProjectWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initVoteForProjectWithObject(object)
+    }
+    func getSuggestIncludeImagesForProjectWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initSuggestIncludeImagesForProjectWithObject(object)
+    }
+    func getVoteIncludeImagesForProjectWithObject(object: AnyObject) {
+        suggestion = UASuggestion().initVoteIncludeImagesForProjectWithObject(object)
+    }
 }

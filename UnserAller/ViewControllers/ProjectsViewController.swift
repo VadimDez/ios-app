@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import SwiftyJSON
 
 class ProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var mainTable: UITableView!
@@ -18,6 +17,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // nibs
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
 
         // add infinite load
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -25,6 +28,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
+        
+        
+        // take first
+        self.mainTable.triggerInfiniteScrolling()
     }
     
     override func didMoveToParentViewController(parent: UIViewController?) {
@@ -60,19 +67,32 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+    }*/
+    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.countEntries
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        
+        // set project id
+        projectViewController.projectId = self.entries[indexPath.row].id
+        
+        self.navigationController?.pushViewController(projectViewController, animated: true)
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
+        
+        cell.setCell(self.entries[indexPath.row])
+        
+        return cell
     }
     
     /*
@@ -82,6 +102,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         self.page += 1
         
         self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
         }, {() -> Void in
@@ -95,8 +117,21 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
      *  Pull to refresh implementation
      */
     func refresh() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.mainTable.pullToRefreshView.stopAnimating()
+        self.page = 0
+        self.entries = []
+        self.countEntries = 0
+        
+        self.getEntries({() -> Void in
+            self.mainTable.reloadData()
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.pullToRefreshView.stopAnimating()
+        }, {() -> Void in
+            println("Projects pull to refresh load error")
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.mainTable.pullToRefreshView.stopAnimating()
+        })
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
@@ -116,7 +151,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     // get get objects from JSON
                     var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as [Dictionary<String, AnyObject>])
-                        
+                    
                     // merge two arrays
                     self.entries = self.entries + array
                     self.countEntries = self.entries.count
@@ -124,5 +159,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     success()
                 }
         }
+    }
+    @IBAction func showMenu(sender: AnyObject) {
+        toggleSideMenuView()
     }
 }

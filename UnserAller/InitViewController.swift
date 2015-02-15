@@ -27,7 +27,7 @@ class InitViewController: UIViewController {
         // delete email and pass from keychain
 //        Locksmith.deleteData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
         
-        let (dictionary, error) = Locksmith.loadData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
+        let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
         
         
         // if an error

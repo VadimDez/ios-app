@@ -8,17 +8,14 @@
 
 import UIKit
 
-class UASuggestionCell: UITableViewCell {
-
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var contentLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
+class UASuggestionCell: UACell {
+    
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0
+    var suggestion: UASuggestion!
     
     
     override func awakeFromNib() {
@@ -32,7 +29,24 @@ class UASuggestionCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /**
+    Like suggestion
+    
+    :param: sender
+    */
+    @IBAction func like(sender: AnyObject) {
+        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
+            let increment = (active) ? 1 : -1;
+            self.suggestion.likeCount = self.suggestion.likeCount + increment;
+            self.likeLabel.text = "\(self.suggestion.likeCount)"
+        }) { () -> Void in
+            
+        }
+    }
+    
     func setCellForHome(suggestion: UASuggestion) {
+        // set suggestion
+        self.suggestion = suggestion
         
         self.contentLabel?.text     = suggestion.content
         self.titleLabel?.text       = suggestion.userName
@@ -41,13 +55,32 @@ class UASuggestionCell: UITableViewCell {
         self.commentLabel?.text     = "\(suggestion.commentCount)"
         self.suggestionId           = suggestion.suggestionId
         self.projectId              = suggestion.projectId
+        self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
+
+        // load profile image
+        self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
-        // date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm dd/MM/yyyy"
-        // set date
-        self.dateLabel?.text = dateFormatter.stringFromDate(suggestion.updated)
-        
+        // change shape of image
+        self.makeRoundCorners()
     }
 
+    func setCellForPhase(suggestion: UASuggestion) {
+        // set suggestion
+        self.suggestion = suggestion
+        
+        self.contentLabel.text      = suggestion.content
+        self.titleLabel.text        = suggestion.userName
+        self.likeLabel.text         = "\(suggestion.likeCount)"
+        self.commentLabel.text      = "\(suggestion.commentCount)"
+        self.subtitleLabel.text     = self.getStringFromDate(suggestion.updated)
+        self.dateLabel.text         = ""
+        self.suggestionId           = suggestion.suggestionId
+        
+        // change shape of image
+        self.makeRoundCorners()
+        
+        // load profile image
+        self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        
+    }
 }

@@ -6,24 +6,30 @@
 //  Copyright (c) 2014 Vadym Yatsyuk. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import Alamofire
 
 class UAUser {
-    var userId: Int!
-    var fullname: String!
+    var id: UInt!
+    var fullName: String!
     var profileImageURL: String!
     var profileImageView: UIImageView!
     
-    func initWithParams(usrId: Int, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
-        userId = usrId
-        fullname = usrFullname
-        profileImageURL = usrProfileImageUrl
-        profileImageView = usrProfileImageView
+    func initWithParams(id: UInt, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
+        self.id = id
+        self.fullName = usrFullname
+        self.profileImageURL = usrProfileImageUrl
+        self.profileImageView = usrProfileImageView
     }
     
     init() {
     
+    }
+    
+    init(id: UInt, fullName: String) {
+        self.id = id
+        self.fullName = fullName
     }
     
     /**
@@ -59,7 +65,8 @@ class UAUser {
     }
     
     func saveEmailAndPasswordToKeychain(email: String, password: String) {
-        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser");
+        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forUserAccount: "UnserAllerUser", inService: "UnserAller")
+//        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser");
 //        Keychain.save("UserAuthUserToken", data: self.encode(email))
 //        Keychain.save("UserAuthPasswordToken", data: self.encode(password))
     }
@@ -76,5 +83,47 @@ class UAUser {
     
     func decode(data: NSData) -> String {
         return NSString(data: data, encoding: NSUTF8StringEncoding)!
+    }
+    
+//    func getImage(URLString: String, imageView: UIImageView) {
+//        let request: NSURLRequest = NSURLRequest(URL: NSURL(string: URLString)!)
+//        let getImage: NSURLSessionDataTask = session.dataTaskWithRequest(request, completionHandler: { (data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+//            if error == nil {
+//                println("Error: \(error.localizedDescription)")
+//            } else {
+//                image = UIImage(data: data)
+//                
+//                // Store the image in to our cache
+//                self.imageCache[urlString] = image
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    imageView.image = image
+//                })
+//            }
+//        })
+//        getImage.resume()
+//    }
+    
+    
+    
+    /**
+    Log out user from app
+    
+    :param: success
+    :param: failure
+    */
+    func logout(success: () -> Void, failure: () -> Void) {
+        let url: String = "https://\(APIURL)/api/mobile/auth/logout"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .response { (request, response, _, error) in
+                if (error != nil) {
+                    failure()
+                } else {
+                    let error = Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+                    
+                    success()
+                }
+                
+        }
     }
 }

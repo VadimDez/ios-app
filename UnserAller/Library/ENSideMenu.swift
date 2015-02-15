@@ -93,7 +93,7 @@ class ENSideMenu : NSObject {
         self.sourceView = sourceView
         self.menuPosition = menuPosition
         self.setupMenuView()
-        
+    
         animator = UIDynamicAnimator(referenceView:sourceView)
         
         // Add right swipe gesture recognizer
@@ -115,7 +115,7 @@ class ENSideMenu : NSObject {
         }
         
     }
-    
+
     convenience init(sourceView: UIView, menuTableViewController: UITableViewController, menuPosition: ENSideMenuPosition) {
         self.init(sourceView: sourceView, menuPosition: menuPosition)
         self.menuTableViewController = menuTableViewController
@@ -136,12 +136,12 @@ class ENSideMenu : NSObject {
         
         sideMenuContainerView.frame = menuFrame
     }
-    
+
     private func setupMenuView() {
         
         // Configure side menu container
         updateFrame()
-        
+
         sideMenuContainerView.backgroundColor = UIColor.clearColor()
         sideMenuContainerView.clipsToBounds = false
         sideMenuContainerView.layer.masksToBounds = false;
@@ -166,6 +166,7 @@ class ENSideMenu : NSObject {
     
     private func toggleMenu (shouldOpen: Bool) {
         isMenuOpen = shouldOpen
+        sourceView.bringSubviewToFront(sideMenuContainerView)
         if (bouncingEnabled) {
             
             animator.removeAllBehaviors()
@@ -215,9 +216,9 @@ class ENSideMenu : NSObject {
             }
             else {
                 destFrame = CGRectMake((shouldOpen) ? sourceView.frame.size.width-menuWidth : sourceView.frame.size.width+2.0,
-                    0,
-                    menuWidth,
-                    sideMenuContainerView.frame.size.height)
+                                        0,
+                                        menuWidth,
+                                        sideMenuContainerView.frame.size.height)
             }
             
             UIView.animateWithDuration(0.4, animations: { () -> Void in
@@ -247,7 +248,7 @@ class ENSideMenu : NSObject {
             frame.size.width = menuWidth
             sideMenuContainerView.frame = frame
             sideMenuContainerView.layer.shadowPath = UIBezierPath(rect: sideMenuContainerView.bounds).CGPath
-            
+
             needUpdateApperance = false
         }
     }
