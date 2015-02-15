@@ -161,6 +161,6 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
+        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
 }

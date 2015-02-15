@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
+        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
 
     /*

@@ -141,7 +141,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      *  Hide menu button
      */
     @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
+        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
     
     // MARK: table view delegates

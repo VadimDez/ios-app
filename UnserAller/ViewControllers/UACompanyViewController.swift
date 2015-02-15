@@ -40,7 +40,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
+        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
     
     

@@ -21,6 +21,7 @@ class MenuTableViewController: UITableViewController {
         tableView.separatorStyle = .None
         tableView.backgroundColor = UIColor.clearColor()
         tableView.scrollsToTop = false
+        self.tableView.scrollEnabled = false
         
         // Preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
@@ -69,40 +70,39 @@ class MenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        println("did select row: \(indexPath.row)")
-        
-        if (indexPath.row == selectedMenuItem) {
+        if (indexPath.row == selectedMenuItem) { // if already selected - toggle
+            self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
             return
         }
         selectedMenuItem = indexPath.row
         
         //Present new view controller
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main",bundle: nil)
         var destViewController : UIViewController
         switch (indexPath.row) {
         case 0:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Home") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
             break
         case 1:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Projects") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsNavi") as UINavigationController
             break
         case 2:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Credits") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("creditsNavi") as UINavigationController
             break
         case 3:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Bookmarks") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("bookmarksNavi") as UINavigationController
             break
         case 4:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Activity") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("activityNavi") as UINavigationController
             break
         case 5:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Settings") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("settingsNavi") as UINavigationController
             break
         default:
-            destViewController = mainStoryboard.instantiateViewControllerWithIdentifier("Home") as UIViewController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
             break
         }
-        sideMenuController()?.setContentViewController(destViewController)
+        
+        self.evo_drawerController?.setCenterViewController(destViewController, withCloseAnimation: true, completion: nil)
     }
     
     

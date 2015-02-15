@@ -73,6 +73,10 @@
 		1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1270B5871A6B16D400D041B9 /* UAComment.swift */; };
 		127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127665711A6B9D9600E87A0E /* UACommentCell.swift */; };
 		127665741A6B9E1700E87A0E /* UACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 127665731A6B9E1700E87A0E /* UACommentCell.xib */; };
+		12878AF41A91413900B2F53B /* AnimatedMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */; };
+		12878AF51A91413900B2F53B /* DrawerBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */; };
+		12878AF61A91413900B2F53B /* DrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF21A91413900B2F53B /* DrawerController.swift */; };
+		12878AF71A91413900B2F53B /* DrawerVisualState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF31A91413900B2F53B /* DrawerVisualState.swift */; };
 		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
 		129837E81A69BB3E00087E5F /* UASuggestionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129837E71A69BB3E00087E5F /* UASuggestionHeaderView.swift */; };
 		129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */; };
@@ -112,10 +116,7 @@
 		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
 		12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12FCF47D1A11536A008B74AA /* UAProjectCell.xib */; };
 		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
-		D511715219E030D2007675EE /* ENSideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715019E030D2007675EE /* ENSideMenu.swift */; };
-		D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */; };
 		D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715419E034F8007675EE /* MenuTableViewController.swift */; };
-		D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715619E0364F007675EE /* InitNavigationViewController.swift */; };
 		D5291667197C210C0038A048 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291666197C210C0038A048 /* LoginViewController.swift */; };
 		D529166B197C2B5C0038A048 /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
 		D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */; };
@@ -325,6 +326,10 @@
 		1270B5871A6B16D400D041B9 /* UAComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAComment.swift; path = Models/UAComment.swift; sourceTree = "<group>"; };
 		127665711A6B9D9600E87A0E /* UACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACommentCell.swift; path = Views/Cells/UACommentCell.swift; sourceTree = "<group>"; };
 		127665731A6B9E1700E87A0E /* UACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UACommentCell.xib; path = Views/Cells/UACommentCell.xib; sourceTree = "<group>"; };
+		12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedMenuButton.swift; sourceTree = "<group>"; };
+		12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerBarButtonItem.swift; sourceTree = "<group>"; };
+		12878AF21A91413900B2F53B /* DrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerController.swift; sourceTree = "<group>"; };
+		12878AF31A91413900B2F53B /* DrawerVisualState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerVisualState.swift; sourceTree = "<group>"; };
 		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
 		129837E71A69BB3E00087E5F /* UASuggestionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionHeaderView.swift; path = Views/Views/UASuggestionHeaderView.swift; sourceTree = "<group>"; };
 		129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteCell.swift; path = Views/Cells/UASuggestionVoteCell.swift; sourceTree = "<group>"; };
@@ -363,10 +368,7 @@
 		3E90463A3D0C4D70295DD36B /* Pods-UnserAller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnserAller/Pods-UnserAller.debug.xcconfig"; sourceTree = "<group>"; };
 		620383539B4A09B42CE2F492 /* Pods-UnserAller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnserAller/Pods-UnserAller.release.xcconfig"; sourceTree = "<group>"; };
 		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D511715019E030D2007675EE /* ENSideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenu.swift; sourceTree = "<group>"; };
-		D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ENSideMenuNavigationController.swift; sourceTree = "<group>"; };
 		D511715419E034F8007675EE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
-		D511715619E0364F007675EE /* InitNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InitNavigationViewController.swift; path = ViewControllers/InitNavigationViewController.swift; sourceTree = "<group>"; };
 		D5291666197C210C0038A048 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewControllers/LoginViewController.swift; sourceTree = "<group>"; };
 		D529166A197C2B5C0038A048 /* UAUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAUser.swift; path = Models/UAUser.swift; sourceTree = "<group>"; };
 		D52FF94319E321F8006139E2 /* UASuggestionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UASuggestionViewModel.swift; sourceTree = "<group>"; };
@@ -601,6 +603,17 @@
 			name = Locksmith;
 			sourceTree = "<group>";
 		};
+		12878AEB1A91412800B2F53B /* DrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */,
+				12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */,
+				12878AF21A91413900B2F53B /* DrawerController.swift */,
+				12878AF31A91413900B2F53B /* DrawerVisualState.swift */,
+			);
+			name = DrawerController;
+			sourceTree = "<group>";
+		};
 		12A7ABA01A7E3BEA00D50BE7 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -628,12 +641,11 @@
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				12878AEB1A91412800B2F53B /* DrawerController */,
 				12620B5C1A6182A800C54124 /* FloatRatingView.swift */,
 				12172C4A1A267B000049DC34 /* MWPhotoBrowser */,
 				124B0CCB1A0E7F22005EA92E /* Locksmith */,
 				D5D9E65719E158AE00537FBD /* Keychain */,
-				D511715019E030D2007675EE /* ENSideMenu.swift */,
-				D511715119E030D2007675EE /* ENSideMenuNavigationController.swift */,
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
 				129CD1351A6140D400434D67 /* UALabel.swift */,
 			);
@@ -648,7 +660,6 @@
 				1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */,
 				D584D595197C47E000E1CAB3 /* HomeViewController.swift */,
 				D511715419E034F8007675EE /* MenuTableViewController.swift */,
-				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
 				1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */,
 				D59780CC1A2B799600CEC181 /* ProjectViewController.swift */,
 				124331F81A6703F500B7190A /* UASuggestionViewController.swift */,
@@ -1070,13 +1081,13 @@
 				12172D001A2680A40049DC34 /* PSTCollectionViewFlowLayout.m in Sources */,
 				12172D071A2680A40049DC34 /* PSTGridLayoutSection.m in Sources */,
 				12172CCF1A267B000049DC34 /* SDWebImageManager.m in Sources */,
+				12878AF71A91413900B2F53B /* DrawerVisualState.swift in Sources */,
 				12172CD01A267B000049DC34 /* SDWebImagePrefetcher.m in Sources */,
 				12172CAE1A267B000049DC34 /* MWCaptionView.m in Sources */,
 				12172CAF1A267B000049DC34 /* MWGridCell.m in Sources */,
 				12172CFE1A2680A40049DC34 /* PSTCollectionViewController.m in Sources */,
 				124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */,
 				12172CC91A267B000049DC34 /* NSData+ImageContentType.m in Sources */,
-				D511715219E030D2007675EE /* ENSideMenu.swift in Sources */,
 				124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */,
 				12172CD61A267B000049DC34 /* UIImageView+WebCache.m in Sources */,
 				1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */,
@@ -1092,9 +1103,11 @@
 				12172CD31A267B000049DC34 /* UIImage+MultiFormat.m in Sources */,
 				12172CD51A267B000049DC34 /* UIImageView+HighlightedWebCache.m in Sources */,
 				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
+				12878AF51A91413900B2F53B /* DrawerBarButtonItem.swift in Sources */,
 				12172CD21A267B000049DC34 /* UIImage+GIF.m in Sources */,
 				12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */,
 				12172CCC1A267B000049DC34 /* SDWebImageDecoder.m in Sources */,
+				12878AF41A91413900B2F53B /* AnimatedMenuButton.swift in Sources */,
 				12172CFB1A2680A40049DC34 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				12172D061A2680A40049DC34 /* PSTGridLayoutRow.m in Sources */,
 				12172D051A2680A40049DC34 /* PSTGridLayoutItem.m in Sources */,
@@ -1120,7 +1133,7 @@
 				126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */,
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
-				D511715319E030D2007675EE /* ENSideMenuNavigationController.swift in Sources */,
+				12878AF61A91413900B2F53B /* DrawerController.swift in Sources */,
 				12172CFF1A2680A40049DC34 /* PSTCollectionViewData.m in Sources */,
 				12172CB71A267B000049DC34 /* MBProgressHUD.m in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
@@ -1146,7 +1159,6 @@
 				129CD1361A6140D400434D67 /* UALabel.swift in Sources */,
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				12172CD71A267B000049DC34 /* UIView+WebCacheOperation.m in Sources */,
-				D511715719E0364F007675EE /* InitNavigationViewController.swift in Sources */,
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,
 				12A7AB9B1A7E371400D50BE7 /* UAEditorViewController.swift in Sources */,

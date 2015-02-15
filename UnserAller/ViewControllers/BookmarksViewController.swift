@@ -54,7 +54,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     @IBAction func showMenu(sender: AnyObject) {
-        toggleSideMenuView()
+        self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

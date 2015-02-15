@@ -42,9 +42,25 @@ class InitViewController: UIViewController {
                 let userService: UAUser = UAUser()
                 
                 userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as String, password: dictionary["UserAuthPasswordToken"] as String, success: { () -> Void in
-                    var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
                     
-                    self.presentViewController(root, animated: false, completion: nil)
+//                    let leftSideDrawerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("left") as UIViewController
+//                    let centerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("center") as UIViewController
+
+                    let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+                    let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+                    leftSideNavController.navigationBar.hidden = true
+                    
+                    var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
+                    drawerController.showsShadows = true
+                    
+                    drawerController.restorationIdentifier = "Drawer"
+                    drawerController.maximumLeftDrawerWidth = 240.0
+                    drawerController.openDrawerGestureModeMask = .All
+                    drawerController.closeDrawerGestureModeMask = .All
+                    drawerController.drawerVisualStateBlock = DrawerVisualState.parallaxVisualStateBlock(CGFloat(1.0))
+
+                    self.presentViewController(drawerController, animated: false, completion: nil)
+
                 }, error: { () -> Void in
                     
                 })
