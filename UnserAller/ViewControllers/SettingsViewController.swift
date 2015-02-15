@@ -33,5 +33,33 @@ class SettingsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    /**
+    Logout button
+    
+    :param: sender
+    */
+    @IBAction func logoutAction(sender: AnyObject) {
+        var user: UAUser = UAUser()
 
+        // logout
+        user.logout({ () -> Void in
+            // show initial
+            self.presentInitialViewController()
+        }, failure: { () -> Void in
+
+        })
+    }
+    
+    /**
+    Show initial view controller
+    */
+    func presentInitialViewController() {
+        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Initial") as InitViewController
+        
+        var navigationController = UINavigationController(rootViewController: initViewController)
+        navigationController.navigationBar.hidden = true
+        
+        self.presentViewController(navigationController, animated: false, completion: nil)
+    }
 }

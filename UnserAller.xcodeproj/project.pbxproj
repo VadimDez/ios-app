@@ -11,6 +11,7 @@
 		1208037E1A6BAECE00CD19E8 /* UACommentWithImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1208037D1A6BAECE00CD19E8 /* UACommentWithImageCell.xib */; };
 		120803801A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1208037F1A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift */; };
 		120803821A6BBA3900CD19E8 /* UASuggestionWithImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 120803811A6BBA3900CD19E8 /* UASuggestionWithImageView.xib */; };
+		1216C0D61A85800A0057FF86 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */; };
 		12172CAE1A267B000049DC34 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C4D1A267B000049DC34 /* MWCaptionView.m */; };
 		12172CAF1A267B000049DC34 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C501A267B000049DC34 /* MWGridCell.m */; };
 		12172CB01A267B000049DC34 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C521A267B000049DC34 /* MWGridViewController.m */; };
@@ -216,6 +217,7 @@
 		1208037D1A6BAECE00CD19E8 /* UACommentWithImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UACommentWithImageCell.xib; path = Views/CellsWithImages/UACommentWithImageCell.xib; sourceTree = "<group>"; };
 		1208037F1A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionWithImageView.swift; path = Views/Views/UASuggestionWithImageView.swift; sourceTree = "<group>"; };
 		120803811A6BBA3900CD19E8 /* UASuggestionWithImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionWithImageView.xib; path = Views/Views/UASuggestionWithImageView.xib; sourceTree = "<group>"; };
+		1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegistrationViewController.swift; path = ViewControllers/RegistrationViewController.swift; sourceTree = "<group>"; };
 		12172C4C1A267B000049DC34 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		12172C4D1A267B000049DC34 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		12172C4E1A267B000049DC34 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 			children = (
 				D5812289197C08B600E3573C /* InitViewController.swift */,
 				D5291666197C210C0038A048 /* LoginViewController.swift */,
+				1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */,
 				D584D595197C47E000E1CAB3 /* HomeViewController.swift */,
 				D511715419E034F8007675EE /* MenuTableViewController.swift */,
 				D511715619E0364F007675EE /* InitNavigationViewController.swift */,
@@ -1132,6 +1135,7 @@
 				12172CFD1A2680A40049DC34 /* PSTCollectionViewCell.m in Sources */,
 				12172CCE1A267B000049DC34 /* SDWebImageDownloaderOperation.m in Sources */,
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
+				1216C0D61A85800A0057FF86 /* RegistrationViewController.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
 				12172CD11A267B000049DC34 /* UIButton+WebCache.m in Sources */,
 				12A7ABA21A7E3C2F00D50BE7 /* UAEditorDelegate.swift in Sources */,

@@ -102,4 +102,28 @@ class UAUser {
 //        })
 //        getImage.resume()
 //    }
+    
+    
+    
+    /**
+    Log out user from app
+    
+    :param: success
+    :param: failure
+    */
+    func logout(success: () -> Void, failure: () -> Void) {
+        let url: String = "https://\(APIURL)/api/mobile/auth/logout"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .response { (request, response, _, error) in
+                if (error != nil) {
+                    failure()
+                } else {
+                    let error = Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+                    
+                    success()
+                }
+                
+        }
+    }
 }
