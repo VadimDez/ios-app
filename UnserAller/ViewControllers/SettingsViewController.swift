@@ -7,13 +7,98 @@
 //
 
 import UIKit
+import Alamofire
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
 
+    @IBOutlet weak var mainTable: UITableView!
+    @IBOutlet weak var viewSwitch: UISegmentedControl!
+    
+    var views: [AnyObject] = ["", "", ""]
+    var settingsObject: [Dictionary<String, AnyObject>]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.mainTable.delegate = self
+        self.mainTable.dataSource = self
+        self.registerNibs()
+        self.setSegmetedControl()
+        
+        self.setFirstCell()
+        self.getSettings({ () -> Void in
+            (self.views[0] as InformationTableViewCell).setCell(self.settingsObject)
+        }, failure: { () -> Void in
+            
+        })
+    }
+    
+    func registerNibs() {
+        var InformationTableViewCellNib = UINib(nibName: "InformationTableViewCell", bundle: nil)
+        self.mainTable.registerNib(InformationTableViewCellNib, forCellReuseIdentifier: "InformationTableViewCell")
+        var PasswordTableViewCellNib = UINib(nibName: "PasswordTableViewCell", bundle: nil)
+        self.mainTable.registerNib(PasswordTableViewCellNib, forCellReuseIdentifier: "PasswordTableViewCell")
+        var NotificationsTableViewCellNib = UINib(nibName: "NotificationsTableViewCell", bundle: nil)
+        self.mainTable.registerNib(NotificationsTableViewCellNib, forCellReuseIdentifier: "NotificationsTableViewCell")
+    }
+    
+    // MARK: - Segmented Controller
+    /**
+    Set segmented control
+    */
+    func setSegmetedControl() {
+        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Normal, rightSegmentState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        
+        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Selected, rightSegmentState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        
+        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Normal, rightSegmentState: UIControlState.Selected, barMetrics: UIBarMetrics.Default)
+        
+        // background
+        self.viewSwitch.setBackgroundImage(UIImage(named: "SegmentedController_bg"), forState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
+        self.viewSwitch.setBackgroundImage(UIImage(named: "SegmentedController_bg_grey"), forState: UIControlState.Selected, barMetrics: UIBarMetrics.Default)
+        
+        // positioning
+        // divider = 11px
+//        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(11/2, 0), forSegmentType: UISegmentedControlSegment.Left, barMetrics: UIBarMetrics.Default)
+//        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(-11/2, 0), forSegmentType: UISegmentedControlSegment.Right, barMetrics: UIBarMetrics.Default)
+        
+    }
+    
+    func setFirstCell() {
+        // set first cell
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as InformationTableViewCell
+        cell.firstNameInput.delegate = self
+        cell.lastNameInput.delegate = self
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        // update profile info
+        cell.updateProfileInfo.addTarget(self, action: "updateProfileInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+        // update address info
+        cell.updateAddressInfo.addTarget(self, action: "updatePostalAddressInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.views[0] = cell;
+    }
+    
+    @IBAction func changeView(sender: UISegmentedControl) {
+        
+        if (!(self.views[self.viewSwitch.selectedSegmentIndex] is UITableViewCell)) {
+            var cell: UITableViewCell!
+            
+            if (self.viewSwitch.selectedSegmentIndex == 0) {
+                cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as InformationTableViewCell
+                (cell as InformationTableViewCell).updateProfileInfo.addTarget(self, action: "updateProfileInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+                
+            } else if (self.viewSwitch.selectedSegmentIndex == 1) {
+                cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as PasswordTableViewCell
+                (cell as PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
+            } else if (self.viewSwitch.selectedSegmentIndex == 2) {
+                cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as NotificationsTableViewCell
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            self.views[self.viewSwitch.selectedSegmentIndex] = cell
+        }
+        
+        self.mainTable.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,5 +146,100 @@ class SettingsViewController: UIViewController {
         navigationController.navigationBar.hidden = true
         
         self.presentViewController(navigationController, animated: false, completion: nil)
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        return self.views[self.viewSwitch.selectedSegmentIndex] as UITableViewCell
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return CGFloat(1000.0)
+    }
+    
+    
+    // MARK: - load
+    func getSettings(success: () -> Void, failure: () -> Void) {
+        let url: String = "https://\(APIURL)/api/mobile/profile/getsettings"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .responseJSON { (_, _, JSON, errors) -> Void in
+                if(errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    self.settingsObject = JSON as [Dictionary<String, AnyObject>]
+                    success()
+                }
+        }
+    }
+    
+    // MARK: button actions
+    @IBAction func updateProfileInfo(sender: AnyObject) {
+        self.view.endEditing(true)
+        let cell = self.views[0] as InformationTableViewCell
+        // save
+        let url: String = "https://\(APIURL)/api/mobile/profile/saveuserinfo"
+        
+        let params = ["firstname": cell.firstNameInput.text, "lastname": cell.lastNameInput.text]
+        
+        Alamofire.request(.POST, url, parameters: params)
+            .responseJSON { (_, _, JSON, errors) -> Void in
+                if(errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                } else {
+                    println("saved")
+                }
+        }
+    }
+    @IBAction func updatePostalAddressInfo(sender: AnyObject) {
+        self.view.endEditing(true)
+        let cell = self.views[0] as InformationTableViewCell
+        
+
+    }
+    
+    @IBAction func changePassword(sender: AnyObject) {
+        self.view.endEditing(true)
+        
+        let cell = self.views[1] as PasswordTableViewCell
+        
+        // save
+        let url: String = "https://\(APIURL)/api/v1/user/resetpassword"
+        
+        Alamofire.request(.POST, url, parameters: ["oldpass": cell.actualPassword.text, "password": cell.newPassword.text])
+            .response { (request, response, data, errors) -> Void in
+                
+                if(errors != nil || response?.statusCode >= 400) {
+                    // print error
+                    println(errors)
+                    cell.errorLabel.text = "error!!!"
+                } else {
+                    cell.errorLabel.text = ""
+                    cell.actualPassword.text = ""
+                    cell.newPassword.text = ""
+                    cell.repeatNewPassword.text = ""
+                    println("changed")
+                }
+        }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        self.view.endEditing(true)
     }
 }

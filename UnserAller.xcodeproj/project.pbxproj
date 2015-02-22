@@ -92,6 +92,12 @@
 		12A172891A19470F000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
 		12A1728A1A194739000FAA54 /* UACompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A172881A19470F000FAA54 /* UACompany.swift */; };
 		12A172A01A19491A000FAA54 /* UACreditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */; };
+		12A328A81A98C95100E25D3A /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A328A71A98C95100E25D3A /* InformationTableViewCell.swift */; };
+		12A328AA1A98C96800E25D3A /* InformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12A328A91A98C96800E25D3A /* InformationTableViewCell.xib */; };
+		12A328AC1A98CE0600E25D3A /* PasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A328AB1A98CE0600E25D3A /* PasswordTableViewCell.swift */; };
+		12A328AE1A98CE1900E25D3A /* PasswordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12A328AD1A98CE1900E25D3A /* PasswordTableViewCell.xib */; };
+		12A328B01A98CE5000E25D3A /* NotificationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A328AF1A98CE5000E25D3A /* NotificationsTableViewCell.swift */; };
+		12A328B21A98CE6B00E25D3A /* NotificationsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12A328B11A98CE6B00E25D3A /* NotificationsTableViewCell.xib */; };
 		12A7AB9B1A7E371400D50BE7 /* UAEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */; };
 		12A7ABA21A7E3C2F00D50BE7 /* UAEditorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A7ABA11A7E3C2F00D50BE7 /* UAEditorDelegate.swift */; };
 		12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AE1BD11A20880200BFE3D2 /* UASuggestImageCell.swift */; };
@@ -343,6 +349,12 @@
 		129F4BC61A6C3D0800F5420D /* UASuggestionVoteWithImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteWithImageView.xib; path = Views/Views/UASuggestionVoteWithImageView.xib; sourceTree = "<group>"; };
 		12A172881A19470F000FAA54 /* UACompany.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACompany.swift; sourceTree = "<group>"; };
 		12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditViewModel.swift; sourceTree = "<group>"; };
+		12A328A71A98C95100E25D3A /* InformationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InformationTableViewCell.swift; path = Views/Cells/Settings/InformationTableViewCell.swift; sourceTree = "<group>"; };
+		12A328A91A98C96800E25D3A /* InformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InformationTableViewCell.xib; path = Views/Cells/Settings/InformationTableViewCell.xib; sourceTree = "<group>"; };
+		12A328AB1A98CE0600E25D3A /* PasswordTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PasswordTableViewCell.swift; path = Views/Cells/Settings/PasswordTableViewCell.swift; sourceTree = "<group>"; };
+		12A328AD1A98CE1900E25D3A /* PasswordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PasswordTableViewCell.xib; path = Views/Cells/Settings/PasswordTableViewCell.xib; sourceTree = "<group>"; };
+		12A328AF1A98CE5000E25D3A /* NotificationsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsTableViewCell.swift; path = Views/Cells/Settings/NotificationsTableViewCell.swift; sourceTree = "<group>"; };
+		12A328B11A98CE6B00E25D3A /* NotificationsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NotificationsTableViewCell.xib; path = Views/Cells/Settings/NotificationsTableViewCell.xib; sourceTree = "<group>"; };
 		12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAEditorViewController.swift; path = ViewControllers/UAEditorViewController.swift; sourceTree = "<group>"; };
 		12A7ABA11A7E3C2F00D50BE7 /* UAEditorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAEditorDelegate.swift; path = Delegates/UAEditorDelegate.swift; sourceTree = "<group>"; };
 		12AE1BD11A20880200BFE3D2 /* UASuggestImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestImageCell.swift; path = Views/CellsWithImages/UASuggestImageCell.swift; sourceTree = "<group>"; };
@@ -614,6 +626,19 @@
 			name = DrawerController;
 			sourceTree = "<group>";
 		};
+		12A328A61A98C92100E25D3A /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				12A328A71A98C95100E25D3A /* InformationTableViewCell.swift */,
+				12A328A91A98C96800E25D3A /* InformationTableViewCell.xib */,
+				12A328AB1A98CE0600E25D3A /* PasswordTableViewCell.swift */,
+				12A328AD1A98CE1900E25D3A /* PasswordTableViewCell.xib */,
+				12A328AF1A98CE5000E25D3A /* NotificationsTableViewCell.swift */,
+				12A328B11A98CE6B00E25D3A /* NotificationsTableViewCell.xib */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		12A7ABA01A7E3BEA00D50BE7 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +759,7 @@
 				129CD1331A613E1E00434D67 /* UASuggestionVoteCell.xib */,
 				127665711A6B9D9600E87A0E /* UACommentCell.swift */,
 				127665731A6B9E1700E87A0E /* UACommentCell.xib */,
+				12A328A61A98C92100E25D3A /* Settings */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1011,8 +1037,11 @@
 				12172CC61A267B000049DC34 /* LICENSE in Resources */,
 				12D74B921A6859FA006CE23D /* UASuggestionView.xib in Resources */,
 				12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */,
+				12A328AE1A98CE1900E25D3A /* PasswordTableViewCell.xib in Resources */,
 				D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */,
 				12172CD81A267B000049DC34 /* MWPhotoBrowser.bundle in Resources */,
+				12A328B21A98CE6B00E25D3A /* NotificationsTableViewCell.xib in Resources */,
+				12A328AA1A98C96800E25D3A /* InformationTableViewCell.xib in Resources */,
 				1208037E1A6BAECE00CD19E8 /* UACommentWithImageCell.xib in Resources */,
 				129E9A8F1A19519D00EBF8BF /* UACreditCell.xib in Resources */,
 				D56C462219E04DDE0059735A /* Images.xcassets in Resources */,
@@ -1080,6 +1109,7 @@
 				129837E81A69BB3E00087E5F /* UASuggestionHeaderView.swift in Sources */,
 				12172D001A2680A40049DC34 /* PSTCollectionViewFlowLayout.m in Sources */,
 				12172D071A2680A40049DC34 /* PSTGridLayoutSection.m in Sources */,
+				12A328B01A98CE5000E25D3A /* NotificationsTableViewCell.swift in Sources */,
 				12172CCF1A267B000049DC34 /* SDWebImageManager.m in Sources */,
 				12878AF71A91413900B2F53B /* DrawerVisualState.swift in Sources */,
 				12172CD01A267B000049DC34 /* SDWebImagePrefetcher.m in Sources */,
@@ -1087,6 +1117,7 @@
 				12172CAF1A267B000049DC34 /* MWGridCell.m in Sources */,
 				12172CFE1A2680A40049DC34 /* PSTCollectionViewController.m in Sources */,
 				124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */,
+				12A328A81A98C95100E25D3A /* InformationTableViewCell.swift in Sources */,
 				12172CC91A267B000049DC34 /* NSData+ImageContentType.m in Sources */,
 				124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */,
 				12172CD61A267B000049DC34 /* UIImageView+WebCache.m in Sources */,
@@ -1104,6 +1135,7 @@
 				12172CD51A267B000049DC34 /* UIImageView+HighlightedWebCache.m in Sources */,
 				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
 				12878AF51A91413900B2F53B /* DrawerBarButtonItem.swift in Sources */,
+				12A328AC1A98CE0600E25D3A /* PasswordTableViewCell.swift in Sources */,
 				12172CD21A267B000049DC34 /* UIImage+GIF.m in Sources */,
 				12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */,
 				12172CCC1A267B000049DC34 /* SDWebImageDecoder.m in Sources */,
