@@ -39,45 +39,45 @@ class InformationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func setCell(object: [Dictionary<String, AnyObject>]) {
-        if let firstName = object[0]["firstname"]?.objectForKey("value") as? String {
+    func setCell(settings: Dictionary<String, AnyObject>, address: Dictionary<String, AnyObject>) {
+        if let firstName = settings["firstname"]?.objectForKey("value") as? String {
             self.firstNameInput.text = firstName
         }
         
-        if let lastName = object[0]["lastname"]?.objectForKey("value") as? String {
+        if let lastName = settings["lastname"]?.objectForKey("value") as? String {
             self.lastNameInput.text = lastName
         }
         
-        if let email = object[0]["email"]?.objectForKey("value") as? String {
+        if let email = settings["email"]?.objectForKey("value") as? String {
             self.emailInput.text = email
         }
         
         // address
-        if let firstNamePost = object[1]["firstname"]?.objectForKey("value") as? String {
+        if let firstNamePost = address["firstname"]?.objectForKey("value") as? String {
             self.firstNameAddressInput.text = firstNamePost
         }
         
-        if let lastNamePost = object[1]["lastname"]?.objectForKey("value") as? String {
+        if let lastNamePost = address["lastname"]?.objectForKey("value") as? String {
             self.lastNameAddressInput.text = lastNamePost
         }
         
-        if let genderPost = object[1]["gender"]?.objectForKey("value") as? Bool {
+        if let genderPost = address["gender"]?.objectForKey("value") as? Bool {
             self.gender.selectedSegmentIndex = (genderPost) ? 0 : 1
         }
         
-        if let addressPost = object[1]["address"]?.objectForKey("value") as? String {
+        if let addressPost = address["address"]?.objectForKey("value") as? String {
             self.addressAddressInput.text = addressPost
         }
         
-        if let streetPost = object[1]["street"]?.objectForKey("value") as? String {
+        if let streetPost = address["street"]?.objectForKey("value") as? String {
             self.streetAddressInput.text = streetPost
         }
         
-        if let zipCodePost = object[1]["zipCode"]?.objectForKey("value") as? String {
+        if let zipCodePost = address["zipCode"]?.objectForKey("value") as? String {
             self.zipAddressInput.text = zipCodePost
         }
         
-        if let cityPost = object[1]["city"]?.objectForKey("value") as? String {
+        if let cityPost = address["city"]?.objectForKey("value") as? String {
             self.cityAddressInput.text = cityPost
         }
     }
