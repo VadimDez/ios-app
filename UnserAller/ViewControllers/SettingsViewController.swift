@@ -15,7 +15,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var viewSwitch: UISegmentedControl!
     
     var views: [AnyObject] = ["", "", ""]
-    var settingsObject: [Dictionary<String, AnyObject>]!
+    var settingsObject: Dictionary<String, AnyObject>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.setFirstCell()
         self.getSettings({ () -> Void in
-            (self.views[0] as InformationTableViewCell).setCell(self.settingsObject)
+            let settings = self.settingsObject["settings"] as Dictionary<String, AnyObject>
+            let address = self.settingsObject["address"] as Dictionary<String, AnyObject>
+            (self.views[0] as InformationTableViewCell).setCell(settings, address: address)
         }, failure: { () -> Void in
             
         })
@@ -83,15 +85,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         if (!(self.views[self.viewSwitch.selectedSegmentIndex] is UITableViewCell)) {
             var cell: UITableViewCell!
             
-            if (self.viewSwitch.selectedSegmentIndex == 0) {
-                cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as InformationTableViewCell
-                (cell as InformationTableViewCell).updateProfileInfo.addTarget(self, action: "updateProfileInfo:", forControlEvents: UIControlEvents.TouchUpInside)
-                
-            } else if (self.viewSwitch.selectedSegmentIndex == 1) {
+            if (self.viewSwitch.selectedSegmentIndex == 1) {
                 cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as PasswordTableViewCell
                 (cell as PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
             } else if (self.viewSwitch.selectedSegmentIndex == 2) {
                 cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as NotificationsTableViewCell
+                // set up cell
+                (cell as NotificationsTableViewCell).setUpCell(self.settingsObject["notifications"] as Dictionary<String, AnyObject>)
+                // add action to button
+                (cell as NotificationsTableViewCell).updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
             }
             
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -161,7 +163,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(1000.0)
+        return CGFloat(500.0)
     }
     
     
@@ -177,7 +179,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     // error block
                     failure()
                 } else {
-                    self.settingsObject = JSON as [Dictionary<String, AnyObject>]
+                    self.settingsObject = JSON as Dictionary<String, AnyObject>
                     success()
                 }
         }
@@ -229,6 +231,31 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                     cell.actualPassword.text = ""
                     cell.newPassword.text = ""
                     cell.repeatNewPassword.text = ""
+                    println("changed")
+                }
+        }
+    }
+    
+    @IBAction func updateNotifications(sender: AnyObject) {
+        self.view.endEditing(true)
+        
+        let cell = self.views[2] as NotificationsTableViewCell
+        
+        // save
+        let url: String = "https://\(APIURL)/api/mobile/profile/updatenotifications"
+        
+        Alamofire.request(.POST, url, parameters: [
+            "commentNotification": (cell.newCommentsSwitch.on) ? 1 : 0,
+            "projectInformation": (cell.projectNewsSwitch.on) ? 1 : 0,
+            "projectInvitation": (cell.projectInvitesSwitch.on) ? 1 : 0,
+            "subscription": (cell.generalNewsSwitch.on) ? 1 : 0
+            ])
+            .response { (request, response, data, errors) -> Void in
+                
+                if(errors != nil || response?.statusCode >= 400) {
+                    // print error
+                    println(errors)
+                } else {
                     println("changed")
                 }
         }
