@@ -148,8 +148,13 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ih-Lf-hf2">
+                        <rect key="frame" x="99" y="102" width="212" height="24"/>
+                        <state key="normal" title="Language">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
-                <color key="backgroundColor" red="0.60132028839999996" green="1" blue="0.86202141939999999" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="addressAddressInput" destination="R2o-UN-xB1" id="CHM-RG-aot"/>
@@ -158,6 +163,7 @@
                 <outlet property="firstNameAddressInput" destination="TnO-mm-tsk" id="CIn-uJ-x5A"/>
                 <outlet property="firstNameInput" destination="BpS-MD-12g" id="S7W-XP-e5c"/>
                 <outlet property="gender" destination="osx-qI-xDU" id="TrR-BR-6Wy"/>
+                <outlet property="languageButton" destination="5Ih-Lf-hf2" id="Q8F-ih-gle"/>
                 <outlet property="lastNameAddressInput" destination="bd2-Ch-Drv" id="WcF-JB-K6v"/>
                 <outlet property="lastNameInput" destination="sw4-oS-XEs" id="aCV-yg-cMD"/>
                 <outlet property="streetAddressInput" destination="zR3-ZM-c24" id="X87-hU-0V2"/>
@@ -165,7 +171,7 @@
                 <outlet property="updateProfileInfo" destination="3UE-YX-XJ7" id="E6V-nV-pBI"/>
                 <outlet property="zipAddressInput" destination="KQJ-bB-DVO" id="h8g-kQ-ZbG"/>
             </connections>
-            <point key="canvasLocation" x="429" y="436"/>
+            <point key="canvasLocation" x="429" y="435"/>
         </tableViewCell>
     </objects>
 </document>

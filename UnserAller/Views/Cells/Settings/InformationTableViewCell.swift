@@ -14,6 +14,7 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var lastNameInput: UITextField!
     @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var updateProfileInfo: UIButton!
+    @IBOutlet weak var languageButton: UIButton!
     
     // address
     @IBOutlet weak var firstNameAddressInput: UITextField!
@@ -24,6 +25,8 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var zipAddressInput: UITextField!
     @IBOutlet weak var cityAddressInput: UITextField!
     @IBOutlet weak var updateAddressInfo: UIButton!
+    
+    var language: String!
     
     
     override func awakeFromNib() {
@@ -50,6 +53,10 @@ class InformationTableViewCell: UITableViewCell {
         
         if let email = settings["email"]?.objectForKey("value") as? String {
             self.emailInput.text = email
+        }
+        
+        if let _language = settings["language"]?.objectForKey("value") as? String {
+            self.language = _language
         }
         
         // address

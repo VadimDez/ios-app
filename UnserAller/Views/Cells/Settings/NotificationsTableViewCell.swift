@@ -15,6 +15,9 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var projectNewsSwitch: UISwitch!
     @IBOutlet weak var newCommentsSwitch: UISwitch!
     @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var notificationIntervalButton: UIButton!
+    
+    var notificationInterval: String!
     
     
     override func awakeFromNib() {
@@ -44,6 +47,10 @@ class NotificationsTableViewCell: UITableViewCell {
         
         if let projectNews = config["projectInformation"]?.objectForKey("value") as? Int {
             self.projectNewsSwitch.setOn((projectNews == 1), animated: false)
+        }
+        
+        if let interval = config["notificationInterval"]?.objectForKey("value") as? String {
+            self.notificationInterval = interval
         }
     }
 }

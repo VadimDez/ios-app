@@ -49,8 +49,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abM-JE-VLl">
-                        <rect key="frame" x="266" y="175" width="51" height="30"/>
+                        <rect key="frame" x="261" y="195" width="51" height="30"/>
                         <state key="normal" title="Update">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0F-Fu-Yhp">
+                        <rect key="frame" x="24" y="180" width="288" height="30"/>
+                        <state key="normal" title="Notification interval">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -60,11 +66,12 @@
             <connections>
                 <outlet property="generalNewsSwitch" destination="L1p-fs-cjB" id="uc4-9s-RtJ"/>
                 <outlet property="newCommentsSwitch" destination="6oQ-ET-O30" id="Kto-PT-zPW"/>
+                <outlet property="notificationIntervalButton" destination="q0F-Fu-Yhp" id="87N-S4-X6P"/>
                 <outlet property="projectInvitesSwitch" destination="whU-KD-nAA" id="CY8-CP-leK"/>
                 <outlet property="projectNewsSwitch" destination="j7e-LZ-opX" id="6d8-6r-mhX"/>
                 <outlet property="updateButton" destination="abM-JE-VLl" id="tHc-Zx-DzO"/>
             </connections>
-            <point key="canvasLocation" x="433" y="389"/>
+            <point key="canvasLocation" x="433" y="388"/>
         </tableViewCell>
     </objects>
 </document>
