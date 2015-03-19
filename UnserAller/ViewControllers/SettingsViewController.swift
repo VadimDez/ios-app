@@ -122,12 +122,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         
-        self.updateUIPickerView(self.viewSwitch.selectedSegmentIndex)
+        if (self.viewSwitch.selectedSegmentIndex == 0 || self.viewSwitch.selectedSegmentIndex == 2) {
+            self.updateUIPickerView(self.viewSwitch.selectedSegmentIndex)
+        }
         self.mainTable.reloadData()
     }
     
+    /**
+    Update uipicker view
+
+    :param: selectedIndex int
+    */
     func updateUIPickerView(selectedIndex: Int) {
         var selected: String!
+        
         if (selectedIndex == 0) {
             self.pickerArray = self.languages
             let settings = self.settingsObject["settings"] as Dictionary<String, AnyObject>
@@ -147,6 +155,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         let keys = self.pickerArray.keys.array
+        
         let position = find(keys, selected)?.hashValue
 
         (self.pickerViewTextField.inputView as UIPickerView).selectRow(position!, inComponent: 0, animated: true)
@@ -163,13 +172,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+    MARK: - Navigation
     */
     
     /**
