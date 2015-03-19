@@ -8,8 +8,15 @@
 
 
 import UIKit
+import CoreData
 
 class MenuTableViewController: UITableViewController {
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var firstName: UILabel!
+    @IBOutlet weak var lastName: UILabel!
+    
+    
     var selectedMenuItem : Int = 0
     let menuItems: [String] = ["Wall", "Projects", "Credits", "Bookmarks","Activity", "Settings"]
     
@@ -17,9 +24,9 @@ class MenuTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Customize apperance of table view
-        tableView.contentInset = UIEdgeInsetsMake(64.0, 0, 0, 0) //
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
         tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.clearColor()
+        tableView.backgroundColor = UIColor.whiteColor()
         tableView.scrollsToTop = false
         self.tableView.scrollEnabled = false
         
@@ -27,6 +34,32 @@ class MenuTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
         
         tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
+        self.setProfileData()
+    }
+    
+    /**
+    Set profile data
+    */
+    func setProfileData() {
+        var user: UAUser = UAUser()
+        user.getUserInfo { () -> Void in
+            var error: NSError?
+            let managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+            
+            // fetch request
+            let fetchRequest = NSFetchRequest(entityName: "User")
+            
+            // perform fetch
+            if let results = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
+                if (results.count > 0) {
+                    let mainUser = results[0] as User
+                    println("================================================================================================")
+                    println(results[0] as User)
+//                    self.firstName.text = mainUser.firstname
+                }
+            }
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {

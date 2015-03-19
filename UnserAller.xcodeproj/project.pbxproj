@@ -99,6 +99,8 @@
 		12AE1BD61A209FBE00BFE3D2 /* UACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */; };
 		12AE1BD81A209FD600BFE3D2 /* UACollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */; };
 		12B7D4781A6EE75200642D5B /* UACompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */; };
+		12C33E1D1ABB68EE00ED6ADF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C33E1C1ABB68EE00ED6ADF /* User.swift */; };
+		12C33E1E1ABB693200ED6ADF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C33E1C1ABB68EE00ED6ADF /* User.swift */; };
 		12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */; };
 		12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C528A31A0FD9A100B8A50C /* UAProject.swift */; };
 		12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD63221A5DBE3900E2EDC4 /* UANewsCell.swift */; };
@@ -109,6 +111,7 @@
 		12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */; };
 		12D74B901A685951006CE23D /* UASuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D74B8F1A685951006CE23D /* UASuggestionView.swift */; };
 		12D74B921A6859FA006CE23D /* UASuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12D74B911A6859FA006CE23D /* UASuggestionView.xib */; };
+		12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12D8BB161ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld */; };
 		12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */; };
 		12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F111A5C2ABF007CA3B5 /* UANews.swift */; };
 		12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA195C1A1939C000259B68 /* UACreditTests.swift */; };
@@ -350,6 +353,7 @@
 		12AE1BD51A209FBE00BFE3D2 /* UACollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACollectionViewCell.swift; path = Views/Cells/UACollectionViewCell.swift; sourceTree = "<group>"; };
 		12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UACollectionViewCell.xib; sourceTree = "<group>"; };
 		12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACompanyViewController.swift; path = ViewControllers/UACompanyViewController.swift; sourceTree = "<group>"; };
+		12C33E1C1ABB68EE00ED6ADF /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/DB/User.swift; sourceTree = "<group>"; };
 		12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectViewModel.swift; path = ViewModels/UAProjectViewModel.swift; sourceTree = "<group>"; };
 		12C528A31A0FD9A100B8A50C /* UAProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAProject.swift; sourceTree = "<group>"; };
 		12CD63221A5DBE3900E2EDC4 /* UANewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsCell.swift; path = Views/Cells/UANewsCell.swift; sourceTree = "<group>"; };
@@ -360,6 +364,7 @@
 		12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAProjectNewsCell.xib; path = Views/Cells/UAProjectNewsCell.xib; sourceTree = "<group>"; };
 		12D74B8F1A685951006CE23D /* UASuggestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionView.swift; path = Views/Views/UASuggestionView.swift; sourceTree = "<group>"; };
 		12D74B911A6859FA006CE23D /* UASuggestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionView.xib; path = Views/Views/UASuggestionView.xib; sourceTree = "<group>"; };
+		12D8BB171ABA0F5F00E3DC0D /* UnserAller.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UnserAller.xcdatamodel; sourceTree = "<group>"; };
 		12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsViewModel.swift; path = ViewModels/UANewsViewModel.swift; sourceTree = "<group>"; };
 		12DF1F111A5C2ABF007CA3B5 /* UANews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANews.swift; path = Models/UANews.swift; sourceTree = "<group>"; };
 		12EA195C1A1939C000259B68 /* UACreditTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditTests.swift; sourceTree = "<group>"; };
@@ -622,6 +627,14 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
+		12C33E071ABB5F9F00ED6ADF /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				12C33E1C1ABB68EE00ED6ADF /* User.swift */,
+			);
+			name = DB;
+			sourceTree = "<group>";
+		};
 		12D74B8B1A685921006CE23D /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,6 +689,7 @@
 		D5291669197C2B180038A048 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				12C33E071ABB5F9F00ED6ADF /* DB */,
 				12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */,
 				D529166A197C2B5C0038A048 /* UAUser.swift */,
 				D52FF94519E3229F006139E2 /* UASuggestion.swift */,
@@ -782,6 +796,7 @@
 				D5291669197C2B180038A048 /* Models */,
 				D5291668197C27700038A048 /* ViewControllers */,
 				D5812287197C08B600E3573C /* AppDelegate.swift */,
+				12D8BB161ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld */,
 				D581228B197C08B600E3573C /* Main.storyboard */,
 				D581228E197C08B600E3573C /* Images.xcassets */,
 				D56C462319E04DFC0059735A /* Media.xcassets */,
@@ -1097,6 +1112,7 @@
 				124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */,
 				12172CFC1A2680A40049DC34 /* PSTCollectionView.m in Sources */,
 				127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */,
+				12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */,
 				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
 				12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */,
 				12172CB01A267B000049DC34 /* MWGridViewController.m in Sources */,
@@ -1140,6 +1156,7 @@
 				12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */,
 				12172D031A2680A40049DC34 /* PSTCollectionViewUpdateItem.m in Sources */,
 				D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */,
+				12C33E1D1ABB68EE00ED6ADF /* User.swift in Sources */,
 				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
 				129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */,
 				12172D041A2680A40049DC34 /* PSTGridLayoutInfo.m in Sources */,
@@ -1196,6 +1213,7 @@
 				D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */,
 				D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */,
 				12A1728A1A194739000FAA54 /* UACompany.swift in Sources */,
+				12C33E1E1ABB693200ED6ADF /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1407,6 +1425,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		12D8BB161ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				12D8BB171ABA0F5F00E3DC0D /* UnserAller.xcdatamodel */,
+			);
+			currentVersion = 12D8BB171ABA0F5F00E3DC0D /* UnserAller.xcdatamodel */;
+			path = UnserAller.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D581227A197C08B600E3573C /* Project object */;
 }
