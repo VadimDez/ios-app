@@ -13,8 +13,7 @@ import CoreData
 class MenuTableViewController: UITableViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var firstName: UILabel!
-    @IBOutlet weak var lastName: UILabel!
+    @IBOutlet weak var userName: UILabel!
     
     
     var selectedMenuItem : Int = 0
@@ -23,42 +22,62 @@ class MenuTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Customize apperance of table view
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.whiteColor()
-        tableView.scrollsToTop = false
-        self.tableView.scrollEnabled = false
-        
+        self.setupTableView()
         // Preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
-        tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
         self.setProfileData()
+    }
+    
+    /**
+     *  Setup table view
+     */
+    func setupTableView() {
+        // Customize apperance of table view
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
+        self.tableView.separatorStyle = .None
+        self.tableView.backgroundColor = UIColor.whiteColor()
+        self.tableView.scrollsToTop = false
+        self.tableView.scrollEnabled = false
+        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
+    }
+    
+    /**
+    *  Setup profile image
+    */
+    func setupProfileImage() {
+        var imageLayer:CALayer = self.profileImage.layer
+        imageLayer.cornerRadius = 40
+        imageLayer.masksToBounds = true
     }
     
     /**
     Set profile data
     */
     func setProfileData() {
-        var user: UAUser = UAUser()
-        user.getUserInfo { () -> Void in
-            var error: NSError?
-            let managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+        var user = UAUser()
+        
+        self.setupProfileImage()
+        
+        user.getFromAPI { (user) -> Void in
+            self.userName.text = "\(user.firstname) \(user.lastname)"
+            self.loadProfileImage(user.id.unsignedLongValue)
+        }
+//            var error: NSError?
+//            let managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
             
             // fetch request
-            let fetchRequest = NSFetchRequest(entityName: "User")
+//            let fetchRequest = NSFetchRequest(entityName: "User")
             
             // perform fetch
-            if let results = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
-                if (results.count > 0) {
-                    let mainUser = results[0] as User
-                    println("================================================================================================")
-                    println(results[0] as User)
-//                    self.firstName.text = mainUser.firstname
-                }
-            }
-        }
+//            if let results = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
+//                if (results.count > 0) {
+//                    let mainUser = results[0] as User
+//                    self.userName.text = "\(mainUser.firstname) \(mainUser.lastname)"
+//                    self.loadProfileImage(mainUser.id.unsignedLongValue)
+//                }
+//            }
+//        })
         
     }
     
@@ -148,4 +167,20 @@ class MenuTableViewController: UITableViewController {
     // Pass the selected object to the new view controller.
     }
     */
+    
+    /**
+     * Load profile image
+     */
+    func loadProfileImage(id: UInt) {
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/\(id)/80/80")!)
+        self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            // test
+            if let weakSelf = self {
+                weakSelf.profileImage.image = image
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+                
+        }
+    }
 }

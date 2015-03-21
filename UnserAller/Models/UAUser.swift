@@ -17,6 +17,9 @@ class UAUser {
     var profileImageURL: String!
     var profileImageView: UIImageView!
     
+    // CoreData
+    var managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+    
     func initWithParams(id: UInt, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
         self.id = id
         self.fullName = usrFullname
@@ -104,74 +107,6 @@ class UAUser {
 //        getImage.resume()
 //    }
     
-    func getUserInfo(success: () -> Void) {
-        let url: String = "https://\(APIURL)/api/v1/user"
-        
-        Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { ( request, response, JSON, error) in
-                if (error != nil) {
-                    // error handling
-                } else {
-                    self.saveUserInfo(JSON as Dictionary<String, AnyObject>, success: success)
-                }
-        }
-    }
-    
-    func saveUserInfo(JSON: Dictionary<String, AnyObject>, success: () -> Void) {
-//        println(JSON)
-        if let data = JSON["user"] as? Dictionary<String, AnyObject> {
-            var error: NSError?
-
-            let managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
-            
-            // fetch request
-            let fetchRequest = NSFetchRequest(entityName: "User")
-            
-            // perform fetch
-            if let results = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
-                var mainUser: User?
-                // create new
-                if (results.count == 0) {
-//                    mainUser = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: managedContext) as? User
-                    let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedContext)
-                    mainUser = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext) as? User
-                } else {
-                    println(results[0])
-                    mainUser = results[0]
-                }
-
-                /*
-                // save
-                let entity = NSEntityDescription.entityForName("User", inManagedObjectContext: managedContext)
-                let user = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-                */
-                
-
-                if let _lastName = JSON["id"] as? Int {
-                    mainUser?.id = _lastName
-                }
-                
-                if let _firstName = JSON["firstname"] as? String {
-                    mainUser?.firstname = _firstName
-                }
-                
-                if let _lastName = JSON["lastname"] as? String {
-                    mainUser?.lastname = _lastName
-                }
-                
-                
-                if !managedContext.save(&error) {
-                    println("Could not save \(error), \(error?.userInfo)")
-                } else {
-                    success()
-                }
-            } else {
-                println("Could not fetch \(error)")
-            }
-
-        }
-    }
-    
     
     /**
     Log out user from app
@@ -192,6 +127,77 @@ class UAUser {
                     success()
                 }
                 
+        }
+    }
+    
+    /**
+    *  Get user from api
+    */
+    func getFromAPI(success: (user: User) -> Void) {
+        let url: String = "https://\(APIURL)/api/v1/user"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .responseJSON { ( request, response, JSON, error) in
+                if (error != nil) {
+                    // error handling
+                } else {
+                    //                  println(JSON)
+                    if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
+                        var mainUser = self.getFromDB(data["id"] as UInt)
+                        
+                        mainUser.id         = data["id"] as Int
+                        mainUser.firstname  = data["firstname"] as String
+                        mainUser.lastname   = data["lastname"] as String
+                        
+                        self.save()
+                        
+                        success(user: mainUser)
+                    }
+                }
+        }
+    }
+    
+    /**
+    *  Get user from db
+    */
+    func getFromDB(id: UInt) -> User {
+        var error: NSError?
+        var user: User
+        
+        // fetch request
+        let fetchRequest = NSFetchRequest(entityName: "User")
+        
+        // predicate
+        let predicate = NSPredicate(format: "id == %i", id)
+        
+        // set predicate
+        fetchRequest.predicate = predicate
+        
+        // perform fetch
+        if let results = self.managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
+            
+            // create new
+            if (results.count == 0) {
+                user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as User
+            } else {
+                user = results[0]
+            }
+        } else {
+            println("Could not fetch \(error)")
+            user = User()
+        }
+        
+        return user
+    }
+    
+    /**
+    *  Save
+    */
+    func save() {
+        var error: NSError?
+        
+        if !self.managedContext.save(&error) {
+            println("Could not save \(error)")
         }
     }
 }
