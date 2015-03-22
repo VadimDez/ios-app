@@ -50,7 +50,14 @@ class NotificationsTableViewCell: UITableViewCell {
         }
         
         if let interval = config["notificationInterval"]?.objectForKey("value") as? String {
-            self.notificationInterval = interval
+            self.setInterval(interval)
         }
+    }
+    
+    // set interval
+    func setInterval(interval: String) -> Void {
+        println(interval)
+        self.notificationInterval = interval
+        self.notificationIntervalButton.setTitle(interval, forState: UIControlState.Normal)
     }
 }

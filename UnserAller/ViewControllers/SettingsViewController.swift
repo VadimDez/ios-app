@@ -16,9 +16,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     var views: [AnyObject] = ["", "", ""]
-    var settingsObject: Dictionary<String, AnyObject>!
+    var settingsDictionary: Dictionary<String, AnyObject>!
     var pickerViewTextField: UITextField!
     var pickerArray: [String: AnyObject]!
+    var user: UAUser = UAUser()
     let languages: [String: AnyObject] = ["0": "Deutsch", "1": "English"]
     let notificationIntervals: [String: AnyObject] = ["instant": "instantly", "daily": "daily", "weekly": "weekly", "never": "never"]
     
@@ -39,11 +40,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.pickerArray = self.languages
         
         // load settings
-        self.getSettings({ () -> Void in
+        self.user.getSettings({ (settings) -> Void in
+
+            self.settingsDictionary = settings
+            let _settings = settings["settings"] as Dictionary<String, AnyObject>
+            let _address = settings["address"] as Dictionary<String, AnyObject>
             
-            let settings = self.settingsObject["settings"] as Dictionary<String, AnyObject>
-            let address = self.settingsObject["address"] as Dictionary<String, AnyObject>
-            (self.views[0] as InformationTableViewCell).setCell(settings, address: address)
+            // set up
+            (self.views[0] as InformationTableViewCell).setCell(_settings, address: _address)
             
         }, failure: { () -> Void in
             
@@ -106,13 +110,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             
             if (self.viewSwitch.selectedSegmentIndex == 1) {
                 cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as PasswordTableViewCell
+                
                 (cell as PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
             } else if (self.viewSwitch.selectedSegmentIndex == 2) {
                 cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as NotificationsTableViewCell
+                
                 // set up cell
-                (cell as NotificationsTableViewCell).setUpCell(self.settingsObject["notifications"] as Dictionary<String, AnyObject>)
+                (cell as NotificationsTableViewCell).setUpCell(self.settingsDictionary["notifications"] as Dictionary<String, AnyObject>)
+                
                 // add action to button
                 (cell as NotificationsTableViewCell).updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
+                
                 // update notification interval
                 (cell as NotificationsTableViewCell).notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
             }
@@ -138,29 +146,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         if (selectedIndex == 0) {
             self.pickerArray = self.languages
-            let settings = self.settingsObject["settings"] as Dictionary<String, AnyObject>
-            if let language = settings["language"]?.objectForKey("value") as? String {
-                selected = language
-            } else {
-                selected = "0"
-            }
+            
+            // get selected "0" or "1", etc
+            selected = (self.views[0] as InformationTableViewCell).language
+            
         } else if (selectedIndex == 2) {
             self.pickerArray = self.notificationIntervals
-            let notifications = self.settingsObject["notifications"] as Dictionary<String, AnyObject>
-            if let interval = notifications["notificationInterval"]?.objectForKey("value") as? String {
-                selected = interval
-            } else {
-                selected = "instant"
-            }
+            
+            // get notification interval
+            selected = (self.views[2] as NotificationsTableViewCell).notificationInterval
         }
         
         let keys = self.pickerArray.keys.array
         
         let position = find(keys, selected)?.hashValue
-
-        (self.pickerViewTextField.inputView as UIPickerView).selectRow(position!, inComponent: 0, animated: true)
+        
         // update uipicker
         (self.pickerViewTextField.inputView as UIPickerView).reloadAllComponents()
+        
+        // select row
+        (self.pickerViewTextField.inputView as UIPickerView).selectRow(position!, inComponent: 0, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -170,10 +175,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func showMenu(sender: AnyObject) {
         self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
-
-    /*
-    MARK: - Navigation
-    */
     
     /**
     Logout button
@@ -181,10 +182,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     :param: sender
     */
     @IBAction func logoutAction(sender: AnyObject) {
-        var user: UAUser = UAUser()
-
         // logout
-        user.logout({ () -> Void in
+        self.user.logout({ () -> Void in
             // show initial
             self.presentInitialViewController()
         }, failure: { () -> Void in
@@ -204,6 +203,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.presentViewController(navigationController, animated: false, completion: nil)
     }
     
+    // MARK: table view
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -217,26 +218,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(500.0)
-    }
-    
-    
-    // MARK: - load
-    func getSettings(success: () -> Void, failure: () -> Void) {
-        let url: String = "https://\(APIURL)/api/mobile/profile/getsettings"
-        
-        Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
-                    // print error
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
-                    self.settingsObject = JSON as Dictionary<String, AnyObject>
-                    success()
-                }
+        if (self.viewSwitch.selectedSegmentIndex == 0) {
+            return CGFloat(500.0)
+        } else if (self.viewSwitch.selectedSegmentIndex == 1) {
+            return CGFloat(200.0)
         }
+        
+        return CGFloat(230.0)
     }
     
     // MARK: button actions
@@ -248,19 +236,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func updateProfileInfo(sender: AnyObject) {
         self.view.endEditing(true)
         let cell = self.views[0] as InformationTableViewCell
+        
         // save
-        let url: String = "https://\(APIURL)/api/mobile/profile/saveuserinfo"
-        
-        let params = ["firstname": cell.firstNameInput.text, "lastname": cell.lastNameInput.text, "language": cell.language]
-        
-        Alamofire.request(.POST, url, parameters: params)
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
-                    // print error
-                    println(errors)
-                } else {
-                    println("saved")
-                }
+        self.user.updateInfo(cell.firstNameInput.text, lastName: cell.lastNameInput.text, language: cell.language, success: { () -> Void in
+            // success
+        }) { () -> Void in
+            // failure
         }
     }
     
@@ -271,26 +252,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
-        let url = "https://\(APIURL)/api/mobile/profile/saveuserpostalinfo"
         let cell = self.views[0] as InformationTableViewCell
         
-        Alamofire.request(.POST, url, parameters: [
-            "firstname":    cell.firstNameAddressInput.text,
-            "lastname":     cell.lastNameAddressInput.text,
-            "street":       cell.streetAddressInput.text,
-            "city":         cell.cityAddressInput.text,
-            "zipCode":      cell.zipAddressInput.text,
-            "address":      cell.addressAddressInput.text,
-            "gender":       "\(cell.gender.selectedSegmentIndex)"
-            ])
-            .response{ (request, response, data, errors) -> Void in
-                
-                if(errors != nil || response?.statusCode >= 400) {
-                    // print error
-                    println(errors)
-                } else {
-                    println("changed")
-                }
+        let gender = "\(cell.gender.selectedSegmentIndex)"
+        
+        self.user.updateAddress(cell.firstNameAddressInput.text, lastName: cell.lastNameAddressInput.text, street: cell.streetAddressInput.text, city: cell.cityAddressInput.text, zipCode: cell.zipAddressInput.text, address: cell.addressAddressInput.text, gender: gender, success: { () -> Void in
+            // success
+        }) { () -> Void in
+            // failure
         }
     }
     
@@ -305,22 +274,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = self.views[1] as PasswordTableViewCell
         
         // save
-        let url: String = "https://\(APIURL)/api/v1/user/resetpassword"
-        
-        Alamofire.request(.POST, url, parameters: ["oldpass": cell.actualPassword.text, "password": cell.newPassword.text])
-            .response { (request, response, data, errors) -> Void in
-                
-                if(errors != nil || response?.statusCode >= 400) {
-                    // print error
-                    println(errors)
-                    cell.errorLabel.text = "error!!!"
-                } else {
-                    cell.errorLabel.text = ""
-                    cell.actualPassword.text = ""
-                    cell.newPassword.text = ""
-                    cell.repeatNewPassword.text = ""
-                    println("changed")
-                }
+        self.user.changePassword(cell.actualPassword.text, newPassword: cell.newPassword.text, success: { () -> Void in
+            // success
+            cell.clear()
+        }) { () -> Void in
+            // failure
+            cell.errorLabel.text = "error!!!"
         }
     }
     
@@ -334,25 +293,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = self.views[2] as NotificationsTableViewCell
         
-        // save
-        let url: String = "https://\(APIURL)/api/mobile/profile/updatenotifications"
+        let commentNotification =  (cell.newCommentsSwitch.on) ? 1 : 0;
+        let projectInformation = (cell.projectNewsSwitch.on) ? 1 : 0;
+        let projectInvitation =    (cell.projectInvitesSwitch.on) ? 1 : 0;
+        let subscription =    (cell.generalNewsSwitch.on) ? 1 : 0;
         
-        Alamofire.request(.POST, url, parameters: [
-            "commentNotification":  (cell.newCommentsSwitch.on) ? 1 : 0,
-            "projectInformation":   (cell.projectNewsSwitch.on) ? 1 : 0,
-            "projectInvitation":    (cell.projectInvitesSwitch.on) ? 1 : 0,
-            "subscription":         (cell.generalNewsSwitch.on) ? 1 : 0,
-            "notificationInterval": cell.notificationInterval
-            ])
-            .response { (request, response, data, errors) -> Void in
-                
-                if(errors != nil || response?.statusCode >= 400) {
-                    // print error
-                    println(errors)
-                } else {
-                    println("changed")
-                }
+        // update
+        self.user.updateNotifications(commentNotification, projectInformation: projectInformation, projectInvitation: projectInvitation, subscription: subscription, notificationInterval: cell.notificationInterval, success: { () -> Void in
+            // success
+        }) { () -> Void in
+            // failure
         }
+        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -425,9 +377,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let key = keys[(self.pickerViewTextField.inputView as UIPickerView).selectedRowInComponent(0)]
         
         if (self.viewSwitch.selectedSegmentIndex == 0) {
-            (self.views[0] as InformationTableViewCell).language = key
+            (self.views[0] as InformationTableViewCell).setLanguage(key)
         } else if (self.viewSwitch.selectedSegmentIndex == 2) {
-            (self.views[0] as NotificationsTableViewCell).notificationInterval = key
+            (self.views[2] as NotificationsTableViewCell).setInterval(key)
         }
     }
     
@@ -440,8 +392,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        let keys = self.pickerArray.keys.array
-        let key = keys[row] as String
+        let keys    = self.pickerArray.keys.array
+        let key     = keys[row] as String
         return self.pickerArray[key] as String
     }
     

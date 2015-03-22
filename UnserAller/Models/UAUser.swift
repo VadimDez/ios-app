@@ -205,4 +205,107 @@ class UAUser {
             println("Could not save \(error)")
         }
     }
+    
+    /**
+     *  Change password
+     */
+    func changePassword(actualPassword: String, newPassword: String, success: () -> Void, failure: () -> Void) -> Void {
+        // save
+        let url: String = "https://\(APIURL)/api/v1/user/resetpassword"
+        
+        Alamofire.request(.POST, url, parameters: ["oldpass": actualPassword, "password": newPassword])
+            .response { (request, response, data, errors) -> Void in
+                
+                if(errors != nil || response?.statusCode >= 400) {
+                    // print error
+                    println(errors)
+                    failure()
+                } else {
+                    success()
+                }
+        }
+    }
+    
+    /**
+     *  Update user's notifications
+     */
+    func updateNotifications(commentNotification: Int, projectInformation: Int, projectInvitation: Int, subscription: Int, notificationInterval: String, success: () -> Void, failure: () -> Void) -> Void {
+        
+        // save
+        let url: String = "https://\(APIURL)/api/mobile/profile/updatenotifications"
+        
+        Alamofire.request(.POST, url, parameters: [
+            "commentNotification":  commentNotification,
+            "projectInformation":   projectInformation,
+            "projectInvitation":    projectInvitation,
+            "subscription":         subscription,
+            "notificationInterval": notificationInterval
+            ])
+            .response { (request, response, data, errors) -> Void in
+                
+                if(errors != nil || response?.statusCode >= 400) {
+                    // print error
+                    println(errors)
+                    failure()
+                } else {
+                    success()
+                }
+        }
+    }
+    
+    func updateAddress(firstName: String, lastName: String, street: String, city: String, zipCode: String, address: String, gender: String, success: () -> Void, failure: () -> Void) -> Void {
+        
+        let url = "https://\(APIURL)/api/mobile/profile/saveuserpostalinfo"
+        
+        Alamofire.request(.POST, url, parameters: [
+            "firstname":    firstName,
+            "lastname":     lastName,
+            "street":       street,
+            "city":         city,
+            "zipCode":      zipCode,
+            "address":      address,
+            "gender":       gender
+            ])
+            .response{ (request, response, data, errors) -> Void in
+                
+                if(errors != nil || response?.statusCode >= 400) {
+                    // print error
+                    println(errors)
+                    failure()
+                } else {
+                    success()
+                }
+        }
+    }
+    
+    func updateInfo(firstName: String, lastName: String, language: String, success: () -> Void, failure: () -> Void) -> Void {
+        let url: String = "https://\(APIURL)/api/mobile/profile/saveuserinfo"
+        
+        Alamofire.request(.POST, url, parameters: ["firstname": firstName, "lastname": lastName, "language": language])
+            .responseJSON { (_, _, JSON, errors) -> Void in
+                if(errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    failure()
+                } else {
+                    success()
+                }
+        }
+    }
+    
+    func getSettings(success: (settings: Dictionary<String, AnyObject>) -> Void, failure: () -> Void) {
+        let url: String = "https://\(APIURL)/api/mobile/profile/getsettings"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .responseJSON { (_, _, JSON, errors) -> Void in
+                if(errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    success(settings: JSON  as Dictionary<String, AnyObject>)
+                }
+        }
+    }
 }

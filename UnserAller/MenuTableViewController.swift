@@ -20,23 +20,27 @@ class MenuTableViewController: UITableViewController {
     let menuItems: [String] = ["Wall", "Projects", "Credits", "Bookmarks","Activity", "Settings"]
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
         self.setupTableView()
         // Preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
         self.setProfileData()
+        
+        
+        super.viewDidLoad()
     }
-    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.BlackOpaque
+    }
     /**
      *  Setup table view
      */
     func setupTableView() {
         // Customize apperance of table view
-        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
-        self.tableView.separatorStyle = .None
-        self.tableView.backgroundColor = UIColor.whiteColor()
+//        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
+//        self.tableView.separatorStyle = .None
+//        self.tableView.backgroundColor = UIColor.whiteColor()
         self.tableView.scrollsToTop = false
         self.tableView.scrollEnabled = false
         self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
@@ -47,7 +51,7 @@ class MenuTableViewController: UITableViewController {
     */
     func setupProfileImage() {
         var imageLayer:CALayer = self.profileImage.layer
-        imageLayer.cornerRadius = 40
+        imageLayer.cornerRadius = 30
         imageLayer.masksToBounds = true
     }
     
@@ -88,14 +92,18 @@ class MenuTableViewController: UITableViewController {
         
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MenuCell")
-            cell!.backgroundColor = UIColor.clearColor()
-            cell!.textLabel?.textColor = UIColor.darkGrayColor()
-            let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
-            selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
-            cell!.selectedBackgroundView = selectedBackgroundView
+//            cell!.backgroundColor = UIColor.clearColor()
+            
         }
         
-        cell!.textLabel?.text = menuItems[indexPath.row]// "ViewController #\(indexPath.row+1)"
+        cell!.textLabel?.textColor = UIColor.whiteColor()
+        cell!.textLabel?.text = menuItems[indexPath.row]
+        cell?.imageView?.image = UIImage(named: menuItems[indexPath.row])
+        
+        
+        let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
+        selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.9)
+        cell!.selectedBackgroundView = selectedBackgroundView
         
         return cell!
     }

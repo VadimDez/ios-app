@@ -441,10 +441,14 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as UAPhaseCell
         
+        if (self.phasesArray.count == 0) {
+            return cell
+        }
+        
         if (indexPath.row == 0) {
             cell.setNewsCell()
         } else {
-            cell.setPhaseName(phasesArray[indexPath.row - 1].name)
+            cell.setPhaseName(self.phasesArray[indexPath.row - 1].name)
             
             let totalPhases = self.phasesArray.count
             if ((totalPhases - indexPath.row) == 0) {
@@ -624,6 +628,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     let projectViewModel: UAProjectViewModel = UAProjectViewModel()
 
                     let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as [Dictionary<String, AnyObject>])
+                    
                     self.phasesArray = self.phasesArray + array
                     
                     success()

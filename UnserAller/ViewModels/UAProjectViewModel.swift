@@ -80,10 +80,20 @@ class UAProjectViewModel: NSObject {
                 phase.id = id
             }
             if let name = object["name"] as? String {
+                println("name")
                 phase.name = name
             }
             if let type = object["type"] as? String {
                 phase.type = type
+            }
+            
+            // if old phase - take phase type as name
+            if (phase.name == nil) {
+                if (phase.type != nil) {
+                    phase.name = phase.type
+                } else {
+                    phase.name = ""
+                }
             }
             
             phases.append(phase)

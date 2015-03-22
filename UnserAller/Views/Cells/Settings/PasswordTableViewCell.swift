@@ -27,4 +27,14 @@ class PasswordTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    /**
+     *  Clear
+     */
+    func clear() -> Void {
+        self.errorLabel.text        = ""
+        self.actualPassword.text    = ""
+        self.newPassword.text       = ""
+        self.repeatNewPassword.text = ""
+    }
 }

@@ -27,6 +27,7 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var updateAddressInfo: UIButton!
     
     var language: String!
+    let languages: [String: String] = ["0": "Deutsch", "1": "English"]
     
     
     override func awakeFromNib() {
@@ -55,8 +56,11 @@ class InformationTableViewCell: UITableViewCell {
             self.emailInput.text = email
         }
         
-        if let _language = settings["language"]?.objectForKey("value") as? String {
-            self.language = _language
+        if let langDict = settings["language"] as? Dictionary<String, AnyObject> {
+
+            if let _language = langDict["value"] as? UInt {
+                self.setLanguage("\(_language)")
+            }
         }
         
         // address
@@ -87,5 +91,11 @@ class InformationTableViewCell: UITableViewCell {
         if let cityPost = address["city"]?.objectForKey("value") as? String {
             self.cityAddressInput.text = cityPost
         }
+    }
+    
+    // set language
+    func setLanguage(language: String) -> Void {
+        self.language = language
+        self.languageButton.setTitle(self.languages[language], forState: UIControlState.Normal)
     }
 }
