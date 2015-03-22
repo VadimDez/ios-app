@@ -9,12 +9,16 @@
 import UIKit
 import Foundation
 import Alamofire
+import CoreData
 
 class UAUser {
     var id: UInt!
     var fullName: String!
     var profileImageURL: String!
     var profileImageView: UIImageView!
+    
+    // CoreData
+    var managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
     
     func initWithParams(id: UInt, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
         self.id = id
@@ -110,7 +114,6 @@ class UAUser {
 //    }
     
     
-    
     /**
     Log out user from app
     
@@ -130,6 +133,76 @@ class UAUser {
                     success()
                 }
                 
+        }
+    }
+    
+    /**
+    *  Get user from api
+    */
+    func getFromAPI(success: (user: User) -> Void) {
+        let url: String = "https://\(APIURL)/api/v1/user"
+        
+        Alamofire.request(.GET, url, parameters: nil)
+            .responseJSON { ( request, response, JSON, error) in
+                if (error != nil) {
+                    // error handling
+                } else {
+                    if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
+                        var mainUser = self.getFromDB(data["id"] as UInt)
+                        
+                        mainUser.id         = data["id"] as Int
+                        mainUser.firstname  = data["firstname"] as String
+                        mainUser.lastname   = data["lastname"] as String
+                        
+                        self.save()
+                        
+                        success(user: mainUser)
+                    }
+                }
+        }
+    }
+    
+    /**
+    *  Get user from db
+    */
+    func getFromDB(id: UInt) -> User {
+        var error: NSError?
+        var user: User
+        
+        // fetch request
+        let fetchRequest = NSFetchRequest(entityName: "User")
+        
+        // predicate
+        let predicate = NSPredicate(format: "id == %i", id)
+        
+        // set predicate
+        fetchRequest.predicate = predicate
+        
+        // perform fetch
+        if let results = self.managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
+            
+            // create new
+            if (results.count == 0) {
+                user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as User
+            } else {
+                user = results[0]
+            }
+        } else {
+            println("Could not fetch \(error)")
+            user = User()
+        }
+        
+        return user
+    }
+    
+    /**
+    *  Save
+    */
+    func save() {
+        var error: NSError?
+        
+        if !self.managedContext.save(&error) {
+            println("Could not save \(error)")
         }
     }
 }
