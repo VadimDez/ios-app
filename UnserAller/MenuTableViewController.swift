@@ -63,22 +63,6 @@ class MenuTableViewController: UITableViewController {
             self.userName.text = "\(user.firstname) \(user.lastname)"
             self.loadProfileImage(user.id.unsignedLongValue)
         }
-//            var error: NSError?
-//            let managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
-            
-            // fetch request
-//            let fetchRequest = NSFetchRequest(entityName: "User")
-            
-            // perform fetch
-//            if let results = managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
-//                if (results.count > 0) {
-//                    let mainUser = results[0] as User
-//                    self.userName.text = "\(mainUser.firstname) \(mainUser.lastname)"
-//                    self.loadProfileImage(mainUser.id.unsignedLongValue)
-//                }
-//            }
-//        })
-        
     }
     
     override func didReceiveMemoryWarning() {

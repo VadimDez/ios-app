@@ -141,7 +141,6 @@ class UAUser {
                 if (error != nil) {
                     // error handling
                 } else {
-                    //                  println(JSON)
                     if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
                         var mainUser = self.getFromDB(data["id"] as UInt)
                         
