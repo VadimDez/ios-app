@@ -40,14 +40,29 @@ class LoginViewController: UIViewController {
     
     @IBAction func goBackToLogin(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
-//        self.navigationController.popViewControllerAnimated(true)
     }
     
     func loadRootView() {
+        // old
+//        var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+//        
+//        self.presentViewController(root, animated: false, completion: nil);
         
-        var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+        // new
+        let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+        let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+        leftSideNavController.navigationBar.hidden = true
         
-        self.presentViewController(root, animated: false, completion: nil);
+        var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
+        drawerController.showsShadows = true
+        
+        drawerController.restorationIdentifier = "Drawer"
+        drawerController.maximumLeftDrawerWidth = 240.0
+        drawerController.openDrawerGestureModeMask = .All
+        drawerController.closeDrawerGestureModeMask = .All
+        drawerController.drawerVisualStateBlock = DrawerVisualState.parallaxVisualStateBlock(CGFloat(1.0))
+        
+        self.presentViewController(drawerController, animated: false, completion: nil)
     }
     
     func auth(email: String, password: String) {

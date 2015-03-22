@@ -68,11 +68,17 @@ class UAUser {
         }
     }
     
+    /**
+    Save email and password to key chain
+    
+    :param: email    email string
+    :param: password password string
+    */
     func saveEmailAndPasswordToKeychain(email: String, password: String) {
+        // delete old
+        Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+        // save new
         Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forUserAccount: "UnserAllerUser", inService: "UnserAller")
-//        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser");
-//        Keychain.save("UserAuthUserToken", data: self.encode(email))
-//        Keychain.save("UserAuthPasswordToken", data: self.encode(password))
     }
     
     func encode(string: String) -> NSData {

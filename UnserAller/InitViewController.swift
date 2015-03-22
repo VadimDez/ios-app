@@ -23,12 +23,8 @@ class InitViewController: UIViewController {
     }
 
     override func viewWillAppear(animated: Bool) {
-
-        // delete email and pass from keychain
-//        Locksmith.deleteData(forKey: "UnserAllerAuthToken", inService: "UnserAller", forUserAccount: "UnserAllerUser")
         
         let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
-        
         
         // if an error
         if let error = error {
@@ -40,14 +36,12 @@ class InitViewController: UIViewController {
         if let dictionary = dictionary {
             if (dictionary["UserAuthEmailToken"] != nil && dictionary["UserAuthPasswordToken"] != nil) {
                 let userService: UAUser = UAUser()
-                
+
                 userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as String, password: dictionary["UserAuthPasswordToken"] as String, success: { () -> Void in
-                    
-//                    let leftSideDrawerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("left") as UIViewController
-//                    let centerViewController = self.storyboard?.instantiateViewControllerWithIdentifier("center") as UIViewController
 
                     let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
                     let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+                    // hide navbar
                     leftSideNavController.navigationBar.hidden = true
                     
                     var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
