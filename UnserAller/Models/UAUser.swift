@@ -293,6 +293,12 @@ class UAUser {
         }
     }
     
+    /**
+    Get user settings
+    
+    :param: success function
+    :param: failure function
+    */
     func getSettings(success: (settings: Dictionary<String, AnyObject>) -> Void, failure: () -> Void) {
         let url: String = "https://\(APIURL)/api/mobile/profile/getsettings"
         

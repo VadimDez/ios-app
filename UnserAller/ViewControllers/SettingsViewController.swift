@@ -13,6 +13,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var viewSwitch: UISegmentedControl!
+    @IBOutlet weak var backgroundImage: UIImageView!
+    @IBOutlet weak var profileImage: UIImageView!
     
     
     var views: [AnyObject] = ["", "", ""]
@@ -30,7 +32,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.dataSource = self
         self.registerNibs()
         self.setSegmetedControl()
-        
+        self.navigationBar()
         self.setFirstCell()
         
         // uipicker
@@ -46,12 +48,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             let _settings = settings["settings"] as Dictionary<String, AnyObject>
             let _address = settings["address"] as Dictionary<String, AnyObject>
             
+            self.loadProfileImage()
+            
             // set up
             (self.views[0] as InformationTableViewCell).setCell(_settings, address: _address)
             
         }, failure: { () -> Void in
             
         })
+    }
+    
+    func navigationBar() {
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.translucent = true
+//        self.navigationController?.view.backgroundColor = UIColor.clearColor()
     }
     
     func registerNibs() {
@@ -84,6 +95,29 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 //        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(11/2, 0), forSegmentType: UISegmentedControlSegment.Left, barMetrics: UIBarMetrics.Default)
 //        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(-11/2, 0), forSegmentType: UISegmentedControlSegment.Right, barMetrics: UIBarMetrics.Default)
         
+    }
+    
+    func loadProfileImage() {
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/4/80/80")!)
+        self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            
+            if let weakSelf = self {
+                weakSelf.profileImage.image = image
+                
+                // add blur
+                var blur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
+                
+                var blurView = UIVisualEffectView(effect: blur)
+                
+                blurView.frame = weakSelf.backgroundImage.bounds
+                // set image
+                weakSelf.backgroundImage.image = image
+                // add blur
+                weakSelf.backgroundImage.addSubview(blurView)
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+        }
     }
     
     func setFirstCell() {

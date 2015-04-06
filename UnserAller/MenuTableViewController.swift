@@ -27,12 +27,13 @@ class MenuTableViewController: UITableViewController {
         
         self.setProfileData()
         
-        
         super.viewDidLoad()
     }
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.BlackOpaque
-    }
+    
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return UIStatusBarStyle.BlackOpaque
+//    }
+    
     /**
      *  Setup table view
      */
@@ -92,12 +93,13 @@ class MenuTableViewController: UITableViewController {
         
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MenuCell")
-//            cell!.backgroundColor = UIColor.clearColor()
             
         }
-        
+        // set text color
         cell!.textLabel?.textColor = UIColor.whiteColor()
+        // set text
         cell!.textLabel?.text = menuItems[indexPath.row]
+        // set icon
         cell?.imageView?.image = UIImage(named: menuItems[indexPath.row])
         
         
