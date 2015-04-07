@@ -11,9 +11,11 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet var username: UITextField!;
     @IBOutlet var password: UITextField!;
 //    @IBOutlet var loginButtonView: CSAnimationView!
+    @IBOutlet weak var loginButton: UIButton!
     
     override func viewDidLoad()  {
         super.viewDidLoad();
@@ -31,7 +33,19 @@ class LoginViewController: UIViewController {
 //        self.loginButtonView.type = "CSAnimationTypeShake"
 //        self.loginButtonView.duration = 0.4
         
+        self.configureElements()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.BlackOpaque
+    }
+    
+    func configureElements() {
+        self.containerView.layer.cornerRadius = 7
+        self.containerView.layer.borderWidth = 0.5
+        self.containerView.layer.borderColor = UIColor.whiteColor().CGColor
         
+        self.loginButton.layer.cornerRadius = 4
     }
     
     @IBAction func loginAction(sender: UIButton) {

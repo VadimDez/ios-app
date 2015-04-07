@@ -23,6 +23,22 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var lastName: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var containerView: UIView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.configureElements()
+        
+    }
+    
+    func configureElements() {
+        self.containerView.layer.cornerRadius = 7
+        self.containerView.layer.borderColor = UIColor.whiteColor().CGColor
+        self.containerView.layer.borderWidth = 0.5
+        self.registerButton.layer.cornerRadius = 4
+    }
     
     
     @IBAction func registerAction(sender: AnyObject) {
