@@ -16,19 +16,8 @@ class UAProjectViewModel: NSObject {
         var projects: [UAProject] = []
         
         for object in data {
-            var project: UAProject = UAProject()
-            
-            // check if has id
-            if let id = object["id"] as? UInt {
-                // check if has a name
-                if let name = object["name"] as? String {
-                    // set params
-                    project.initWithParams(id, name: name)
-                    
-                    // add project to project list
-                    projects.append(project)
-                }
-            }
+            // add project to project list
+            projects.append(self.projectFromJSON(object))
         }
         
         return projects
@@ -64,6 +53,14 @@ class UAProjectViewModel: NSObject {
             project.company.name = company
         }
         
+        if let images = object["images"] as? Dictionary<String, AnyObject> {
+            if let projectImage = images["projectImage"] as? Dictionary<String, AnyObject> {
+                if let link = projectImage["link"] as? Dictionary<String, String> {
+                    project.imageUrl = link["href"]!
+                }
+            }
+        }
+        
         return project
     }
     
@@ -80,7 +77,6 @@ class UAProjectViewModel: NSObject {
                 phase.id = id
             }
             if let name = object["name"] as? String {
-                println("name")
                 phase.name = name
             }
             if let type = object["type"] as? String {

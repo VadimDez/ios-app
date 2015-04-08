@@ -95,6 +95,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
+    }
+    
     /*
      * Infite load implementation
      */
@@ -133,7 +137,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             self.mainTable.pullToRefreshView.stopAnimating()
         })
     }
-    
+
+    /**
+     *  Load projects
+     */
     func getEntries(success: () -> Void, error: () -> Void) {
         // url
         let url: String = "https://\(APIURL)/api/mobile/project/"
@@ -160,6 +167,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                 }
         }
     }
+    
+    // show menu
     @IBAction func showMenu(sender: AnyObject) {
         self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }

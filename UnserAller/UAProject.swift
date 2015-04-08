@@ -15,6 +15,7 @@ class UAProject
     var title: String!
     var company: UACompany!
     var imageHash: String = "new"
+    var imageUrl: String = ""
     var bookmarked: Bool = false
     var closedCommunity: Bool = false
     
