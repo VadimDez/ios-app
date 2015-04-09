@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 // GLOBAL URL FOR API
-var APIURL: String = "local.ig.lc"
+var APIURL: String = "local.innosabi.net"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

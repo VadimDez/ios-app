@@ -12,16 +12,16 @@ class UAProjectCell: UITableViewCell {
 
     @IBOutlet weak var projectImage: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var companyName: UILabel!
     
     func setCell(project: UAProject) {
-        label.text = project.name
-        println(hash)
-        let width = UInt(self.projectImage.frame.width)
-        let height = UInt(self.projectImage.frame.height)
-        self.loadProjectImage(project.imageUrl, width: width, height: height)
+        self.label.text = project.name
+        self.companyName.text = project.company.name
         
-        self.removeEffect()
-        self.addEffect()
+        self.loadProjectImage(project.imageUrl)
+        
+//        self.removeEffect()
+//        self.addEffect()
     }
     
     func addEffect() {
@@ -43,7 +43,10 @@ class UAProjectCell: UITableViewCell {
     /**
      * Load project image
      */
-    func loadProjectImage(url: String, width: UInt, height: UInt) {
+    func loadProjectImage(url: String) {
+        
+        let width = UInt(self.projectImage.frame.width)
+        let height = UInt(self.projectImage.frame.height)
         // load profile image
         let request = NSURLRequest(URL: NSURL(string: "\(url)/height/\(height)/width/\(width)")!)
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
