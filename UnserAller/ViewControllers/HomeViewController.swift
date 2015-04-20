@@ -178,13 +178,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      *  Get suggestion cell with suggestion object
      */
     func getSuggestCellForHome(suggestion: UASuggestion) -> UASuggestionCell {
-        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
+        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
         return cell
     }
     
     func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
-        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
         return cell
     }
@@ -193,7 +193,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      *  Get news cell without images
      */
     func getNewsCellForHome(suggestion: UASuggestion) -> UANewsCell {
-        var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as UANewsCell
+        var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as! UANewsCell
         cell.setCellForHome(suggestion)
         return cell
     }
@@ -202,7 +202,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     *  Get suggestion vote cell
     */
     func getVoteCellForHome(suggestion: UASuggestion, row: Int) -> UASuggestionVoteCell {
-        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         
         // rating delegate 
         cell.ratingView.delegate = self
@@ -215,7 +215,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      *  Get vote image cell
      */
     func getVoteImageCellForHome(row: Int) -> UASuggestionVoteImageCell {
-        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         
         // rating delegate
         cell.ratingView.delegate = self
@@ -260,7 +260,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
         suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
         
         self.navigationController?.pushViewController(suggestionVC, animated: true)
@@ -288,7 +288,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let SuggestionModelView = UASuggestionViewModel()
 
                 // get get objects from JSON
-                var array = SuggestionModelView.getSuggestionsFromJSON(JSON as [Dictionary<String, AnyObject>])
+                var array = SuggestionModelView.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
             
                 // merge two arrays
                 self.entries = self.entries + array
@@ -315,7 +315,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
+        let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
         self.photos = []
         if (!cellData.isEmpty) {
             
@@ -330,7 +330,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
                 browser.showPreviousPhotoAnimated(true)
                 browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
+                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
                 self.navigationController?.pushViewController(browser, animated: false)
             }
         }

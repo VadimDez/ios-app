@@ -109,7 +109,7 @@ class UASuggestionHeaderView: UIView {
                     failure()
                 } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(active: ((JSON?.objectForKey("status") as String!) == "active"))
+                    success(active: ((JSON?.objectForKey("status") as! String) == "active"))
                 }
         }
     }

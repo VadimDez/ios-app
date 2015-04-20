@@ -1,5 +1,6 @@
-AMScrollingNavbar
-=================
+<p align="center">
+  <img width="640" height="240" src="assets/logo.png"/>
+</p>
 
 [![Cocoapods](https://cocoapod-badges.herokuapp.com/v/AMScrollingNavbar/badge.png)](http://www.cocoapods.org/?q=amscrollingnavbar)
 [![Build Status](https://travis-ci.org/andreamazz/AMScrollingNavbar.png)](https://travis-ci.org/andreamazz/AMScrollingNavbar)
@@ -12,7 +13,7 @@ I also wrote about this control in [this article](http://andreamazz.github.io/bl
 
 #Screenshot
 
-![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/screenshot.gif)
+![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/assets/screenshot.gif)
 
 #Setup
 
@@ -62,11 +63,26 @@ Set the view constraints
 --------------------
 Make sure to set your scrollview's constraint properly. Please note that the library changes the scrollview's superview frame.
 
-![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/constraints.png)
+![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/assets/constraints.png)
 
 Quick Setup Video
 --------------------
 You can find a video with the full setup [here](https://vimeo.com/92721470)
+
+Using it with UITableViewController or UICollectionViewController
+--------------------
+If you are not using a plain `UIViewController` you have to enable this property:
+```objc
+[self setUseSuperview:NO];
+```
+
+Delegate
+--------------------
+You can implement the `AMScrollingNavbarDelegate` protocol to receive these messages:
+```objc
+- (void)navigationBarDidChangeToCollapsed:(BOOL)collapsed;
+- (void)navigationBarDidChangeToExpanded:(BOOL)expanded;
+```
 
 MIT License
 --------------------

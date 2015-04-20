@@ -1,0 +1,6 @@
+framework module AMScrollingNavbar {
+  umbrella header "Pods-UnserAller-AMScrollingNavbar-umbrella.h"
+
+  export *
+  module * { export * }
+}

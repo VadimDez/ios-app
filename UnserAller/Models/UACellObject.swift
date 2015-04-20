@@ -62,7 +62,7 @@ class UACellObject {
             }
             
             if let hash = object.objectForKey("hash") as? NSString {
-                mediaObject.hash = hash
+                mediaObject.hash = hash as String
             }
             
             // add

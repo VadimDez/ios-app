@@ -45,13 +45,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.user.getSettings({ (settings) -> Void in
 
             self.settingsDictionary = settings
-            let _settings = settings["settings"] as Dictionary<String, AnyObject>
-            let _address = settings["address"] as Dictionary<String, AnyObject>
+            let _settings = settings["settings"] as! Dictionary<String, AnyObject>
+            let _address = settings["address"] as! Dictionary<String, AnyObject>
             
             self.loadProfileImage()
             
             // set up
-            (self.views[0] as InformationTableViewCell).setCell(_settings, address: _address)
+            (self.views[0] as! InformationTableViewCell).setCell(_settings, address: _address)
             
         }, failure: { () -> Void in
             
@@ -122,7 +122,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func setFirstCell() {
         // set first cell
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as InformationTableViewCell
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as! InformationTableViewCell
         cell.firstNameInput.delegate = self
         cell.lastNameInput.delegate = self
         cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -143,20 +143,20 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             var cell: UITableViewCell!
             
             if (self.viewSwitch.selectedSegmentIndex == 1) {
-                cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as PasswordTableViewCell
+                cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as! PasswordTableViewCell
                 
-                (cell as PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
+                (cell as! PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
             } else if (self.viewSwitch.selectedSegmentIndex == 2) {
-                cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as NotificationsTableViewCell
+                cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as! NotificationsTableViewCell
                 
                 // set up cell
-                (cell as NotificationsTableViewCell).setUpCell(self.settingsDictionary["notifications"] as Dictionary<String, AnyObject>)
+                (cell as! NotificationsTableViewCell).setUpCell(self.settingsDictionary["notifications"] as! Dictionary<String, AnyObject>)
                 
                 // add action to button
-                (cell as NotificationsTableViewCell).updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
+                (cell as! NotificationsTableViewCell).updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
                 
                 // update notification interval
-                (cell as NotificationsTableViewCell).notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
+                (cell as! NotificationsTableViewCell).notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
             }
             
             cell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -182,13 +182,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             self.pickerArray = self.languages
             
             // get selected "0" or "1", etc
-            selected = (self.views[0] as InformationTableViewCell).language
+            selected = (self.views[0] as! InformationTableViewCell).language
             
         } else if (selectedIndex == 2) {
             self.pickerArray = self.notificationIntervals
             
             // get notification interval
-            selected = (self.views[2] as NotificationsTableViewCell).notificationInterval
+            selected = (self.views[2] as! NotificationsTableViewCell).notificationInterval
         }
         
         let keys = self.pickerArray.keys.array
@@ -196,10 +196,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let position = find(keys, selected)?.hashValue
         
         // update uipicker
-        (self.pickerViewTextField.inputView as UIPickerView).reloadAllComponents()
+        (self.pickerViewTextField.inputView as! UIPickerView).reloadAllComponents()
         
         // select row
-        (self.pickerViewTextField.inputView as UIPickerView).selectRow(position!, inComponent: 0, animated: true)
+        (self.pickerViewTextField.inputView as! UIPickerView).selectRow(position!, inComponent: 0, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -229,7 +229,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     Show initial view controller
     */
     func presentInitialViewController() {
-        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Initial") as InitViewController
+        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Initial") as! InitViewController
         
         var navigationController = UINavigationController(rootViewController: initViewController)
         navigationController.navigationBar.hidden = true
@@ -244,7 +244,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return self.views[self.viewSwitch.selectedSegmentIndex] as UITableViewCell
+        return self.views[self.viewSwitch.selectedSegmentIndex] as! UITableViewCell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -269,7 +269,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     @IBAction func updateProfileInfo(sender: AnyObject) {
         self.view.endEditing(true)
-        let cell = self.views[0] as InformationTableViewCell
+        let cell = self.views[0] as! InformationTableViewCell
         
         // save
         self.user.updateInfo(cell.firstNameInput.text, lastName: cell.lastNameInput.text, language: cell.language, success: { () -> Void in
@@ -286,7 +286,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
-        let cell = self.views[0] as InformationTableViewCell
+        let cell = self.views[0] as! InformationTableViewCell
         
         let gender = "\(cell.gender.selectedSegmentIndex)"
         
@@ -305,7 +305,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func changePassword(sender: AnyObject) {
         self.view.endEditing(true)
         
-        let cell = self.views[1] as PasswordTableViewCell
+        let cell = self.views[1] as! PasswordTableViewCell
         
         // save
         self.user.changePassword(cell.actualPassword.text, newPassword: cell.newPassword.text, success: { () -> Void in
@@ -325,7 +325,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func updateNotifications(sender: AnyObject) {
         self.view.endEditing(true)
         
-        let cell = self.views[2] as NotificationsTableViewCell
+        let cell = self.views[2] as! NotificationsTableViewCell
         
         let commentNotification =  (cell.newCommentsSwitch.on) ? 1 : 0;
         let projectInformation = (cell.projectNewsSwitch.on) ? 1 : 0;
@@ -346,7 +346,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return true
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
     }
     
@@ -408,12 +408,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
         // perform some action
         let keys = self.pickerArray.keys.array
-        let key = keys[(self.pickerViewTextField.inputView as UIPickerView).selectedRowInComponent(0)]
+        let key = keys[(self.pickerViewTextField.inputView as! UIPickerView).selectedRowInComponent(0)]
         
         if (self.viewSwitch.selectedSegmentIndex == 0) {
-            (self.views[0] as InformationTableViewCell).setLanguage(key)
+            (self.views[0] as! InformationTableViewCell).updateLanguage(key)
         } else if (self.viewSwitch.selectedSegmentIndex == 2) {
-            (self.views[2] as NotificationsTableViewCell).setInterval(key)
+            (self.views[2] as! NotificationsTableViewCell).setInterval(key)
         }
     }
     
@@ -428,7 +428,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         let keys    = self.pickerArray.keys.array
         let key     = keys[row] as String
-        return self.pickerArray[key] as String
+        return self.pickerArray[key] as! String
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

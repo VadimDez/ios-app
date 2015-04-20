@@ -18,17 +18,17 @@ class UAComment: UACellObject {
     func initCommentWithJSON(json: Dictionary<String, AnyObject>) -> UAComment {
 
         if let _user = json["user"] as? Dictionary<String, AnyObject> {
-            let firstName = _user["firstname"] as String
-            let lastName = _user["lastname"] as String
+            let firstName = _user["firstname"] as! String
+            let lastName = _user["lastname"] as! String
             
             self.user = UAUser(id: UInt((_user["id"] as AnyObject!).integerValue), fullName: "\(firstName) \(lastName)")
         }
         
         // set content
-        self.content = json["content"] as String
+        self.content = json["content"] as! String
 
         // set lang
-        self.language = json["language"] as String
+        self.language = json["language"] as! String
 
         // set updated
         if let _updated = json["updated"] as? NSString {

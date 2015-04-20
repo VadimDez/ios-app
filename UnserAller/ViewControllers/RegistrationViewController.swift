@@ -13,7 +13,7 @@ import Alamofire
 extension String {
     func isEmail() -> Bool {
         let regex = NSRegularExpression(pattern: "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", options: .CaseInsensitive, error: nil)
-        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, countElements(self))) != nil
+        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
     }
 }
 
@@ -61,7 +61,7 @@ class RegistrationViewController: UIViewController {
                         user.saveEmailAndPasswordToKeychain(self.email.text, password: self.password.text)
                         
                         // present login view
-                        var login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as LoginViewController
+                        var login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as! LoginViewController
                         self.presentViewController(login, animated: false, completion: nil)
                         
                         

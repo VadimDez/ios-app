@@ -23,17 +23,17 @@ class UACompany {
 //        println(json)
         
         // set id
-        self.id = json["id"] as UInt
+        self.id = json["id"] as! UInt
         
         // set name
-        self.name = json["name"] as String
+        self.name = json["name"] as! String
         
         if let media = json["media"] as? [Dictionary<String, AnyObject>] {
             self.imageHash = self.getCompanyImageHash(media)
         }
         
         if (!(json["project"] is NSNull)) {
-            self.addProjects(json["project"] as NSDictionary)
+            self.addProjects(json["project"] as! NSDictionary)
         }
         // add projects
     }
@@ -49,16 +49,16 @@ class UACompany {
             var project = UAProject()
 
             // id
-            project.id = object["id"] as UInt
+            project.id = object["id"] as! UInt
 
             // name
-            project.name = object["name"] as String
+            project.name = object["name"] as! String
             
             // title
-            project.title = object["title"] as String
+            project.title = object["title"] as! String
             
             // closed community
-            project.closedCommunity = ((object["closedCommunity"] as Int) == 1)
+            project.closedCommunity = ((object["closedCommunity"] as! Int) == 1)
             
             self.projects.append(project)
         }
@@ -74,8 +74,8 @@ class UACompany {
     func getCompanyImageHash(media: [Dictionary<String, AnyObject>]) -> String {
         if (media.count > 0) {
             for image in media {
-                if ((image["category"] as String) == "companyLogo") {
-                    return image["hash"] as String
+                if ((image["category"] as! String) == "companyLogo") {
+                    return image["hash"] as! String
                 }
             }
         }

@@ -103,7 +103,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
         suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
         
         self.navigationController?.pushViewController(suggestionVC, animated: true)
@@ -114,19 +114,19 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     *  Get suggestion cell with suggestion object
     */
     func getSuggestCellForActivity(suggestion: UASuggestion) -> UASuggestionCell {
-        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
+        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
         return cell
     }
         
     func getSuggestImageCellForActivity(suggestion: UASuggestion) -> UASuggestImageCell {
-        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
         return cell
     }
     
     func getVoteCellForActivity(row: Int) -> UASuggestionVoteCell {
-        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         cell.ratingView.delegate = self
         cell.ratingView.editable = false
         cell.ratingView.tag = row
@@ -135,7 +135,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getVoteWithImageCellForActivity(row: Int) -> UASuggestionVoteImageCell {
-        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         cell.ratingView.delegate = self
         cell.ratingView.editable = false
         cell.ratingView.tag = row
@@ -177,7 +177,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Activity infinite load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -198,7 +198,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Activity pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -221,7 +221,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
                     let SuggestionViewModel = UASuggestionViewModel()
 
                     // get get objects from JSON
-                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as [Dictionary<String, AnyObject>])
+                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
                     // merge two arrays
                     self.entries = self.entries + array
                     self.countEntries = self.entries.count
@@ -244,7 +244,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
+        let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
         self.photos = []
         
         if (!cellData.isEmpty) {
@@ -260,7 +260,7 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 browser.showPreviousPhotoAnimated(true)
                 browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
+                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
                 self.navigationController?.pushViewController(browser, animated: false)
             }
         }

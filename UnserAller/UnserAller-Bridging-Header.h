@@ -2,10 +2,12 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import <CSAnimationView.h>
+//#ifndef UnserAller_Bridging_Header_h
+//#define UnserAller_Bridging_Header_h
+
+#import "CSAnimationView.h"
 #import <AFNetworking/AFNetworking.h>
 #import "UIImageView+AFNetworking.h"
-//#import "AFNetworking/AFNetworking.h"
 //#import <AFNetworking.h>
 //#import "UIViewController+ECSlidingViewController.h"
 //#import "MEDynamicTransition.h"

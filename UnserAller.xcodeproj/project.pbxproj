@@ -54,12 +54,9 @@
 		12172D061A2680A40049DC34 /* PSTGridLayoutRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172CF81A2680A40049DC34 /* PSTGridLayoutRow.m */; };
 		12172D071A2680A40049DC34 /* PSTGridLayoutSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172CFA1A2680A40049DC34 /* PSTGridLayoutSection.m */; };
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
-		123BCDBA1A7AD1B600001B02 /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 123BCDB11A7AD11300001B02 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */; };
 		1241E3E21A646E460068678D /* UASuggestionVoteImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */; };
 		124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124331F81A6703F500B7190A /* UASuggestionViewController.swift */; };
-		124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
-		124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
 		124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */; };
 		124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124F8C211A1A94E7000A5812 /* ActivityViewController.swift */; };
 		125E39DC1A1146EB00DD5542 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
@@ -73,10 +70,6 @@
 		1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1270B5871A6B16D400D041B9 /* UAComment.swift */; };
 		127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127665711A6B9D9600E87A0E /* UACommentCell.swift */; };
 		127665741A6B9E1700E87A0E /* UACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 127665731A6B9E1700E87A0E /* UACommentCell.xib */; };
-		12878AF41A91413900B2F53B /* AnimatedMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */; };
-		12878AF51A91413900B2F53B /* DrawerBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */; };
-		12878AF61A91413900B2F53B /* DrawerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF21A91413900B2F53B /* DrawerController.swift */; };
-		12878AF71A91413900B2F53B /* DrawerVisualState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12878AF31A91413900B2F53B /* DrawerVisualState.swift */; };
 		1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */; };
 		129837E81A69BB3E00087E5F /* UASuggestionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129837E71A69BB3E00087E5F /* UASuggestionHeaderView.swift */; };
 		129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */; };
@@ -125,7 +118,7 @@
 		12EA19601A193A7400259B68 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
 		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
 		12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12FCF47D1A11536A008B74AA /* UAProjectCell.xib */; };
-		3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C35093133BCA4887915E8666 /* libPods-UnserAller.a */; };
+		B9C8EE660D67D98E2C11647A /* Pods_UnserAller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C16CA92047E1808F935078E /* Pods_UnserAller.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511715419E034F8007675EE /* MenuTableViewController.swift */; };
 		D5291667197C210C0038A048 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5291666197C210C0038A048 /* LoginViewController.swift */; };
 		D529166B197C2B5C0038A048 /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
@@ -143,8 +136,6 @@
 		D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */; };
 		D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584D595197C47E000E1CAB3 /* HomeViewController.swift */; };
 		D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
-		D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */; };
-		D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */; };
 		D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780CC1A2B799600CEC181 /* ProjectViewController.swift */; };
 		D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */; };
 		D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59780D41A2B919300CEC181 /* UAPhaseCell.xib */; };
@@ -165,41 +156,6 @@
 			remoteGlobalIDString = 4C6F96C414AF704100F8389A;
 			remoteInfo = MWPhotoBrowser;
 		};
-		123BCDB01A7AD11300001B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
-		123BCDB21A7AD11300001B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
-			remoteInfo = "Alamofire OSX";
-		};
-		123BCDB41A7AD11300001B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS Tests";
-		};
-		123BCDB61A7AD11300001B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
-			remoteInfo = "Alamofire OSX Tests";
-		};
-		123BCDB81A7AD19A00001B02 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F8111E3219A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
 		D5812295197C08B600E3573C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D581227A197C08B600E3573C /* Project object */;
@@ -216,7 +172,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				123BCDBA1A7AD1B600001B02 /* Alamofire.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,12 +273,9 @@
 		12172CF91A2680A40049DC34 /* PSTGridLayoutSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSTGridLayoutSection.h; sourceTree = "<group>"; };
 		12172CFA1A2680A40049DC34 /* PSTGridLayoutSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSTGridLayoutSection.m; sourceTree = "<group>"; };
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
-		123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = UnserAller/Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteImageCell.swift; path = Views/CellsWithImages/UASuggestionVoteImageCell.swift; sourceTree = "<group>"; };
 		1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteImageCell.xib; path = Views/CellsWithImages/UASuggestionVoteImageCell.xib; sourceTree = "<group>"; };
 		124331F81A6703F500B7190A /* UASuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionViewController.swift; path = ViewControllers/UASuggestionViewController.swift; sourceTree = "<group>"; };
-		124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locksmith.swift; sourceTree = "<group>"; };
-		124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocksmithRequest.swift; sourceTree = "<group>"; };
 		124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		124F8C211A1A94E7000A5812 /* ActivityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityViewController.swift; path = ViewControllers/ActivityViewController.swift; sourceTree = "<group>"; };
 		12620B5C1A6182A800C54124 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
@@ -336,10 +288,6 @@
 		1270B5871A6B16D400D041B9 /* UAComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAComment.swift; path = Models/UAComment.swift; sourceTree = "<group>"; };
 		127665711A6B9D9600E87A0E /* UACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACommentCell.swift; path = Views/Cells/UACommentCell.swift; sourceTree = "<group>"; };
 		127665731A6B9E1700E87A0E /* UACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UACommentCell.xib; path = Views/Cells/UACommentCell.xib; sourceTree = "<group>"; };
-		12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedMenuButton.swift; sourceTree = "<group>"; };
-		12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerBarButtonItem.swift; sourceTree = "<group>"; };
-		12878AF21A91413900B2F53B /* DrawerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerController.swift; sourceTree = "<group>"; };
-		12878AF31A91413900B2F53B /* DrawerVisualState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerVisualState.swift; sourceTree = "<group>"; };
 		1294A16E1A0FBB9B00E45596 /* ProjectsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectsViewController.swift; path = ViewControllers/ProjectsViewController.swift; sourceTree = "<group>"; };
 		129837E71A69BB3E00087E5F /* UASuggestionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionHeaderView.swift; path = Views/Views/UASuggestionHeaderView.swift; sourceTree = "<group>"; };
 		129CD12E1A613E0F00434D67 /* UASuggestionVoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteCell.swift; path = Views/Cells/UASuggestionVoteCell.swift; sourceTree = "<group>"; };
@@ -385,8 +333,8 @@
 		12FCF4791A11534C008B74AA /* UAProjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectCell.swift; path = Views/Cells/UAProjectCell.swift; sourceTree = "<group>"; };
 		12FCF47D1A11536A008B74AA /* UAProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UAProjectCell.xib; sourceTree = "<group>"; };
 		3E90463A3D0C4D70295DD36B /* Pods-UnserAller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UnserAller/Pods-UnserAller.debug.xcconfig"; sourceTree = "<group>"; };
+		4C16CA92047E1808F935078E /* Pods_UnserAller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UnserAller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		620383539B4A09B42CE2F492 /* Pods-UnserAller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UnserAller.release.xcconfig"; path = "Pods/Target Support Files/Pods-UnserAller/Pods-UnserAller.release.xcconfig"; sourceTree = "<group>"; };
-		C35093133BCA4887915E8666 /* libPods-UnserAller.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UnserAller.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D511715419E034F8007675EE /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		D5291666197C210C0038A048 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = ViewControllers/LoginViewController.swift; sourceTree = "<group>"; };
 		D529166A197C2B5C0038A048 /* UAUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAUser.swift; path = Models/UAUser.swift; sourceTree = "<group>"; };
@@ -429,7 +377,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3827BD89EAAE4D26B32301C7 /* libPods-UnserAller.a in Frameworks */,
+				B9C8EE660D67D98E2C11647A /* Pods_UnserAller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,37 +550,6 @@
 			path = PSTCollectionView;
 			sourceTree = "<group>";
 		};
-		123BCDAA1A7AD11300001B02 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				123BCDB11A7AD11300001B02 /* Alamofire.framework */,
-				123BCDB31A7AD11300001B02 /* Alamofire.framework */,
-				123BCDB51A7AD11300001B02 /* Alamofire iOS Tests.xctest */,
-				123BCDB71A7AD11300001B02 /* Alamofire OSX Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		124B0CCB1A0E7F22005EA92E /* Locksmith */ = {
-			isa = PBXGroup;
-			children = (
-				124B0CCE1A0E7F3F005EA92E /* Locksmith.swift */,
-				124B0CCF1A0E7F3F005EA92E /* LocksmithRequest.swift */,
-			);
-			name = Locksmith;
-			sourceTree = "<group>";
-		};
-		12878AEB1A91412800B2F53B /* DrawerController */ = {
-			isa = PBXGroup;
-			children = (
-				12878AF01A91413900B2F53B /* AnimatedMenuButton.swift */,
-				12878AF11A91413900B2F53B /* DrawerBarButtonItem.swift */,
-				12878AF21A91413900B2F53B /* DrawerController.swift */,
-				12878AF31A91413900B2F53B /* DrawerVisualState.swift */,
-			);
-			name = DrawerController;
-			sourceTree = "<group>";
-		};
 		12A328A61A98C92100E25D3A /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,10 +598,8 @@
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				12878AEB1A91412800B2F53B /* DrawerController */,
 				12620B5C1A6182A800C54124 /* FloatRatingView.swift */,
 				12172C4A1A267B000049DC34 /* MWPhotoBrowser */,
-				124B0CCB1A0E7F22005EA92E /* Locksmith */,
 				D5D9E65719E158AE00537FBD /* Keychain */,
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
 				129CD1351A6140D400434D67 /* UALabel.swift */,
@@ -797,7 +712,6 @@
 		D5812279197C08B600E3573C = {
 			isa = PBXGroup;
 			children = (
-				123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */,
 				D5812284197C08B600E3573C /* UnserAller */,
 				D5812297197C08B600E3573C /* UnserAllerTests */,
 				D5812283197C08B600E3573C /* Products */,
@@ -909,7 +823,7 @@
 		EA69EAB27E124453A0FB0AC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C35093133BCA4887915E8666 /* libPods-UnserAller.a */,
+				4C16CA92047E1808F935078E /* Pods_UnserAller.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -927,11 +841,11 @@
 				D5812280197C08B600E3573C /* Resources */,
 				C8B95B34AE36406C9A8AE977 /* Copy Pods Resources */,
 				D511716B19E03DCD007675EE /* Copy Frameworks */,
+				0D0478263E7286A16D3CAC20 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				123BCDB91A7AD19A00001B02 /* PBXTargetDependency */,
 			);
 			name = UnserAller;
 			productName = UnserAller;
@@ -988,10 +902,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 123BCDAA1A7AD11300001B02 /* Products */;
-					ProjectRef = 123BCDA91A7AD11300001B02 /* Alamofire.xcodeproj */;
-				},
-				{
 					ProductGroup = 12172CAC1A267B000049DC34 /* Products */;
 					ProjectRef = 12172CAB1A267B000049DC34 /* MWPhotoBrowser.xcodeproj */;
 				},
@@ -1010,34 +920,6 @@
 			fileType = archive.ar;
 			path = libMWPhotoBrowser.a;
 			remoteRef = 12172CDC1A267B000049DC34 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		123BCDB11A7AD11300001B02 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 123BCDB01A7AD11300001B02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		123BCDB31A7AD11300001B02 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 123BCDB21A7AD11300001B02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		123BCDB51A7AD11300001B02 /* Alamofire iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire iOS Tests.xctest";
-			remoteRef = 123BCDB41A7AD11300001B02 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		123BCDB71A7AD11300001B02 /* Alamofire OSX Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire OSX Tests.xctest";
-			remoteRef = 123BCDB61A7AD11300001B02 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1085,6 +967,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0D0478263E7286A16D3CAC20 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UnserAller/Pods-UnserAller-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C8B95B34AE36406C9A8AE977 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1129,12 +1026,10 @@
 				12172D071A2680A40049DC34 /* PSTGridLayoutSection.m in Sources */,
 				12A328B01A98CE5000E25D3A /* NotificationsTableViewCell.swift in Sources */,
 				12172CCF1A267B000049DC34 /* SDWebImageManager.m in Sources */,
-				12878AF71A91413900B2F53B /* DrawerVisualState.swift in Sources */,
 				12172CD01A267B000049DC34 /* SDWebImagePrefetcher.m in Sources */,
 				12172CAE1A267B000049DC34 /* MWCaptionView.m in Sources */,
 				12172CAF1A267B000049DC34 /* MWGridCell.m in Sources */,
 				12172CFE1A2680A40049DC34 /* PSTCollectionViewController.m in Sources */,
-				124B0CD01A0E7F3F005EA92E /* Locksmith.swift in Sources */,
 				12A328A81A98C95100E25D3A /* InformationTableViewCell.swift in Sources */,
 				12172CC91A267B000049DC34 /* NSData+ImageContentType.m in Sources */,
 				124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */,
@@ -1153,12 +1048,10 @@
 				12172CD31A267B000049DC34 /* UIImage+MultiFormat.m in Sources */,
 				12172CD51A267B000049DC34 /* UIImageView+HighlightedWebCache.m in Sources */,
 				126CBE231A115A9200E22070 /* BookmarksViewController.swift in Sources */,
-				12878AF51A91413900B2F53B /* DrawerBarButtonItem.swift in Sources */,
 				12A328AC1A98CE0600E25D3A /* PasswordTableViewCell.swift in Sources */,
 				12172CD21A267B000049DC34 /* UIImage+GIF.m in Sources */,
 				12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */,
 				12172CCC1A267B000049DC34 /* SDWebImageDecoder.m in Sources */,
-				12878AF41A91413900B2F53B /* AnimatedMenuButton.swift in Sources */,
 				12172CFB1A2680A40049DC34 /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				12172D061A2680A40049DC34 /* PSTGridLayoutRow.m in Sources */,
 				12172D051A2680A40049DC34 /* PSTGridLayoutItem.m in Sources */,
@@ -1177,7 +1070,6 @@
 				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
 				12172CB51A267B000049DC34 /* MWZoomingScrollView.m in Sources */,
 				12D11BF81AD469F000CC19EF /* UIView+RoundCorners.swift in Sources */,
-				124B0CD11A0E7F3F005EA92E /* LocksmithRequest.swift in Sources */,
 				12172D011A2680A40049DC34 /* PSTCollectionViewItemKey.m in Sources */,
 				D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */,
 				12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */,
@@ -1185,7 +1077,6 @@
 				126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */,
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
-				12878AF61A91413900B2F53B /* DrawerController.swift in Sources */,
 				12172CFF1A2680A40049DC34 /* PSTCollectionViewData.m in Sources */,
 				12172CB71A267B000049DC34 /* MBProgressHUD.m in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
@@ -1243,9 +1134,7 @@
 				12A172851A1944DA000FAA54 /* UAProject.swift in Sources */,
 				12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */,
 				12EA19601A193A7400259B68 /* UACredit.swift in Sources */,
-				D5974E701A102CC200BE93EE /* Locksmith.swift in Sources */,
 				1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */,
-				D5974E711A102CC600BE93EE /* LocksmithRequest.swift in Sources */,
 				D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */,
 				D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */,
 				12A1728A1A194739000FAA54 /* UACompany.swift in Sources */,
@@ -1256,11 +1145,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		123BCDB91A7AD19A00001B02 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Alamofire iOS";
-			targetProxy = 123BCDB81A7AD19A00001B02 /* PBXContainerItemProxy */;
-		};
 		D5812296197C08B600E3573C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D5812281197C08B600E3573C /* UnserAller */;
@@ -1373,6 +1257,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "UnserAller/UnserAller-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "Pods/**";
 			};
 			name = Debug;
 		};
@@ -1391,6 +1276,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "UnserAller/UnserAller-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "Pods/**";
 			};
 			name = Release;
 		};

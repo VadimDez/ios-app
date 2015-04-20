@@ -41,7 +41,7 @@ class UASuggestion: UACellObject {
         // set content
 //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
 
         // set project id
@@ -63,7 +63,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
+            self.updated = self.getDateFromString(updated as String)
         }
         
         // set user id
@@ -73,7 +73,7 @@ class UASuggestion: UACellObject {
 
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
 
         // set user votes
@@ -83,12 +83,12 @@ class UASuggestion: UACellObject {
 
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
 
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -119,7 +119,7 @@ class UASuggestion: UACellObject {
             
             // set updated
             if let updated = suggestion["date"]?.objectForKey("date") as? NSString {
-                self.updated = self.getDateFromString(updated)
+                self.updated = self.getDateFromString(updated as String)
             }
             
             // set user votes
@@ -133,7 +133,7 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
         
         // set user id
@@ -143,7 +143,7 @@ class UASuggestion: UACellObject {
         
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
         
         // set project id
@@ -151,12 +151,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -170,7 +170,7 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
         
         // set project id
@@ -180,7 +180,7 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
 
         // set cell class type
@@ -194,7 +194,7 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
         
         // set project id
@@ -202,12 +202,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -231,7 +231,7 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
         
         // set project id
@@ -249,7 +249,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
+            self.updated = self.getDateFromString(updated as String)
         }
         
         // set user id
@@ -259,7 +259,7 @@ class UASuggestion: UACellObject {
         
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
         
         // set user votes
@@ -269,12 +269,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -301,7 +301,7 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
         }
         
         // set project id
@@ -319,7 +319,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
+            self.updated = self.getDateFromString(updated as String)
         }
         
         // set user id
@@ -329,7 +329,7 @@ class UASuggestion: UACellObject {
         
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
         
         // set user votes
@@ -339,12 +339,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -362,7 +362,7 @@ class UASuggestion: UACellObject {
         // set user name
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -373,19 +373,19 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
             
         }
         
@@ -414,7 +414,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String,AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -425,19 +425,19 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
         }
         
         // set user votes
@@ -466,7 +466,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -476,19 +476,19 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
 
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -524,7 +524,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -534,19 +534,19 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -597,7 +597,7 @@ class UASuggestion: UACellObject {
         // set user name
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -608,16 +608,16 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
             
         }
         // set comment count
@@ -641,7 +641,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String,AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -652,16 +652,16 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
         }
 
         // set user votes
@@ -691,7 +691,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -701,16 +701,16 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -739,7 +739,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -749,16 +749,16 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -794,12 +794,12 @@ class UASuggestion: UACellObject {
             
             if let _user = _suggestion["user"] as? Dictionary<String, AnyObject> {
                 // user id
-                self.userId = _user["id"] as UInt
+                self.userId = _user["id"] as! UInt
                 
-                self.userName = (_user["firstname"] as String) + " " + (_user["lastname"] as String)
+                self.userName = (_user["firstname"] as! String) + " " + (_user["lastname"] as! String)
             }
             
-            self.content = _suggestion["content"] as String
+            self.content = _suggestion["content"] as! String
             
             if let _media = _suggestion["mediaSuggestion"] as? [Dictionary<String, String>] {
                 self.addMediaToSuggestionWithJSON(_media)
@@ -820,7 +820,7 @@ class UASuggestion: UACellObject {
         // set project name
 //        self.projectName = json["projectName"] as String
         
-        self.type = json["suggestionType"] as String
+        self.type = json["suggestionType"] as! String
         
         if (!(json["votes"] is NSNull)) {
             if let _votes: Int = json["votes"] as? Int {
@@ -839,7 +839,7 @@ class UASuggestion: UACellObject {
     
     func initSuggestForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
         // set suggestion id
-        self.suggestionId = jsonObject.objectForKey("id") as UInt
+        self.suggestionId = jsonObject.objectForKey("id") as! UInt
         
         // set user name
         if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
@@ -850,16 +850,16 @@ class UASuggestion: UACellObject {
         }
         
         // set user id
-        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
         
         // set project id
         self.projectId = project.id
         
         // set content
-        self.content = jsonObject.objectForKey("content") as String
+        self.content = jsonObject.objectForKey("content") as! String
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("updated") as String)
+        self.updated = self.getDateFromLongString(jsonObject.objectForKey("updated") as! String)
 
         // set comment count
         self.commentCount = 0
@@ -876,7 +876,7 @@ class UASuggestion: UACellObject {
     func initVoteForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
             
         // set suggestion id
-        self.suggestionId = jsonObject.objectForKey("id") as UInt
+        self.suggestionId = jsonObject.objectForKey("id") as! UInt
             
         // set user name
         if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
@@ -887,16 +887,16 @@ class UASuggestion: UACellObject {
         }
             
         // set user id
-        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
             
         // set project id
         self.projectId = project.id
         
         // set content
-        self.content = jsonObject.objectForKey("content") as String
+        self.content = jsonObject.objectForKey("content") as! String
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("created") as String)
+        self.updated = self.getDateFromLongString(jsonObject.objectForKey("created") as! String)
 
         // set user votes
         self.userVotes = 0

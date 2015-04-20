@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import DrawerController
 
 class LoginViewController: UIViewController {
     
@@ -37,7 +38,7 @@ class LoginViewController: UIViewController {
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.BlackOpaque
+        return UIStatusBarStyle.LightContent//UIStatusBarStyle.Black
     }
     
     func configureElements() {
@@ -63,8 +64,8 @@ class LoginViewController: UIViewController {
 //        self.presentViewController(root, animated: false, completion: nil);
         
         // new
-        let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-        let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+        let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
+        let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
         leftSideNavController.navigationBar.hidden = true
         
         var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)

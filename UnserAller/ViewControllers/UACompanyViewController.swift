@@ -66,7 +66,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
+        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         projectCell.setCell(self.company.projects[indexPath.row])
         return projectCell
     }
@@ -86,7 +86,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     :param: indexPath
     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
         
         // set project id
         projectViewController.projectId = self.company.projects[indexPath.row].id
@@ -117,7 +117,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
                     // error block
                     error()
                 } else {
-                    self.company.setCompanyFromJSON(JSON?.objectAtIndex(0).objectForKey("company") as Dictionary<String, AnyObject>)
+                    self.company.setCompanyFromJSON(JSON?.objectAtIndex(0).objectForKey("company") as! Dictionary<String, AnyObject>)
                     
                     success()
                 }

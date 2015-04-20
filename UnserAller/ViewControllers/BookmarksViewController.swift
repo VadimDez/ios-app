@@ -70,7 +70,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
 //        
 //        return cell!
         
-        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as UABookmarkCell
+        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as! UABookmarkCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -104,7 +104,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
                 let ProjectModelView = UAProjectViewModel()
                 
                 // get get objects from JSON
-                var array = ProjectModelView.getBookmarksFromJSON(JSON as [Dictionary<String, AnyObject>])
+                var array = ProjectModelView.getBookmarksFromJSON(JSON as! [Dictionary<String, AnyObject>])
                 
                 // merge two arrays
                 self.entries = self.entries + array
@@ -128,7 +128,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Bookmarks infinite load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -148,7 +148,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Bookmarks pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false

@@ -109,7 +109,7 @@ class UAProjectViewModel: NSObject {
         var project = UAProject()
         
         // set id
-        project.id = json["id"] as UInt
+        project.id = json["id"] as! UInt
         
         // set name
         project.name = json["name"] as? String
@@ -128,7 +128,7 @@ class UAProjectViewModel: NSObject {
         // set company
         project.company = UACompany()
         if let company = json["company"] as? Dictionary<String, AnyObject> {
-            project.company.id = company["id"] as UInt
+            project.company.id = company["id"] as! UInt
             project.company.name = company["name"] as? String
         }
         

@@ -117,6 +117,7 @@ class MenuTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if (indexPath.row == selectedMenuItem) { // if already selected - toggle
+            
             self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
             return
         }
@@ -126,25 +127,25 @@ class MenuTableViewController: UITableViewController {
         var destViewController : UIViewController
         switch (indexPath.row) {
         case 0:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
             break
         case 1:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsNavi") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsNavi") as! UINavigationController
             break
         case 2:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("creditsNavi") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("creditsNavi") as! UINavigationController
             break
         case 3:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("bookmarksNavi") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("bookmarksNavi") as! UINavigationController
             break
         case 4:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("activityNavi") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("activityNavi") as! UINavigationController
             break
         case 5:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("settingsNavi") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("settingsNavi") as! UINavigationController
             break
         default:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
             break
         }
         

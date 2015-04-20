@@ -148,7 +148,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             let projectViewModel = UAProjectViewModel()
-            self.project = projectViewModel.getProjectForProject(json.objectForKey("project") as Dictionary<String, AnyObject>)
+            self.project = projectViewModel.getProjectForProject(json.objectForKey("project") as! Dictionary<String, AnyObject>)
             
             // update project info
             self.updateProjectInfo()
@@ -300,11 +300,11 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // end date
         if (!(jsonResponse.objectForKey("endDate") is NSNull)) {
-            endDate = jsonResponse.objectForKey("endDate")?.objectForKey("date") as String!
+            endDate = jsonResponse.objectForKey("endDate")?.objectForKey("date") as! String!
         }
         // start date
         if let start: AnyObject = jsonResponse.objectForKey("startDate") {
-            startDate = start.objectForKey("date") as String!
+            startDate = start.objectForKey("date") as! String!
         }
         // check active
         self.active = self.checkActive(startDate, end: endDate)
@@ -326,8 +326,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return self.entries.count
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
-        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+        suggestionVC.suggestion = self.entries[indexPath.row] as! UASuggestion
         
         self.navigationController?.pushViewController(suggestionVC, animated: true)
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
@@ -349,8 +349,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      *  Get suggest cell without images
      */
     func getSuggestCellForRow(row: Int) -> UASuggestionCell {
-        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -358,8 +358,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggest cell with image
     */
     func getSuggestImageCellForRow(row: Int) -> UASuggestImageCell {
-        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -367,8 +367,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      *  Get project news cell
      */
     func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
-        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as UAProjectNewsCell
-        cell.setCellForProjectPhase(self.entries[row] as UANews)
+        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as! UAProjectNewsCell
+        cell.setCellForProjectPhase(self.entries[row] as! UANews)
         return cell
     }
     
@@ -376,10 +376,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggestion vote cell
     */
     func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
-        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
+        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -387,10 +387,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggestion vote cell
     */
     func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
-        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
+        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
-        cell.setCellForHome(self.entries[row] as UASuggestion)
+        cell.setCellForHome(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -439,7 +439,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as UAPhaseCell
+        var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
         
         if (self.phasesArray.count == 0) {
             return cell
@@ -539,7 +539,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         return nil;
     }
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
+        let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
         self.photos = []
         if (!cellData.isEmpty) {
             
@@ -554,7 +554,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
                 browser.showPreviousPhotoAnimated(true)
                 browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
+                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
                 self.navigationController?.pushViewController(browser, animated: false)
             }
         }
@@ -627,7 +627,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 } else {
                     let projectViewModel: UAProjectViewModel = UAProjectViewModel()
 
-                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as [Dictionary<String, AnyObject>])
+                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as! [Dictionary<String, AnyObject>])
                     
                     self.phasesArray = self.phasesArray + array
                     
@@ -742,7 +742,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     failure()
                 } else {
                     let suggestionVM = UASuggestionViewModel()
-                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
+                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as! [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
                     
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -778,7 +778,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     let newsViewModel = UANewsViewModel()
                     
                     // get news
-                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as [Dictionary<String, AnyObject>])
+                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as! [Dictionary<String, AnyObject>])
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
@@ -797,7 +797,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
         
         if (!self.votingDisabled) {
-            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+            var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
 
             // disable for a moment
@@ -807,9 +807,9 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
                 
-                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
                 
-                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+                (self.entries[ratingView.tag] as! UASuggestion).userVotes  = votes
                 
                 // update only changed row
                 let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
@@ -855,7 +855,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     :param: sender
     */
     @IBAction func showCompanyView(sender: AnyObject) {
-        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as UACompanyViewController
+        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as! UACompanyViewController
         companyVC.company = self.project.company
         self.navigationController?.pushViewController(companyVC, animated: true)
     }
@@ -867,7 +867,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     :param: sender
     */
     @IBAction func openEditor(sender: AnyObject) {
-        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as UAEditorViewController
+        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         editor.delegate = self
         editor.string = self.sendSuggestionInput.text

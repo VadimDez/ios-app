@@ -28,7 +28,7 @@ class UASuggestionViewModel {
             // TODO: needs to be validated
             if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
 
-                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
                 
                 if object["media"] != nil {
                     
@@ -94,7 +94,7 @@ class UASuggestionViewModel {
             // check if empty
             // TODO: needs to be validated
             if object["suggestion"] != nil {
-                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
                 
                 if object["suggestion"]?.objectForKey("mediaSuggestion") != nil && object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0 {
                     

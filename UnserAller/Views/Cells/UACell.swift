@@ -72,7 +72,7 @@ class UACell: UITableViewCell {
                     failure()
                 } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(active: ((JSON?.objectForKey("status") as String!) == "active"))
+                    success(active: ((JSON?.objectForKey("status") as! String!) == "active"))
                 }
         }
     }

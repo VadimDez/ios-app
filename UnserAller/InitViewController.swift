@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Locksmith
+import DrawerController
 
 class InitViewController: UIViewController {
     
@@ -37,10 +39,10 @@ class InitViewController: UIViewController {
             if (dictionary["UserAuthEmailToken"] != nil && dictionary["UserAuthPasswordToken"] != nil) {
                 let userService: UAUser = UAUser()
 
-                userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as String, password: dictionary["UserAuthPasswordToken"] as String, success: { () -> Void in
+                userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as! String, password: dictionary["UserAuthPasswordToken"] as! String, success: { () -> Void in
 
-                    let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-                    let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+                    let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
+                    let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
                     // hide navbar
                     leftSideNavController.navigationBar.hidden = true
                     

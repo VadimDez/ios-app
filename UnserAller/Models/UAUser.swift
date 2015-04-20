@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Locksmith
 import Alamofire
 import CoreData
 
@@ -18,7 +19,7 @@ class UAUser {
     var profileImageView: UIImageView!
     
     // CoreData
-    var managedContext = (UIApplication.sharedApplication().delegate as AppDelegate).managedObjectContext!
+    var managedContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext!
     
     func initWithParams(id: UInt, usrFullname: String, usrProfileImageUrl: String, usrProfileImageView:UIImageView) {
         self.id = id
@@ -86,13 +87,13 @@ class UAUser {
         
         let base64Encoded:NSString = utf8str.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0)) //NSDataBase64EncodingOptions.fromRaw(0)!)
         
-        let data: NSData = NSData(base64EncodedString: base64Encoded, options: NSDataBase64DecodingOptions(rawValue: 0))!
+        let data: NSData = NSData(base64EncodedString: base64Encoded as String, options: NSDataBase64DecodingOptions(rawValue: 0))!
         
         return data
     }
     
     func decode(data: NSData) -> String {
-        return NSString(data: data, encoding: NSUTF8StringEncoding)!
+        return NSString(data: data, encoding: NSUTF8StringEncoding)! as String
     }
     
 //    func getImage(URLString: String, imageView: UIImageView) {
@@ -148,11 +149,11 @@ class UAUser {
                     // error handling
                 } else {
                     if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
-                        var mainUser = self.getFromDB(data["id"] as UInt)
+                        var mainUser = self.getFromDB(data["id"] as! UInt)
                         
-                        mainUser.id         = data["id"] as Int
-                        mainUser.firstname  = data["firstname"] as String
-                        mainUser.lastname   = data["lastname"] as String
+                        mainUser.id         = data["id"] as! Int
+                        mainUser.firstname  = data["firstname"] as! String
+                        mainUser.lastname   = data["lastname"] as! String
                         
                         self.save()
                         
@@ -183,7 +184,7 @@ class UAUser {
             
             // create new
             if (results.count == 0) {
-                user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as User
+                user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as! User
             } else {
                 user = results[0]
             }
@@ -310,7 +311,7 @@ class UAUser {
                     // error block
                     failure()
                 } else {
-                    success(settings: JSON  as Dictionary<String, AnyObject>)
+                    success(settings: JSON  as! Dictionary<String, AnyObject>)
                 }
         }
     }

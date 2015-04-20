@@ -79,7 +79,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
         
         // set project id
         projectViewController.projectId = self.entries[indexPath.row].id
@@ -88,7 +88,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
+        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -105,12 +105,14 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     func infiniteLoad() {
         self.page += 1
         
-        self.getEntries({() -> Void in
+        self.getEntries({ () -> Void in
+            
             self.mainTable.reloadData()
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-        }, {() -> Void in
+        }, error: { () -> Void in
+            
             println("Projects infinite load error")
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -130,7 +132,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-        }, {() -> Void in
+        }, error: {() -> Void in
             println("Projects pull to refresh load error")
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -157,7 +159,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     let ProjectModelView = UAProjectViewModel()
                     
                     // get get objects from JSON
-                    var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as [Dictionary<String, AnyObject>])
+                    var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as! [Dictionary<String, AnyObject>])
                     
                     // merge two arrays
                     self.entries = self.entries + array
@@ -170,6 +172,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // show menu
     @IBAction func showMenu(sender: AnyObject) {
+        
         self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
 }

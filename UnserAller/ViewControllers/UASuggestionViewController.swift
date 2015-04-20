@@ -84,11 +84,11 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (self.entries[indexPath.row].cellType == "UACommentWithImageCell") {
-            var cell: UACommentWithImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentWithImageCell") as UACommentWithImageCell
+            var cell: UACommentWithImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentWithImageCell") as! UACommentWithImageCell
             cell.setCell(self.entries[indexPath.row])
             return cell
         }
-        var cell: UACommentCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentCell") as UACommentCell
+        var cell: UACommentCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentCell") as! UACommentCell
 
         cell.setCell(self.entries[indexPath.row])
         
@@ -141,7 +141,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
                     
                     let suggestionViewModel = UASuggestionViewModel()
                     
-                    self.suggestion = UASuggestion().getSuggestionFromJSONForSuggestionVC(JSON?.objectAtIndex(0) as Dictionary<String, AnyObject>)
+                    self.suggestion = UASuggestion().getSuggestionFromJSONForSuggestionVC(JSON?.objectAtIndex(0) as! Dictionary<String, AnyObject>)
                     
                     success()
                 }
@@ -173,7 +173,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
                         let commentViewModel = UACommentViewModel()
 
                         // get array
-                        var array = commentViewModel.getCommentsFromJSON(JSON?.objectForKey("comments") as [Dictionary<String, AnyObject>])
+                        var array = commentViewModel.getCommentsFromJSON(JSON?.objectForKey("comments") as! [Dictionary<String, AnyObject>])
                         
                         self.entries = self.entries + array
                     }
@@ -210,7 +210,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     */
     func getSuggestionView() -> UASuggestionView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionView", owner: self, options: nil)
-        var suggestionView: UASuggestionView = nib[0] as UASuggestionView
+        var suggestionView: UASuggestionView = nib[0] as! UASuggestionView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -226,7 +226,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     */
     func getSuggestionWithimageView() -> UASuggestionWithImageView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionWithImageView", owner: self, options: nil)
-        var suggestionView: UASuggestionWithImageView = nib[0] as UASuggestionWithImageView
+        var suggestionView: UASuggestionWithImageView = nib[0] as! UASuggestionWithImageView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -242,7 +242,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     */
     func getSuggestionVoteView() -> UASuggestionVoteView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionVoteView", owner: self, options: nil)
-        var suggestionView: UASuggestionVoteView = nib[0] as UASuggestionVoteView
+        var suggestionView: UASuggestionVoteView = nib[0] as! UASuggestionVoteView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.ratingView.delegate = self
@@ -259,7 +259,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     */
     func getSuggestionVoteWithImageView() -> UASuggestionVoteWithImageView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionVoteWithImageView", owner: self, options: nil)
-        var suggestionView: UASuggestionVoteWithImageView = nib[0] as UASuggestionVoteWithImageView
+        var suggestionView: UASuggestionVoteWithImageView = nib[0] as! UASuggestionVoteWithImageView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.ratingView.delegate = self
@@ -306,8 +306,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     :param: votes     user votes
     */
     func updateVoteTableHeader(likeCount: Int, votes: Float) {
-        (self.mainTable.tableHeaderView as UASuggestionVoteView).likeLabel.text = "\(likeCount)"
-        (self.mainTable.tableHeaderView as UASuggestionVoteView).ratingView.rating = votes
+        (self.mainTable.tableHeaderView as! UASuggestionVoteView).likeLabel.text = "\(likeCount)"
+        (self.mainTable.tableHeaderView as! UASuggestionVoteView).ratingView.rating = votes
     }
     
     /**
@@ -342,10 +342,10 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     :param: sender
     */
     @IBAction func openEditor(sender: AnyObject) {
-        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as UAEditorViewController
+        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         editor.delegate = self
-        editor.string = (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text
+        editor.string = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
         
 //        1)
 //        self.navigationController?.pushViewController(editor, animated: true)
@@ -356,16 +356,16 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func passTextBack(controller: UAEditorViewController, string: String) {
-        (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text = string
+        (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = string
     }
     
     @IBAction func sendNewComment(sender: AnyObject) {
-        let newComment: String = (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text
+        let newComment: String = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
 
         self.sendNewComment(newComment, success: { (json) -> () in
-            (self.mainTable.tableHeaderView as UASuggestionHeaderView).newCommentInput.text = ""
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = ""
             
-            let comment = UAComment().initCommentWithJSON(json as Dictionary<String, AnyObject>)
+            let comment = UAComment().initCommentWithJSON(json as! Dictionary<String, AnyObject>)
             let array = [comment]
             
             // prepend new comment

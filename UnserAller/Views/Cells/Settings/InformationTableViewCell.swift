@@ -59,7 +59,7 @@ class InformationTableViewCell: UITableViewCell {
         if let langDict = settings["language"] as? Dictionary<String, AnyObject> {
 
             if let _language = langDict["value"] as? UInt {
-                self.setLanguage("\(_language)")
+                self.updateLanguage("\(_language)")
             }
         }
         
@@ -94,7 +94,7 @@ class InformationTableViewCell: UITableViewCell {
     }
     
     // set language
-    func setLanguage(language: String) -> Void {
+    func updateLanguage(language: String) -> Void {
         self.language = language
         self.languageButton.setTitle(self.languages[language], forState: UIControlState.Normal)
     }
