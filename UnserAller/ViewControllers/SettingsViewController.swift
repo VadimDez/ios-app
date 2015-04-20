@@ -12,12 +12,24 @@ import Alamofire
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
-    @IBOutlet weak var viewSwitch: UISegmentedControl!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var profileImage: UIImageView!
     
+    // credits
+    @IBOutlet weak var suggestionCreditsLabel: UILabel!
+    @IBOutlet weak var commentsCreditLabel: UILabel!
+    @IBOutlet weak var likeCreditsLabel: UILabel!
+    @IBOutlet weak var voteCreditsLabel: UILabel!
     
-    var views: [AnyObject] = ["", "", ""]
+    // show views
+    @IBOutlet weak var informationViewBtn: UIButton!
+    @IBOutlet weak var addressViewBtn: UIButton!
+    @IBOutlet weak var passwordViewBtn: UIButton!
+    @IBOutlet weak var notificationsViewBtn: UIButton!
+    
+    
+    var selectedViewIndex: Int = 0
+    var views: [AnyObject] = ["", "", "", ""]
     var settingsDictionary: Dictionary<String, AnyObject>!
     var pickerViewTextField: UITextField!
     var pickerArray: [String: AnyObject]!
@@ -31,9 +43,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         self.registerNibs()
-        self.setSegmetedControl()
         self.navigationBar()
-        self.setFirstCell()
+        self.setInformationCell()
         
         // uipicker
         self.setupUIPicker()
@@ -46,16 +57,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
             self.settingsDictionary = settings
             let _settings = settings["settings"] as! Dictionary<String, AnyObject>
-            let _address = settings["address"] as! Dictionary<String, AnyObject>
             
             self.loadProfileImage()
             
             // set up
-            (self.views[0] as! InformationTableViewCell).setCell(_settings, address: _address)
+            (self.views[0] as! InformationTableViewCell).setCell(_settings)
             
         }, failure: { () -> Void in
             
         })
+        
+        // set credits
+        self.setCredits()
     }
     
     func navigationBar() {
@@ -66,35 +79,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func registerNibs() {
-        var InformationTableViewCellNib = UINib(nibName: "InformationTableViewCell", bundle: nil)
+        let InformationTableViewCellNib = UINib(nibName: "InformationTableViewCell", bundle: nil)
         self.mainTable.registerNib(InformationTableViewCellNib, forCellReuseIdentifier: "InformationTableViewCell")
-        var PasswordTableViewCellNib = UINib(nibName: "PasswordTableViewCell", bundle: nil)
+        
+        let addressTableViewCellNib = UINib(nibName: "AddressTableViewCell", bundle: nil)
+        self.mainTable.registerNib(addressTableViewCellNib, forCellReuseIdentifier: "AddressTableViewCell")
+        
+        let PasswordTableViewCellNib = UINib(nibName: "PasswordTableViewCell", bundle: nil)
         self.mainTable.registerNib(PasswordTableViewCellNib, forCellReuseIdentifier: "PasswordTableViewCell")
-        var NotificationsTableViewCellNib = UINib(nibName: "NotificationsTableViewCell", bundle: nil)
+        
+        let NotificationsTableViewCellNib = UINib(nibName: "NotificationsTableViewCell", bundle: nil)
         self.mainTable.registerNib(NotificationsTableViewCellNib, forCellReuseIdentifier: "NotificationsTableViewCell")
-    }
-    
-    // MARK: - Segmented Controller
-    
-    /**
-    Set segmented control
-    */
-    func setSegmetedControl() {
-        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Normal, rightSegmentState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
-        
-        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Selected, rightSegmentState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
-        
-        self.viewSwitch.setDividerImage(UIImage(named: "SegmentedController_bg-1"), forLeftSegmentState: UIControlState.Normal, rightSegmentState: UIControlState.Selected, barMetrics: UIBarMetrics.Default)
-        
-        // background
-        self.viewSwitch.setBackgroundImage(UIImage(named: "SegmentedController_bg"), forState: UIControlState.Normal, barMetrics: UIBarMetrics.Default)
-        self.viewSwitch.setBackgroundImage(UIImage(named: "SegmentedController_bg_grey"), forState: UIControlState.Selected, barMetrics: UIBarMetrics.Default)
-        
-        // positioning
-        // divider = 11px
-//        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(11/2, 0), forSegmentType: UISegmentedControlSegment.Left, barMetrics: UIBarMetrics.Default)
-//        self.viewSwitch.setContentPositionAdjustment(UIOffsetMake(-11/2, 0), forSegmentType: UISegmentedControlSegment.Right, barMetrics: UIBarMetrics.Default)
-        
     }
     
     func loadProfileImage() {
@@ -106,7 +101,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 weakSelf.profileImage.image = image
                 
                 // add blur
-                var blur = UIBlurEffect(style: UIBlurEffectStyle.ExtraLight)
+                var blur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
                 
                 var blurView = UIVisualEffectView(effect: blur)
                 
@@ -120,54 +115,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func setFirstCell() {
-        // set first cell
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as! InformationTableViewCell
-        cell.firstNameInput.delegate = self
-        cell.lastNameInput.delegate = self
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        // update profile info
-        cell.updateProfileInfo.addTarget(self, action: "updateProfileInfo:", forControlEvents: UIControlEvents.TouchUpInside)
-        // update address info
-        cell.updateAddressInfo.addTarget(self, action: "updatePostalAddressInfo:", forControlEvents: UIControlEvents.TouchUpInside)
-        // language button
-        cell.languageButton.addTarget(self, action: "updateLanguage:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.views[0] = cell;
-    }
-    
-    @IBAction func changeView(sender: UISegmentedControl) {
-        
-        if (!(self.views[self.viewSwitch.selectedSegmentIndex] is UITableViewCell)) {
-            var cell: UITableViewCell!
-            
-            if (self.viewSwitch.selectedSegmentIndex == 1) {
-                cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as! PasswordTableViewCell
-                
-                (cell as! PasswordTableViewCell).changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
-            } else if (self.viewSwitch.selectedSegmentIndex == 2) {
-                cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as! NotificationsTableViewCell
-                
-                // set up cell
-                (cell as! NotificationsTableViewCell).setUpCell(self.settingsDictionary["notifications"] as! Dictionary<String, AnyObject>)
-                
-                // add action to button
-                (cell as! NotificationsTableViewCell).updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
-                
-                // update notification interval
-                (cell as! NotificationsTableViewCell).notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
-            }
-            
-            cell.selectionStyle = UITableViewCellSelectionStyle.None
-            self.views[self.viewSwitch.selectedSegmentIndex] = cell
-        }
-        
-        
-        if (self.viewSwitch.selectedSegmentIndex == 0 || self.viewSwitch.selectedSegmentIndex == 2) {
-            self.updateUIPickerView(self.viewSwitch.selectedSegmentIndex)
-        }
-        self.mainTable.reloadData()
+    // set first cell
+    func setInformationCell() {
+        self.views[0] = self.getInformationCell();
     }
     
     /**
@@ -184,11 +134,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             // get selected "0" or "1", etc
             selected = (self.views[0] as! InformationTableViewCell).language
             
-        } else if (selectedIndex == 2) {
+        } else if (selectedIndex == 3) {
             self.pickerArray = self.notificationIntervals
             
             // get notification interval
-            selected = (self.views[2] as! NotificationsTableViewCell).notificationInterval
+            selected = (self.views[3] as! NotificationsTableViewCell).notificationInterval
         }
         
         let keys = self.pickerArray.keys.array
@@ -237,6 +187,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.presentViewController(navigationController, animated: false, completion: nil)
     }
     
+    /**
+     *  Set credits
+     */
+    func setCredits() {
+        self.suggestionCreditsLabel.text = "0"
+        self.commentsCreditLabel.text = "0"
+        self.likeCreditsLabel.text = "0"
+        self.voteCreditsLabel.text = "0"
+    }
+    
     // MARK: table view
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -244,7 +204,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return self.views[self.viewSwitch.selectedSegmentIndex] as! UITableViewCell
+        return self.views[self.selectedViewIndex] as! UITableViewCell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -252,9 +212,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if (self.viewSwitch.selectedSegmentIndex == 0) {
-            return CGFloat(500.0)
-        } else if (self.viewSwitch.selectedSegmentIndex == 1) {
+        if (self.selectedViewIndex == 0) {
+            return CGFloat(150.0)
+        }
+        
+        if (self.selectedViewIndex == 1) {
+            return CGFloat(300.0)
+        }
+        
+        if (self.selectedViewIndex == 2) {
             return CGFloat(200.0)
         }
         
@@ -286,11 +252,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
-        let cell = self.views[0] as! InformationTableViewCell
+        let cell = self.views[1] as! AddressTableViewCell
         
         let gender = "\(cell.gender.selectedSegmentIndex)"
         
-        self.user.updateAddress(cell.firstNameAddressInput.text, lastName: cell.lastNameAddressInput.text, street: cell.streetAddressInput.text, city: cell.cityAddressInput.text, zipCode: cell.zipAddressInput.text, address: cell.addressAddressInput.text, gender: gender, success: { () -> Void in
+        self.user.updateAddress(cell.firstNameAddressInput.text,
+            lastName: cell.lastNameAddressInput.text,
+            street: cell.streetAddressInput.text,
+            city: cell.cityAddressInput.text,
+            zipCode: cell.zipAddressInput.text,
+            address: cell.addressAddressInput.text,
+            gender: gender,
+            success: { () -> Void in
             // success
         }) { () -> Void in
             // failure
@@ -348,6 +321,24 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.view.endEditing(true)
+    }
+    
+    
+    // MARK: - show views
+    @IBAction func showInformationView(sender: AnyObject) {
+        self.showSettingsView(sender.tag)
+    }
+    
+    @IBAction func showAddressView(sender: AnyObject) {
+        self.showSettingsView(sender.tag)
+    }
+    
+    @IBAction func showPasswordView(sender: AnyObject) {
+        self.showSettingsView(sender.tag)
+    }
+    
+    @IBAction func showNotificationView(sender: AnyObject) {
+        self.showSettingsView(sender.tag)
     }
     
     // MARK: - UIPICKER
@@ -410,9 +401,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let keys = self.pickerArray.keys.array
         let key = keys[(self.pickerViewTextField.inputView as! UIPickerView).selectedRowInComponent(0)]
         
-        if (self.viewSwitch.selectedSegmentIndex == 0) {
+        if (self.selectedViewIndex == 0) {
             (self.views[0] as! InformationTableViewCell).updateLanguage(key)
-        } else if (self.viewSwitch.selectedSegmentIndex == 2) {
+        } else if (self.selectedViewIndex == 3) {
             (self.views[2] as! NotificationsTableViewCell).setInterval(key)
         }
     }
@@ -433,5 +424,95 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         // selected
+    }
+    
+    // MARK: - other functions
+    func showSettingsView(buttonIndex: Int) {
+        // update selected view index
+        self.selectedViewIndex = buttonIndex
+        
+        if (!(self.views[buttonIndex] is UITableViewCell)) {
+            var cell: UITableViewCell!
+            
+            if (buttonIndex == 1) { // address
+                cell = self.getAddressCell()
+            } else if (buttonIndex == 2) { // password
+                cell = self.getPasswordCell()
+            } else if (buttonIndex == 3) { // notifications
+                cell = self.getNotificationCell()
+            }
+            
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+            self.views[buttonIndex] = cell
+        }
+        
+        
+        if (buttonIndex == 0 || buttonIndex == 3) {
+            self.updateUIPickerView(buttonIndex)
+        }
+        self.mainTable.reloadData()
+    }
+    
+    func getInformationCell() -> InformationTableViewCell {
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as! InformationTableViewCell
+        
+        cell.firstNameInput.delegate = self
+        cell.lastNameInput.delegate = self
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        // update profile info
+        cell.updateProfileInfo.addTarget(self, action: "updateProfileInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // language button
+        cell.languageButton.addTarget(self, action: "updateLanguage:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        return cell
+    }
+    
+    func getAddressCell() -> AddressTableViewCell {
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("AddressTableViewCell") as! AddressTableViewCell
+        
+        let _address = self.settingsDictionary["address"] as! Dictionary<String, AnyObject>
+        cell.setCell(_address)
+        
+        // update address info
+        cell.updateAddressInfo.addTarget(self, action: "updatePostalAddressInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // delegates
+        cell.firstNameAddressInput.delegate = self
+        cell.lastNameAddressInput.delegate = self
+        cell.addressAddressInput.delegate = self
+        cell.streetAddressInput.delegate = self
+        cell.zipAddressInput.delegate = self
+        cell.cityAddressInput.delegate = self
+        
+        return cell
+    }
+    func getPasswordCell() -> PasswordTableViewCell {
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as! PasswordTableViewCell
+        
+        cell.changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // delegates
+        cell.actualPassword.delegate = self
+        cell.newPassword.delegate = self
+        cell.repeatNewPassword.delegate = self
+        
+        return cell
+    }
+    
+    func getNotificationCell() -> NotificationsTableViewCell {
+        var cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as! NotificationsTableViewCell
+        
+        // set up cell
+        cell.setUpCell(self.settingsDictionary["notifications"] as! Dictionary<String, AnyObject>)
+        
+        // add action to button
+        cell.updateButton.addTarget(self, action: "updateNotifications:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // update notification interval
+        cell.notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        return cell
     }
 }

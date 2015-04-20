@@ -85,6 +85,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         projectViewController.projectId = self.entries[indexPath.row].id
         
         self.navigationController?.pushViewController(projectViewController, animated: true)
+        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
