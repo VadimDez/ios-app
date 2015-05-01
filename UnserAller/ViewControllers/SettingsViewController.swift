@@ -27,6 +27,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var passwordViewBtn: UIButton!
     @IBOutlet weak var notificationsViewBtn: UIButton!
     
+    //
+    weak var activeTextField: UITextField!
+    ///
     
     var selectedViewIndex: Int = 0
     var views: [AnyObject] = ["", "", "", ""]
@@ -36,6 +39,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var user: UAUser = UAUser()
     let languages: [String: AnyObject] = ["0": "Deutsch", "1": "English"]
     let notificationIntervals: [String: AnyObject] = ["instant": "instantly", "daily": "daily", "weekly": "weekly", "never": "never"]
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.registerForKeyboardNotifications()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +77,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // set credits
         self.setCredits()
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func navigationBar() {
@@ -94,7 +104,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func loadProfileImage() {
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/profileimage/4/80/80")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/4/80/80")!)
         self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
             if let weakSelf = self {
@@ -226,6 +236,22 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         return CGFloat(230.0)
     }
+    
+//    func textFieldDidBeginEditing(textField: UITextField) {
+//        var cell: UITableViewCell
+//        
+////        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+////            // Load resources for iOS 6.1 or earlier
+////            cell = (UITableViewCell *) textField.superview.superview;
+////            
+////        } else {
+//            // Load resources for iOS 7 or later
+//            cell = textField.superview!.superview as! UITableViewCell;
+//            // TextField -> UITableVieCellContentView -> (in iOS 7!)ScrollView -> Cell!
+////        }
+//        
+//        self.mainTable.scrollToRowAtIndexPath(self.mainTable.indexPathForCell(cell)!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//    }
     
     // MARK: button actions
     /**
@@ -514,5 +540,69 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.notificationIntervalButton.addTarget(self, action: "updateNotificationInterval:", forControlEvents: UIControlEvents.TouchUpInside)
         
         return cell
+    }
+    
+    //MARK: - Keyboard Management Methods
+    
+    // Call this method somewhere in your view controller setup code.
+    func registerForKeyboardNotifications() {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self,
+            selector: "keyboardWillBeShown:",
+            name: UIKeyboardWillShowNotification,
+            object: nil)
+        notificationCenter.addObserver(self,
+            selector: "keyboardWillBeHidden:",
+            name: UIKeyboardWillHideNotification,
+            object: nil)
+    }
+    
+    // Called when the UIKeyboardDidShowNotification is sent.
+    func keyboardWillBeShown(sender: NSNotification) {
+        let info: NSDictionary = sender.userInfo!
+        let value: NSValue = info.valueForKey(UIKeyboardFrameBeginUserInfoKey) as! NSValue
+        let keyboardSize: CGSize = value.CGRectValue().size
+        let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
+//        scrollView.contentInset = contentInsets
+//        scrollView.scrollIndicatorInsets = contentInsets
+        
+            
+        self.mainTable.contentInset = contentInsets
+        self.mainTable.scrollIndicatorInsets = contentInsets
+        
+        // If active text field is hidden by keyboard, scroll it so it's visible
+        // Your app might not need or want this behavior.
+        var aRect: CGRect = self.view.frame
+        aRect.size.height -= keyboardSize.height
+        let activeTextFieldRect: CGRect? = activeTextField?.frame
+        let activeTextFieldOrigin: CGPoint? = activeTextFieldRect?.origin
+        if (!CGRectContainsPoint(aRect, activeTextFieldOrigin!)) {
+//            scrollView.scrollRectToVisible(activeTextFieldRect!, animated:true)
+            self.mainTable.scrollRectToVisible(activeTextFieldRect!, animated:true)
+        }
+    }
+    
+    // Called when the UIKeyboardWillHideNotification is sent
+    func keyboardWillBeHidden(sender: NSNotification) {
+        let contentInsets: UIEdgeInsets = UIEdgeInsetsZero
+//        scrollView.contentInset = contentInsets
+//        scrollView.scrollIndicatorInsets = contentInsets
+        
+        self.mainTable.contentInset = contentInsets
+        self.mainTable.scrollIndicatorInsets = contentInsets
+    }
+    
+    //MARK: - UITextField Delegate Methods
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        activeTextField = textField
+        self.mainTable.scrollEnabled = true
+//        scrollView.scrollEnabled = true
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        activeTextField = nil
+        self.mainTable.scrollEnabled = false
+//        scrollView.scrollEnabled = false
     }
 }

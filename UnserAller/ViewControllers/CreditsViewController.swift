@@ -118,7 +118,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func getEntries(success: () -> Void, error: () -> Void) {
         // /api/mobile/profile/getbookmarks/
-        let url: String = "https://\(APIURL)/api/mobile/profile/getcredits"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/getcredits"
 
         Alamofire.request(.GET, url, parameters: ["page": page])
             .responseJSON { (_, _, JSON, errors) -> Void in

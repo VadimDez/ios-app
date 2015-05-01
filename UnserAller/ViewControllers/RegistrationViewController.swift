@@ -101,7 +101,7 @@ class RegistrationViewController: UIViewController {
     */
     func checkAvailableEmail(success: (available: Bool) -> Void, failure: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/auth/checkemail"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/auth/checkemail"
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["email": self.email.text])
@@ -131,7 +131,7 @@ class RegistrationViewController: UIViewController {
     */
     func registerNewUser(success: () -> Void, failure: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/auth/register"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/auth/register"
         
         // get entries
         Alamofire.request(.POST, url, parameters: ["email": self.email.text, "password": self.password.text, "firstname": self.firstName.text, "lastname": self.lastName.text])

@@ -273,7 +273,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
      */
     func getEntries(success:() -> Void, error: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/profile/getwall"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/getwall"
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page])
@@ -322,7 +322,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
 
                 for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
                     self.photos.append(photo)
                 }
 

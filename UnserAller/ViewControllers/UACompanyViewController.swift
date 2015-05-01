@@ -105,7 +105,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     */
     func getCompanyWithProjects(success:() -> Void, error: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/company/get/"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/company/get/"
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["id": self.company.id])
@@ -126,7 +126,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     func loadCompanyImage() {
         // load profile image
-        let url = "https://\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
+        let url = "\(APIPROTOCOL)://\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
         self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in

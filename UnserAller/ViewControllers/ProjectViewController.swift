@@ -546,7 +546,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
                 
                 for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
                     self.photos.append(photo)
                 }
                 
@@ -565,7 +565,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      */
     func loadProject(success: (json: AnyObject) -> Void, error: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/project/get/\(self.projectId)"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/get/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -592,7 +592,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.projectName.text = self.project.name
         self.navigationItem.title = self.project.name
         
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
 
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
@@ -612,7 +612,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     */
     func loadPhases(success: () -> Void, error: () -> Void) {
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -642,7 +642,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func loadPhase(id: UInt, success: (jsonResponse: AnyObject) -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getstep/\(id)"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getstep/\(id)"
         
         // GET
         Alamofire.request(.GET, url)
@@ -727,7 +727,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/suggestions"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/suggestions"
         
         // GET
         Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "top", "page": self.page])
@@ -762,7 +762,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getnews"
+        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getnews"
         
         // GET
         Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
@@ -830,7 +830,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "https://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
@@ -910,7 +910,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func sendSuggestion(success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "https://\(APIURL)/api/v1/suggestion/post"
+        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/post"
         
         Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text, "phase": self.actualPhaseId])
             .responseJSON { (_,_,JSON,errors) in
