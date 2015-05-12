@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0D7788C86F6F18E63693A64E"
-               BuildableName = "libPods-UnserAller-AMScrollingNavbar.a"
+               BlueprintIdentifier = "6E9285BB9CF34A1C6995B961"
+               BuildableName = "AMScrollingNavbar.framework"
                BlueprintName = "Pods-UnserAller-AMScrollingNavbar"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

@@ -15,5 +15,6 @@ pod 'DrawerController', '~> 1.0'
 end
 
 target "UnserAllerTests" do
-
+pod 'Locksmith', '~> 1.2'
+pod 'Alamofire', '~> 1.2'
 end

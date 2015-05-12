@@ -52,7 +52,7 @@
 #define COCOAPODS_POD_AVAILABLE_AMScrollingNavbar
 #define COCOAPODS_VERSION_MAJOR_AMScrollingNavbar 1
 #define COCOAPODS_VERSION_MINOR_AMScrollingNavbar 3
-#define COCOAPODS_VERSION_PATCH_AMScrollingNavbar 4
+#define COCOAPODS_VERSION_PATCH_AMScrollingNavbar 6
 
 // Alamofire
 #define COCOAPODS_POD_AVAILABLE_Alamofire

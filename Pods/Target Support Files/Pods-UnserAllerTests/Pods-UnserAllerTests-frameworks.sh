@@ -8,7 +8,7 @@ SWIFT_STDLIB_PATH="${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}"
 
 install_framework()
 {
-  local source="${BUILT_PRODUCTS_DIR}/Pods-UnserAller/$1"
+  local source="${BUILT_PRODUCTS_DIR}/Pods-UnserAllerTests/$1"
   local destination="${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
@@ -48,22 +48,10 @@ code_sign() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework 'AFNetworking.framework'
-  install_framework 'AMScrollingNavbar.framework'
   install_framework 'Alamofire.framework'
-  install_framework 'Canvas.framework'
-  install_framework 'DrawerController.framework'
-  install_framework 'ECSlidingViewController.framework'
   install_framework 'Locksmith.framework'
-  install_framework 'SVPullToRefresh.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework 'AFNetworking.framework'
-  install_framework 'AMScrollingNavbar.framework'
   install_framework 'Alamofire.framework'
-  install_framework 'Canvas.framework'
-  install_framework 'DrawerController.framework'
-  install_framework 'ECSlidingViewController.framework'
   install_framework 'Locksmith.framework'
-  install_framework 'SVPullToRefresh.framework'
 fi
