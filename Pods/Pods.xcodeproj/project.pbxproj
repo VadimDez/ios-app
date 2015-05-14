@@ -1420,6 +1420,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
+				TargetAttributes = {
+					6E9285BB9CF34A1C6995B961 = {
+						DevelopmentTeam = 8YFCERCRUC;
+					};
+				};
 			};
 			buildConfigurationList = 445521357B1885FA1ED8046F /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1776,6 +1781,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3EB9EB8669D778AEA8F8FF9D /* Pods-UnserAller-AMScrollingNavbar-Private.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1791,6 +1797,7 @@
 				MODULEMAP_FILE = "Target Support Files/Pods-UnserAller-AMScrollingNavbar/Pods-UnserAller-AMScrollingNavbar.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = AMScrollingNavbar;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2207,6 +2214,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3EB9EB8669D778AEA8F8FF9D /* Pods-UnserAller-AMScrollingNavbar-Private.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -2222,6 +2230,7 @@
 				MODULEMAP_FILE = "Target Support Files/Pods-UnserAller-AMScrollingNavbar/Pods-UnserAller-AMScrollingNavbar.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = AMScrollingNavbar;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
