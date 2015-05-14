@@ -36,7 +36,7 @@ class UAProjectViewModel: NSObject {
         return projects
     }
     
-    func projectFromJSON(object:Dictionary<String, AnyObject>) -> UAProject {
+    func projectFromJSON(object: Dictionary<String, AnyObject>) -> UAProject {
         var project = UAProject()
         project.company = UACompany()
         
@@ -49,8 +49,17 @@ class UAProjectViewModel: NSObject {
         if let title = object["title"] as? String {
             project.title = title
         }
-        if let company = object["company"] as? String {
-            project.company.name = company
+
+        // save company
+        if let company = object["company"] as? Dictionary<String, AnyObject> {
+            
+            if let companyId = company["id"] as? UInt {
+                project.company.id = companyId
+            }
+            
+            if let companyName = company["name"] as? String {
+                project.company.name = companyName
+            }
         }
         
         if let images = object["images"] as? Dictionary<String, AnyObject> {

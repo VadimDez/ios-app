@@ -17,27 +17,8 @@ class UAProjectCell: UITableViewCell {
     func setCell(project: UAProject) {
         self.label.text = project.name
         self.companyName.text = project.company.name
-        
+
         self.loadProjectImage(project.imageUrl)
-        
-//        self.removeEffect()
-//        self.addEffect()
-    }
-    
-    func addEffect() {
-        var blur = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        var effectView:UIVisualEffectView = UIVisualEffectView (effect: blur)
-        effectView.frame = self.projectImage.frame
-        
-        self.projectImage.addSubview(effectView)
-    }
-    
-    func removeEffect() {
-        for subView in self.projectImage.subviews {
-            if subView.isKindOfClass(UIVisualEffectView) {
-                subView.removeFromSuperview()
-            }
-        }
     }
     
     /**

@@ -14,13 +14,15 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     var page: Int = -1
     var entries: [UAProject] = []
     var countEntries: Int = 0
+    @IBOutlet weak var searchView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.mainTable.tableHeaderView?.hidden = true
+        
         // nibs
-        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
-        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
+        self.registerNibs()
 
         // add infinite load
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -32,6 +34,11 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // take first
         self.mainTable.triggerInfiniteScrolling()
+    }
+    
+    func registerNibs() {
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
     
     override func didMoveToParentViewController(parent: UIViewController?) {
@@ -97,7 +104,34 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 160
+
+        let base: CGFloat = 169.0
+        var companyNameHeight: CGFloat = 0.0
+        let projectNameHeight = self.getTextHeight(self.entries[indexPath.row].name, width: 288, fontSize: 17.0, fontName: "Helvetica Neue")
+        
+        if let companyName = self.entries[indexPath.row].company!.name {
+            companyNameHeight = self.getTextHeight(companyName, width: 288, fontSize: 14.0, fontName: "Helvetica Neue Thin")
+        }
+        
+        return base + projectNameHeight + companyNameHeight
+        
+//        return 206
+    }
+    
+    func getTextHeight(string: String, width: CGFloat, fontSize: CGFloat, fontName: String) -> CGFloat {
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = width
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = string
+        label.font = UIFont(name: fontName, size: fontSize)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        return label.frame.size.height
     }
     
     /*
@@ -173,7 +207,20 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // show menu
     @IBAction func showMenu(sender: AnyObject) {
-        
         self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
+    }
+    
+    /**
+     * Toggle search
+     */
+    @IBAction func toggleSearch(sender: AnyObject) {
+        let hide = !self.searchView.hidden
+        self.searchView.hidden = hide
+        
+        if (hide) {
+            self.mainTable.contentOffset.y = -64
+        } else {
+            self.mainTable.contentOffset.y = -105
+        }
     }
 }
