@@ -167,6 +167,9 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         self.page = 0
         self.entries = []
         self.countEntries = 0
+        self.mainTable.reloadData()
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         self.getEntries({() -> Void in
             self.mainTable.reloadData()
@@ -189,9 +192,10 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/"
 
         // get entries
-        Alamofire.request(.GET, url, parameters: ["page": page])
+        Alamofire.request(.GET, url, parameters: ["page": page, "filter": ["searchString": self.searchField.text]])
             .responseJSON { (_,_,JSON,errors) in
-                if(errors != nil || JSON?.count == 0) {
+                
+                if (errors != nil || JSON?.count == 0) {
                     // print error
                     println(errors)
                     // error block
@@ -220,7 +224,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
      *  Search projects
      */
     @IBAction func searchProject(sender: AnyObject) {
-        
+        self.refresh()
     }
     
     /**
