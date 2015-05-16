@@ -15,15 +15,14 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     var entries: [UAProject] = []
     var countEntries: Int = 0
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var searchField: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.mainTable.tableHeaderView?.hidden = true
-        
         // nibs
         self.registerNibs()
-
+        
         // add infinite load
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             // activity indicator
@@ -31,6 +30,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             self.infiniteLoad()
         }
         
+        //
+        self.setupSearchView()
         
         // take first
         self.mainTable.triggerInfiniteScrolling()
@@ -39,6 +40,11 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     func registerNibs() {
         var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
         self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
+    }
+    
+    func setupSearchView() {
+        // hide search view
+        self.searchView.hidden = true
     }
     
     override func didMoveToParentViewController(parent: UIViewController?) {
@@ -211,16 +217,41 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     /**
+     *  Search projects
+     */
+    @IBAction func searchProject(sender: AnyObject) {
+        
+    }
+    
+    /**
      * Toggle search
      */
     @IBAction func toggleSearch(sender: AnyObject) {
         let hide = !self.searchView.hidden
+        
         self.searchView.hidden = hide
         
-        if (hide) {
-            self.mainTable.contentOffset.y = -64
-        } else {
-            self.mainTable.contentOffset.y = -105
-        }
+//        if (hide) {
+//            self.mainTable.contentOffset.y = -64
+//        } else {
+//            self.mainTable.contentOffset.y = -105
+//        }
+//        
+//        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
+//            
+//            var frame: CGRect = self.searchView.frame
+//            if (hide) {
+//                frame.origin.y -= 38
+//            } else {
+//                self.searchView.hidden = false
+//                frame.origin.y += 38
+//            }
+//            println(frame.origin.y)
+//            self.searchView.frame = frame
+//        }) { (Bool) -> Void in
+//            if (hide) {
+//                self.searchView.hidden = true
+//            }
+//        }
     }
 }
