@@ -1012,20 +1012,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FlV-AY-EVv">
-                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVW-mi-IsD">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="GW6-iT-csD"/>
                                 </constraints>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
                                     <navigationItem title="Title" id="wX0-fm-jgm">
                                         <barButtonItem key="rightBarButtonItem" title="Done" id="bps-Eq-fC0">
+                                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <connections>
                                                 <action selector="doneAction:" destination="lDc-sS-Htg" id="ntQ-75-SoJ"/>
                                             </connections>
@@ -1033,19 +1029,50 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gch-72-JJX">
+                                <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgn-cz-Lnp">
+                                        <rect key="frame" x="10" y="10" width="300" height="396"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FlV-AY-EVv">
+                                                <rect key="frame" x="5" y="5" width="290" height="386"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="FlV-AY-EVv" secondAttribute="trailing" constant="5" id="CQ8-zs-GrB"/>
+                                            <constraint firstItem="FlV-AY-EVv" firstAttribute="top" secondItem="hgn-cz-Lnp" secondAttribute="top" constant="5" id="VdA-Ea-l6g"/>
+                                            <constraint firstAttribute="bottom" secondItem="FlV-AY-EVv" secondAttribute="bottom" constant="5" id="ubz-8n-Mcf"/>
+                                            <constraint firstItem="FlV-AY-EVv" firstAttribute="leading" secondItem="hgn-cz-Lnp" secondAttribute="leading" constant="5" id="yqw-hu-eOm"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="hgn-cz-Lnp" firstAttribute="top" secondItem="Gch-72-JJX" secondAttribute="top" constant="10" id="Gkh-qj-heG"/>
+                                    <constraint firstAttribute="bottom" secondItem="hgn-cz-Lnp" secondAttribute="bottom" constant="10" id="jR6-5H-tAQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="hgn-cz-Lnp" secondAttribute="trailing" constant="10" id="leg-nU-Nf3"/>
+                                    <constraint firstItem="hgn-cz-Lnp" firstAttribute="leading" secondItem="Gch-72-JJX" secondAttribute="leading" constant="10" id="zrk-zz-eeR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="MFY-Kx-zvH" firstAttribute="top" secondItem="FlV-AY-EVv" secondAttribute="bottom" id="B6O-gr-lys"/>
+                            <constraint firstItem="Gch-72-JJX" firstAttribute="leading" secondItem="okT-54-z2Q" secondAttribute="leadingMargin" constant="-16" id="9nQ-SX-xAx"/>
+                            <constraint firstItem="MFY-Kx-zvH" firstAttribute="top" secondItem="Gch-72-JJX" secondAttribute="bottom" id="FXn-dj-PfQ"/>
                             <constraint firstItem="eVW-mi-IsD" firstAttribute="top" secondItem="okT-54-z2Q" secondAttribute="topMargin" id="XR0-bz-in0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eVW-mi-IsD" secondAttribute="trailing" constant="-16" id="ZGT-yH-Drq"/>
+                            <constraint firstItem="Gch-72-JJX" firstAttribute="top" secondItem="eVW-mi-IsD" secondAttribute="bottom" id="d9U-gP-dd6"/>
                             <constraint firstItem="eVW-mi-IsD" firstAttribute="leading" secondItem="okT-54-z2Q" secondAttribute="leadingMargin" constant="-16" id="dWD-pw-svF"/>
-                            <constraint firstItem="FlV-AY-EVv" firstAttribute="top" secondItem="eVW-mi-IsD" secondAttribute="bottom" id="eCY-MA-v5U"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FlV-AY-EVv" secondAttribute="trailing" constant="-16" id="rHo-9B-XdA"/>
-                            <constraint firstItem="FlV-AY-EVv" firstAttribute="leading" secondItem="okT-54-z2Q" secondAttribute="leadingMargin" constant="-16" id="wfu-Wk-Ukz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gch-72-JJX" secondAttribute="trailing" constant="-16" id="vly-Uo-oQj"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bottomConstraint" destination="jR6-5H-tAQ" id="uI6-2O-iyH"/>
                         <outlet property="textView" destination="FlV-AY-EVv" id="LYQ-6W-pOY"/>
                     </connections>
                 </viewController>
