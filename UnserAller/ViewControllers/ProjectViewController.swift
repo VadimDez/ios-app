@@ -869,7 +869,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBAction func openEditor(sender: AnyObject) {
         var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
-        editor.delegate = self
+        weak var _self = self
+        
+        editor.setEditorTitle("New suggestion")
+        editor.delegate = _self
         editor.string = self.sendSuggestionInput.text
         self.presentViewController(editor, animated: true, completion: nil)
 

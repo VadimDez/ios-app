@@ -59,8 +59,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        self.mainTable.rowHeight = UITableViewAutomaticDimension
         
         self.mainTable.triggerInfiniteScrolling()
-        
+        self.registerNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeNotifications()
+    }
+    
+    func registerNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
+    }
+    
+    func removeNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSelectItemFromCollectionView", object: nil)
     }
     
     func registerNibs() {

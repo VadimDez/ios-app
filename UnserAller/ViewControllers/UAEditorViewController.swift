@@ -11,16 +11,18 @@ import UIKit
 class UAEditorViewController: UIViewController {    
     
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     var delegate: UAEditorDelegate! = nil
     var string: String!
+    var navigationBarTitle: String = ""
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.textView.text = self.string
-
+        self.navigationBar.topItem?.title = self.navigationBarTitle
         self.registerNotifications()        
         self.textView.becomeFirstResponder()
 
@@ -32,9 +34,8 @@ class UAEditorViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
         self.removeObservers()
+        super.viewWillDisappear(animated)
     }
     
     @IBAction func doneAction(sender: AnyObject) {
@@ -50,30 +51,20 @@ class UAEditorViewController: UIViewController {
     }
     
     func registerNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardNotification:", name: UIKeyboardWillChangeFrameNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "keyboardNotification:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
-    func keyboardWillHide(sender: NSNotification) {
-        if let userInfo = sender.userInfo {
-            
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
-            let duration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-            let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
-            let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-            
-            if let keyboardHeight = endFrame?.size.height {
-                self.bottomConstraint.constant -= keyboardHeight
-                
-                UIView.animateWithDuration(duration, delay: NSTimeInterval(0), options: animationCurve, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-        }
+    func keyboardWillHide(notification: NSNotification) {
+        self.changeTextViewHeight(notification, hideKeyboard: true)
     }
     
     func keyboardNotification(notification: NSNotification) {
+        self.changeTextViewHeight(notification, hideKeyboard: false)
+    }
+    
+    func changeTextViewHeight(notification: NSNotification, hideKeyboard: Bool) {
         if let userInfo = notification.userInfo {
             let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
             let duration: NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
@@ -81,9 +72,12 @@ class UAEditorViewController: UIViewController {
             let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
             let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
             
-            
-            self.bottomConstraint.constant = endFrame?.size.height ?? 0.0
-            self.bottomConstraint.constant += 10.0
+            if (hideKeyboard) {
+                self.bottomConstraint.constant -= endFrame?.size.height ?? 0.0
+            } else {
+                self.bottomConstraint.constant = endFrame?.size.height ?? 0.0
+                self.bottomConstraint.constant += 10.0
+            }
             
             UIView.animateWithDuration(duration,
                 delay: NSTimeInterval(0),
@@ -91,5 +85,9 @@ class UAEditorViewController: UIViewController {
                 animations: { self.view.layoutIfNeeded() },
                 completion: nil)
         }
+    }
+    
+    func setEditorTitle(title: String) {
+        self.navigationBarTitle = title
     }
 }

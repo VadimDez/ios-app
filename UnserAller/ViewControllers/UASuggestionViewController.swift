@@ -344,7 +344,9 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func openEditor(sender: AnyObject) {
         var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
-        editor.delegate = self
+        weak var _self = self
+        editor.setEditorTitle("New comment")
+        editor.delegate = _self
         editor.string = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
         
 //        1)

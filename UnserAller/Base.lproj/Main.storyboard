@@ -1035,11 +1035,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgn-cz-Lnp">
                                         <rect key="frame" x="10" y="10" width="300" height="396"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FlV-AY-EVv">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FlV-AY-EVv">
                                                 <rect key="frame" x="5" y="5" width="290" height="386"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES" address="YES" calendarEvent="YES"/>
                                             </textView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1073,6 +1074,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomConstraint" destination="jR6-5H-tAQ" id="uI6-2O-iyH"/>
+                        <outlet property="navigationBar" destination="eVW-mi-IsD" id="PWW-WL-0Af"/>
                         <outlet property="textView" destination="FlV-AY-EVv" id="LYQ-6W-pOY"/>
                     </connections>
                 </viewController>
