@@ -127,29 +127,33 @@ class MenuTableViewController: UITableViewController {
         var destViewController : UIViewController
         switch (indexPath.row) {
         case 0:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("initNavigation")
             break
         case 1:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsNavi") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("projectsNavi")
             break
         case 2:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("creditsNavi") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("creditsNavi")
             break
         case 3:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("bookmarksNavi") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("bookmarksNavi")
             break
         case 4:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("activityNavi") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("activityNavi")
             break
         case 5:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("settingsNavi") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("settingsNavi")
             break
         default:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
+            destViewController = self.getNavigationByIdentifier("initNavigation")
             break
         }
         
         self.evo_drawerController?.setCenterViewController(destViewController, withCloseAnimation: true, completion: nil)
+    }
+    
+    func getNavigationByIdentifier(identifier: String) -> UINavigationController {
+        return self.storyboard?.instantiateViewControllerWithIdentifier(identifier) as! UINavigationController
     }
     
     
