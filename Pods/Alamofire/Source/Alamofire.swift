@@ -420,6 +420,18 @@ public class Manager {
         }
 
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: ((NSURLSessionAuthChallengeDisposition, NSURLCredential!) -> Void)) {
+            
+            //TODO: Remove this
+            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+                let trustedDomain = "self.signed.domain.com"
+                if challenge.protectionSpace.host == trustedDomain {
+                    let trustedCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
+                    completionHandler(.UseCredential, trustedCredential)
+                    return
+                }
+            }
+            //TODO: No, Really Remove This
+            
             if taskDidReceiveChallenge != nil {
                 completionHandler(taskDidReceiveChallenge!(session, task, challenge))
             } else if let delegate = self[task] {
