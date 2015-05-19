@@ -43,6 +43,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.registerForKeyboardNotifications()
+        
+        // offset
+        //        self.mainTable.frame.origin.x = -32.0
+        self.view.frame.origin.y = -100.0
     }
     
     override func viewDidLoad() {
@@ -54,12 +58,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.navigationBar()
         self.setInformationCell()
         
+        
         // uipicker
         self.setupUIPicker()
         
         // set ui picker's array
         self.pickerArray = self.languages
-        
+
         // load settings
         self.user.getSettings({ (settings) -> Void in
 
@@ -152,14 +157,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         let keys = self.pickerArray.keys.array
-        
-        let position = find(keys, selected)?.hashValue
+
+        let position = find(keys, selected)?.hashValue ?? 0
         
         // update uipicker
         (self.pickerViewTextField.inputView as! UIPickerView).reloadAllComponents()
         
         // select row
-        (self.pickerViewTextField.inputView as! UIPickerView).selectRow(position!, inComponent: 0, animated: true)
+        (self.pickerViewTextField.inputView as! UIPickerView).selectRow(position, inComponent: 0, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -575,10 +580,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         var aRect: CGRect = self.view.frame
         aRect.size.height -= keyboardSize.height
         let activeTextFieldRect: CGRect? = activeTextField?.frame
-        let activeTextFieldOrigin: CGPoint? = activeTextFieldRect?.origin
-        if (!CGRectContainsPoint(aRect, activeTextFieldOrigin!)) {
-//            scrollView.scrollRectToVisible(activeTextFieldRect!, animated:true)
-            self.mainTable.scrollRectToVisible(activeTextFieldRect!, animated:true)
+        if let activeTextFieldOrigin: CGPoint? = activeTextFieldRect?.origin {
+            if (!CGRectContainsPoint(aRect, activeTextFieldOrigin!)) {
+//              scrollView.scrollRectToVisible(activeTextFieldRect!, animated:true)
+                self.mainTable.scrollRectToVisible(activeTextFieldRect!, animated:true)
+            }
         }
     }
     
