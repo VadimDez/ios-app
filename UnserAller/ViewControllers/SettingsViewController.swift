@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate/*, UIScrollViewDelegate*/ {
 
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var backgroundImage: UIImageView!
@@ -47,7 +47,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // offset
         //        self.mainTable.frame.origin.x = -32.0
-        self.view.frame.origin.y = -100.0
+//        self.view.frame.origin.y = -100.0
+//        self.view.bounds.origin.y = 24.0
+        
+        // profile image
+        self.adjustProfileImage()
     }
     
     override func viewDidLoad() {
@@ -92,6 +96,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 //        self.navigationController?.navigationBar.shadowImage = UIImage()
 //        self.navigationController?.navigationBar.translucent = true
 //        self.navigationController?.view.backgroundColor = UIColor.clearColor()
+    }
+    
+    func adjustProfileImage() {
+        var imageLayer:CALayer = self.profileImage.layer
+        imageLayer.cornerRadius = self.profileImage.frame.width / 2
+        imageLayer.masksToBounds = true
     }
     
     func registerNibs() {
@@ -622,4 +632,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.scrollEnabled = false
 //        scrollView.scrollEnabled = false
     }
+    
+    // MARK: - Scroll
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y < -20.0) {
+//            println(scrollView.contentOffset.y)
+//            var frame = CGRect(x: 0, y: 0, width: self.backgroundImage.frame.width, height: self.backgroundImage.frame.height + abs(scrollView.contentOffset.y))
+//            self.backgroundImage.frame = frame
+//            
+//            frame.height = CGFloat(scrollView.contentOffset.y + 20.0)
+//            self.backgroundImage.frame.origin.y = scrollView.contentOffset.y
+//        }
+//    }
 }
