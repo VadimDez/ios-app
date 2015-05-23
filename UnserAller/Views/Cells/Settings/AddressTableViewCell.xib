@@ -78,13 +78,6 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8xJ-Th-3em">
-                        <rect key="frame" x="99" y="105" width="212" height="29"/>
-                        <segments>
-                            <segment title="Male"/>
-                            <segment title="Female"/>
-                        </segments>
-                    </segmentedControl>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GENDER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2K-CI-uh6">
                         <rect key="frame" x="8" y="108" width="57" height="21"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
@@ -99,6 +92,14 @@
                         <rect key="frame" x="0.0" y="96" width="320" height="1"/>
                         <color key="backgroundColor" red="0.83589804290000003" green="0.83589804290000003" blue="0.83589804290000003" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HuA-ol-1yM">
+                        <rect key="frame" x="107" y="106" width="205" height="30"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <state key="normal" title="Gender">
+                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3sL-PO-5ak" userLabel="divider">
                         <rect key="frame" x="0.0" y="144" width="320" height="1"/>
                         <color key="backgroundColor" red="0.83589804290000003" green="0.83589804290000003" blue="0.83589804290000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -122,6 +123,7 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="46y-Bf-6je">
                         <rect key="frame" x="0.0" y="336" width="320" height="48"/>
                         <color key="backgroundColor" red="0.12549019610000001" green="0.75294117650000003" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.12549019610000001" green="0.62668192489999996" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                         <state key="normal" title="Update postal address">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -133,7 +135,7 @@
                 <outlet property="addressAddressInput" destination="Sl0-dE-mHg" id="Y7w-bU-CDh"/>
                 <outlet property="cityAddressInput" destination="S85-z1-oYn" id="GZn-jf-wCk"/>
                 <outlet property="firstNameAddressInput" destination="y7S-EQ-o2t" id="CPJ-vL-gV8"/>
-                <outlet property="gender" destination="8xJ-Th-3em" id="Jdr-fG-WZz"/>
+                <outlet property="genderButton" destination="HuA-ol-1yM" id="Vvb-xq-KS5"/>
                 <outlet property="lastNameAddressInput" destination="J1l-ka-2jy" id="UUt-SC-OsH"/>
                 <outlet property="streetAddressInput" destination="JqD-bU-oBQ" id="LKX-T8-cz8"/>
                 <outlet property="updateAddressInfo" destination="46y-Bf-6je" id="zrb-xa-D2r"/>

@@ -39,6 +39,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     var user: UAUser = UAUser()
     let languages: [String: AnyObject] = ["0": "Deutsch", "1": "English"]
     let notificationIntervals: [String: AnyObject] = ["instant": "instantly", "daily": "daily", "weekly": "weekly", "never": "never"]
+    let genders: [String: AnyObject] = ["0": "Female", "1": "Male"]
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -142,13 +143,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     */
     func updateUIPickerView(selectedIndex: Int) {
         var selected: String!
-        
+
         if (selectedIndex == 0) {
             self.pickerArray = self.languages
             
             // get selected "0" or "1", etc
             selected = (self.views[0] as! InformationTableViewCell).language
             
+        } else if (selectedIndex == 1) {
+            self.pickerArray = self.genders
+
+            selected = (self.views[1] as! AddressTableViewCell).gender
         } else if (selectedIndex == 3) {
             self.pickerArray = self.notificationIntervals
             
@@ -228,18 +233,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if (self.selectedViewIndex == 0) {
-            return CGFloat(150.0)
+            return CGFloat(237.0)
         }
         
         if (self.selectedViewIndex == 1) {
-            return CGFloat(300.0)
+            return CGFloat(385.0)
         }
         
         if (self.selectedViewIndex == 2) {
-            return CGFloat(200.0)
+            return CGFloat(193.0)
         }
         
-        return CGFloat(230.0)
+        return CGFloat(288.0)
     }
     
 //    func textFieldDidBeginEditing(textField: UITextField) {
@@ -284,16 +289,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
         let cell = self.views[1] as! AddressTableViewCell
-        
-        let gender = "\(cell.gender.selectedSegmentIndex)"
-        
+        println("SDF")
         self.user.updateAddress(cell.firstNameAddressInput.text,
             lastName: cell.lastNameAddressInput.text,
             street: cell.streetAddressInput.text,
             city: cell.cityAddressInput.text,
             zipCode: cell.zipAddressInput.text,
             address: cell.addressAddressInput.text,
-            gender: gender,
+            gender: cell.gender,
             success: { () -> Void in
             // success
         }) { () -> Void in
@@ -414,6 +417,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     func updateLanguage(sender: AnyObject) {
         self.pickerViewTextField.becomeFirstResponder()
     }
+    func updateGender(sender: AnyObject) {
+        self.pickerViewTextField.becomeFirstResponder()
+    }
     func updateNotificationInterval(sender: AnyObject) {
         self.pickerViewTextField.becomeFirstResponder()
     }
@@ -434,6 +440,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         if (self.selectedViewIndex == 0) {
             (self.views[0] as! InformationTableViewCell).updateLanguage(key)
+        } else if (self.selectedViewIndex == 1) {
+            (self.views[1] as! AddressTableViewCell).updateGender(key)
         } else if (self.selectedViewIndex == 3) {
             (self.views[2] as! NotificationsTableViewCell).setInterval(key)
         }
@@ -478,7 +486,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         
-        if (buttonIndex == 0 || buttonIndex == 3) {
+        if (buttonIndex == 0 || buttonIndex == 1 || buttonIndex == 3) {
             self.updateUIPickerView(buttonIndex)
         }
         self.mainTable.reloadData()
@@ -508,6 +516,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // update address info
         cell.updateAddressInfo.addTarget(self, action: "updatePostalAddressInfo:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        // gender button
+        cell.genderButton.addTarget(self, action: "updateGender:", forControlEvents: UIControlEvents.TouchUpInside)
         
         // delegates
         cell.firstNameAddressInput.delegate = self

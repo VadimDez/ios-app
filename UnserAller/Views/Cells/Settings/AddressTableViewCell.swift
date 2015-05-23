@@ -12,12 +12,15 @@ class AddressTableViewCell: UITableViewCell {
     
     @IBOutlet weak var firstNameAddressInput: UITextField!
     @IBOutlet weak var lastNameAddressInput: UITextField!
-    @IBOutlet weak var gender: UISegmentedControl!
+    @IBOutlet weak var genderButton: UIButton!
     @IBOutlet weak var addressAddressInput: UITextField!
     @IBOutlet weak var streetAddressInput: UITextField!
     @IBOutlet weak var zipAddressInput: UITextField!
     @IBOutlet weak var cityAddressInput: UITextField!
     @IBOutlet weak var updateAddressInfo: UIButton!
+    
+    let genders = ["0": "Female", "1": "Male"]
+    var gender: String = "1"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,9 +41,9 @@ class AddressTableViewCell: UITableViewCell {
         if let lastNamePost = address["lastname"]?.objectForKey("value") as? String {
             self.lastNameAddressInput.text = lastNamePost
         }
-        
+
         if let genderPost = address["gender"]?.objectForKey("value") as? Bool {
-            self.gender.selectedSegmentIndex = (genderPost) ? 0 : 1
+            self.updateGender((genderPost) ? "1" : "0")
         }
         
         if let addressPost = address["address"]?.objectForKey("value") as? String {
@@ -58,5 +61,11 @@ class AddressTableViewCell: UITableViewCell {
         if let cityPost = address["city"]?.objectForKey("value") as? String {
             self.cityAddressInput.text = cityPost
         }
+    }
+    
+    // set language
+    func updateGender(gender: String) -> Void {
+        self.gender = gender
+        self.genderButton.setTitle(self.genders[gender], forState: UIControlState.Normal)
     }
 }

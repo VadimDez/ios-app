@@ -268,7 +268,7 @@ class UAUser {
             "gender":       gender
             ])
             .response{ (request, response, data, errors) -> Void in
-                
+                println(response)
                 if(errors != nil || response?.statusCode >= 400) {
                     // print error
                     println(errors)
