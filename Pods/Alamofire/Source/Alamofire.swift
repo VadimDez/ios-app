@@ -423,7 +423,7 @@ public class Manager {
             
             //TODO: Remove this
             if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-                let trustedDomain = "self.signed.domain.com"
+                let trustedDomain = "local.innosabi.net"
                 if challenge.protectionSpace.host == trustedDomain {
                     let trustedCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
                     completionHandler(.UseCredential, trustedCredential)
