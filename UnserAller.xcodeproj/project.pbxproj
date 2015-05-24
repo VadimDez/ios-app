@@ -131,10 +131,6 @@
 		D581228A197C08B600E3573C /* InitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812289197C08B600E3573C /* InitViewController.swift */; };
 		D581228D197C08B600E3573C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D581228B197C08B600E3573C /* Main.storyboard */; };
 		D581229B197C08B600E3573C /* UnserAllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D581229A197C08B600E3573C /* UnserAllerTests.swift */; };
-		D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D586197C451300E1CAB3 /* MEDynamicTransition.m */; };
-		D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D588197C451300E1CAB3 /* MEFoldAnimationController.m */; };
-		D584D58F197C451300E1CAB3 /* METransitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58A197C451300E1CAB3 /* METransitions.m */; };
-		D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */; };
 		D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D584D595197C47E000E1CAB3 /* HomeViewController.swift */; };
 		D5974E6D1A102A2A00BE93EE /* UAUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D529166A197C2B5C0038A048 /* UAUser.swift */; };
 		D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780CC1A2B799600CEC181 /* ProjectViewController.swift */; };
@@ -355,14 +351,6 @@
 		D5812294197C08B600E3573C /* UnserAllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnserAllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812299197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D581229A197C08B600E3573C /* UnserAllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnserAllerTests.swift; sourceTree = "<group>"; };
-		D584D585197C451300E1CAB3 /* MEDynamicTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEDynamicTransition.h; sourceTree = "<group>"; };
-		D584D586197C451300E1CAB3 /* MEDynamicTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEDynamicTransition.m; sourceTree = "<group>"; };
-		D584D587197C451300E1CAB3 /* MEFoldAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEFoldAnimationController.h; sourceTree = "<group>"; };
-		D584D588197C451300E1CAB3 /* MEFoldAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEFoldAnimationController.m; sourceTree = "<group>"; };
-		D584D589197C451300E1CAB3 /* METransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = METransitions.h; sourceTree = "<group>"; };
-		D584D58A197C451300E1CAB3 /* METransitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = METransitions.m; sourceTree = "<group>"; };
-		D584D58B197C451300E1CAB3 /* MEZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEZoomAnimationController.h; sourceTree = "<group>"; };
-		D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEZoomAnimationController.m; sourceTree = "<group>"; };
 		D584D595197C47E000E1CAB3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = ViewControllers/HomeViewController.swift; sourceTree = "<group>"; };
 		D59780CC1A2B799600CEC181 /* ProjectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectViewController.swift; path = ViewControllers/ProjectViewController.swift; sourceTree = "<group>"; };
 		D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhaseCell.swift; path = Views/CollectionCells/UAPhaseCell.swift; sourceTree = "<group>"; };
@@ -754,7 +742,6 @@
 				D581228B197C08B600E3573C /* Main.storyboard */,
 				D581228E197C08B600E3573C /* Images.xcassets */,
 				D56C462319E04DFC0059735A /* Media.xcassets */,
-				D584D591197C451800E1CAB3 /* Transitions */,
 				D5812285197C08B600E3573C /* Supporting Files */,
 				D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */,
 			);
@@ -786,21 +773,6 @@
 				D5812299197C08B600E3573C /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D584D591197C451800E1CAB3 /* Transitions */ = {
-			isa = PBXGroup;
-			children = (
-				D584D585197C451300E1CAB3 /* MEDynamicTransition.h */,
-				D584D586197C451300E1CAB3 /* MEDynamicTransition.m */,
-				D584D587197C451300E1CAB3 /* MEFoldAnimationController.h */,
-				D584D588197C451300E1CAB3 /* MEFoldAnimationController.m */,
-				D584D589197C451300E1CAB3 /* METransitions.h */,
-				D584D58A197C451300E1CAB3 /* METransitions.m */,
-				D584D58B197C451300E1CAB3 /* MEZoomAnimationController.h */,
-				D584D58C197C451300E1CAB3 /* MEZoomAnimationController.m */,
-			);
-			name = Transitions;
 			sourceTree = "<group>";
 		};
 		D59780D11A2B914000CEC181 /* CollectionCells */ = {
@@ -1098,14 +1070,12 @@
 				124F8C1E1A1A8F2B000A5812 /* SettingsViewController.swift in Sources */,
 				12172CD61A267B000049DC34 /* UIImageView+WebCache.m in Sources */,
 				1294A16F1A0FBB9B00E45596 /* ProjectsViewController.swift in Sources */,
-				D584D58F197C451300E1CAB3 /* METransitions.m in Sources */,
 				D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */,
 				D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */,
 				124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */,
 				12172CFC1A2680A40049DC34 /* PSTCollectionView.m in Sources */,
 				127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */,
 				12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */,
-				D584D590197C451300E1CAB3 /* MEZoomAnimationController.m in Sources */,
 				12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */,
 				12172CB01A267B000049DC34 /* MWGridViewController.m in Sources */,
 				12172CD31A267B000049DC34 /* UIImage+MultiFormat.m in Sources */,
@@ -1130,7 +1100,6 @@
 				1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
 				12172CC81A267B000049DC34 /* MKAnnotationView+WebCache.m in Sources */,
-				D584D58E197C451300E1CAB3 /* MEFoldAnimationController.m in Sources */,
 				12172CB51A267B000049DC34 /* MWZoomingScrollView.m in Sources */,
 				12D11BF81AD469F000CC19EF /* UIView+RoundCorners.swift in Sources */,
 				12172D011A2680A40049DC34 /* PSTCollectionViewItemKey.m in Sources */,
@@ -1151,7 +1120,6 @@
 				129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */,
 				12172D041A2680A40049DC34 /* PSTGridLayoutInfo.m in Sources */,
 				12172CB11A267B000049DC34 /* MWPhoto.m in Sources */,
-				D584D58D197C451300E1CAB3 /* MEDynamicTransition.m in Sources */,
 				12172CFD1A2680A40049DC34 /* PSTCollectionViewCell.m in Sources */,
 				12172CCE1A267B000049DC34 /* SDWebImageDownloaderOperation.m in Sources */,
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,

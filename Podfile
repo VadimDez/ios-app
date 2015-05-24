@@ -6,7 +6,6 @@ use_frameworks!
 target "UnserAller" do
 pod 'Alamofire', '~> 1.2'
 pod 'AMScrollingNavbar', :head
-pod 'ECSlidingViewController', '~> 2.0'
 pod 'Canvas', '~> 0.1'
 pod 'SVPullToRefresh', '~> 0.4'
 pod 'Locksmith', '~> 1.2'

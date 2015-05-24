@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AF9FBAAC1871C6845E4FD11F"
+               BlueprintIdentifier = "D2B2762A5AA8C3C2CF93D235"
                BuildableName = "Locksmith.framework"
                BlueprintName = "Pods-UnserAller-Locksmith"
                ReferencedContainer = "container:Pods.xcodeproj">

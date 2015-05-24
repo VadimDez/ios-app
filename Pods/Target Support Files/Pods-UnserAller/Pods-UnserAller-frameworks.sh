@@ -53,7 +53,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Alamofire.framework'
   install_framework 'Canvas.framework'
   install_framework 'DrawerController.framework'
-  install_framework 'ECSlidingViewController.framework'
   install_framework 'Locksmith.framework'
   install_framework 'SVPullToRefresh.framework'
 fi
@@ -63,7 +62,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Alamofire.framework'
   install_framework 'Canvas.framework'
   install_framework 'DrawerController.framework'
-  install_framework 'ECSlidingViewController.framework'
   install_framework 'Locksmith.framework'
   install_framework 'SVPullToRefresh.framework'
 fi
