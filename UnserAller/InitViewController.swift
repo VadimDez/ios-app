@@ -51,10 +51,10 @@ class InitViewController: UIViewController {
                     
                     drawerController.restorationIdentifier = "Drawer"
                     drawerController.maximumLeftDrawerWidth = 240.0
-                    drawerController.openDrawerGestureModeMask = .All
-                    drawerController.closeDrawerGestureModeMask = .All
+                    drawerController.openDrawerGestureModeMask = OpenDrawerGestureMode.BezelPanningCenterView
+                    drawerController.closeDrawerGestureModeMask = CloseDrawerGestureMode.All
                     drawerController.drawerVisualStateBlock = DrawerVisualState.parallaxVisualStateBlock(CGFloat(1.0))
-
+                    
                     self.presentViewController(drawerController, animated: false, completion: nil)
 
                 }, error: { () -> Void in

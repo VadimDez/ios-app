@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
         
         drawerController.restorationIdentifier = "Drawer"
         drawerController.maximumLeftDrawerWidth = 240.0
-        drawerController.openDrawerGestureModeMask = .All
+        drawerController.openDrawerGestureModeMask = OpenDrawerGestureMode.BezelPanningCenterView
         drawerController.closeDrawerGestureModeMask = .All
         drawerController.drawerVisualStateBlock = DrawerVisualState.parallaxVisualStateBlock(CGFloat(1.0))
         
