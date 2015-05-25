@@ -118,6 +118,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.registerNib(NotificationsTableViewCellNib, forCellReuseIdentifier: "NotificationsTableViewCell")
     }
     
+    
     func loadProfileImage() {
         // load profile image
         let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/4/80/80")!)
@@ -221,10 +222,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
      *  Set credits
      */
     func setCredits() {
-        self.suggestionCreditsLabel.text = "0"
-        self.commentsCreditLabel.text = "0"
-        self.likeCreditsLabel.text = "0"
-        self.voteCreditsLabel.text = "0"
+        self.suggestionCreditsLabel.text    = "0"
+        self.commentsCreditLabel.text       = "0"
+        self.likeCreditsLabel.text          = "0"
+        self.voteCreditsLabel.text          = "0"
     }
     
     // MARK: table view
@@ -299,7 +300,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
         let cell = self.views[1] as! AddressTableViewCell
-        println("SDF")
+
         self.user.updateAddress(cell.firstNameAddressInput.text,
             lastName: cell.lastNameAddressInput.text,
             street: cell.streetAddressInput.text,

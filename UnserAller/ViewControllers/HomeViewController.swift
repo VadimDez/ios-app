@@ -247,7 +247,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         // TODO: check why it's empty
         if (self.entries.count > 0) {
-            let base: CGFloat = 110.0
+            let base: CGFloat = 95.0
 
             // count text
             var frame: CGRect = CGRect()
