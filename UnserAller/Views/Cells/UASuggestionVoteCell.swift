@@ -19,6 +19,8 @@ class UASuggestionVoteCell: UACell {
         super.awakeFromNib()
         // Initialization code
         
+//        self.titleLabel.verticalAlignment = TTTAttributedLabelVerticalAlignment.Top;
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -21,7 +21,7 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - Alamofire (1.2.2)
-  - AMScrollingNavbar (HEAD based on 1.3.7)
+  - AMScrollingNavbar (HEAD based on 1.3.8)
   - Canvas (0.1.2)
   - DrawerController (1.0.4):
     - DrawerController/Core (= 1.0.4)
@@ -31,6 +31,7 @@ PODS:
     - DrawerController/Core
   - Locksmith (1.2.2)
   - SVPullToRefresh (0.4.1)
+  - TTTAttributedLabel (1.13.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -40,14 +41,16 @@ DEPENDENCIES:
   - DrawerController (~> 1.0)
   - Locksmith (~> 1.2)
   - SVPullToRefresh (~> 0.4)
+  - TTTAttributedLabel (~> 1.13)
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
-  AMScrollingNavbar: 6983932ee39596654c10961b5801510c85b5e895
+  AMScrollingNavbar: 8573197b7077cb10ac548fd64f81d938bf8e9ff0
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   DrawerController: 80b7f2bdfe67f93b6d0991ed6034cd5ce331811d
   Locksmith: c84c10bf23f99e6d04703dba65065dc38b038d88
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
+  TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.37.2

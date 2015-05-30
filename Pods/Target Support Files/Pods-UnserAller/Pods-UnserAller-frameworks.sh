@@ -55,6 +55,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'DrawerController.framework'
   install_framework 'Locksmith.framework'
   install_framework 'SVPullToRefresh.framework'
+  install_framework 'TTTAttributedLabel.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'AFNetworking.framework'
@@ -64,4 +65,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'DrawerController.framework'
   install_framework 'Locksmith.framework'
   install_framework 'SVPullToRefresh.framework'
+  install_framework 'TTTAttributedLabel.framework'
 fi

@@ -34,6 +34,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         self.contentLabel.text = suggestion.content
         self.likeLabel.text = "\(suggestion.likeCount)"
         self.commentLabel.text = "\(suggestion.commentCount)"
+//        self.dateLabel.text = "\()"
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()

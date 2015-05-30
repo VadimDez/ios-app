@@ -8,6 +8,7 @@
 #import "CSAnimationView.h"
 #import <AFNetworking/AFNetworking.h>
 #import "UIImageView+AFNetworking.h"
+#import "TTTAttributedLabel.h"
 //#import <AFNetworking.h>
 //#import "UIViewController+ECSlidingViewController.h"
 //#import "MEDynamicTransition.h"

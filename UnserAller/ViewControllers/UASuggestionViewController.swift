@@ -187,14 +187,13 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         Set up table header view
     */
     func setViewHeader() {
-        println(self.suggestion.cellType)
         switch (self.suggestion.cellType) {
             case "SuggestionCell": self.mainTable.tableHeaderView = self.getSuggestionView()
                 break
             case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
                 break
-            case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
-                break
+//            case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
+//                break
             case "UASuggestionVoteCell": self.mainTable.tableHeaderView = self.getSuggestionVoteView()
                 break
             case "UASuggestionVoteImageCell": self.mainTable.tableHeaderView = self.getSuggestionVoteWithImageView()
@@ -215,6 +214,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
         
         return suggestionView
     }
@@ -231,7 +231,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
-        
+        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
         return suggestionView
     }
     
@@ -248,6 +248,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(110.0)
         
         return suggestionView
     }
@@ -265,8 +266,36 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
         
         return suggestionView
+    }
+    
+    func calculateHeaderHeight(base: CGFloat) -> CGFloat {
+        let imageSize: CGFloat = 40.0
+        var media: CGFloat = 0.0
+        
+        if (self.suggestion.media.count > 0) {
+            media = 50.0 + CGFloat((self.suggestion.media.count/5) * 50) + 10
+        }
+        
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = self.mainTable.frame.width - 10
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = self.suggestion.content
+        label.font = UIFont(name: "Helvetica Neue", size: 14)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        println(base)
+        println(media)
+        println(label.frame.size.height)
+        
+        return base + media + label.frame.size.height
     }
     
     // MARK: rating delegates

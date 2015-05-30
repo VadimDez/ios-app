@@ -52,7 +52,7 @@
 #define COCOAPODS_POD_AVAILABLE_AMScrollingNavbar
 #define COCOAPODS_VERSION_MAJOR_AMScrollingNavbar 1
 #define COCOAPODS_VERSION_MINOR_AMScrollingNavbar 3
-#define COCOAPODS_VERSION_PATCH_AMScrollingNavbar 7
+#define COCOAPODS_VERSION_PATCH_AMScrollingNavbar 8
 
 // Alamofire
 #define COCOAPODS_POD_AVAILABLE_Alamofire
@@ -95,4 +95,10 @@
 #define COCOAPODS_VERSION_MAJOR_SVPullToRefresh 0
 #define COCOAPODS_VERSION_MINOR_SVPullToRefresh 4
 #define COCOAPODS_VERSION_PATCH_SVPullToRefresh 1
+
+// TTTAttributedLabel
+#define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
+#define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
+#define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 13
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 3
 
