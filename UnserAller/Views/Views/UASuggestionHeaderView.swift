@@ -85,6 +85,7 @@ class UASuggestionHeaderView: UIView {
             let increment = (active) ? 1 : -1;
             self.suggestion.likeCount = self.suggestion.likeCount + increment;
             self.likeLabel.text = "\(self.suggestion.likeCount)"
+            
             }) { () -> Void in
                 
         }
@@ -101,7 +102,7 @@ class UASuggestionHeaderView: UIView {
         Alamofire.request(.GET, url, parameters: ["id": id])
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
                     println(errors)

@@ -219,6 +219,7 @@
                 <outlet property="contentLabel" destination="dOA-0b-vvT" id="9JW-Ug-Yhv"/>
                 <outlet property="dateLabel" destination="9kA-ha-yCa" id="Ina-Qq-gCE"/>
                 <outlet property="imageCollectionView" destination="YTm-Xi-DtS" id="ESn-sB-fE0"/>
+                <outlet property="likeImage" destination="a2B-Pq-QQ3" id="NyV-ds-A5B"/>
                 <outlet property="likeLabel" destination="cgX-Xe-p5F" id="BGB-jq-Ivn"/>
                 <outlet property="mainImage" destination="yiE-8X-euK" id="BcS-a2-Fm9"/>
                 <outlet property="secondaryImage" destination="QNq-NX-rJR" id="FVM-P6-Jlo"/>

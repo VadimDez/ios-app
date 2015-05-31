@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate, FloatRatingViewDelegate, UAEditorDelegate {
+class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FloatRatingViewDelegate, UAEditorDelegate {
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -33,8 +33,17 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     var type: String = ""
     var active: Bool = false
     var news = false
-    var photos: [MWPhotoObj] = []
     var votingDisabled = false
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.registerNotifications()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeNotifications()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +51,6 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.setDelegates()
         // nib
         self.registerNibs()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
         
         self.configureLayout()
         
@@ -115,7 +122,6 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
         var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
-
     }
     
     /**
@@ -340,7 +346,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
             case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
             case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
-        default: break;
+            default: break;
         }
         return self.defaultCell(indexPath.row)
     }
@@ -523,40 +529,6 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             }, failure: { () -> Void in
                 
             })
-        }
-    }
-    /**
-    * MWPhotoBrowser delegates
-    */
-    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        return UInt(self.photos.count)
-    }
-    
-    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        if (Int(index) < self.photos.count) {
-            return self.photos[Int(index)];
-        }
-        return nil;
-    }
-    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
-        self.photos = []
-        if (!cellData.isEmpty) {
-            
-            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
-                
-                for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
-                    self.photos.append(photo)
-                }
-                
-                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
-                
-                browser.showPreviousPhotoAnimated(true)
-                browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
-                self.navigationController?.pushViewController(browser, animated: false)
-            }
         }
     }
     

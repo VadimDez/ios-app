@@ -716,7 +716,9 @@
                                                 <constraint firstAttribute="width" constant="36" id="4QF-jc-OBz"/>
                                                 <constraint firstAttribute="height" constant="30" id="Ku7-zk-mYh"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                             <state key="normal" title="Send">
+                                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>

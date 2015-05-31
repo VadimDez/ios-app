@@ -64,7 +64,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
-        self.secondaryImage.backgroundColor = UIColor.whiteColor()
+        self.secondaryImage.backgroundColor = UIColor.clearColor()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -83,6 +83,8 @@ class UASuggestionCell: UACell {
         
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        // clear project image cell
+        self.secondaryImage.backgroundColor = UIColor.clearColor()
         
     }
 }

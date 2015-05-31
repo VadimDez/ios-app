@@ -56,7 +56,7 @@ class UASuggestionVoteCell: UACell {
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
-        self.secondaryImage.backgroundColor = UIColor.whiteColor()
+        self.secondaryImage.backgroundColor = UIColor.clearColor()
     }
     
     func setCellForActivity(suggestion: UASuggestion) {

@@ -13,6 +13,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var likeImage: UIImageView!
     
     var suggestionId: UInt = 0
     var projectId: UInt = 0
@@ -63,7 +64,6 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.suggestion = suggestion
         
         self.type = "suggestion";
-        //    _collectionDataDictionary = data;
         
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
@@ -74,14 +74,17 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.commentLabel.text  = "\(suggestion.commentCount)"
         self.medias             = suggestion.media
         self.dateLabel?.text    = suggestion.updated.getStringFromDate()
+        //
+        self.suggestionId       = suggestion.suggestionId
+        self.projectId          = suggestion.projectId
         
         // if liked - tint heart
-        var color:UIColor
         if (suggestion.userVotes > 0) {
-            color = UIColor.redColor()
+            self.likeImage.image = UIImage(named: "heart_red")
         } else {
-            color = UIColor.grayColor()
+            self.likeImage.image = UIImage(named: "heart_black_32")
         }
+        
 //        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
 //        [_likeButton setTintColor:color];
         
@@ -89,8 +92,6 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         //    _imageCollectionView.backgroundColor = [UIColor greenColor];
         
         
-        self.suggestionId        = suggestion.suggestionId
-        self.projectId           = suggestion.projectId
         
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
@@ -110,7 +111,6 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.suggestion = suggestion
         
         self.type = "suggestion";
-        //    _collectionDataDictionary = data;
         
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
@@ -129,6 +129,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         } else {
             color = UIColor.grayColor()
         }
+        
         //        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
         //        [_likeButton setTintColor:color];
         
@@ -143,7 +144,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
         // clear project image
-        self.secondaryImage.backgroundColor = UIColor.whiteColor()
+        self.secondaryImage.backgroundColor = UIColor.clearColor()
         
         // change shape of image
         self.makeRoundCorners()
