@@ -70,12 +70,12 @@
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="VqX-Cr-XrE">
-                    <rect key="frame" x="235" y="70" width="13" height="15"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment-16" translatesAutoresizingMaskIntoConstraints="NO" id="VqX-Cr-XrE">
+                    <rect key="frame" x="236" y="71" width="12" height="14"/>
                     <rect key="contentStretch" x="0.20000000000000001" y="0.25" width="0.94999999999999996" height="1"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="13" id="YDw-Y1-7A4"/>
-                        <constraint firstAttribute="height" constant="15" id="nUe-i6-5ng"/>
+                        <constraint firstAttribute="width" constant="12" id="YDw-Y1-7A4"/>
+                        <constraint firstAttribute="height" constant="14" id="nUe-i6-5ng"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbU-gk-Cxx" userLabel="commentLabel">
@@ -118,7 +118,9 @@
                         <constraint firstAttribute="width" constant="50" id="89O-m2-qnA"/>
                         <constraint firstAttribute="height" constant="30" id="GvU-Xo-0Nu"/>
                     </constraints>
+                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <state key="normal" title="Send">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
@@ -197,7 +199,7 @@
         </view>
     </objects>
     <resources>
-        <image name="comment" width="24" height="24"/>
+        <image name="comment-16" width="16" height="16"/>
         <image name="selected" width="32" height="32"/>
         <image name="time" width="24" height="24"/>
         <image name="unselected" width="32" height="32"/>
