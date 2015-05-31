@@ -21,6 +21,9 @@
 // THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
+// TODO: remove me
+#define _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_ 1
+// end todo
 #import <Availability.h>
 
 #ifndef _AFNETWORKING_
