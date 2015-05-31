@@ -13,11 +13,12 @@ class UASuggestionView: UASuggestionHeaderView {
     func setUp(suggestion: UASuggestion) {
         self.suggestion = suggestion
         
-        self.titleLabel.text = suggestion.userName
+        self.titleLabel.text    = suggestion.userName
         self.subtitleLabel.text = suggestion.projectName
-        self.contentLabel.text = suggestion.content
-        self.likeLabel.text = "\(suggestion.likeCount)"
-        self.commentLabel.text = "\(suggestion.commentCount)"
+        self.contentLabel.text  = suggestion.content
+        self.likeLabel.text     = "\(suggestion.likeCount)"
+        self.commentLabel.text  = "\(suggestion.commentCount)"
+        self.dateLabel.text     = suggestion.updated.getStringFromDate()
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()

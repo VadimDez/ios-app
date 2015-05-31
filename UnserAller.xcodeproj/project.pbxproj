@@ -13,6 +13,9 @@
 		120803801A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1208037F1A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift */; };
 		120803821A6BBA3900CD19E8 /* UASuggestionWithImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 120803811A6BBA3900CD19E8 /* UASuggestionWithImageView.xib */; };
 		1216C0D61A85800A0057FF86 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */; };
+		1216E5C71B1B401E004D8F22 /* UIViewControllerWithMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216E5C61B1B401E004D8F22 /* UIViewControllerWithMedia.swift */; };
+		1216E5C91B1B4182004D8F22 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216E5C81B1B4182004D8F22 /* StringExtensions.swift */; };
+		1216E5CB1B1B444B004D8F22 /* NSDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */; };
 		12172CAE1A267B000049DC34 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C4D1A267B000049DC34 /* MWCaptionView.m */; };
 		12172CAF1A267B000049DC34 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C501A267B000049DC34 /* MWGridCell.m */; };
 		12172CB01A267B000049DC34 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12172C521A267B000049DC34 /* MWGridViewController.m */; };
@@ -183,6 +186,9 @@
 		1208037F1A6BBA0E00CD19E8 /* UASuggestionWithImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionWithImageView.swift; path = Views/Views/UASuggestionWithImageView.swift; sourceTree = "<group>"; };
 		120803811A6BBA3900CD19E8 /* UASuggestionWithImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionWithImageView.xib; path = Views/Views/UASuggestionWithImageView.xib; sourceTree = "<group>"; };
 		1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegistrationViewController.swift; path = ViewControllers/RegistrationViewController.swift; sourceTree = "<group>"; };
+		1216E5C61B1B401E004D8F22 /* UIViewControllerWithMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewControllerWithMedia.swift; path = ViewControllers/UIViewControllerWithMedia.swift; sourceTree = "<group>"; };
+		1216E5C81B1B4182004D8F22 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtensions.swift; sourceTree = "<group>"; };
 		12172C4C1A267B000049DC34 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		12172C4D1A267B000049DC34 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		12172C4E1A267B000049DC34 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
@@ -603,6 +609,8 @@
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
 				129CD1351A6140D400434D67 /* UALabel.swift */,
 				12D11BF71AD469F000CC19EF /* UIView+RoundCorners.swift */,
+				1216E5C81B1B4182004D8F22 /* StringExtensions.swift */,
+				1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -610,6 +618,7 @@
 		D5291668197C27700038A048 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				1216E5C61B1B401E004D8F22 /* UIViewControllerWithMedia.swift */,
 				D5812289197C08B600E3573C /* InitViewController.swift */,
 				D5291666197C210C0038A048 /* LoginViewController.swift */,
 				1216C0D51A85800A0057FF86 /* RegistrationViewController.swift */,
@@ -1110,6 +1119,7 @@
 				D5291667197C210C0038A048 /* LoginViewController.swift in Sources */,
 				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
 				12172CFF1A2680A40049DC34 /* PSTCollectionViewData.m in Sources */,
+				1216E5CB1B1B444B004D8F22 /* NSDateExtensions.swift in Sources */,
 				12172CB71A267B000049DC34 /* MBProgressHUD.m in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
 				12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */,
@@ -1122,6 +1132,7 @@
 				12172CB11A267B000049DC34 /* MWPhoto.m in Sources */,
 				12172CFD1A2680A40049DC34 /* PSTCollectionViewCell.m in Sources */,
 				12172CCE1A267B000049DC34 /* SDWebImageDownloaderOperation.m in Sources */,
+				1216E5C91B1B4182004D8F22 /* StringExtensions.swift in Sources */,
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
 				1216C0D61A85800A0057FF86 /* RegistrationViewController.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,
@@ -1153,6 +1164,7 @@
 				D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */,
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
 				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,
+				1216E5C71B1B401E004D8F22 /* UIViewControllerWithMedia.swift in Sources */,
 				12172CB21A267B000049DC34 /* MWPhotoBrowser.m in Sources */,
 				120803791A6BAEB100CD19E8 /* UACommentWithImageCell.swift in Sources */,
 			);

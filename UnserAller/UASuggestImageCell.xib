@@ -79,7 +79,7 @@
                                     <constraint firstAttribute="width" constant="123" id="CkB-cp-V7i"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="lAN-Rc-x38">
@@ -221,6 +221,7 @@
                 <outlet property="imageCollectionView" destination="YTm-Xi-DtS" id="ESn-sB-fE0"/>
                 <outlet property="likeLabel" destination="cgX-Xe-p5F" id="BGB-jq-Ivn"/>
                 <outlet property="mainImage" destination="yiE-8X-euK" id="BcS-a2-Fm9"/>
+                <outlet property="secondaryImage" destination="QNq-NX-rJR" id="FVM-P6-Jlo"/>
                 <outlet property="subtitleLabel" destination="k5h-44-DdT" id="vWC-NS-iwI"/>
                 <outlet property="titleLabel" destination="hKZ-dL-VEq" id="n7w-Wy-aTK"/>
             </connections>

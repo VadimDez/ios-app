@@ -34,27 +34,29 @@ class UASuggestionVoteCell: UACell {
         self.contentLabel.text      = suggestion.content
         self.titleLabel.text        = suggestion.userName
         self.subtitleLabel.text     = suggestion.projectName
-        self.dateLabel.text         = self.getStringFromDate(suggestion.updated)
+        self.dateLabel.text         = suggestion.updated.getStringFromDate()
         self.ratingView.rating      = Float(suggestion.userVotes)
         self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
     }
     
     func setCellForPhase(suggestion: UASuggestion) {
 //        self._suggestion = suggestion
         self.contentLabel.text      = suggestion.content
         self.titleLabel.text        = suggestion.userName
-        self.subtitleLabel.text     = self.getStringFromDate(suggestion.updated)
-        self.dateLabel.text         = ""
+        self.subtitleLabel.text     = ""
+        self.dateLabel.text         = suggestion.updated.getStringFromDate()
         self.ratingView.rating      = Float(suggestion.userVotes)
         self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        self.secondaryImage.backgroundColor = UIColor.whiteColor()
     }
     
     func setCellForActivity(suggestion: UASuggestion) {
@@ -62,12 +64,13 @@ class UASuggestionVoteCell: UACell {
         self.contentLabel.text      = suggestion.content
         self.titleLabel.text        = suggestion.userName
         self.subtitleLabel.text     = suggestion.projectName
-        self.dateLabel.text         = self.getStringFromDate(suggestion.updated)
+        self.dateLabel.text         = suggestion.updated.getStringFromDate()
         self.ratingView.rating      = Float(suggestion.userVotes)
         self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
     }
 }

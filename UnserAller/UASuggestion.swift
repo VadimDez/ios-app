@@ -63,7 +63,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated as String)
+            self.updated = (updated as String).getDateFromString()
         }
         
         // set user id
@@ -119,7 +119,7 @@ class UASuggestion: UACellObject {
             
             // set updated
             if let updated = suggestion["date"]?.objectForKey("date") as? NSString {
-                self.updated = self.getDateFromString(updated as String)
+                self.updated = (updated as String).getDateFromString()
             }
             
             // set user votes
@@ -249,7 +249,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated as String)
+            self.updated = (updated as String).getDateFromString()
         }
         
         // set user id
@@ -319,7 +319,7 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated as String)
+            self.updated = (updated as String).getDateFromString()
         }
         
         // set user id
@@ -385,7 +385,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
         }
         
@@ -437,7 +437,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
         
         // set user votes
@@ -488,7 +488,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
 
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -546,7 +546,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -582,7 +582,7 @@ class UASuggestion: UACellObject {
         }
         // created
         if let created = jsonObject.objectForKey("created") as? String {
-            self.updated = self.getDateFromString(created)
+            self.updated = created.getDateFromString()
         }
         // content
         if let content = jsonObject.objectForKey("content") as? String {
@@ -617,7 +617,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
         }
         // set comment count
@@ -661,7 +661,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
 
         // set user votes
@@ -710,7 +710,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -758,7 +758,7 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as! String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -806,7 +806,7 @@ class UASuggestion: UACellObject {
             }
             
             if let _created = _suggestion["created"] as? Dictionary<String, String> {
-                self.updated = self.getDateFromString(_created["date"]!)
+                self.updated = _created["date"]!.getDateFromString()
             }
         }
         
@@ -859,7 +859,7 @@ class UASuggestion: UACellObject {
         self.content = jsonObject.objectForKey("content") as! String
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("updated") as! String)
+        self.updated = (jsonObject.objectForKey("updated") as! String).getDateFromLongString()
 
         // set comment count
         self.commentCount = 0
@@ -896,7 +896,7 @@ class UASuggestion: UACellObject {
         self.content = jsonObject.objectForKey("content") as! String
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("created") as! String)
+        self.updated = (jsonObject.objectForKey("created") as! String).getDateFromLongString()
 
         // set user votes
         self.userVotes = 0

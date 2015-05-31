@@ -73,7 +73,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
         self.medias             = suggestion.media
-        self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
+        self.dateLabel?.text    = suggestion.updated.getStringFromDate()
         
         // if liked - tint heart
         var color:UIColor
@@ -95,6 +95,9 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
+        // load project image
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
+        
         // change shape of image
         self.makeRoundCorners()
         
@@ -113,11 +116,11 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         
         self.contentLabel.text  = suggestion.content
         self.titleLabel.text    = suggestion.userName
-        self.subtitleLabel.text = self.getStringFromDate(suggestion.updated)
+        self.subtitleLabel.text = ""
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
         self.medias             = suggestion.media
-        self.dateLabel?.text = ""
+        self.dateLabel?.text    = suggestion.updated.getStringFromDate()
         
         // if liked - tint heart
         var color:UIColor
@@ -139,6 +142,9 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
+        // clear project image
+        self.secondaryImage.backgroundColor = UIColor.whiteColor()
+        
         // change shape of image
         self.makeRoundCorners()
         
@@ -146,6 +152,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         //        [_collectionView reloadData];
     }
 
+    // MARK: - Collection view
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return medias.count
     }

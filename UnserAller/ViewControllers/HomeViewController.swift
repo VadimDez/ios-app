@@ -10,15 +10,14 @@
 import UIKit
 import Alamofire
 
-
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
+class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITableViewDataSource, FloatRatingViewDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1 // -1 for initial infinite load
     var entries: [UASuggestion] = []
     let maxResponse: UInt = 10
     var countEntries: Int = 0
-    var photos: [MWPhotoObj] = []
+//    var photos: [MWPhotoObj] = []
     var votingDisabled = false
     
     override func viewWillAppear(animated: Bool) {
@@ -40,6 +39,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        }, error: { () -> Void in
 //            
 //        })
+        
+        self.registerNotifications()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,25 +55,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.infiniteLoad()
         }
         
-        
         // set row height
 //        self.mainTable.rowHeight = UITableViewAutomaticDimension
         
         self.mainTable.triggerInfiniteScrolling()
-        self.registerNotifications()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.removeNotifications()
-    }
-    
-    func registerNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
-    }
-    
-    func removeNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSelectItemFromCollectionView", object: nil)
     }
     
     func registerNibs() {
@@ -307,43 +298,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.countEntries = self.entries.count
                 
                 success()
-            }
-        }
-    }
-    
-    // MARK: MWPhotoBrowser delegates
-    /**
-     * MWPhotoBrowser delegates
-     */
-    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        return UInt(self.photos.count)
-    }
-    
-    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        if (Int(index) < self.photos.count) {
-            return self.photos[Int(index)];
-        }
-        return nil;
-    }
-    
-    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
-        self.photos = []
-        if (!cellData.isEmpty) {
-            
-            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
-
-                for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
-                    self.photos.append(photo)
-                }
-
-                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
-
-                browser.showPreviousPhotoAnimated(true)
-                browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
-                self.navigationController?.pushViewController(browser, animated: false)
             }
         }
     }

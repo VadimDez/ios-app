@@ -16,6 +16,7 @@ class UACell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var secondaryImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,12 +28,6 @@ class UACell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func getStringFromDate(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm dd/MM/yyyy"
-        return dateFormatter.stringFromDate(date)
-    }
 
     func makeRoundCorners() {
         var imageLayer:CALayer = self.mainImage.layer
@@ -40,15 +35,34 @@ class UACell: UITableViewCell {
         imageLayer.masksToBounds = true
     }
     
+    /**
+    Load profileImage
+    
+    :param: hash   String
+    :param: width  Uint
+    :param: height Uint
+    */
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
-        // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")!)
+        self.loadImage(self.mainImage, url: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
+    }
+    
+    /**
+    Load project image
+    
+    :param: hash   String
+    :param: width  Uint
+    :param: height Uint
+    */
+    func loadProjectImage(projectId: UInt, width: UInt, height: UInt) {
+        self.loadImage(self.secondaryImage, url: "\(APIPROTOCOL)://\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
+    }
+    
+    func loadImage(imageView: UIImageView, url: String) {
+        let request = NSURLRequest(URL: NSURL(string: url)!)
         
-        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-            // test
-            if let weakSelf = self {
-                weakSelf.mainImage.image = image
-            }
+        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+
+            imageView.image = image
             }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }

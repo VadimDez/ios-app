@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class UASuggestionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FloatRatingViewDelegate, UAEditorDelegate {
+class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSource, UITableViewDelegate, FloatRatingViewDelegate, UAEditorDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     
@@ -21,34 +21,39 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
     var newCommentContent: String!
     
     override func viewWillAppear(animated: Bool) {
-        
-        self.mainTable.delegate = self
-        self.mainTable.dataSource = self
-        
         self.tableWidth = self.mainTable.frame.width
         
-        // register nibs
-        self.registerNibs()
+        self.registerNotifications()
         
-        self.newCommentContent = ""
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setViewHeader()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeNotifications()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.mainTable.delegate = self
+        self.mainTable.dataSource = self
         
-        self.setViewHeader()
+        // register nibs
+        self.registerNibs()
+        
         
         self.loadComments({ () -> Void in
             self.mainTable.reloadData()
             }, failure: { () -> Void in
                 
         })
+        
+        self.newCommentContent = ""
     }
     
     
@@ -69,7 +74,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    
     // MARK: - Table view data source
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -192,8 +198,6 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
                 break
             case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
                 break
-//            case "UASuggestImageCell": self.mainTable.tableHeaderView = self.getSuggestionWithimageView()
-//                break
             case "UASuggestionVoteCell": self.mainTable.tableHeaderView = self.getSuggestionVoteView()
                 break
             case "UASuggestionVoteImageCell": self.mainTable.tableHeaderView = self.getSuggestionVoteWithImageView()
@@ -214,7 +218,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
-        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
         
         return suggestionView
     }
@@ -231,7 +235,8 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
-        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
+        
         return suggestionView
     }
     
@@ -266,7 +271,7 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
-        suggestionView.frame.size.height = self.calculateHeaderHeight(95.0)
+        suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
         
         return suggestionView
     }
@@ -286,14 +291,10 @@ class UASuggestionViewController: UIViewController, UITableViewDataSource, UITab
         var label: UILabel = UILabel(frame: frame)
         
         label.text = self.suggestion.content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
+        label.font = UIFont(name: "Helvetica Neue", size: 13)
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
         label.sizeToFit()
-        
-        println(base)
-        println(media)
-        println(label.frame.size.height)
         
         return base + media + label.frame.size.height
     }

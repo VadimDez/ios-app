@@ -1340,7 +1340,7 @@
             </objects>
             <point key="canvasLocation" x="1561" y="448"/>
         </scene>
-        <!--Activity View Controller-->
+        <!--Activity-->
         <scene sceneID="U4l-Uq-zpd">
             <objects>
                 <viewController storyboardIdentifier="Activity" id="ekC-sk-C9m" customClass="ActivityViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
@@ -1352,9 +1352,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tXV-qN-1Rr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="tXV-qN-1Rr">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1365,7 +1365,7 @@
                             <constraint firstItem="tXV-qN-1Rr" firstAttribute="leading" secondItem="knM-0R-UgA" secondAttribute="leadingMargin" constant="-16" id="uXt-3P-GeA"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4De-VB-L7s">
+                    <navigationItem key="navigationItem" title="Activity" id="4De-VB-L7s">
                         <barButtonItem key="leftBarButtonItem" image="Menu-32" id="IIQ-2r-Oax">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

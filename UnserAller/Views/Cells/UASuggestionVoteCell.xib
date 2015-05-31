@@ -186,6 +186,7 @@
                 <outlet property="likeLabel" destination="yBg-6V-rip" id="YUD-Fw-4LY"/>
                 <outlet property="mainImage" destination="yEU-0Z-4vj" id="zmN-fO-dRr"/>
                 <outlet property="ratingView" destination="5y6-cY-DgG" id="Llc-zX-Lnl"/>
+                <outlet property="secondaryImage" destination="qbP-2P-ia4" id="olA-Lp-as1"/>
                 <outlet property="subtitleLabel" destination="F4t-Dl-kif" id="4e7-7w-urY"/>
                 <outlet property="titleLabel" destination="0cb-o6-9Kf" id="zS1-ya-OcA"/>
             </connections>

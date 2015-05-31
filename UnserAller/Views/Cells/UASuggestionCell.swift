@@ -55,10 +55,12 @@ class UASuggestionCell: UACell {
         self.commentLabel?.text     = "\(suggestion.commentCount)"
         self.suggestionId           = suggestion.suggestionId
         self.projectId              = suggestion.projectId
-        self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
+        self.dateLabel?.text        = suggestion.updated.getStringFromDate()
 
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        // load project image
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
         
         // change shape of image
         self.makeRoundCorners()
@@ -72,8 +74,8 @@ class UASuggestionCell: UACell {
         self.titleLabel.text        = suggestion.userName
         self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
-        self.subtitleLabel.text     = self.getStringFromDate(suggestion.updated)
-        self.dateLabel.text         = ""
+        self.subtitleLabel.text     = ""
+        self.dateLabel?.text        = suggestion.updated.getStringFromDate()
         self.suggestionId           = suggestion.suggestionId
         
         // change shape of image

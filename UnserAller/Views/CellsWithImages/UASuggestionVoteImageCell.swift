@@ -40,7 +40,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.contentLabel.text      = suggestion.content
         self.titleLabel.text        = suggestion.userName
         self.subtitleLabel.text     = suggestion.projectName
-        self.dateLabel.text         = self.getStringFromDate(suggestion.updated)
+        self.dateLabel.text         = suggestion.updated.getStringFromDate()
         self.ratingView.rating      = Float(suggestion.userVotes)
         self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
@@ -48,6 +48,23 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
+    }
+    
+    func setCellForPhase(suggestion: UASuggestion) {
+        self.imageCollectionView.backgroundColor    = UIColor.clearColor()
+        self.contentLabel.text      = suggestion.content
+        self.titleLabel.text        = suggestion.userName
+        self.subtitleLabel.text     = ""
+        self.dateLabel.text         = suggestion.updated.getStringFromDate()
+        self.ratingView.rating      = Float(suggestion.userVotes)
+        self.likeLabel.text         = "\(suggestion.likeCount)"
+        self.commentLabel.text      = "\(suggestion.commentCount)"
+        self.medias                 = suggestion.media
+        
+        self.makeRoundCorners()
+        self.loadMainImage(suggestion.userId, width: 35, height: 35)
+        self.secondaryImage.backgroundColor = UIColor.whiteColor()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -390,7 +390,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
-        cell.setCellForHome(self.entries[row] as! UASuggestion)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -663,25 +663,13 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     /**
-    *  Get NSDate from string
-    *
-    */
-    func getDateFromString(string: String) -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
-        formatter.timeZone = NSTimeZone(name: "Europe/Berlin")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        return formatter.dateFromString(string)!
-    }
-    
-    /**
      * Check active
      *
      * 3 Cases
      */
     func checkActive(start: String, end: String) -> Bool {
-        let endDate: NSDate = (end.isEmpty) ? NSDate(timeIntervalSinceNow: 1000) : self.getDateFromString(end)
-        let startDate: NSDate = self.getDateFromString(start)
+        let endDate: NSDate = (end.isEmpty) ? NSDate(timeIntervalSinceNow: 1000) : end.getDateFromString()
+        let startDate: NSDate = start.getDateFromString()
         let now: NSDate = NSDate()
         
         if (endDate.compare(now) == NSComparisonResult.OrderedDescending && now.compare(startDate) == NSComparisonResult.OrderedDescending) {

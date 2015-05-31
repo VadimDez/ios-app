@@ -20,13 +20,13 @@ class UASuggestionVoteView: UASuggestionHeaderView {
     */
 
     func setUp(suggestion: UASuggestion) {
-        self.titleLabel.text = suggestion.userName
+        self.titleLabel.text    = suggestion.userName
         self.subtitleLabel.text = suggestion.projectName
-        self.contentLabel.text = suggestion.content
-        self.likeLabel.text = "\(suggestion.likeCount)"
-        self.commentLabel.text = "\(suggestion.commentCount)"
-        self.dateLabel.text = ""
-        self.ratingView.rating = Float(suggestion.userVotes)
+        self.contentLabel.text  = suggestion.content
+        self.likeLabel.text     = "\(suggestion.likeCount)"
+        self.commentLabel.text  = "\(suggestion.commentCount)"
+        self.dateLabel.text     = suggestion.updated.getStringFromDate()
+        self.ratingView.rating  = Float(suggestion.userVotes)
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()

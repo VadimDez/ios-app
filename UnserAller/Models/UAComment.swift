@@ -54,7 +54,7 @@ class UAComment: UACellObject {
     *  Get NSDate from string
     *
     */
-    override func getDateFromString(string: String) -> NSDate {
+    func getDateFromString(string: String) -> NSDate {
         var formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 

@@ -25,13 +25,13 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         
         self.registerNibs()
         
-        self.titleLabel.text = suggestion.userName
+        self.titleLabel.text    = suggestion.userName
         self.subtitleLabel.text = suggestion.projectName
-        self.contentLabel.text = suggestion.content
-        self.likeLabel.text = "\(suggestion.likeCount)"
-        self.commentLabel.text = "\(suggestion.commentCount)"
-        self.dateLabel.text = ""
-        self.ratingView.rating = Float(suggestion.userVotes)
+        self.contentLabel.text  = suggestion.content
+        self.likeLabel.text     = "\(suggestion.likeCount)"
+        self.commentLabel.text  = "\(suggestion.commentCount)"
+        self.dateLabel.text     = suggestion.updated.getStringFromDate()
+        self.ratingView.rating  = Float(suggestion.userVotes)
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
@@ -59,6 +59,12 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         cell.setCell(self.suggestion.media[indexPath.row])
         return cell
     }
+    
+    // custom sizes
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+//        let size = CGFloat((self.imageCollectionView.frame.size.width - 10) / 2.0)
+//        return CGSizeMake(size, size)
+//    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
