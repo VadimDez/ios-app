@@ -299,12 +299,6 @@ class UASuggestion: UACellObject {
                 self.suggestionId = suggestionId
             }
             
-            // set content
-            //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            if let content = suggestionObject["content"] as? NSString {
-                self.content = content as String
-            }
-            
             // set like count
             if (!(suggestionObject["like"] is NSNull)) {
                 if let _likeCount: AnyObject = suggestionObject["like"] {
@@ -328,7 +322,11 @@ class UASuggestion: UACellObject {
             }
         }
         
-        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content as String
+        }
         
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
