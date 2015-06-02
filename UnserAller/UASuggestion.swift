@@ -293,54 +293,64 @@ class UASuggestion: UACellObject {
     
     func initVoteIncludingImages(jsonObject: AnyObject) -> UASuggestion {
         
-        // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
-            self.suggestionId = suggestionId
+        if let suggestionObject = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            // set id
+            if let suggestionId = suggestionObject["id"] as? UInt {
+                self.suggestionId = suggestionId
+            }
+            
+            // set content
+            //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if let content = suggestionObject["content"] as? NSString {
+                self.content = content as String
+            }
+            
+            // set like count
+            if (!(suggestionObject["like"] is NSNull)) {
+                if let _likeCount: AnyObject = suggestionObject["like"] {
+                    self.likeCount = _likeCount.integerValue
+                }
+            }
+            
+            // set comment count
+            if let commentCount = suggestionObject["comment"] as? UInt {
+                self.commentCount = commentCount
+            }
+            
+            // set updated
+            if let updated = suggestionObject["date"]?.objectForKey("date") as? NSString {
+                self.updated = (updated as String).getDateFromString()
+            }
+            
+            // set user votes
+            if let userVotes = suggestionObject["userVote"] as? Int {
+                self.userVotes = userVotes
+            }
         }
         
-        // set content
-        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content as String
-        }
+        
         
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
-        
-        // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
-            self.likeCount = likeCount
-        }
-        
-        // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
-            self.commentCount = commentCount
-        }
-        
-        // set updated
-        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = (updated as String).getDateFromString()
-        }
-        
-        // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
-            self.userId = userId
-        }
-        
-        // set user name
-        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName as String
-        }
-        
-        // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
-            self.userVotes = userVotes
-        }
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
             self.projectName = projectName as String
         }
+        
+        if let userObject = jsonObject.objectForKey("user") as? Dictionary<String, AnyObject> {
+            // set user id
+            if let userId = userObject["id"] as? UInt {
+                self.userId = userId
+            }
+            
+            // set user name
+            if let userName = userObject["name"] as? NSString {
+                self.userName = userName as String
+            }
+        }
+        
+        
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
