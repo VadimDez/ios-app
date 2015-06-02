@@ -344,10 +344,10 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
         var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
 
-        Alamofire.request(.POST, url, parameters: ["id": id, "votes": votes])
+        Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
 
-                if(errors != nil) {
+                if (errors != nil) {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
                     println(errors)
