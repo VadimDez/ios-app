@@ -6,8 +6,7 @@
 //  Copyright (c) 2015 Vadym Yatsyuk. All rights reserved.
 //
 
-class UIViewControllerWithMedia: UIViewController, MWPhotoBrowserDelegate {
-    var photos: [MWPhotoObj] = []
+class UIViewControllerWithMedia: UIViewController, IDMPhotoBrowserDelegate {
     
     
     func registerNotifications() {
@@ -17,40 +16,32 @@ class UIViewControllerWithMedia: UIViewController, MWPhotoBrowserDelegate {
     func removeNotifications() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSelectItemFromCollectionView", object: nil)
     }
-    
-    // MARK: MWPhotoBrowser delegates
-    /**
-    * MWPhotoBrowser delegates
-    */
-    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        return UInt(self.photos.count)
-    }
-    
-    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        if (Int(index) < self.photos.count) {
-            return self.photos[Int(index)];
-        }
-        return nil;
-    }
+
     
     func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
         let cellData: Dictionary<String, AnyObject> = notification.object as! Dictionary<String, AnyObject>
-        self.photos = []
+        var photos: [IDMPhoto] = []
+        
         if (!cellData.isEmpty) {
             
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
                 
                 for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
-                    self.photos.append(photo)
+                    let photo: IDMPhoto = IDMPhoto(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    photos.append(photo)
                 }
                 
-                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
                 
-                browser.showPreviousPhotoAnimated(true)
-                browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as! UInt)
-                self.navigationController?.pushViewController(browser, animated: false)
+                var browser: IDMPhotoBrowser = IDMPhotoBrowser(photos: photos)
+                browser.delegate = self
+//                browser.forceHideStatusBar = true // not sure
+                browser.setInitialPageIndex(cellData["actual"] as! UInt)
+                browser.displayCounterLabel = true
+                browser.usePopAnimation = true
+//                browser.doneButtonImage = UIImage(named: "selected")
+                
+                
+                self.presentViewController(browser, animated: true, completion: nil)
             }
         }
     }

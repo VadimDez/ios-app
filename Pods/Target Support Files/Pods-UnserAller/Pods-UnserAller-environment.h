@@ -66,6 +66,12 @@
 #define COCOAPODS_VERSION_MINOR_Canvas 1
 #define COCOAPODS_VERSION_PATCH_Canvas 2
 
+// DACircularProgress
+#define COCOAPODS_POD_AVAILABLE_DACircularProgress
+#define COCOAPODS_VERSION_MAJOR_DACircularProgress 2
+#define COCOAPODS_VERSION_MINOR_DACircularProgress 3
+#define COCOAPODS_VERSION_PATCH_DACircularProgress 1
+
 // DrawerController
 #define COCOAPODS_POD_AVAILABLE_DrawerController
 #define COCOAPODS_VERSION_MAJOR_DrawerController 1
@@ -84,6 +90,12 @@
 #define COCOAPODS_VERSION_MINOR_DrawerController_DrawerVisualStates 0
 #define COCOAPODS_VERSION_PATCH_DrawerController_DrawerVisualStates 4
 
+// IDMPhotoBrowser
+#define COCOAPODS_POD_AVAILABLE_IDMPhotoBrowser
+#define COCOAPODS_VERSION_MAJOR_IDMPhotoBrowser 1
+#define COCOAPODS_VERSION_MINOR_IDMPhotoBrowser 6
+#define COCOAPODS_VERSION_PATCH_IDMPhotoBrowser 2
+
 // Locksmith
 #define COCOAPODS_POD_AVAILABLE_Locksmith
 #define COCOAPODS_VERSION_MAJOR_Locksmith 1
@@ -101,4 +113,10 @@
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
 #define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 13
 #define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 3
+
+// pop
+#define COCOAPODS_POD_AVAILABLE_pop
+#define COCOAPODS_VERSION_MAJOR_pop 1
+#define COCOAPODS_VERSION_MINOR_pop 0
+#define COCOAPODS_VERSION_PATCH_pop 7
 

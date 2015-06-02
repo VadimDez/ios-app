@@ -12,6 +12,7 @@ pod 'Locksmith', '~> 1.2'
 pod "AFNetworking", "~> 2.0"
 pod 'DrawerController', '~> 1.0'
 pod 'TTTAttributedLabel', '~> 1.13'
+pod 'IDMPhotoBrowser', '~> 1.6'
 end
 
 target "UnserAllerTests" do

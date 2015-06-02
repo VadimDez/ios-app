@@ -1,0 +1,6 @@
+framework module IDMPhotoBrowser {
+  umbrella header "Pods-UnserAller-IDMPhotoBrowser-umbrella.h"
+
+  export *
+  module * { export * }
+}
