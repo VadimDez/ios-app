@@ -8,18 +8,12 @@
 
 import UIKit
 
-class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    @IBOutlet weak var likeLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    @IBOutlet weak var likeImage: UIImageView!
     
-    var suggestionId: UInt = 0
-    var projectId: UInt = 0
     var type:String = "suggestion"
     var medias: [UAMedia] = []
-    var suggestion: UASuggestion!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,21 +37,6 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    /**
-    Like suggestion
-    
-    :param: sender
-    */
-    @IBAction func like(sender: AnyObject) {
-        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
-            let increment = (active) ? 1 : -1;
-            self.suggestion.likeCount = self.suggestion.likeCount + increment;
-            self.likeLabel.text = "\(self.suggestion.likeCount)"
-            }) { () -> Void in
-                
-        }
     }
     
     func setCellForHome(suggestion: UASuggestion) {
