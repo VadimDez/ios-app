@@ -85,9 +85,6 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
             self.likeImage.image = UIImage(named: "heart_black_32")
         }
         
-//        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
-//        [_likeButton setTintColor:color];
-        
         //    imageList = [dictionary objectForKey:@"media"];
         //    _imageCollectionView.backgroundColor = [UIColor greenColor];
         

@@ -18,6 +18,8 @@ class UACell: UITableViewCell {
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var secondaryImage: UIImageView!
     
+    var likeRequest: Request!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -72,11 +74,15 @@ class UACell: UITableViewCell {
     *  Send like
     */
     func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/like"
+        if (self.likeRequest != nil) {
+            self.likeRequest.suspend()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        Alamofire.request(.GET, url, parameters: ["id": id])
+        self.likeRequest = Alamofire.request(.GET, url, parameters: ["id": id])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
