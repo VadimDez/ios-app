@@ -186,6 +186,7 @@
                 <outlet property="commentLabel" destination="iAV-Ep-I5B" id="wIO-lF-D4d"/>
                 <outlet property="contentLabel" destination="Tgw-IJ-Fhz" id="Y88-WG-Dg6"/>
                 <outlet property="dateLabel" destination="5dX-iz-ehI" id="oFn-fu-5Hm"/>
+                <outlet property="likeImage" destination="FuN-14-S0u" id="uEf-ug-vM7"/>
                 <outlet property="likeLabel" destination="4TW-hx-sXh" id="EYh-uS-5mV"/>
                 <outlet property="mainImage" destination="OX7-eJ-WhA" id="b7d-v3-PDo"/>
                 <outlet property="newCommentButton" destination="vNZ-M6-mku" id="QOR-wR-kPY"/>

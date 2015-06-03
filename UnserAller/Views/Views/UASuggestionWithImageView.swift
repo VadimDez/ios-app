@@ -11,6 +11,7 @@ import UIKit
 class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet weak var likeImage: UIImageView!
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -39,6 +40,16 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
+        
+        // clear color
+        self.imageCollectionView.backgroundColor = UIColor.clearColor()
+        
+        // if liked - tint heart
+        if (suggestion.userVotes > 0) {
+            self.likeImage.image = UIImage(named: "heart_red")
+        } else {
+            self.likeImage.image = UIImage(named: "heart_black_32")
+        }
     }
     
     func registerNibs() {

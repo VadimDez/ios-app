@@ -398,8 +398,8 @@ class UASuggestion: UACellObject {
         }
         
         // set comment count
-        if (!(jsonObject.objectForKey("comments") is NSNull)) {
-            if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
+        if (!(jsonObject.objectForKey("commentCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentCount") {
                 self.commentCount = UInt(_commentCount.integerValue)
             }
         }
@@ -408,6 +408,13 @@ class UASuggestion: UACellObject {
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
                 self.likeCount = _likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
             }
         }
         
@@ -449,14 +456,19 @@ class UASuggestion: UACellObject {
         }
         
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
+
+        // set comment count
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.unsignedIntValue)
+            }
         }
         
-        // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
-        }
         // set like count
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
@@ -503,10 +515,10 @@ class UASuggestion: UACellObject {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }
-        
+
         // set comment count
-        if (!(jsonObject.objectForKey("comments") is NSNull)) {
-            if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
                 self.commentCount = UInt(_commentCount.integerValue)
             }
         }
@@ -518,6 +530,12 @@ class UASuggestion: UACellObject {
             }
         }
         
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
         
         // set type
         self.type = "suggestionMedia";
@@ -561,18 +579,28 @@ class UASuggestion: UACellObject {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }
+        
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("likeCount") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("likeCount") {
+                self.likeCount = likeCount.integerValue
+            }
         }
+        
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
+        
         // set type
         self.type = "project";
         
@@ -629,13 +657,24 @@ class UASuggestion: UACellObject {
             
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(_commentCount.integerValue)
+            }
         }
         
         // set like count
-        if let votes = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = votes
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
         
         // set cell type
@@ -680,9 +719,12 @@ class UASuggestion: UACellObject {
         }
 
         // set comment count
-        if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
-            self.commentCount = UInt(_commentCount.integerValue)
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
@@ -726,14 +768,25 @@ class UASuggestion: UACellObject {
             }
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
-        }
-        // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
         
+        // set like count
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
         
         // set type
         self.type = "suggestionMedia";
@@ -774,17 +827,26 @@ class UASuggestion: UACellObject {
             }
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
         }
+        
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
+        
         // set type
         self.type = "project";
         

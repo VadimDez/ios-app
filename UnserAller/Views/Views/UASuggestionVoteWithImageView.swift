@@ -39,6 +39,9 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+        
+        // clear color
+        self.imageCollectionView.backgroundColor = UIColor.clearColor()
     }
     
     func registerNibs() {

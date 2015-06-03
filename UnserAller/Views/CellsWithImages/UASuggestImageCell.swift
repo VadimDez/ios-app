@@ -98,20 +98,13 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         self.medias             = suggestion.media
         self.dateLabel?.text    = suggestion.updated.getStringFromDate()
         
+        
         // if liked - tint heart
-        var color:UIColor
         if (suggestion.userVotes > 0) {
-            color = UIColor.redColor()
+            self.likeImage.image = UIImage(named: "heart_red")
         } else {
-            color = UIColor.grayColor()
+            self.likeImage.image = UIImage(named: "heart_black_32")
         }
-        
-        //        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
-        //        [_likeButton setTintColor:color];
-        
-        //    imageList = [dictionary objectForKey:@"media"];
-        //    _imageCollectionView.backgroundColor = [UIColor greenColor];
-        
         
         self.suggestionId        = suggestion.suggestionId
         self.projectId           = suggestion.projectId

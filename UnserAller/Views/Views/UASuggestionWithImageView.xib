@@ -207,6 +207,7 @@
                 <outlet property="contentLabel" destination="3Re-L3-g1q" id="4pS-9k-I4N"/>
                 <outlet property="dateLabel" destination="znj-f6-Lgo" id="VNS-3V-bIX"/>
                 <outlet property="imageCollectionView" destination="CjV-jP-e3u" id="dHG-co-Bvh"/>
+                <outlet property="likeImage" destination="Wb0-8e-5nj" id="Bba-X7-eOA"/>
                 <outlet property="likeLabel" destination="Ied-eX-vTv" id="p4c-M5-Ebw"/>
                 <outlet property="mainImage" destination="Fkp-4a-1Dv" id="rtK-dU-D7D"/>
                 <outlet property="newCommentButton" destination="2TE-MG-Lg7" id="bbt-1Z-H28"/>
