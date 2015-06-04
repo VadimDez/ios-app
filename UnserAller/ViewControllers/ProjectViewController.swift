@@ -225,6 +225,10 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
                     // active activity indicator
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
+                    }, failure: { () -> Void in
+                        
+                    self.mainTable.pullToRefreshView.stopAnimating()
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
             }
         }
@@ -258,11 +262,18 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
                 
-                self.mainTable.pullToRefreshView.stopAnimating()
+                self.mainTable.infiniteScrollingView.stopAnimating()
                 
                 // active activity indicator
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
+                }, failure: { () -> Void in
+                    println("Project infiniteload error")
+                    
+                    self.mainTable.infiniteScrollingView.stopAnimating()
+                    
+                    // active activity indicator
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             })
         }
     }
@@ -507,6 +518,8 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
             
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
+                }, failure: { () -> Void in
+                    println("fail load news")
             })
             
         } else {
@@ -718,7 +731,7 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
     /**
      *  Load project news
      */
-    func loadNews(success: () -> Void) -> Void {
+    func loadNews(success: () -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
@@ -734,6 +747,8 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
                     println(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    failure()
                 } else {
                     let newsViewModel = UANewsViewModel()
                     

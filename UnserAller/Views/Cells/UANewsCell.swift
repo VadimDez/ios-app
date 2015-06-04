@@ -14,8 +14,9 @@ class UANewsCell: UACell {
         self.titleLabel.text = suggestion.projectName
         self.contentLabel.text = suggestion.content
         self.subtitleLabel.text = ""
+        self.dateLabel.text = suggestion.updated.getStringFromDate()
         
         // make round corners
-        self.makeRoundCorners()
+//        self.makeRoundCorners()
     }
 }

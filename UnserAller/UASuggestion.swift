@@ -166,12 +166,36 @@ class UASuggestion: UACellObject {
     }
     
     func initNews(jsonObject: AnyObject) -> UASuggestion {
+        println(jsonObject)
+        
+        if let pageArticle = jsonObject.objectForKey("pageArticle") as? Dictionary<String, AnyObject> {
+            if let pageArticleId = pageArticle["id"] as? UInt {
+                self.suggestionId = pageArticleId
+            }
+            
+            if let created = pageArticle["created"] as? Dictionary<String, String> {
+                let createdString: String = created["date"]!
+                self.updated = createdString.getDateFromString()
+            }
+        }
         
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content as String
+        var articleContent: String = ""
+        
+        if let title = jsonObject.objectForKey("title") as? String {
+            articleContent = title
         }
+        
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            if (count(articleContent) > 0) {
+                articleContent = articleContent + " "
+            }
+            
+            articleContent = articleContent + (content as String)
+        }
+        
+        self.content = articleContent
         
         // set project id
 //        if let projectId = jsonObject.objectForKey("project") as? NSNumber {

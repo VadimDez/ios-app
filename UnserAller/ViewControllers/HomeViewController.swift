@@ -95,10 +95,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     
     func refresh() {
         self.page = 0
-        self.entries = []
-        self.countEntries = 0
-        
+//        self.entries = []
+//        self.countEntries = 0
+
         self.getEntries({ () -> Void in
+            
             self.mainTable.reloadData()
             
             self.mainTable.pullToRefreshView.stopAnimating()
@@ -242,12 +243,12 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
             // count text
             var frame: CGRect = CGRect()
-            frame.size.width = 290
+            frame.size.width = self.mainTable.frame.width
             frame.size.height = CGFloat(MAXFLOAT)
             var label: UILabel = UILabel(frame: frame)
             
             label.text = entries[indexPath.row].content
-            label.font = UIFont(name: "Helvetica Neue", size: 14)
+            label.font = UIFont(name: "Helvetica Neue", size: 13)
             label.numberOfLines = 0
             label.lineBreakMode = NSLineBreakMode.ByWordWrapping
             label.sizeToFit()
