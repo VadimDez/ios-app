@@ -17,7 +17,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     var entries: [UASuggestion] = []
     let maxResponse: UInt = 10
     var countEntries: Int = 0
-//    var photos: [MWPhotoObj] = []
+
     var votingDisabled = false
     
     override func viewWillAppear(animated: Bool) {
@@ -29,16 +29,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         // adjust table Or use didMoveToParentViewController
 //        self.automaticallyAdjustsScrollViewInsets = false
 //        self.edgesForExtendedLayout = UIRectEdge.None
-        
-        // hide nav bar
-//        self.navigationController?.hidesBarsOnSwipe = true
-        
-        
-//        self.getEntries({
-//            
-//        }, error: { () -> Void in
-//            
-//        })
         
         self.registerNotifications()
     }
@@ -54,9 +44,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
-        
-        // set row height
-//        self.mainTable.rowHeight = UITableViewAutomaticDimension
         
         self.mainTable.triggerInfiniteScrolling()
     }
@@ -95,8 +82,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     
     func refresh() {
         self.page = 0
-//        self.entries = []
-//        self.countEntries = 0
 
         self.getEntries({ () -> Void in
             
@@ -151,14 +136,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        
-        // TODO: check why it's empty
-        if(self.entries.count == 0) {
-            println("accessing with no elements")
-            return UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-        }
-        
-        
+
         if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row])
         } else if ("UASuggestImageCell" == entries[indexPath.row].cellType) {
@@ -184,12 +162,22 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func getSuggestCellForHome(suggestion: UASuggestion) -> UASuggestionCell {
         var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentSuggestionViewController(suggestion)
+        }
         return cell
     }
     
     func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentSuggestionViewController(suggestion)
+        }
         return cell
     }
     
@@ -199,6 +187,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func getNewsCellForHome(suggestion: UASuggestion) -> UANewsCell {
         var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as! UANewsCell
         cell.setCellForHome(suggestion)
+
+        cell.onMainButton = {
+            () -> Void in
+            self.presentNewsViewController(suggestion)
+        }
         return cell
     }
     
@@ -212,6 +205,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
         cell.setCellForHome(suggestion)
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentSuggestionViewController(suggestion)
+        }
         return cell
     }
     
@@ -225,6 +223,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
         cell.setCellForHome(self.entries[row])
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentSuggestionViewController(self.entries[row])
+        }
         return cell
     }
     
@@ -237,8 +240,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        // TODO: check why it's empty
-        if (self.entries.count > 0) {
             let base: CGFloat = 95.0
 
             // count text
@@ -259,18 +260,40 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             }
         
             return base + label.frame.size.height + media
-        } else {
-            return 0;
-        }
     }
+
+    /**
+     * Did select row
+     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
-        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
+        if (self.entries[indexPath.row].cellType == "NewsCell" || self.entries[indexPath.row].cellType == "NewsContainerTableCell") {
+            self.presentNewsViewController(self.entries[indexPath.row] as UASuggestion)
+        } else {
+            self.presentSuggestionViewController(self.entries[indexPath.row] as UASuggestion)
+        }
         
-        self.navigationController?.pushViewController(suggestionVC, animated: true)
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
-    
+
+    /**
+     * Present suggestion view controller with suggestion
+     */
+    func presentSuggestionViewController(suggestion: UASuggestion) {
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+        suggestionVC.suggestion = suggestion
+
+        self.navigationController?.pushViewController(suggestionVC, animated: true)
+    }
+
+
+    /**
+     * Present news view controller with news
+     */
+    func presentNewsViewController(news: UASuggestion) {
+        var newsVC: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+
+        self.navigationController?.pushViewController(newsVC, animated: true)
+    }
     
     /**
      *  Get entries
@@ -346,7 +369,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         var url: String = "http://\(APIURL)/api/v1/suggestion/vote"
 
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_, _, JSON, errors) in
 
                 if (errors != nil) {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false

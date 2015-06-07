@@ -38,6 +38,9 @@
                                         <include reference="Btm-M2-8Ng"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="onTouchMainButton:" destination="Hqz-XX-czu" eventType="touchUpInside" id="Q19-zR-sML"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VTd-zh-dYz">
                                 <rect key="frame" x="10" y="5" width="40" height="40"/>
@@ -259,11 +262,11 @@
                                 <exclude reference="WNn-wx-idY"/>
                                 <exclude reference="nEY-Lj-7lO"/>
                                 <exclude reference="tnM-PY-pUv"/>
-                                <exclude reference="gyF-5W-2Q4"/>
-                                <exclude reference="ibC-K6-FgT"/>
                                 <exclude reference="LNx-Ql-ozz"/>
                                 <exclude reference="QtG-BC-Fng"/>
                                 <exclude reference="UL3-Cd-TLs"/>
+                                <exclude reference="gyF-5W-2Q4"/>
+                                <exclude reference="ibC-K6-FgT"/>
                                 <exclude reference="EMz-yM-XgM"/>
                                 <exclude reference="vAu-yO-XPS"/>
                                 <exclude reference="O54-YW-UZW"/>
@@ -287,11 +290,11 @@
                                 <include reference="WNn-wx-idY"/>
                                 <include reference="nEY-Lj-7lO"/>
                                 <include reference="tnM-PY-pUv"/>
-                                <include reference="gyF-5W-2Q4"/>
-                                <include reference="ibC-K6-FgT"/>
                                 <include reference="LNx-Ql-ozz"/>
                                 <include reference="QtG-BC-Fng"/>
                                 <include reference="UL3-Cd-TLs"/>
+                                <include reference="gyF-5W-2Q4"/>
+                                <include reference="ibC-K6-FgT"/>
                                 <include reference="EMz-yM-XgM"/>
                                 <include reference="vAu-yO-XPS"/>
                                 <include reference="O54-YW-UZW"/>
@@ -314,6 +317,7 @@
             <connections>
                 <outlet property="contentLabel" destination="dIQ-zt-LPQ" id="16X-et-hAP"/>
                 <outlet property="dateLabel" destination="cBI-eU-u8W" id="8g9-Ps-HbE"/>
+                <outlet property="mainButton" destination="dUN-8B-mg6" id="oxc-DB-FJq"/>
                 <outlet property="mainImage" destination="VTd-zh-dYz" id="HSm-yB-XSy"/>
                 <outlet property="subtitleLabel" destination="a4b-sW-Imw" id="ZYd-Wc-fBd"/>
                 <outlet property="titleLabel" destination="lRv-Rr-QGF" id="fl2-WO-4mv"/>

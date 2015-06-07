@@ -24,6 +24,9 @@
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onTouchMainButton:" destination="Ipr-lX-SOG" eventType="touchUpInside" id="L03-xD-qXs"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yEU-0Z-4vj">
                                 <rect key="frame" x="5" y="5" width="40" height="40"/>
@@ -184,6 +187,7 @@
                 <outlet property="contentLabel" destination="UpO-R0-foM" id="meI-Kk-GFg"/>
                 <outlet property="dateLabel" destination="eYw-QO-zjP" id="2hH-Ri-oDr"/>
                 <outlet property="likeLabel" destination="yBg-6V-rip" id="YUD-Fw-4LY"/>
+                <outlet property="mainButton" destination="A8T-u1-ctH" id="3XF-GV-q8y"/>
                 <outlet property="mainImage" destination="yEU-0Z-4vj" id="zmN-fO-dRr"/>
                 <outlet property="ratingView" destination="5y6-cY-DgG" id="Llc-zX-Lnl"/>
                 <outlet property="secondaryImage" destination="qbP-2P-ia4" id="olA-Lp-as1"/>

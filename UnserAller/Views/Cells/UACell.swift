@@ -17,8 +17,12 @@ class UACell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var secondaryImage: UIImageView!
+    @IBOutlet weak var mainButton: UIButton!
     
     var likeRequest: Request!
+    var onMainButton: () -> Void = {
+        () -> Void in
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -96,5 +100,12 @@ class UACell: UITableViewCell {
                     success(active: ((JSON?.objectForKey("status") as! String!) == "active"))
                 }
         }
+    }
+
+    /**
+     *  On click on main button
+     */
+    @IBAction func onTouchMainButton(sender: AnyObject) {
+        self.onMainButton()
     }
 }

@@ -71,6 +71,4 @@ class UASuggestionCell: UACellSuggest {
         // if liked - tint heart
         self.tintLike(suggestion.userVotes > 0)
     }
-    
-
 }

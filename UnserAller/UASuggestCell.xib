@@ -38,6 +38,9 @@
                                         <include reference="J37-Gh-3Ac"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="onTouchMainButton:" destination="TJB-cY-eAv" eventType="touchUpInside" id="Emd-AC-pNL"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EtG-NU-J97" userLabel="Main Image">
                                 <rect key="frame" x="10" y="5" width="40" height="40"/>
@@ -520,6 +523,7 @@
                 <outlet property="dateLabel" destination="2P6-eq-8pO" id="DpG-qM-3sd"/>
                 <outlet property="likeImage" destination="pMj-jR-2US" id="GwR-Ea-6zp"/>
                 <outlet property="likeLabel" destination="rxG-xl-lI4" id="yKD-e8-iow"/>
+                <outlet property="mainButton" destination="l4W-GN-wGo" id="baM-dP-9Of"/>
                 <outlet property="mainImage" destination="EtG-NU-J97" id="Thc-UG-DeN"/>
                 <outlet property="secondaryImage" destination="9Ac-0x-eer" id="2O9-2L-7i2"/>
                 <outlet property="subtitleLabel" destination="ZqH-ru-89H" id="Jag-Ax-vQ5"/>

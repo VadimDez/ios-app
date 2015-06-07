@@ -10,6 +10,7 @@ class UACellSuggest: UACell {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var likeImage: UIImageView!
+
     var suggestionId: UInt = 0
     var projectId: UInt = 0
     var suggestion: UASuggestion!

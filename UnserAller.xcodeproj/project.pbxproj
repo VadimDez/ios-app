@@ -17,6 +17,7 @@
 		1216E5C91B1B4182004D8F22 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216E5C81B1B4182004D8F22 /* StringExtensions.swift */; };
 		1216E5CB1B1B444B004D8F22 /* NSDateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */; };
 		1229AAC51A0EDD5A002887E6 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1229AAC41A0EDD5A002887E6 /* UserTests.swift */; };
+		123986981B20BD3A002EB6D7 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123986971B20BD3A002EB6D7 /* NewsViewController.swift */; };
 		1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */; };
 		1241E3E21A646E460068678D /* UASuggestionVoteImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */; };
 		124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124331F81A6703F500B7190A /* UASuggestionViewController.swift */; };
@@ -143,6 +144,7 @@
 		1216E5C81B1B4182004D8F22 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtensions.swift; sourceTree = "<group>"; };
 		1229AAC41A0EDD5A002887E6 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		123986971B20BD3A002EB6D7 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewsViewController.swift; path = ViewControllers/NewsViewController.swift; sourceTree = "<group>"; };
 		1241E3DC1A646E240068678D /* UASuggestionVoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionVoteImageCell.swift; path = Views/CellsWithImages/UASuggestionVoteImageCell.swift; sourceTree = "<group>"; };
 		1241E3E11A646E460068678D /* UASuggestionVoteImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionVoteImageCell.xib; path = Views/CellsWithImages/UASuggestionVoteImageCell.xib; sourceTree = "<group>"; };
 		124331F81A6703F500B7190A /* UASuggestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionViewController.swift; path = ViewControllers/UASuggestionViewController.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				124F8C211A1A94E7000A5812 /* ActivityViewController.swift */,
 				12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */,
 				12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */,
+				123986971B20BD3A002EB6D7 /* NewsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
 				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,
 				1216E5C71B1B401E004D8F22 /* UIViewControllerWithMedia.swift in Sources */,
+				123986981B20BD3A002EB6D7 /* NewsViewController.swift in Sources */,
 				120803791A6BAEB100CD19E8 /* UACommentWithImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

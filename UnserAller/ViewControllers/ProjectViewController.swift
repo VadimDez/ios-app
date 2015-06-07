@@ -9,7 +9,16 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FloatRatingViewDelegate, UAEditorDelegate {
+class ProjectViewController:
+        UIViewControllerWithMedia,
+        UITableViewDelegate,
+        UITableViewDataSource,
+        UICollectionViewDelegate,
+        UICollectionViewDataSource,
+        UICollectionViewDelegateFlowLayout,
+        FloatRatingViewDelegate,
+        UAEditorDelegate
+{
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -60,22 +69,22 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
             if (self.phasesArray.count > 0) {
                 // reload collection
                 self.phaseCollection.reloadData()
-                
+
                 // set first phase as actial one
                 self.actualPhaseId = self.phasesArray[0].id
-                
+
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-                    
+
                     self.updatePhase(jsonResponse, success: { () -> Void in
-                        
+
                         self.entries = []
                         self.loadSuggestions({ () -> Void in
-                            
+
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             }, failure: { () -> Void in
-                                
+
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
@@ -189,7 +198,8 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
             }
         }
     }
-    
+
+
     func refresh() {
         self.page = 0
         
@@ -339,16 +349,25 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.entries.count
     }
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
-        suggestionVC.suggestion = self.entries[indexPath.row] as! UASuggestion
-        
-        self.navigationController?.pushViewController(suggestionVC, animated: true)
+        if (!news) {
+            var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+            detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        } else {
+            var detailViewController: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+            detailViewController.news = self.entries[indexPath.row] as! UANews
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
         switch self.entries[indexPath.row].cellType {
@@ -510,6 +529,10 @@ class ProjectViewController: UIViewControllerWithMedia, UITableViewDelegate, UIT
         }
         return size;
     }
+
+    /**
+     * did select
+     */
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == 0) {
             // news
