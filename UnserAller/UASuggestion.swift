@@ -166,7 +166,6 @@ class UASuggestion: UACellObject {
     }
     
     func initNews(jsonObject: AnyObject) -> UASuggestion {
-        println(jsonObject)
         
         if let pageArticle = jsonObject.objectForKey("pageArticle") as? Dictionary<String, AnyObject> {
             if let pageArticleId = pageArticle["id"] as? UInt {
@@ -196,11 +195,9 @@ class UASuggestion: UACellObject {
         }
         
         self.content = articleContent
-        
+
         // set project id
-//        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
-//            self.projectId = projectId
-//        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {

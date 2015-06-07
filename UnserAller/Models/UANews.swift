@@ -10,7 +10,7 @@ import Foundation
 
 class UANews: UACellObject {
     var id: UInt!
-    var projectId: Int!
+    var projectId: UInt!
     var title: String!
     var created: String!
     

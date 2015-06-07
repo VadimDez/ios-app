@@ -165,7 +165,8 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentSuggestionViewController(suggestion)
+            self.presentProjectViewController(suggestion.projectId)
+
         }
         return cell
     }
@@ -176,7 +177,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentSuggestionViewController(suggestion)
+            self.presentProjectViewController(suggestion.projectId)
         }
         return cell
     }
@@ -190,7 +191,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
         cell.onMainButton = {
             () -> Void in
-            self.presentNewsViewController(suggestion)
+            self.presentProjectViewController(suggestion.projectId)
         }
         return cell
     }
@@ -208,7 +209,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentSuggestionViewController(suggestion)
+            self.presentProjectViewController(suggestion.projectId)
         }
         return cell
     }
@@ -223,10 +224,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
         cell.setCellForHome(self.entries[row])
+
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentSuggestionViewController(self.entries[row])
+            self.presentProjectViewController(self.entries[row].projectId)
         }
         return cell
     }
@@ -294,6 +296,18 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
         self.navigationController?.pushViewController(newsVC, animated: true)
     }
+
+    /**
+     *   Present project view controller
+     */
+    func presentProjectViewController(projectId: UInt) {
+        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+
+        // set project id
+        projectVC.projectId = projectId
+
+        self.navigationController?.pushViewController(projectVC, animated: true)
+    }
     
     /**
      *  Get entries
@@ -360,6 +374,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             }
         }
     }
+
     /**
      *  Send rating
      */
