@@ -49,7 +49,7 @@ class UACell: UITableViewCell {
     :param: height Uint
     */
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
-        self.loadImage(self.mainImage, url: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
+        self.loadImage(self.mainImage, url: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
     }
     
     /**
@@ -60,7 +60,7 @@ class UACell: UITableViewCell {
     :param: height Uint
     */
     func loadProjectImage(projectId: UInt, width: UInt, height: UInt) {
-        self.loadImage(self.secondaryImage, url: "\(APIPROTOCOL)://\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
+        self.loadImage(self.secondaryImage, url: "\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
     }
     
     func loadImage(imageView: UIImageView, url: String) {
@@ -79,7 +79,7 @@ class UACell: UITableViewCell {
     */
     func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/like"
+        var url: String = "\(APIURL)/api/v1/suggestion/like"
         if (self.likeRequest != nil) {
             self.likeRequest.suspend()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false

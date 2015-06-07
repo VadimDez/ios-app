@@ -53,7 +53,7 @@ class UAUser {
      *
      */
     func getUserCrederntials(email: String, password: String, success: () -> Void, error: () -> Void ) {
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/auth/login"
+        let url: String = "\(APIURL)/api/mobile/auth/login"
         
         Alamofire.request(.GET, url, parameters: ["username": email, "password": password])
             .authenticate(user: email, password: password)
@@ -122,7 +122,7 @@ class UAUser {
     :param: failure
     */
     func logout(success: () -> Void, failure: () -> Void) {
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/auth/logout"
+        let url: String = "\(APIURL)/api/mobile/auth/logout"
         
         Alamofire.request(.GET, url, parameters: nil)
             .response { (request, response, _, error) in
@@ -141,7 +141,7 @@ class UAUser {
     *  Get user from api
     */
     func getFromAPI(success: (user: User) -> Void) {
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/user"
+        let url: String = "\(APIURL)/api/v1/user"
         
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { ( request, response, JSON, error) in
@@ -212,7 +212,7 @@ class UAUser {
      */
     func changePassword(actualPassword: String, newPassword: String, success: () -> Void, failure: () -> Void) -> Void {
         // save
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/user/resetpassword"
+        let url: String = "\(APIURL)/api/v1/user/resetpassword"
         
         Alamofire.request(.POST, url, parameters: ["oldpass": actualPassword, "password": newPassword])
             .response { (request, response, data, errors) -> Void in
@@ -233,7 +233,7 @@ class UAUser {
     func updateNotifications(commentNotification: Int, projectInformation: Int, projectInvitation: Int, subscription: Int, notificationInterval: String, success: () -> Void, failure: () -> Void) -> Void {
         
         // save
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/updatenotifications"
+        let url: String = "\(APIURL)/api/mobile/profile/updatenotifications"
         
         Alamofire.request(.POST, url, parameters: [
             "commentNotification":  commentNotification,
@@ -256,7 +256,7 @@ class UAUser {
     
     func updateAddress(firstName: String, lastName: String, street: String, city: String, zipCode: String, address: String, gender: String, success: () -> Void, failure: () -> Void) -> Void {
         
-        let url = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/saveuserpostalinfo"
+        let url = "\(APIURL)/api/mobile/profile/saveuserpostalinfo"
         
         Alamofire.request(.POST, url, parameters: [
             "firstname":    firstName,
@@ -280,7 +280,7 @@ class UAUser {
     }
     
     func updateInfo(firstName: String, lastName: String, language: String, success: () -> Void, failure: () -> Void) -> Void {
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/saveuserinfo"
+        let url: String = "\(APIURL)/api/mobile/profile/saveuserinfo"
         
         Alamofire.request(.POST, url, parameters: ["firstname": firstName, "lastname": lastName, "language": language])
             .responseJSON { (_, _, JSON, errors) -> Void in
@@ -301,7 +301,7 @@ class UAUser {
     :param: failure function
     */
     func getSettings(success: (settings: Dictionary<String, AnyObject>) -> Void, failure: () -> Void) {
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/getsettings"
+        let url: String = "\(APIURL)/api/mobile/profile/getsettings"
         
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { (_, _, JSON, errors) -> Void in

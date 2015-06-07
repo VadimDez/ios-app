@@ -314,7 +314,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      */
     func getEntries(success:() -> Void, error: () -> Void) {
         // build URL
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/getwall"
+        let url: String = "\(APIURL)/api/mobile/profile/getwall"
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page])

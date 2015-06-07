@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func loadProfileImage() {
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/4/80/80")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/profileimage/4/80/80")!)
         self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
             if let weakSelf = self {

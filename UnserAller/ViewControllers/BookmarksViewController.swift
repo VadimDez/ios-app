@@ -91,7 +91,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     
     func getEntries(success: () -> Void, error: () -> Void) {
         // /api/mobile/profile/getbookmarks/
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/profile/getbookmarks"
+        let url: String = "\(APIURL)/api/mobile/profile/getbookmarks"
         
         Alamofire.request(.GET, url, parameters: ["page": page])
         .responseJSON { (_, _, JSON, errors) -> Void in

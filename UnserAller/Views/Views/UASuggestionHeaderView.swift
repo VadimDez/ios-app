@@ -65,7 +65,7 @@ class UASuggestionHeaderView: UIView {
     
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")!)
         self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             if let weakSelf = self {
                 weakSelf.mainImage.image = image
@@ -97,7 +97,7 @@ class UASuggestionHeaderView: UIView {
     func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/like"
+        var url: String = "\(APIURL)/api/v1/suggestion/like"
         
         Alamofire.request(.GET, url, parameters: ["id": id])
             .responseJSON { (_,_,JSON,errors) in

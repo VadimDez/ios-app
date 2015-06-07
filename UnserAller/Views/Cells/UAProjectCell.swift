@@ -28,6 +28,7 @@ class UAProjectCell: UITableViewCell {
         
         let width = UInt(self.projectImage.frame.width)
         let height = UInt(self.projectImage.frame.height)
+        println(url)
         // load profile image
         let request = NSURLRequest(URL: NSURL(string: "\(url)/height/\(height)/width/\(width)")!)
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in

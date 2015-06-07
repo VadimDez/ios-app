@@ -172,7 +172,7 @@ class MenuTableViewController: UITableViewController {
      */
     func loadProfileImage(id: UInt) {
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/profileimage/\(id)/80/80")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/profileimage/\(id)/80/80")!)
         self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             // test
             if let weakSelf = self {

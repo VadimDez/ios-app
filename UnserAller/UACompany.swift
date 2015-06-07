@@ -18,6 +18,11 @@ class UACompany {
     init () {
         self.id = 0
     }
+
+    init(id: UInt, name: String) {
+        self.id = id
+        self.name = name
+    }
     
     func setCompanyFromJSON(json: Dictionary<String, AnyObject>) {
 //        println(json)
@@ -31,11 +36,11 @@ class UACompany {
         if let media = json["media"] as? [Dictionary<String, AnyObject>] {
             self.imageHash = self.getCompanyImageHash(media)
         }
-        
+
+        // add projects
         if (!(json["project"] is NSNull)) {
             self.addProjects(json["project"] as! NSDictionary)
         }
-        // add projects
     }
     
     /**
@@ -59,7 +64,13 @@ class UACompany {
             
             // closed community
             project.closedCommunity = ((object["closedCommunity"] as! Int) == 1)
-            
+
+            // set company
+            project.company = UACompany(id: self.id, name: self.name)
+
+            // set media
+            project.imageUrl = "\(APIURL)/api/v1/media/project/\(project.id)"
+
             self.projects.append(project)
         }
     }

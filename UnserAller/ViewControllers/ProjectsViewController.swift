@@ -189,7 +189,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
      */
     func getEntries(success: () -> Void, error: () -> Void) {
         // url
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/"
+        let url: String = "\(APIURL)/api/mobile/project/"
 
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page, "filter": ["searchString": self.searchField.text]])

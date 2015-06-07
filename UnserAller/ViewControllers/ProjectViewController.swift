@@ -168,7 +168,6 @@ class ProjectViewController:
             // update project info
             self.updateProjectInfo()
             
-            
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             // get phases
             self.loadPhases({ () -> Void in
@@ -573,7 +572,7 @@ class ProjectViewController:
      */
     func loadProject(success: (json: AnyObject) -> Void, error: () -> Void) {
         // build URL
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/get/\(self.projectId)"
+        let url: String = "\(APIURL)/api/mobile/project/get/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -600,7 +599,7 @@ class ProjectViewController:
         self.projectName.text = self.project.name
         self.navigationItem.title = self.project.name
         
-        let request = NSURLRequest(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
 
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
@@ -620,7 +619,7 @@ class ProjectViewController:
     */
     func loadPhases(success: () -> Void, error: () -> Void) {
         // build url
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
+        let url: String = "\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -650,7 +649,7 @@ class ProjectViewController:
     func loadPhase(id: UInt, success: (jsonResponse: AnyObject) -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         // build url
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getstep/\(id)"
+        let url: String = "\(APIURL)/api/mobile/project/getstep/\(id)"
         
         // GET
         Alamofire.request(.GET, url)
@@ -723,7 +722,7 @@ class ProjectViewController:
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/suggestions"
+        let url: String = "\(APIURL)/api/mobile/project/suggestions"
         
         // GET
         Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "top", "page": self.page])
@@ -758,7 +757,7 @@ class ProjectViewController:
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
-        let url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/project/getnews"
+        let url: String = "\(APIURL)/api/mobile/project/getnews"
         
         // GET
         Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
@@ -828,7 +827,7 @@ class ProjectViewController:
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
@@ -873,7 +872,6 @@ class ProjectViewController:
         editor.delegate = _self
         editor.string = self.sendSuggestionInput.text
         self.presentViewController(editor, animated: true, completion: nil)
-
     }
     
     func passTextBack(controller: UAEditorViewController, string: String) {
@@ -911,7 +909,7 @@ class ProjectViewController:
     func sendSuggestion(success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/post"
+        var url: String = "\(APIURL)/api/v1/suggestion/post"
         
         Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text, "phase": self.actualPhaseId])
             .responseJSON { (_,_,JSON,errors) in

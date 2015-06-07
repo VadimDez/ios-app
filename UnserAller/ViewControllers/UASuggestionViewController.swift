@@ -130,7 +130,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func getSuggestion(success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/suggestion/suggestion"
+        var url: String = "\(APIURL)/api/mobile/suggestion/suggestion"
 
         Alamofire.request(.GET, url, parameters: ["id": self.suggestion.suggestionId])
             .responseJSON { (_,_,JSON,errors) in
@@ -346,7 +346,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
@@ -413,7 +413,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIPROTOCOL)://\(APIURL)/api/mobile/comment/add"
+        var url: String = "\(APIURL)/api/mobile/comment/add"
 
         Alamofire.request(.POST, url, parameters: [
             "comment": comment,

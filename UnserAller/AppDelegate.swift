@@ -9,10 +9,8 @@
 import UIKit
 import CoreData
 
-// protocol
-let APIPROTOCOL: String = "https"
 // GLOBAL URL FOR API
-let APIURL: String = "local.innosabi.net" //"192.168.0.8:8443"
+let APIURL: String = "https://local.innosabi.net" //"192.168.0.8:8443"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

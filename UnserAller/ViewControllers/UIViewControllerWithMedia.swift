@@ -27,7 +27,7 @@ class UIViewControllerWithMedia: UIViewController, IDMPhotoBrowserDelegate {
             if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
                 
                 for media: UAMedia in medias {
-                    let photo: IDMPhoto = IDMPhoto(URL: NSURL(string: "\(APIPROTOCOL)://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
+                    let photo: IDMPhoto = IDMPhoto(URL: NSURL(string: "\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
                     photos.append(photo)
                 }
                 
