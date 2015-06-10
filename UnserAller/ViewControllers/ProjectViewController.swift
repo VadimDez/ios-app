@@ -855,9 +855,10 @@ class ProjectViewController:
         var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as! UACompanyViewController
         companyVC.company = self.project.company
         self.navigationController?.pushViewController(companyVC, animated: true)
+
     }
     
-    
+    // MARK: new suggestion editor delegates
     /**
     Open editor
     
@@ -873,11 +874,14 @@ class ProjectViewController:
         editor.string = self.sendSuggestionInput.text
         self.presentViewController(editor, animated: true, completion: nil)
     }
-    
+
     func passTextBack(controller: UAEditorViewController, string: String) {
         self.sendSuggestionInput.text = string
     }
-    
+
+    /**
+     *  Send new suggestion
+     */
     @IBAction func sendNewSuggestion() {
         self.sendSuggestion({ (json) -> () in
             

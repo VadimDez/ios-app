@@ -25,6 +25,10 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         // register all nibs
         self.registerNibs()
 
+//        let btn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem., target: nil, action: nil)
+//        self.navigationItem.leftBarButtonItem = btn
+//        self.navigationItem.backBarButtonItem = btn
+        
         self.getCompanyWithProjects({ () -> Void in
             self.loadCompanyImage()
             
@@ -32,6 +36,12 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         }, error: { () -> Void in
             
         })
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = self.company.name
+        
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,6 +102,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         projectViewController.projectId = self.company.projects[indexPath.row].id
         
         self.navigationController?.pushViewController(projectViewController, animated: true)
+        self.projectsTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -152,7 +163,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     func loadCompanyImage() {
         // load profile image
-        let url = "\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
+        let url = "\(APIURL)/media/scale/\(self.company.imageHash)/180/320"
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
         self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in

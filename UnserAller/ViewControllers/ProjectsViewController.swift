@@ -167,7 +167,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         self.page = 0
         self.entries = []
         self.countEntries = 0
-        self.mainTable.reloadData()
+//        self.mainTable.reloadData()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
