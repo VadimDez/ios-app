@@ -73,7 +73,7 @@
 		12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */; };
 		12CD632E1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */; };
 		12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */; };
-		12D11BF81AD469F000CC19EF /* UIView+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D11BF71AD469F000CC19EF /* UIView+RoundCorners.swift */; };
+		12D11BF81AD469F000CC19EF /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */; };
 		12D74B901A685951006CE23D /* UASuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D74B8F1A685951006CE23D /* UASuggestionView.swift */; };
 		12D74B921A6859FA006CE23D /* UASuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12D74B911A6859FA006CE23D /* UASuggestionView.xib */; };
 		12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12D8BB161ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld */; };
@@ -196,7 +196,7 @@
 		12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACellObject.swift; path = Models/UACellObject.swift; sourceTree = "<group>"; };
 		12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectNewsCell.swift; path = Views/Cells/UAProjectNewsCell.swift; sourceTree = "<group>"; };
 		12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAProjectNewsCell.xib; path = Views/Cells/UAProjectNewsCell.xib; sourceTree = "<group>"; };
-		12D11BF71AD469F000CC19EF /* UIView+RoundCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RoundCorners.swift"; sourceTree = "<group>"; };
+		12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		12D74B8F1A685951006CE23D /* UASuggestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionView.swift; path = Views/Views/UASuggestionView.swift; sourceTree = "<group>"; };
 		12D74B911A6859FA006CE23D /* UASuggestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionView.xib; path = Views/Views/UASuggestionView.xib; sourceTree = "<group>"; };
 		12D8BB171ABA0F5F00E3DC0D /* UnserAller.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UnserAller.xcdatamodel; sourceTree = "<group>"; };
@@ -316,7 +316,7 @@
 				D5D9E65719E158AE00537FBD /* Keychain */,
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
 				129CD1351A6140D400434D67 /* UALabel.swift */,
-				12D11BF71AD469F000CC19EF /* UIView+RoundCorners.swift */,
+				12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */,
 				1216E5C81B1B4182004D8F22 /* StringExtensions.swift */,
 				1216E5CA1B1B444B004D8F22 /* NSDateExtensions.swift */,
 			);
@@ -781,7 +781,7 @@
 				12C528A41A0FD9A100B8A50C /* UAProject.swift in Sources */,
 				1241E3DD1A646E240068678D /* UASuggestionVoteImageCell.swift in Sources */,
 				D529166B197C2B5C0038A048 /* UAUser.swift in Sources */,
-				12D11BF81AD469F000CC19EF /* UIView+RoundCorners.swift in Sources */,
+				12D11BF81AD469F000CC19EF /* UIViewExtensions.swift in Sources */,
 				D584D596197C47E000E1CAB3 /* HomeViewController.swift in Sources */,
 				12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */,
 				D511715519E034F8007675EE /* MenuTableViewController.swift in Sources */,

@@ -675,6 +675,12 @@
                                                 <constraint firstAttribute="height" constant="188" id="hyZ-4u-JLU"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qa7-Nr-YKA" userLabel="project name bg">
+                                            <rect key="frame" x="0.0" y="113" width="320" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="70" id="pub-t8-UOr"/>
+                                            </constraints>
+                                        </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Osf-dJ-ebr" userLabel="contentLabel">
                                             <rect key="frame" x="8" y="243" width="304" height="18"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -686,8 +692,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="SNM-F7-10N"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jz-6A-k5C" userLabel="companyBtn">
@@ -695,8 +701,10 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="yaZ-aB-bMM"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                             <state key="normal" title="Button">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="titleColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="showCompanyView:" destination="EC2-4E-ZyR" eventType="touchUpInside" id="Mm9-wn-aR9"/>
@@ -774,13 +782,16 @@
                                         <constraint firstItem="7jz-6A-k5C" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="6" id="6u7-n8-sY1"/>
                                         <constraint firstAttribute="bottom" secondItem="KnH-1u-zml" secondAttribute="bottom" constant="8" id="8p4-d2-bUF"/>
                                         <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="7jz-6A-k5C" secondAttribute="bottom" constant="2" id="BVA-NS-9on"/>
+                                        <constraint firstItem="Qa7-Nr-YKA" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" id="DVW-d6-EMT"/>
                                         <constraint firstAttribute="trailing" secondItem="KnH-1u-zml" secondAttribute="trailing" constant="8" id="Fg8-Ez-xkJ"/>
                                         <constraint firstItem="fHv-ei-JvJ" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="6" id="Gop-ml-n9h"/>
                                         <constraint firstItem="yiV-y2-if2" firstAttribute="top" secondItem="F7Q-uU-R9a" secondAttribute="top" id="Het-4i-b9W"/>
+                                        <constraint firstAttribute="trailing" secondItem="Qa7-Nr-YKA" secondAttribute="trailing" id="KGv-Sq-5bu"/>
                                         <constraint firstItem="vvz-i0-f9K" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="8" id="OUg-kg-fjT"/>
                                         <constraint firstItem="vvz-i0-f9K" firstAttribute="top" secondItem="F7Q-uU-R9a" secondAttribute="top" constant="138" id="RGb-vD-Zr6"/>
                                         <constraint firstItem="KnH-1u-zml" firstAttribute="leading" secondItem="thT-23-O4e" secondAttribute="trailing" constant="8" id="SWc-4Z-kJI"/>
                                         <constraint firstAttribute="bottom" secondItem="fHv-ei-JvJ" secondAttribute="bottom" constant="8" id="TIf-nC-Hq8"/>
+                                        <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="Qa7-Nr-YKA" secondAttribute="bottom" constant="2" id="TMh-gf-FTj"/>
                                         <constraint firstAttribute="bottom" secondItem="thT-23-O4e" secondAttribute="bottom" constant="9" id="Tcs-lv-x55"/>
                                         <constraint firstItem="Osf-dJ-ebr" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="8" id="UZn-PR-wz2"/>
                                         <constraint firstAttribute="trailing" secondItem="xCP-H7-6W4" secondAttribute="trailing" id="WUK-bp-ywt"/>
@@ -818,6 +829,7 @@
                         <outlet property="projectCompanyName" destination="7jz-6A-k5C" id="6Nd-8G-Whd"/>
                         <outlet property="projectImage" destination="yiV-y2-if2" id="qeW-Pp-eaa"/>
                         <outlet property="projectName" destination="vvz-i0-f9K" id="TCx-ka-KeK"/>
+                        <outlet property="projectNameBackground" destination="Qa7-Nr-YKA" id="DpE-EI-EqJ"/>
                         <outlet property="sendSuggestionBtn" destination="KnH-1u-zml" id="NKi-5g-BQq"/>
                         <outlet property="sendSuggestionInput" destination="fHv-ei-JvJ" id="FGO-Wl-KcX"/>
                         <outlet property="tableHeader" destination="F7Q-uU-R9a" id="Wcd-zw-dLx"/>

@@ -31,6 +31,7 @@ class ProjectViewController:
     @IBOutlet weak var phaseContent: UILabel!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var bookmarkImage: UIImageView!
+    @IBOutlet weak var projectNameBackground: UIView!
 
     var project: UAProject!
     var projectId: UInt = 0
@@ -100,6 +101,10 @@ class ProjectViewController:
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
+        
+        
+        ///
+        self.projectNameBackground.layerGradient(UIColor.clearColor(), color2: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1), color3: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2), color4: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25))
     }
     
     /**
@@ -599,7 +604,7 @@ class ProjectViewController:
         self.projectName.text = self.project.name
         self.navigationItem.title = self.project.name
         
-        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/api/v1/media/project/\(self.project.id)/width/320/height/188")!)
 
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
@@ -763,7 +768,7 @@ class ProjectViewController:
         Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     // print error
                     println("Load project news error")
                     println(errors)

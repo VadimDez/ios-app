@@ -124,9 +124,9 @@ class UAProjectViewModel: NSObject {
         project.name = json["name"] as? String
         
         // set image hash
-        if let img = json["image"] as? String {
-            project.imageHash = img
-        }
+//        if let img = json["image"] as? String {
+//            project.imageHash = img
+//        }
         
         // set bookmarked value
         project.bookmarked = ((json["bookmarked"] as? Int) == 1)
