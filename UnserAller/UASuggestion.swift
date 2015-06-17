@@ -42,6 +42,7 @@ class UASuggestion: UACellObject {
 //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content as String
+            self.content = self.content.stripHTML()
         }
 
         // set project id
@@ -134,6 +135,7 @@ class UASuggestion: UACellObject {
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content as String
+            self.content = self.content.stripHTML()
         }
         
         // set user id
@@ -195,6 +197,7 @@ class UASuggestion: UACellObject {
         }
         
         self.content = articleContent
+        self.content = self.content.stripHTML()
 
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
@@ -216,6 +219,7 @@ class UASuggestion: UACellObject {
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content as String
+            self.content = self.content.stripHTML()
         }
         
         // set project id
@@ -253,6 +257,7 @@ class UASuggestion: UACellObject {
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content as String
+            self.content = self.content.stripHTML()
         }
         
         // set project id
@@ -347,6 +352,7 @@ class UASuggestion: UACellObject {
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
             self.content = content as String
+            self.content = self.content.stripHTML()
         }
         
         // set project id
@@ -412,6 +418,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -471,6 +478,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -527,6 +535,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -591,6 +600,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -644,6 +654,7 @@ class UASuggestion: UACellObject {
         // content
         if let content = jsonObject.objectForKey("content") as? String {
             self.content = content
+            self.content = self.content.stripHTML()
         }
         
         self.cellType = "NewsCell"
@@ -672,6 +683,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -727,6 +739,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -779,6 +792,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -838,6 +852,7 @@ class UASuggestion: UACellObject {
             
             // set content
             self.content = suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
@@ -891,6 +906,7 @@ class UASuggestion: UACellObject {
             }
             
             self.content = _suggestion["content"] as! String
+            self.content = self.content.stripHTML()
             
             if let _media = _suggestion["mediaSuggestion"] as? [Dictionary<String, String>] {
                 self.addMediaToSuggestionWithJSON(_media)
@@ -948,6 +964,7 @@ class UASuggestion: UACellObject {
         
         // set content
         self.content = jsonObject.objectForKey("content") as! String
+        self.content = self.content.stripHTML()
         
         // set updated
         self.updated = (jsonObject.objectForKey("updated") as! String).getDateFromLongString()
@@ -985,6 +1002,7 @@ class UASuggestion: UACellObject {
         
         // set content
         self.content = jsonObject.objectForKey("content") as! String
+        self.content = self.content.stripHTML()
         
         // set updated
         self.updated = (jsonObject.objectForKey("created") as! String).getDateFromLongString()

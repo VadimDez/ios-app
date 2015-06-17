@@ -29,4 +29,12 @@ extension String {
         
         return formatter.dateFromString(self)!
     }
+    
+    
+    func stripHTML() -> String {
+        // title
+        var str = self.stringByReplacingOccurrencesOfString("</h3>", withString: " ", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        // rest
+        return str.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+    }
 }
