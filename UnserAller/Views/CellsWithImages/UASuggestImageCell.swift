@@ -80,6 +80,8 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         
 //        [_collectionView setContentOffset:CGPointZero animated:NO];
 //        [_collectionView reloadData];
+        self.imageCollectionView.reloadData()
+        
     }
     
     
@@ -97,8 +99,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         self.commentLabel.text  = "\(suggestion.commentCount)"
         self.medias             = suggestion.media
         self.dateLabel?.text    = suggestion.updated.getStringFromDate()
-        
-        
+
         // if liked - tint heart
         if (suggestion.userVotes > 0) {
             self.likeImage.image = UIImage(named: "heart_red")
@@ -120,6 +121,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         
         //        [_collectionView setContentOffset:CGPointZero animated:NO];
         //        [_collectionView reloadData];
+        self.imageCollectionView.reloadData()
     }
 
     // MARK: - Collection view
@@ -142,4 +144,8 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
 
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
     }
+    
+//    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+//        return !touch.view.isKindOfClass(UICollectionView)
+//    }
 }

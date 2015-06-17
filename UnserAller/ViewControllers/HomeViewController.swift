@@ -247,26 +247,30 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-            let base: CGFloat = 95.0
-
-            // count text
-            var frame: CGRect = CGRect()
-            frame.size.width = self.mainTable.frame.width - 20
-            frame.size.height = CGFloat(MAXFLOAT)
-            var label: UILabel = UILabel(frame: frame)
-            
-            label.text = entries[indexPath.row].content
-            label.font = UIFont(name: "Helvetica Neue", size: 13)
-            label.numberOfLines = 0
-            label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-            label.sizeToFit()
-            
-            var media:CGFloat = 0.0
-            if (entries[indexPath.row].media.count > 0) {
-                media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
-            }
+        let base: CGFloat = 95.0
         
-            return base + label.frame.size.height + media
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = self.mainTable.frame.width - 20
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = entries[indexPath.row].content
+        label.font = UIFont(name: "Helvetica Neue", size: 13)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+            
+        var media:CGFloat = 0.0
+        if (entries[indexPath.row].media.count > 0) {
+            media = 50.0
+            let mediaCount = entries[indexPath.row].media.count
+            
+            if (mediaCount > 5) {
+                media = media + CGFloat(((mediaCount/5) - 1) * 50)
+            }
+        }
+        return base + label.frame.size.height + media
     }
 
     /**

@@ -676,7 +676,7 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qa7-Nr-YKA" userLabel="project name bg">
-                                            <rect key="frame" x="0.0" y="113" width="320" height="70"/>
+                                            <rect key="frame" x="0.0" y="115" width="320" height="70"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="70" id="pub-t8-UOr"/>
                                             </constraints>
@@ -697,7 +697,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jz-6A-k5C" userLabel="companyBtn">
-                                            <rect key="frame" x="6" y="162" width="197" height="21"/>
+                                            <rect key="frame" x="6" y="160" width="197" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="yaZ-aB-bMM"/>
                                             </constraints>
@@ -781,7 +781,7 @@
                                     <constraints>
                                         <constraint firstItem="7jz-6A-k5C" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="6" id="6u7-n8-sY1"/>
                                         <constraint firstAttribute="bottom" secondItem="KnH-1u-zml" secondAttribute="bottom" constant="8" id="8p4-d2-bUF"/>
-                                        <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="7jz-6A-k5C" secondAttribute="bottom" constant="2" id="BVA-NS-9on"/>
+                                        <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="7jz-6A-k5C" secondAttribute="bottom" constant="4" id="BVA-NS-9on"/>
                                         <constraint firstItem="Qa7-Nr-YKA" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" id="DVW-d6-EMT"/>
                                         <constraint firstAttribute="trailing" secondItem="KnH-1u-zml" secondAttribute="trailing" constant="8" id="Fg8-Ez-xkJ"/>
                                         <constraint firstItem="fHv-ei-JvJ" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="6" id="Gop-ml-n9h"/>
@@ -791,7 +791,7 @@
                                         <constraint firstItem="vvz-i0-f9K" firstAttribute="top" secondItem="F7Q-uU-R9a" secondAttribute="top" constant="138" id="RGb-vD-Zr6"/>
                                         <constraint firstItem="KnH-1u-zml" firstAttribute="leading" secondItem="thT-23-O4e" secondAttribute="trailing" constant="8" id="SWc-4Z-kJI"/>
                                         <constraint firstAttribute="bottom" secondItem="fHv-ei-JvJ" secondAttribute="bottom" constant="8" id="TIf-nC-Hq8"/>
-                                        <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="Qa7-Nr-YKA" secondAttribute="bottom" constant="2" id="TMh-gf-FTj"/>
+                                        <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="Qa7-Nr-YKA" secondAttribute="bottom" id="TMh-gf-FTj"/>
                                         <constraint firstAttribute="bottom" secondItem="thT-23-O4e" secondAttribute="bottom" constant="9" id="Tcs-lv-x55"/>
                                         <constraint firstItem="Osf-dJ-ebr" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="8" id="UZn-PR-wz2"/>
                                         <constraint firstAttribute="trailing" secondItem="xCP-H7-6W4" secondAttribute="trailing" id="WUK-bp-ywt"/>
@@ -799,7 +799,7 @@
                                         <constraint firstItem="xCP-H7-6W4" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" id="c5L-Lj-4Ge"/>
                                         <constraint firstItem="Osf-dJ-ebr" firstAttribute="top" secondItem="xCP-H7-6W4" secondAttribute="bottom" constant="8" id="dKT-ZV-1MK"/>
                                         <constraint firstItem="fHv-ei-JvJ" firstAttribute="top" secondItem="Osf-dJ-ebr" secondAttribute="bottom" constant="4" id="dRp-oG-5rl"/>
-                                        <constraint firstItem="7jz-6A-k5C" firstAttribute="top" secondItem="vvz-i0-f9K" secondAttribute="bottom" constant="3" id="hWm-PH-evx"/>
+                                        <constraint firstItem="7jz-6A-k5C" firstAttribute="top" secondItem="vvz-i0-f9K" secondAttribute="bottom" constant="1" id="hWm-PH-evx"/>
                                         <constraint firstItem="yiV-y2-if2" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" id="hco-1N-09g"/>
                                         <constraint firstAttribute="trailing" secondItem="7jz-6A-k5C" secondAttribute="trailing" constant="117" id="iRz-Sz-rWr"/>
                                         <constraint firstItem="3lz-Xw-0aA" firstAttribute="top" secondItem="F7Q-uU-R9a" secondAttribute="top" id="jce-FE-TuA"/>
@@ -920,7 +920,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y2B-yK-CQ2">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y2B-yK-CQ2">
                                         <rect key="frame" x="8" y="73" width="304" height="399"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ufc-T9-KYQ">
                                             <size key="itemSize" width="50" height="50"/>

@@ -310,13 +310,14 @@ class ProjectViewController:
         }
         
         // get step text
-        var phaseText = ""
+        var phaseText: String = ""
         if let shortText = jsonResponse.objectForKey("shortText") as? String {
             phaseText = "\(shortText)"
         }
         if let text = jsonResponse.objectForKey("text") as? String {
             phaseText = "\(phaseText)\(text)"
         }
+        phaseText = phaseText.html2String()
         
         self.phaseContent.text = phaseText
         self.adjustTableHeader()
@@ -538,6 +539,7 @@ class ProjectViewController:
      * did select
      */
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
         if (indexPath.row == 0) {
             // news
             self.news = true
@@ -555,11 +557,12 @@ class ProjectViewController:
             // set active phase id
             self.actualPhaseId = self.phasesArray[indexPath.row - 1].id
             
+            self.entries = []
+            self.mainTable.reloadData()
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                 self.updatePhase(jsonResponse, success: { () -> Void in
-                    
-                    self.entries = []
+
                     self.loadSuggestions({ () -> Void in
                         
                         }, failure: { () -> Void in
@@ -743,10 +746,11 @@ class ProjectViewController:
                 } else {
                     let suggestionVM = UASuggestionViewModel()
                     self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as! [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
-                    
+
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
+                    println("HERE?")
+                    println(self.entries.count)
                     // reload table data
                     self.mainTable.reloadData()
                     
