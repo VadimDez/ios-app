@@ -54,14 +54,19 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     }
     
     func registerNibs() {
+        // suggest
         var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
+        // suggest with image
         var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
+        // news
         var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
+        // suggestion vote
         var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
+        // suggestion vote with image
         var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
     }
@@ -246,7 +251,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
             // count text
             var frame: CGRect = CGRect()
-            frame.size.width = self.mainTable.frame.width
+            frame.size.width = self.mainTable.frame.width - 20
             frame.size.height = CGFloat(MAXFLOAT)
             var label: UILabel = UILabel(frame: frame)
             
