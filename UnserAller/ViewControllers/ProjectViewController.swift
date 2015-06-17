@@ -466,7 +466,11 @@ class ProjectViewController:
         
         var media:CGFloat = 0.0
         if (self.entries[indexPath.row].media.count > 0) {
-            media = 50.0 + CGFloat((self.entries[indexPath.row].media.count/5) * 50)
+            media = 50.0
+            let mediaCount = self.entries[indexPath.row].media.count
+            if (mediaCount > 5) {
+                media = media + CGFloat((mediaCount / 5) * 50)
+            }
         }
         
         return base + label.frame.size.height + media

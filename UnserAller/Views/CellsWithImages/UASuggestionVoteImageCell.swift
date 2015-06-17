@@ -49,6 +49,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
+        self.imageCollectionView.reloadData()
     }
     
     func setCellForPhase(suggestion: UASuggestion) {
@@ -65,6 +66,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         self.secondaryImage.backgroundColor = UIColor.clearColor()
+        self.imageCollectionView.reloadData()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -267,7 +267,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             let mediaCount = entries[indexPath.row].media.count
             
             if (mediaCount > 5) {
-                media = media + CGFloat(((mediaCount/5) - 1) * 50)
+                media = media + CGFloat((mediaCount / 5) * 50)
             }
         }
         return base + label.frame.size.height + media

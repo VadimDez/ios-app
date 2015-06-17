@@ -39,6 +39,24 @@ extension String {
     }
     
     func html2String() -> String {
+//        var html = self
+//        
+//        // Replace newline character by HTML line break
+//        while let range = html.rangeOfString("\n") {
+//            html.replaceRange(range, with: "<br />")
+//        }
+//        
+//        // Embed in a <span> for font attributes:
+//        html = "<span style=\"font-family: Helvetica; font-size:14pt;\">" + html + "</span>"
+//        
+//        let data = html.dataUsingEncoding(NSUnicodeStringEncoding, allowLossyConversion: true)!
+//        let attrStr = NSAttributedString(
+//            data: data,
+//            options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+//            documentAttributes: nil,
+//            error: nil)!
+//        return attrStr.string
+        
         return NSAttributedString(data: self.dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil, error: nil)!.string
     }
     var html2NSAttributedString:NSAttributedString {
