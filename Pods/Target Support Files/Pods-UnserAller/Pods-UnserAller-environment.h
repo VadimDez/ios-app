@@ -58,7 +58,7 @@
 #define COCOAPODS_POD_AVAILABLE_Alamofire
 #define COCOAPODS_VERSION_MAJOR_Alamofire 1
 #define COCOAPODS_VERSION_MINOR_Alamofire 2
-#define COCOAPODS_VERSION_PATCH_Alamofire 2
+#define COCOAPODS_VERSION_PATCH_Alamofire 3
 
 // Canvas
 #define COCOAPODS_POD_AVAILABLE_Canvas
@@ -112,7 +112,7 @@
 #define COCOAPODS_POD_AVAILABLE_TTTAttributedLabel
 #define COCOAPODS_VERSION_MAJOR_TTTAttributedLabel 1
 #define COCOAPODS_VERSION_MINOR_TTTAttributedLabel 13
-#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 3
+#define COCOAPODS_VERSION_PATCH_TTTAttributedLabel 4
 
 // pop
 #define COCOAPODS_POD_AVAILABLE_pop
