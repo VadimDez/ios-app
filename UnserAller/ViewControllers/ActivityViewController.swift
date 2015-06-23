@@ -115,12 +115,24 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     func getSuggestCellForActivity(suggestion: UASuggestion) -> UASuggestionCell {
         var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentProjectViewController(suggestion.projectId)
+        }
         return cell
     }
         
     func getSuggestImageCellForActivity(suggestion: UASuggestion) -> UASuggestImageCell {
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentProjectViewController(suggestion.projectId)
+        }
         return cell
     }
     
@@ -130,6 +142,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         cell.ratingView.editable = false
         cell.ratingView.tag = row
         cell.setCellForActivity(self.entries[row])
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentProjectViewController(self.entries[row].projectId)
+        }
         return cell
     }
     
@@ -139,6 +157,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         cell.ratingView.editable = false
         cell.ratingView.tag = row
         cell.setCellForHome(self.entries[row])
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            self.presentProjectViewController(self.entries[row].projectId)
+        }
         return cell
     }
     
@@ -262,5 +286,17 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
 //                    self.votingDisabled = false
 //            }
         }
+    }
+    
+    /**
+    *   Present project view controller
+    */
+    func presentProjectViewController(projectId: UInt) {
+        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+        
+        // set project id
+        projectVC.projectId = projectId
+        
+        self.navigationController?.pushViewController(projectVC, animated: true)
     }
 }

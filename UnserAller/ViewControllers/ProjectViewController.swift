@@ -754,8 +754,7 @@ class ProjectViewController:
 
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    println("HERE?")
-                    println(self.entries.count)
+                    
                     // reload table data
                     self.mainTable.reloadData()
                     
