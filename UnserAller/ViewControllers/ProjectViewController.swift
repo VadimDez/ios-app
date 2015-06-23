@@ -44,6 +44,7 @@ class ProjectViewController:
     var active: Bool = false
     var news = false
     var votingDisabled = false
+    var newsPhaseCount = 0
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,35 +58,37 @@ class ProjectViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setDelegates()
         // nib
         self.registerNibs()
         
         self.configureLayout()
         
-        
         self.startLoad { () -> Void in
+            // set news to 1
+            self.newsPhaseCount = 1
+            // reload collection
+            self.phaseCollection.reloadData()
+            
             // check if there's at least one phase
             if (self.phasesArray.count > 0) {
-                // reload collection
-                self.phaseCollection.reloadData()
-
+                
                 // set first phase as actial one
                 self.actualPhaseId = self.phasesArray[0].id
-
+                
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-
+                    
                     self.updatePhase(jsonResponse, success: { () -> Void in
-
+                        
                         self.entries = []
                         self.loadSuggestions({ () -> Void in
-
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             }, failure: { () -> Void in
-
+                                
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
@@ -476,9 +479,7 @@ class ProjectViewController:
         return base + label.frame.size.height + media
     }
     
-    /**
-     * Collection view delegates
-     */
+    // MARK: Collection view delegates
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0, 0, 0)
     }
@@ -510,7 +511,7 @@ class ProjectViewController:
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // +1 for "NEWS"
-        return phasesArray.count + 1
+        return phasesArray.count + self.newsPhaseCount
     }
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
