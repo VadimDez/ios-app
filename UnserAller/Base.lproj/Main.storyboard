@@ -1226,6 +1226,7 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Obb-cg-gEr" userLabel="backgroundImage">
                                             <rect key="frame" x="0.0" y="-24" width="320" height="235"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpF-NT-xQE">
                                             <rect key="frame" x="8" y="10" width="28" height="22"/>
