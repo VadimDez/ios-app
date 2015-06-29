@@ -12,6 +12,7 @@ import Alamofire
 class UASuggestionHeaderView: UIView {
     
     @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var secondaryImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
@@ -63,13 +64,34 @@ class UASuggestionHeaderView: UIView {
         imageLayer.masksToBounds = true
     }
     
+    /**
+    Load profileImage
+    
+    :param: hash   String
+    :param: width  Uint
+    :param: height Uint
+    */
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
-        // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")!)
-        self.mainImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-            if let weakSelf = self {
-                weakSelf.mainImage.image = image
-            }
+        self.loadImage(self.mainImage, url: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
+    }
+    
+    /**
+    Load project image
+    
+    :param: hash   String
+    :param: width  Uint
+    :param: height Uint
+    */
+    func loadProjectImage(projectId: UInt, width: UInt, height: UInt) {
+        self.loadImage(self.secondaryImage, url: "\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
+    }
+    
+    func loadImage(imageView: UIImageView, url: String) {
+        let request = NSURLRequest(URL: NSURL(string: url)!)
+        
+        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            
+            imageView.image = image
             }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }

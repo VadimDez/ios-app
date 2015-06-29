@@ -36,6 +36,7 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
+        self.loadProjectImage(suggestion.projectId, width: 10, height: 20)
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self

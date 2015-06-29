@@ -59,6 +59,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
+        
+        // disable "over" scroll
+        self.mainTable.bounces = false
+        
         self.registerNibs()
         self.navigationBar()
         self.setInformationCell()
@@ -636,6 +640,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Scroll
 //    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y < 0) {
+//            self.mainTable.scrollEnabled = false
+//        } else {
+//            self.mainTable.scrollEnabled = true
+//        }
+        
 //        if (scrollView.contentOffset.y < -20.0) {
 //            println(scrollView.contentOffset.y)
 //            var frame = CGRect(x: 0, y: 0, width: self.backgroundImage.frame.width, height: self.backgroundImage.frame.height + abs(scrollView.contentOffset.y))

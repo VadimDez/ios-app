@@ -40,6 +40,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
+        self.loadProjectImage(suggestion.projectId, width: 10, height: 20)
         
         // clear color
         self.imageCollectionView.backgroundColor = UIColor.clearColor()

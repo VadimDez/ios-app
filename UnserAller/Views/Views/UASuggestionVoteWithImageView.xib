@@ -211,6 +211,7 @@
                 <outlet property="newCommentButton" destination="3Dc-FB-wOA" id="ONB-Bk-uSK"/>
                 <outlet property="newCommentInput" destination="6zw-WP-iXh" id="19e-jo-pZe"/>
                 <outlet property="ratingView" destination="dRy-U5-e43" id="lPy-UX-W0A"/>
+                <outlet property="secondaryImage" destination="SGn-7u-WKD" id="xUE-LK-f7e"/>
                 <outlet property="sendNewCommentButton" destination="qdF-OD-j1L" id="NyU-OU-NFW"/>
                 <outlet property="subtitleLabel" destination="tYE-qj-pFR" id="5XZ-Lw-tk7"/>
                 <outlet property="titleLabel" destination="huc-jX-LR5" id="6D9-ta-aBs"/>
