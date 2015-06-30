@@ -15,7 +15,8 @@ class UASuggestionView: UASuggestionHeaderView {
         self.suggestion = suggestion
         
         self.titleLabel.text    = suggestion.userName
-        self.subtitleLabel.text = suggestion.projectName
+        self.projectButton.setTitle(suggestion.projectName, forState: UIControlState.Normal)
+//        self.subtitleLabel.text = suggestion.projectName
         self.contentLabel.text  = suggestion.content
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"

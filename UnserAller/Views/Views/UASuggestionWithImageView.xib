@@ -33,15 +33,6 @@
                         <constraint firstAttribute="width" constant="20" id="tfR-hf-StO"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWg-tZ-AfQ" userLabel="subtitleLabel">
-                    <rect key="frame" x="75" y="24" width="223" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="BLL-QO-tre"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Re-L3-g1q" userLabel="contentLabel">
                     <rect key="frame" x="5" y="49" width="290" height="16"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
@@ -148,27 +139,39 @@
                         <constraint firstAttribute="height" constant="15" id="uCM-kt-QC7"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvW-yM-wcm">
+                    <rect key="frame" x="75" y="24" width="220" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="eYs-9c-pCD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                    <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="gvW-yM-wcm" secondAttribute="trailing" constant="5" id="3cz-7Z-jZJ"/>
                 <constraint firstItem="Ied-eX-vTv" firstAttribute="leading" secondItem="Wb0-8e-5nj" secondAttribute="trailing" id="4vC-mC-7Ow"/>
                 <constraint firstItem="Fkp-4a-1Dv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="ALH-wQ-8Ha"/>
-                <constraint firstItem="pWg-tZ-AfQ" firstAttribute="top" secondItem="34s-iJ-0Rb" secondAttribute="bottom" constant="3" id="ASk-Kc-gCe"/>
                 <constraint firstItem="87y-Kd-foK" firstAttribute="leading" secondItem="qRD-8I-Mgc" secondAttribute="trailing" constant="15" id="B5k-yI-0RA"/>
                 <constraint firstItem="oa6-14-mOR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="BaJ-yF-HQU"/>
-                <constraint firstItem="pWg-tZ-AfQ" firstAttribute="leading" secondItem="4N2-zD-8V2" secondAttribute="trailing" constant="5" id="Cgi-n2-yLg"/>
                 <constraint firstItem="qhG-Ve-uf0" firstAttribute="leading" secondItem="pko-Uu-qLi" secondAttribute="trailing" constant="8" id="Dyx-bk-NNO"/>
                 <constraint firstItem="3Re-L3-g1q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="ESh-PK-3CQ"/>
                 <constraint firstAttribute="bottom" secondItem="Ied-eX-vTv" secondAttribute="bottom" constant="33" id="GCe-6E-A6F"/>
                 <constraint firstItem="87y-Kd-foK" firstAttribute="top" secondItem="Og0-cd-rLX" secondAttribute="bottom" constant="1" id="ISR-vG-Iag"/>
-                <constraint firstAttribute="trailing" secondItem="pWg-tZ-AfQ" secondAttribute="trailing" constant="2" id="Jsb-w7-wl9"/>
                 <constraint firstItem="4N2-zD-8V2" firstAttribute="leading" secondItem="Fkp-4a-1Dv" secondAttribute="trailing" constant="5" id="MWC-wc-nIS"/>
                 <constraint firstItem="Wb0-8e-5nj" firstAttribute="leading" secondItem="pko-Uu-qLi" secondAttribute="trailing" constant="6" id="Nhg-Tg-7Hh"/>
                 <constraint firstAttribute="trailing" secondItem="qhG-Ve-uf0" secondAttribute="trailing" id="OQD-rL-SNZ"/>
+                <constraint firstItem="gvW-yM-wcm" firstAttribute="top" secondItem="34s-iJ-0Rb" secondAttribute="bottom" constant="3" id="PB4-5c-bcE"/>
                 <constraint firstItem="qRD-8I-Mgc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="RWJ-pn-eUq"/>
                 <constraint firstItem="oa6-14-mOR" firstAttribute="top" secondItem="CjV-jP-e3u" secondAttribute="bottom" constant="4" id="SK7-LG-Zp2"/>
                 <constraint firstAttribute="trailing" secondItem="3Re-L3-g1q" secondAttribute="trailing" constant="5" id="U8A-mn-MlO"/>
                 <constraint firstAttribute="trailing" secondItem="CjV-jP-e3u" secondAttribute="trailing" constant="5" id="Us4-bT-X7K"/>
+                <constraint firstItem="gvW-yM-wcm" firstAttribute="leading" secondItem="4N2-zD-8V2" secondAttribute="trailing" constant="5" id="WcO-9O-egZ"/>
                 <constraint firstItem="34s-iJ-0Rb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="Wpw-Ym-RVV"/>
                 <constraint firstItem="CjV-jP-e3u" firstAttribute="top" secondItem="3Re-L3-g1q" secondAttribute="bottom" constant="3" id="X16-dN-xeE"/>
                 <constraint firstAttribute="bottom" secondItem="2TE-MG-Lg7" secondAttribute="bottom" constant="1" id="XMT-Hh-49Y"/>
@@ -187,7 +190,7 @@
                 <constraint firstAttribute="trailing" secondItem="87y-Kd-foK" secondAttribute="trailing" constant="5" id="k7R-Of-TkG"/>
                 <constraint firstItem="34s-iJ-0Rb" firstAttribute="leading" secondItem="Fkp-4a-1Dv" secondAttribute="trailing" constant="5" id="kPt-Oe-bBF"/>
                 <constraint firstItem="Fkp-4a-1Dv" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="liA-kU-pZ6"/>
-                <constraint firstItem="3Re-L3-g1q" firstAttribute="top" secondItem="pWg-tZ-AfQ" secondAttribute="bottom" constant="4" id="nGB-LF-6a4"/>
+                <constraint firstItem="3Re-L3-g1q" firstAttribute="top" secondItem="4N2-zD-8V2" secondAttribute="bottom" constant="4" id="m1k-y7-zxW"/>
                 <constraint firstAttribute="bottom" secondItem="pko-Uu-qLi" secondAttribute="bottom" constant="33" id="np0-3o-vrq"/>
                 <constraint firstAttribute="trailing" secondItem="34s-iJ-0Rb" secondAttribute="trailing" constant="42" id="qqk-j8-zKR"/>
                 <constraint firstAttribute="bottom" secondItem="qhG-Ve-uf0" secondAttribute="bottom" constant="29" id="uxh-of-WKS"/>
@@ -212,9 +215,9 @@
                 <outlet property="mainImage" destination="Fkp-4a-1Dv" id="rtK-dU-D7D"/>
                 <outlet property="newCommentButton" destination="2TE-MG-Lg7" id="bbt-1Z-H28"/>
                 <outlet property="newCommentInput" destination="qRD-8I-Mgc" id="Gys-Hc-0vO"/>
+                <outlet property="projectButton" destination="gvW-yM-wcm" id="0Bs-xx-fqa"/>
                 <outlet property="secondaryImage" destination="4N2-zD-8V2" id="pdL-9C-Brw"/>
                 <outlet property="sendNewCommentButton" destination="87y-Kd-foK" id="E4O-vE-Buw"/>
-                <outlet property="subtitleLabel" destination="pWg-tZ-AfQ" id="tKs-W1-fTu"/>
                 <outlet property="titleLabel" destination="34s-iJ-0Rb" id="atR-8s-xyb"/>
             </connections>
             <point key="canvasLocation" x="203" y="141"/>

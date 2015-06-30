@@ -14,11 +14,11 @@ class UASuggestionHeaderView: UIView {
     @IBOutlet weak var mainImage: UIImageView!
     @IBOutlet weak var secondaryImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var projectButton: UIButton!
     
     var suggestion: UASuggestion!
     

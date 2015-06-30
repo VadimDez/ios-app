@@ -218,6 +218,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
         
         return suggestionView
@@ -235,6 +236,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
         
         return suggestionView
@@ -253,6 +255,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.frame.size.height = self.calculateHeaderHeight(110.0)
         
         return suggestionView
@@ -271,6 +274,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
+        suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.frame.size.height = self.calculateHeaderHeight(105.0)
         
         return suggestionView
@@ -408,6 +412,16 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         }) { () -> () in
             
         }
+    }
+    
+    
+    @IBAction func openProject(sender: AnyObject) {
+        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+        
+        // set project id
+        projectVC.projectId = self.suggestion.projectId
+        
+        self.navigationController?.pushViewController(projectVC, animated: true)
     }
     
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
