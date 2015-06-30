@@ -160,7 +160,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func loadComments(success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "http://\(APIURL)/api/mobile/comment/suggestion"
+        var url: String = "\(APIURL)/api/mobile/comment/suggestion"
         
         Alamofire.request(.GET, url, parameters: ["id": self.suggestion.suggestionId])
             .responseJSON { (_,_,JSON,errors) in

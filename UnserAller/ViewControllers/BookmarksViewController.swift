@@ -26,7 +26,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         
         var UABookmarkCellNib = UINib(nibName: "UABookmarkCell", bundle: nil)
         
-        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
+        self.registerNibs();
         
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -34,6 +34,13 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         self.mainTable.triggerInfiniteScrolling()
+    }
+    
+    func registerNibs() {
+//        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
+        
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +77,50 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
 //        
 //        return cell!
         
-        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as! UABookmarkCell
+        
+        // bookmark
+//        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as! UABookmarkCell
+//        
+//        cell.setCell(self.entries[indexPath.row])
+//        
+//        return cell
+        
+        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         
         cell.setCell(self.entries[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let base: CGFloat = 169.0
+        var companyNameHeight: CGFloat = 0.0
+        let projectNameHeight = self.getTextHeight(self.entries[indexPath.row].name, width: 288, fontSize: 17.0, fontName: "Helvetica Neue")
+        
+        if let companyName = self.entries[indexPath.row].company!.name {
+            companyNameHeight = self.getTextHeight(companyName, width: 288, fontSize: 14.0, fontName: "Helvetica Neue Thin")
+        }
+        
+        return base + projectNameHeight + companyNameHeight
+        
+        //        return 206
+    }
+    
+    func getTextHeight(string: String, width: CGFloat, fontSize: CGFloat, fontName: String) -> CGFloat {
+        // count text
+        var frame: CGRect = CGRect()
+        frame.size.width = width
+        frame.size.height = CGFloat(MAXFLOAT)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = string
+        label.font = UIFont(name: fontName, size: fontSize)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        return label.frame.size.height
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,6 +132,13 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+        
+        // set project id
+        projectVC.projectId = self.entries[indexPath.row].id
+        
+        self.navigationController?.pushViewController(projectVC, animated: true)
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
