@@ -578,45 +578,45 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // Call this method somewhere in your view controller setup code.
     func registerForKeyboardNotifications() {
         let notificationCenter = NSNotificationCenter.defaultCenter()
-        notificationCenter.addObserver(self,
-            selector: "keyboardWillBeShown:",
-            name: UIKeyboardWillShowNotification,
-            object: nil)
-        notificationCenter.addObserver(self,
-            selector: "keyboardWillBeHidden:",
-            name: UIKeyboardWillHideNotification,
-            object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillBeShown:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillBeHidden:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     // Called when the UIKeyboardDidShowNotification is sent.
     func keyboardWillBeShown(sender: NSNotification) {
-        let info: NSDictionary = sender.userInfo!
-        let value: NSValue = info.valueForKey(UIKeyboardFrameBeginUserInfoKey) as! NSValue
-        let keyboardSize: CGSize = value.CGRectValue().size
-        let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
-//        scrollView.contentInset = contentInsets
-//        scrollView.scrollIndicatorInsets = contentInsets
-        
+        if let userInfo: NSDictionary = sender.userInfo {
+            let value: NSValue = userInfo.valueForKey(UIKeyboardFrameBeginUserInfoKey) as! NSValue
+            let keyboardSize: CGSize = value.CGRectValue().size
+            let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0)
+    //        scrollView.contentInset = contentInsets
+    //        scrollView.scrollIndicatorInsets = contentInsets
             
-        self.mainTable.contentInset = contentInsets
-        self.mainTable.scrollIndicatorInsets = contentInsets
-        
-        // If active text field is hidden by keyboard, scroll it so it's visible
-        // Your app might not need or want this behavior.
-        var aRect: CGRect = self.view.frame
-        aRect.size.height -= keyboardSize.height
-        let activeTextFieldRect: CGRect? = activeTextField?.frame
-        if let activeTextFieldOrigin: CGPoint? = activeTextFieldRect?.origin {
-            if (!CGRectContainsPoint(aRect, activeTextFieldOrigin!)) {
-//              scrollView.scrollRectToVisible(activeTextFieldRect!, animated:true)
-                self.mainTable.scrollRectToVisible(activeTextFieldRect!, animated:true)
+                
+            self.mainTable.contentInset = contentInsets
+            self.mainTable.scrollIndicatorInsets = contentInsets
+            
+            // If active text field is hidden by keyboard, scroll it so it's visible
+            // Your app might not need or want this behavior.
+            var aRect: CGRect = self.view.frame
+            aRect.size.height -= keyboardSize.height
+            
+            if (activeTextField != nil) {
+                let activeTextFieldRect: CGRect = CGRect(x: activeTextField.frame.origin.x, y: activeTextField.frame.origin.y + 300, width: activeTextField.frame.width, height: activeTextField.frame.height)
+                
+    //            if let activeTextFieldOrigin: CGPoint = activeTextFieldRect.origin {
+                    if (!CGRectContainsPoint(aRect, activeTextFieldRect.origin)) {
+        //              scrollView.scrollRectToVisible(activeTextFieldRect!, animated:true)
+                        self.mainTable.scrollRectToVisible(activeTextFieldRect, animated:true)
+                    }
+    //            }
             }
         }
     }
     
     // Called when the UIKeyboardWillHideNotification is sent
     func keyboardWillBeHidden(sender: NSNotification) {
-        let contentInsets: UIEdgeInsets = UIEdgeInsetsZero
+        let contentInsets: UIEdgeInsets = UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0)
+
 //        scrollView.contentInset = contentInsets
 //        scrollView.scrollIndicatorInsets = contentInsets
         
