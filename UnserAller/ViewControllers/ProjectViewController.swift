@@ -455,18 +455,6 @@ class ProjectViewController:
             return base
         }
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = 290
-        frame.size.height = CGFloat(MAXFLOAT)
-        
-        var label: UILabel = UILabel(frame: frame)
-        label.text = self.entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
         var media:CGFloat = 0.0
         if (self.entries[indexPath.row].media.count > 0) {
             media = 50.0
@@ -476,7 +464,7 @@ class ProjectViewController:
             }
         }
         
-        return base + label.frame.size.height + media
+        return base + self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
     }
     
     // MARK: Collection view delegates
@@ -522,20 +510,7 @@ class ProjectViewController:
         if(indexPath.row == 0) {
             size.width = 70.0
         } else {
-            
-            // count text
-            var frame: CGRect = CGRect()
-            frame.size.height = 17.0
-            frame.size.width = CGFloat(MAXFLOAT)
-            var label: UILabel = UILabel(frame: frame)
-            
-            label.text = self.phasesArray[indexPath.row - 1].name
-            label.font = UIFont(name: "Helvetica Neue", size: 14)
-            label.numberOfLines = 1
-            label.sizeToFit()
-            
-            
-            size.width = 20.0 + label.frame.width;
+            size.width = 20.0 + self.phasesArray[indexPath.row - 1].name.getWidthForView(17.0, font: UIFont(name: "Helvetica Neue", size: 14)!);
         }
         return size;
     }
@@ -709,21 +684,9 @@ class ProjectViewController:
      */
     func adjustTableHeader() {
         var mainFrame = self.mainTable.tableHeaderView?.frame
-
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = self.phaseContent.frame.width
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = self.phaseContent.text
-        label.font = UIFont(name: "Helvetica Neue", size: 15)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
         
         // set frame height
-        mainFrame?.size.height = label.frame.size.height + 290.0
+        mainFrame?.size.height = self.phaseContent.text!.getHeightForView(self.phaseContent.frame.width, font: UIFont(name: "Helvetica Neue", size: 15)!) + 290.0
         self.mainTable.tableHeaderView?.frame = mainFrame!
         self.mainTable.tableHeaderView = self.mainTable.tableHeaderView
     }

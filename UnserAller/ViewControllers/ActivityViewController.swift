@@ -169,24 +169,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 110.0
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = 290
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
         var media:CGFloat = 0.0
         if (entries[indexPath.row].media.count > 0) {
             media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
         }
         
-        return base + label.frame.size.height + media
+        return base + entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
     }
     
     /*

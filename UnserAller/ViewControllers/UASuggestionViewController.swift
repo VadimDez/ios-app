@@ -104,24 +104,12 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 69.0
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = self.tableWidth
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 13)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
         var media:CGFloat = 0.0
         if (entries[indexPath.row].media.count > 0) {
             media = 60.0 + CGFloat((entries[indexPath.row].media.count/5) * 51)
         }
         
-        return base + label.frame.size.height + media
+        return base + entries[indexPath.row].content.getHeightForView(self.tableWidth, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
     
     /**
@@ -288,19 +276,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             media = 50.0 + CGFloat((self.suggestion.media.count/5) * 50) + 10
         }
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = self.mainTable.frame.width - 10
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = self.suggestion.content
-        label.font = UIFont(name: "Helvetica Neue", size: 13)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
-        return base + media + label.frame.size.height
+        return base + media + self.suggestion.content.getHeightForView(self.mainTable.frame.width - 10, font: UIFont(name: "Helvetica Neue", size: 13)!)
     }
     
     // MARK: rating delegates

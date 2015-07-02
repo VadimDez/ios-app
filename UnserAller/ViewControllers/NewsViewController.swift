@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+class NewsViewController: UITableViewController {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -25,7 +25,8 @@ class NewsViewController: UIViewController {
         self.titleLabel.text = "asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd "
         self.contentLabel.text = "asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd "
         
-        self.automaticallyAdjustsScrollViewInsets = false
+//        self.automaticallyAdjustsScrollViewInsets = false
+        self.setHeaderHeight()
     }
     
     
@@ -41,5 +42,19 @@ class NewsViewController: UIViewController {
 //        self.scrollView.frame = CGRect(x: 0, y: 0, width: screen.width, height: 5000)
 //        self.container.frame = CGRect(x: 0, y: 0, width: screen.width, height: 5000)
 //        self.view.frame = CGRect(x: 0, y: 0, width: screen.width, height: 5000)
+    }
+    
+    // MARK: - Table Delegates
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func setHeaderHeight() {
+        let width = self.tableView.tableHeaderView?.frame.size.width
+        self.tableView.tableHeaderView?.frame = CGRect(x: 0.0, y: 0.0, width: width!, height: 1000.0)
+        self.tableView.tableHeaderView = self.tableView.tableHeaderView
     }
 }

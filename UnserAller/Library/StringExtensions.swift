@@ -62,4 +62,32 @@ extension String {
     var html2NSAttributedString:NSAttributedString {
         return NSAttributedString(data: dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil, error: nil)!
     }
+    
+    func getHeightForView(width: CGFloat, font: UIFont) -> CGFloat {
+        // count text
+        var frame: CGRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = self
+        label.font = font
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        return label.frame.size.height
+    }
+    
+    func getWidthForView(height: CGFloat, font: UIFont) -> CGFloat {
+        // count text
+        var frame: CGRect = CGRect(x: 0, y: 0, width: CGFloat(MAXFLOAT), height: height)
+        var label: UILabel = UILabel(frame: frame)
+        
+        label.text = self
+        label.font = font
+        label.numberOfLines = 1
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.sizeToFit()
+        
+        return label.frame.size.width
+    }
 }

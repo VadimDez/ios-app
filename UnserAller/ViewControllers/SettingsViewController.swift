@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.mainTable.dataSource = self
         
         // disable "over" scroll
-        self.mainTable.bounces = false
+//        self.mainTable.bounces = false
         
         self.registerNibs()
         self.navigationBar()
@@ -654,5 +654,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 //            frame.height = CGFloat(scrollView.contentOffset.y + 20.0)
 //            self.backgroundImage.frame.origin.y = scrollView.contentOffset.y
 //        }
+//     //   self.updateHeaderView()
 //    }
+    
+    func updateHeaderView() {
+        var headRect = CGRect(x: 0, y: -211, width: self.mainTable.bounds.width, height: 211)
+        if self.mainTable.contentOffset.y < -211 {
+            headRect.origin.y = self.mainTable.contentOffset.y
+            headRect.size.height = -self.mainTable.contentOffset.y
+        }
+        
+        self.mainTable.tableHeaderView?.frame = headRect
+        self.mainTable.tableHeaderView = self.mainTable.tableHeaderView
+    }
 }

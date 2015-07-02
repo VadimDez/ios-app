@@ -108,29 +108,14 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 169.0
         var companyNameHeight: CGFloat = 0.0
-        let projectNameHeight = self.getTextHeight(self.company.projects[indexPath.row].name, width: 288, fontSize: 17.0, fontName: "Helvetica Neue")
+        let projectNameHeight = self.company.projects[indexPath.row].name.getHeightForView(288, font: UIFont(name: "Helvetica Neue", size: 17.0)!)
+
         
         if let companyName = self.company.name {
-            companyNameHeight = self.getTextHeight(companyName, width: 288, fontSize: 14.0, fontName: "Helvetica Neue Thin")
+            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "Helvetica Neue Thin", size: 14.0)!)
         }
         
         return base + projectNameHeight + companyNameHeight
-    }
-    
-    func getTextHeight(string: String, width: CGFloat, fontSize: CGFloat, fontName: String) -> CGFloat {
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = width
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = string
-        label.font = UIFont(name: fontName, size: fontSize)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
-        return label.frame.size.height
     }
     
     // MARK: load functions

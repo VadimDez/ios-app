@@ -245,21 +245,9 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 95.0
-        
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = self.mainTable.frame.width - 20
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 13)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
             
         var media:CGFloat = 0.0
         if (entries[indexPath.row].media.count > 0) {
@@ -270,7 +258,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
                 media = media + CGFloat((mediaCount / 5) * 50)
             }
         }
-        return base + label.frame.size.height + media
+        return base + entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
 
     /**

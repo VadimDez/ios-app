@@ -38,24 +38,12 @@ class UASuggestionHeaderView: UIView {
 //        var frame = CGRect(x: 0, y: 0, width: self.frame.width, height: 90.0)
         let base = CGFloat(105.0)//CGFloat(76.0)
         
-        // count text height
-        var frame: CGRect = CGRect()
-        frame.size.width = self.contentLabel.frame.width
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
         var media:CGFloat = 0.0
         if (imageQuantity > 0) {
             media = 51.0 + CGFloat((imageQuantity/5) * 51)
         }
 
-        self.frame.size.height = base + label.frame.height + media
+        self.frame.size.height = base + content.getHeightForView(self.contentLabel.frame.width, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
     }
 
     func makeRoundCorners() {
