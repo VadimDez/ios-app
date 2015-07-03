@@ -22,10 +22,13 @@ class NewsViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.titleLabel.text = "asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd "
-        self.contentLabel.text = "asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd asd "
+        if (self.news != nil) {
+            self.titleLabel.text = self.news.title
+            self.contentLabel.text = self.news.content
+            self.dateLabel.text = self.news.updated.getStringFromDate()
         
 //        self.automaticallyAdjustsScrollViewInsets = false
+        }
         self.setHeaderHeight()
     }
     
@@ -53,8 +56,21 @@ class NewsViewController: UITableViewController {
     }
     
     func setHeaderHeight() {
+        let base: CGFloat = 30.0
         let width = self.tableView.tableHeaderView?.frame.size.width
-        self.tableView.tableHeaderView?.frame = CGRect(x: 0.0, y: 0.0, width: width!, height: 1000.0)
+        var height: CGFloat = base
+        
+        if (self.news != nil) {
+            if let title = self.news.title {
+                height += title.getHeightForView(300, font: UIFont(name: "Helvetica Neue", size: 14.0)!)
+            }
+            
+            if let content = self.news?.content {
+                height += content.getHeightForView(300, font: UIFont(name: "Helvetica Neue", size: 13.0)!)
+            }
+        }
+        
+        self.tableView.tableHeaderView?.frame = CGRect(x: 0.0, y: 0.0, width: width!, height: height)
         self.tableView.tableHeaderView = self.tableView.tableHeaderView
     }
 }

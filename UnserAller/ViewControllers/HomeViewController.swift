@@ -14,7 +14,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1 // -1 for initial infinite load
-    var entries: [UASuggestion] = []
+    var entries: [UACellObject] = []
     let maxResponse: UInt = 10
     var countEntries: Int = 0
 
@@ -143,13 +143,13 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         var cell: UITableViewCell
 
         if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
-            cell = self.getSuggestCellForHome(entries[indexPath.row])
+            cell = self.getSuggestCellForHome(entries[indexPath.row] as! UASuggestion)
         } else if ("UASuggestImageCell" == entries[indexPath.row].cellType) {
-            cell = self.getSuggestImageCellForHome(entries[indexPath.row])
+            cell = self.getSuggestImageCellForHome(entries[indexPath.row] as! UASuggestion)
         } else if ("NewsCell" == self.entries[indexPath.row].cellType) {
-            cell = self.getNewsCellForHome(self.entries[indexPath.row])
+            cell = self.getNewsCellForHome(self.entries[indexPath.row] as! UANews)
         } else if ("UASuggestionVoteCell" == self.entries[indexPath.row].cellType) {
-            cell = self.getVoteCellForHome(self.entries[indexPath.row], row: indexPath.row)
+            cell = self.getVoteCellForHome(self.entries[indexPath.row] as! UASuggestion, row: indexPath.row)
         } else if ("UASuggestionVoteImageCell" == self.entries[indexPath.row].cellType) {
             cell = self.getVoteImageCellForHome(indexPath.row)
         } else {
@@ -190,13 +190,13 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     /**
      *  Get news cell without images
      */
-    func getNewsCellForHome(suggestion: UASuggestion) -> UANewsCell {
+    func getNewsCellForHome(news: UANews) -> UANewsCell {
         var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as! UANewsCell
-        cell.setCellForHome(suggestion)
+        cell.setCellForHome(news)
 
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(suggestion.projectId)
+            self.presentProjectViewController(news.projectId)
         }
         return cell
     }
@@ -228,12 +228,12 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         // rating delegate
         cell.ratingView.delegate = self
         cell.ratingView.tag = row
-        cell.setCellForHome(self.entries[row])
+        cell.setCellForHome(self.entries[row] as! UASuggestion)
 
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(self.entries[row].projectId)
+            self.presentProjectViewController((self.entries[row] as! UASuggestion).projectId)
         }
         return cell
     }
@@ -266,9 +266,9 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (self.entries[indexPath.row].cellType == "NewsCell" || self.entries[indexPath.row].cellType == "NewsContainerTableCell") {
-            self.presentNewsViewController(self.entries[indexPath.row] as UASuggestion)
+            self.presentNewsViewController(self.entries[indexPath.row] as! UANews)
         } else {
-            self.presentSuggestionViewController(self.entries[indexPath.row] as UASuggestion)
+            self.presentSuggestionViewController(self.entries[indexPath.row] as! UASuggestion)
         }
         
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
@@ -288,8 +288,10 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     /**
      * Present news view controller with news
      */
-    func presentNewsViewController(news: UASuggestion) {
+    func presentNewsViewController(news: UANews) {
         var newsVC: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+        
+        newsVC.news = news
 
         self.navigationController?.pushViewController(newsVC, animated: true)
     }
@@ -317,16 +319,18 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         Alamofire.request(.GET, url, parameters: ["page": page])
         .responseJSON { (_,_,JSON,errors) in
             
-            if(errors != nil || JSON?.count == 0 || JSON?.objectAtIndex(0).count == 0) {
+            if (errors != nil || JSON?.count == 0 || JSON?.objectAtIndex(0).count == 0) {
                 // print error
                 println(errors)
                 // error block
                 error()
             } else {
-                let SuggestionModelView = UASuggestionViewModel()
+//                let SuggestionViewModel = UASuggestionViewModel()
+                let timelineViewModel = TimelineViewModel()
 
                 // get get objects from JSON
-                var array = SuggestionModelView.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
+//                var array = SuggestionViewModel.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                var array = timelineViewModel.getObjectsFromJSON(JSON as! [Dictionary<String, AnyObject>])
             
                 // merge two arrays
                 self.entries = self.entries + array
@@ -345,7 +349,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
         
         if (!self.votingDisabled) {
-            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+            var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
             
             // disable for a moment
@@ -355,9 +359,9 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             
             self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
                 
-                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
                 
-                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+                (self.entries[ratingView.tag] as! UASuggestion).userVotes  = votes
                 
                 // update only changed row
                 let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)

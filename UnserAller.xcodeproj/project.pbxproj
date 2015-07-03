@@ -73,6 +73,7 @@
 		12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */; };
 		12CD632E1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */; };
 		12CD63301A5DDEA000E2EDC4 /* UAProjectNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */; };
+		12CE5E661B47158B00EC9344 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CE5E651B47158B00EC9344 /* TimelineViewModel.swift */; };
 		12D11BF81AD469F000CC19EF /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */; };
 		12D74B901A685951006CE23D /* UASuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D74B8F1A685951006CE23D /* UASuggestionView.swift */; };
 		12D74B921A6859FA006CE23D /* UASuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12D74B911A6859FA006CE23D /* UASuggestionView.xib */; };
@@ -196,6 +197,7 @@
 		12CD632B1A5DD51400E2EDC4 /* UACellObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACellObject.swift; path = Models/UACellObject.swift; sourceTree = "<group>"; };
 		12CD632D1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectNewsCell.swift; path = Views/Cells/UAProjectNewsCell.swift; sourceTree = "<group>"; };
 		12CD632F1A5DDEA000E2EDC4 /* UAProjectNewsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAProjectNewsCell.xib; path = Views/Cells/UAProjectNewsCell.xib; sourceTree = "<group>"; };
+		12CE5E651B47158B00EC9344 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimelineViewModel.swift; path = ViewModels/TimelineViewModel.swift; sourceTree = "<group>"; };
 		12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		12D74B8F1A685951006CE23D /* UASuggestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionView.swift; path = Views/Views/UASuggestionView.swift; sourceTree = "<group>"; };
 		12D74B911A6859FA006CE23D /* UASuggestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionView.xib; path = Views/Views/UASuggestionView.xib; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */,
 				12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */,
 				1270B5821A6B166100D041B9 /* UACommentViewModel.swift */,
+				12CE5E651B47158B00EC9344 /* TimelineViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
 				129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */,
 				1216E5C91B1B4182004D8F22 /* StringExtensions.swift in Sources */,
+				12CE5E661B47158B00EC9344 /* TimelineViewModel.swift in Sources */,
 				D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */,
 				1216C0D61A85800A0057FF86 /* RegistrationViewController.swift in Sources */,
 				D581228A197C08B600E3573C /* InitViewController.swift in Sources */,

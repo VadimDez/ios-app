@@ -21,4 +21,12 @@ class UANewsViewModel {
         return newsArray
     }
     
+    func parseNewsForTimeline(object: Dictionary<String, AnyObject>) -> UANews {
+        if (object["media"] != nil) {
+            return UANews().initNewsIncludeImages(object)
+        } else {
+            return UANews().initNewsForTimeline(object)
+        }
+    }
+    
 }

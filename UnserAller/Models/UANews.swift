@@ -11,11 +11,59 @@ import Foundation
 class UANews: UACellObject {
     var id: UInt!
     var projectId: UInt!
+    var projectName: String = ""
     var title: String!
     var created: String!
+    var updated: NSDate     = NSDate()
     
     override init() {
         super.init()
+    }
+    
+    func initNewsForTimeline(jsonObject: AnyObject) -> UANews {
+        
+        if let pageArticle = jsonObject.objectForKey("pageArticle") as? Dictionary<String, AnyObject> {
+            if let pageArticleId = pageArticle["id"] as? UInt {
+                self.id = pageArticleId
+            }
+            
+            if let created = pageArticle["created"] as? Dictionary<String, String> {
+                let createdString: String = created["date"]!
+                self.updated = createdString.getDateFromString()
+            }
+        }
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        var articleContent: String = ""
+        
+        if let title = jsonObject.objectForKey("title") as? String {
+            articleContent = title
+        }
+        
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            if (count(articleContent) > 0) {
+                articleContent = articleContent + " "
+            }
+            
+            articleContent = articleContent + (content as String)
+        }
+        
+        self.content = articleContent
+        self.content = self.content.html2String()
+        
+        // set project id
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName as String
+        }
+        
+        // set cell class type
+        self.cellType = "NewsCell";
+        
+        return self
     }
     
     func initNewsForProjectWithObject(object: AnyObject) -> UANews {
@@ -40,6 +88,34 @@ class UANews: UACellObject {
         
         // set cell type
         self.cellType = "UAProjectNewsCell"
+        
+        return self
+    }
+    
+    func initNewsIncludeImages(jsonObject: AnyObject) -> UANews {
+        
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            self.content = content as String
+            self.content = self.content.html2String()
+        }
+        
+        // set project id
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
+        
+        // set project name
+        if let projectName = jsonObject.objectForKey("projectName") as? NSString {
+            self.projectName = projectName as String
+        }
+        
+        // set cell class type
+        self.cellType = "NewsContainerTableCell";
+        
+        // add media
+        if let media = jsonObject.objectForKey("media") as? [AnyObject] {
+            self.addMediaToSuggestionWithJSON(media)
+        }
         
         return self
     }

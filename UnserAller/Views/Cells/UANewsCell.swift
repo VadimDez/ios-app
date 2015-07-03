@@ -10,11 +10,11 @@ import UIKit
 
 class UANewsCell: UACell {
     
-    func setCellForHome(suggestion: UASuggestion) {
-        self.titleLabel.text = suggestion.projectName
-        self.contentLabel.text = suggestion.content
+    func setCellForHome(news: UANews) {
+        self.titleLabel.text = news.projectName
+        self.contentLabel.text = news.content
         self.subtitleLabel.text = ""
-        self.dateLabel.text = suggestion.updated.getStringFromDate()
+        self.dateLabel.text = news.updated.getStringFromDate()
         
         // make round corners
 //        self.makeRoundCorners()

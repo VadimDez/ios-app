@@ -23,43 +23,34 @@ class UASuggestionViewModel {
         for object in data {
             // clean
             suggestion = UASuggestion()
-
-            // check if empty
-            // TODO: needs to be validated
-            if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
-
-                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
-                
-                if object["media"] != nil {
-                    
-                    if (isSuggest) {
-                        self.getSuggestIncludingImages(object)
-                    } else {
-                        self.getVoteIncludeImagesWithObject(object)
-                    }
-                } else {
-                    
-                    if (isSuggest) {
-                        self.getSuggestion(object)
-                    } else {
-                        self.getVote(object)
-                    }
-                }
-                
-            } else {
-                
-                if (object["media"] != nil) {
-                    self.getNewsIncludeImages(object)
-                } else {
-                    self.getNews(object)
-                }
-            }
+            
+            self.parseSuggestion(object)
             
             // add suggestion object to array
             suggestions.append(suggestion)
         }
         
         return suggestions
+    }
+    
+    func parseSuggestion(object: Dictionary<String, AnyObject>) {
+        let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
+        
+        if object["media"] != nil {
+            
+            if (isSuggest) {
+                self.getSuggestIncludingImages(object)
+            } else {
+                self.getVoteIncludeImagesWithObject(object)
+            }
+        } else {
+            
+            if (isSuggest) {
+                self.getSuggestion(object)
+            } else {
+                self.getVote(object)
+            }
+        }
     }
     
     
