@@ -538,6 +538,7 @@ class ProjectViewController:
             // news
             self.news = true
             self.entries = []
+            self.mainTable.reloadData()
             
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()

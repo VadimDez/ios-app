@@ -56,7 +56,7 @@ class NewsViewController: UITableViewController {
     }
     
     func setHeaderHeight() {
-        let base: CGFloat = 35.0
+        let base: CGFloat = 42.0
         let width = self.tableView.tableHeaderView?.frame.size.width
         var height: CGFloat = base
         let labelWidth = UIScreen.mainScreen().applicationFrame.width - 20
