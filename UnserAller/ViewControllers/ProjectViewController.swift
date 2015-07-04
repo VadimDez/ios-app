@@ -46,6 +46,8 @@ class ProjectViewController:
     var votingDisabled = false
     var newsPhaseCount = 0
     
+    var getRequest: Alamofire.Request!
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.registerNotifications()
@@ -88,6 +90,7 @@ class ProjectViewController:
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             }, failure: { () -> Void in
+                                println("fail load suggestions")
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
@@ -222,7 +225,8 @@ class ProjectViewController:
                                 
                                 self.mainTable.pullToRefreshView.stopAnimating()
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            }, failure: { () -> Void in
+                                }, failure: { () -> Void in
+                                    println("fail load suggestions")
                                 
                                 self.mainTable.pullToRefreshView.stopAnimating()
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -449,10 +453,11 @@ class ProjectViewController:
      * Define height for cell
      */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = (news) ? 45.0 : 110.0
+        let base: CGFloat!
+        var content: CGFloat = 0
         
         if (self.entries.count == 0) {
-            return base
+            return 0
         }
         
         var media:CGFloat = 0.0
@@ -464,7 +469,16 @@ class ProjectViewController:
             }
         }
         
-        return base + self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
+        if (self.news) {
+            base = 50.0
+            content = self.entries[indexPath.row].content.getHeightForView(280, font: UIFont(name: "Helvetica Neue", size: 14)!)
+            content += (self.entries[indexPath.row] as! UANews).title.getHeightForView(280, font: UIFont(name: "Helvetica Neue", size: 16)!)
+        } else {
+            base = 110.0
+            content = self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!)
+        }
+        
+        return base + content + media
     }
     
     // MARK: Collection view delegates
@@ -546,11 +560,11 @@ class ProjectViewController:
                     self.loadSuggestions({ () -> Void in
                         
                         }, failure: { () -> Void in
-                            
+                            println("fail load suggestions")
                     })
                 })
             }, failure: { () -> Void in
-                
+                    println("fail load phase")
             })
         }
     }
@@ -640,7 +654,7 @@ class ProjectViewController:
         let url: String = "\(APIURL)/api/mobile/project/getstep/\(id)"
         
         // GET
-        Alamofire.request(.GET, url)
+        self.getRequest = Alamofire.request(.GET, url)
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
@@ -697,11 +711,17 @@ class ProjectViewController:
     func loadSuggestions(success: () -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
+        // cancel previous request
+        if self.getRequest != nil {
+            println("cancel news")
+            self.getRequest.cancel()
+        }
+        
         // build url
         let url: String = "\(APIURL)/api/mobile/project/suggestions"
         
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "newest", "page": self.page])
+        self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "newest", "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
@@ -717,7 +737,7 @@ class ProjectViewController:
 
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
+                    println("HERE")
                     // reload table data
                     self.mainTable.reloadData()
                     
@@ -735,8 +755,14 @@ class ProjectViewController:
         // build url
         let url: String = "\(APIURL)/api/mobile/project/getnews"
         
+        // cancel previous request
+        if self.getRequest != nil {
+            println("cancel suggestions")
+            self.getRequest.cancel()
+        }
+        
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
+        self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if (errors != nil) {
