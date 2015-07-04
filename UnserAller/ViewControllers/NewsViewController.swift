@@ -56,17 +56,18 @@ class NewsViewController: UITableViewController {
     }
     
     func setHeaderHeight() {
-        let base: CGFloat = 30.0
+        let base: CGFloat = 35.0
         let width = self.tableView.tableHeaderView?.frame.size.width
         var height: CGFloat = base
+        let labelWidth = UIScreen.mainScreen().applicationFrame.width - 20
         
         if (self.news != nil) {
             if let title = self.news.title {
-                height += title.getHeightForView(300, font: UIFont(name: "Helvetica Neue", size: 14.0)!)
+                height += title.getHeightForView(labelWidth, font: UIFont(name: "Helvetica Neue", size: 14.0)!)
             }
             
             if let content = self.news?.content {
-                height += content.getHeightForView(300, font: UIFont(name: "Helvetica Neue", size: 13.0)!)
+                height += content.getHeightForView(labelWidth, font: UIFont(name: "Helvetica Neue", size: 13.0)!)
             }
         }
         

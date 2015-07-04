@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xDs-iy-Cho">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xDs-iy-Cho">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -876,7 +876,7 @@
         <scene sceneID="HgP-Wq-l6X">
             <objects>
                 <tableViewController storyboardIdentifier="NewsVC" id="duD-bG-9ul" customClass="NewsViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vD0-c7-fNd">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vD0-c7-fNd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -905,20 +905,20 @@
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAa-kG-i7g" userLabel="Title label">
-                                    <rect key="frame" x="10" y="27" width="300" height="17"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAa-kG-i7g" userLabel="Title label">
+                                    <rect key="frame" x="10" y="25" width="300" height="17"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
-                                    <rect key="frame" x="10" y="46" width="300" height="16"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
+                                    <rect key="frame" x="10" y="44" width="300" height="16"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DR0-zs-LzV">
-                                    <rect key="frame" x="10" y="67" width="300" height="65"/>
+                                    <rect key="frame" x="10" y="65" width="300" height="67"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GW3-yD-8k4">
                                         <size key="itemSize" width="50" height="50"/>
                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -940,6 +940,7 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="LAa-kG-i7g" firstAttribute="top" secondItem="upf-Vh-HYZ" secondAttribute="bottom" constant="3" id="4Rj-7B-om4"/>
                                 <constraint firstItem="DR0-zs-LzV" firstAttribute="top" secondItem="iC5-L2-7Mp" secondAttribute="bottom" constant="5" id="Ag7-mg-yI5"/>
                                 <constraint firstItem="upf-Vh-HYZ" firstAttribute="top" secondItem="LLf-0W-BR1" secondAttribute="top" constant="10" id="Fwy-ik-TW2"/>
                                 <constraint firstAttribute="bottom" secondItem="DR0-zs-LzV" secondAttribute="bottom" constant="10" id="I1s-iO-OUd"/>
@@ -949,7 +950,6 @@
                                 <constraint firstAttribute="trailing" secondItem="DR0-zs-LzV" secondAttribute="trailing" constant="10" id="cOU-gt-o6o"/>
                                 <constraint firstItem="jvy-P6-Hf1" firstAttribute="leading" secondItem="upf-Vh-HYZ" secondAttribute="trailing" constant="5" id="i9z-HD-b4S"/>
                                 <constraint firstItem="upf-Vh-HYZ" firstAttribute="leading" secondItem="LLf-0W-BR1" secondAttribute="leading" constant="10" id="iln-5f-Xqm"/>
-                                <constraint firstItem="LAa-kG-i7g" firstAttribute="top" secondItem="jvy-P6-Hf1" secondAttribute="bottom" constant="3" id="kO9-rE-Nxm"/>
                                 <constraint firstAttribute="trailing" secondItem="LAa-kG-i7g" secondAttribute="trailing" constant="10" id="tgS-Le-Vvs"/>
                                 <constraint firstItem="iC5-L2-7Mp" firstAttribute="leading" secondItem="LLf-0W-BR1" secondAttribute="leading" constant="10" id="uEU-PC-4nj"/>
                                 <constraint firstItem="jvy-P6-Hf1" firstAttribute="top" secondItem="LLf-0W-BR1" secondAttribute="top" constant="8" id="wEH-m6-VZB"/>

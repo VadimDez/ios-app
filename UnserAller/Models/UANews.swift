@@ -35,22 +35,25 @@ class UANews: UACellObject {
         
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        var articleContent: String = ""
+        
+//        var articleContent: String = ""
         
         if let title = jsonObject.objectForKey("title") as? String {
-            articleContent = title
+//            articleContent = title
+            self.title = title.html2String()
         }
         
         if let content = jsonObject.objectForKey("content") as? NSString {
-            if (count(articleContent) > 0) {
-                articleContent = articleContent + " "
-            }
-            
-            articleContent = articleContent + (content as String)
+//            if (count(articleContent) > 0) {
+//                articleContent = articleContent + " "
+//            }
+//            
+//            articleContent = articleContent + (content as String)
+            self.content = (content as String).html2String()
         }
         
-        self.content = articleContent
-        self.content = self.content.html2String()
+//        self.content = articleContent
+//        self.content = self.content.html2String()
         
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)

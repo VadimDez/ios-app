@@ -248,17 +248,22 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 95.0
-            
+        var news: CGFloat = 0.0
+        
         var media:CGFloat = 0.0
-        if (entries[indexPath.row].media.count > 0) {
+        let mediaCount = entries[indexPath.row].media.count
+        if (mediaCount > 0) {
             media = 50.0
-            let mediaCount = entries[indexPath.row].media.count
-            
             if (mediaCount > 5) {
-                media = media + CGFloat((mediaCount / 5) * 50)
+                media += CGFloat((mediaCount / 5) * 50)
             }
         }
-        return base + entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
+        
+        if (self.entries[indexPath.row] is UANews) {
+            news = (self.entries[indexPath.row] as! UANews).title.getHeightForView(self.mainTable.frame.width, font: UIFont(name: "Helvetica Neue", size: 14)!)
+        }
+        
+        return base + entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media + news
     }
 
     /**

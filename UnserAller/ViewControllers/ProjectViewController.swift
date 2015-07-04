@@ -701,7 +701,7 @@ class ProjectViewController:
         let url: String = "\(APIURL)/api/mobile/project/suggestions"
         
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "top", "page": self.page])
+        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "newest", "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
