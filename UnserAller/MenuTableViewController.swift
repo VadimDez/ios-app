@@ -30,9 +30,9 @@ class MenuTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-//        return UIStatusBarStyle.BlackOpaque
-//    }
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
     
     /**
      *  Setup table view
