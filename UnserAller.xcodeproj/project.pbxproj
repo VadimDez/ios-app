@@ -103,6 +103,7 @@
 		D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59780D41A2B919300CEC181 /* UAPhaseCell.xib */; };
 		D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D61A2B94CE00CEC181 /* UAPhase.swift */; };
 		D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */; };
+		D5A9D4E41B68137400471EC9 /* CompetenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */; };
 		D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */; };
 		D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D9E65B19E15A2500537FBD /* Keychain.swift */; };
 		D5EFD6271AE5986B0018CE33 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EFD6261AE5986B0018CE33 /* AddressTableViewCell.swift */; };
@@ -234,6 +235,7 @@
 		D59780D61A2B94CE00CEC181 /* UAPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhase.swift; path = Models/UAPhase.swift; sourceTree = "<group>"; };
 		D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAMedia.swift; sourceTree = "<group>"; };
 		D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnserAller-Bridging-Header.h"; sourceTree = "<group>"; };
+		D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompetenceViewController.swift; path = ViewControllers/CompetenceViewController.swift; sourceTree = "<group>"; };
 		D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Tint.swift"; sourceTree = "<group>"; };
 		D5D9E65B19E15A2500537FBD /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		D5EFD6261AE5986B0018CE33 /* AddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressTableViewCell.swift; path = Views/Cells/Settings/AddressTableViewCell.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */,
 				12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */,
 				123986971B20BD3A002EB6D7 /* NewsViewController.swift */,
+				D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
 				1216E5CB1B1B444B004D8F22 /* NSDateExtensions.swift in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
+				D5A9D4E41B68137400471EC9 /* CompetenceViewController.swift in Sources */,
 				12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */,
 				D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */,
 				12C33E1D1ABB68EE00ED6ADF /* User.swift in Sources */,

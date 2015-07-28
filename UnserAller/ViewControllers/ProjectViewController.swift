@@ -61,6 +61,9 @@ class ProjectViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+        self.navigationController?.pushViewController(competenceVC, animated: true)
+        
         self.setDelegates()
         // nib
         self.registerNibs()
