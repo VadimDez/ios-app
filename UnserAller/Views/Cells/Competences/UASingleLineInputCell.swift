@@ -12,8 +12,17 @@ class UASingleLineInputCell: UACompetenceCell {
 
     @IBOutlet weak var input: UITextField!
     
-    func setupCell() {
+    func setupCell(competence: UACompetence) {
         self.contentLabel.text = "qwe"
+    }
+    
+    override func validate() -> Bool {
+        if (self.input.text.isEmpty) {
+            // show error
+            return false
+        }
+        
+        return true
     }
 
 }

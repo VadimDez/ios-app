@@ -12,7 +12,16 @@ class UAMultipleLineInputCell: UACompetenceCell {
     
     @IBOutlet weak var input: UITextView!
 
-    func setupCell() {
+    func setupCell(competence: UACompetence) {
         self.contentLabel.text = "zxc"
+    }
+    
+    override func validate() -> Bool {
+        if (self.input.text.isEmpty) {
+            // show error
+            return false
+        }
+        
+        return true
     }
 }

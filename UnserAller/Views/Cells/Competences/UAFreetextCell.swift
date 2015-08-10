@@ -10,7 +10,7 @@ import UIKit
 
 class UAFreetextCell: UACompetenceCell {
 
-    func setupCell() {
+    func setupCell(competence: UACompetence) {
         self.contentLabel.text = "asd"
     }
 }

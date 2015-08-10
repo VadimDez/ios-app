@@ -1,19 +1,20 @@
 //
-//  CompetenceCell.swift
+//  UAOptionCell.swift
 //  UnserAller
 //
-//  Created by Vadym on 09/08/15.
+//  Created by Vadym on 10/08/15.
 //  Copyright (c) 2015 Vadym Yatsyuk. All rights reserved.
 //
 
 import UIKit
 
-class UACompetenceCell: UITableViewCell {
+class UAOptionCell: UITableViewCell {
     
-    @IBOutlet weak var contentLabel: UILabel!
-    
-    var competence: UACompetence!
+    @IBOutlet weak var toggleView: UIImageView!
+    @IBOutlet weak var label: UILabel!
 
+    var toggled: Bool = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,8 +25,8 @@ class UACompetenceCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func validate() -> Bool {
-        return false
+
+    func toggle(isToggled: Bool) {
+        self.toggled = isToggled
     }
 }

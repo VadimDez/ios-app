@@ -34,7 +34,7 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
         return 1
     }
     
-    func setupCell() {
+    func setupCell(competence: UACompetence) {
         self.contentLabel.text = "qqq"
     }
 }

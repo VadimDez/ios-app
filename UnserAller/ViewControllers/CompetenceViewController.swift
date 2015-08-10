@@ -74,33 +74,33 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         println(index)
         if (index == 0) {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAFreetextCell") as! UAFreetextCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         } else if (index == 1) {
             
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UASingleLineInputCell") as! UASingleLineInputCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         } else if (index == 2) {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAMultipleLineInputCell") as! UAMultipleLineInputCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         } else if (index == 3) {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         } else if (index == 4) {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UACheckboxCell") as! UACheckboxCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         } else if (index == 5) {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UALikertCell") as! UALikertCell
-            cell.setupCell()
+            cell.setupCell(UACompetence())
             
             return cell
         }

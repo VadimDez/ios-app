@@ -34,7 +34,7 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
         return 1
     }
     
-    func setupCell() {
+    func setupCell(competence: UACompetence) {
         self.contentLabel.text = "qqq"
     }
 
