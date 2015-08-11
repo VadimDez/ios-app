@@ -53,7 +53,7 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -61,7 +61,7 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
     }
     
     func setupCell(competence: UACompetence) {
-        self.contentLabel.text = "qqq"
+        self.contentLabel.text = "option competence"
     }
     
     override func validate() -> Bool {
@@ -72,7 +72,7 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
         // loop through option cells
         while (!isToggled && i < count) {
             let index = NSIndexPath(forRow: i, inSection: 0)
-            (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggle(false)
+            isToggled = (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggled
             i++
         }
         

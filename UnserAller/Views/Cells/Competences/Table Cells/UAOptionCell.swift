@@ -18,6 +18,8 @@ class UAOptionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.toggleView.image = UIImage(named: "heart_black_32")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -28,5 +30,10 @@ class UAOptionCell: UITableViewCell {
 
     func toggle(isToggled: Bool) {
         self.toggled = isToggled
+        if isToggled {
+            self.toggleView.image = UIImage(named: "heart_red")
+        } else {
+            self.toggleView.image = UIImage(named: "heart_black_32")
+        }
     }
 }

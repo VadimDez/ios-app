@@ -18,16 +18,34 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
         
         self.optionsTable.delegate = self
         self.optionsTable.dataSource = self
+        
+        self.registerNibs()
+    }
+    
+    /**
+    Register nibs
+    */
+    func registerNibs() {
+        // freetext
+        var UAOptionCellNib = UINib(nibName: "UAOptionCell", bundle: nil)
+        self.optionsTable.registerNib(UAOptionCellNib, forCellReuseIdentifier: "UAOptionCell")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        cell.textLabel?.text = "AAAA"
+        var cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
+        cell.label.text = "OPTION CHECKBOX \(indexPath.row)"
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // toggle
+        var cell = self.optionsTable.cellForRowAtIndexPath(indexPath) as! UAOptionCell
+        cell.toggle(!cell.toggled)
+        self.optionsTable.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -35,6 +53,22 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupCell(competence: UACompetence) {
-        self.contentLabel.text = "qqq"
+        self.contentLabel.text = "a checkbox competence"
     }
+    
+    override func validate() -> Bool {
+        let count = self.optionsTable.numberOfRowsInSection(0)
+        var isToggled = false
+        var i = 0
+        
+        // loop through option cells
+        while (!isToggled && i < count) {
+            let index = NSIndexPath(forRow: i, inSection: 0)
+            isToggled = (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggled
+            i++
+        }
+        
+        return isToggled
+    }
+
 }

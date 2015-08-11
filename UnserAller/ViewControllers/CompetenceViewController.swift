@@ -109,6 +109,10 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 5 {
+            return 600.0
+        }
+        
         if (indexPath.row >= 3) {
             return 150.0
         }
