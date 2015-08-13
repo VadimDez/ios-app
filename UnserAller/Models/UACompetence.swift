@@ -14,5 +14,6 @@ class UACompetence {
     var format: String!
     var content: String!
     var inputValue: String!
-    var congig: String!
+    var config: String!
+    var options: [Dictionary<String, AnyObject>] = []
 }

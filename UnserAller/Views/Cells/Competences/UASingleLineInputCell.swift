@@ -13,7 +13,10 @@ class UASingleLineInputCell: UACompetenceCell {
     @IBOutlet weak var input: UITextField!
     
     func setupCell(competence: UACompetence) {
-        self.contentLabel.text = "qwe"
+        self.contentLabel.text = competence.content
+        
+        // set placeholder
+//        self.input.placeholder = 
     }
     
     override func validate() -> Bool {

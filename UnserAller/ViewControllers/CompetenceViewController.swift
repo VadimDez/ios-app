@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class CompetenceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mainTable: UITableView!
+    
+    var entries: [UACompetence] = []
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -23,6 +26,11 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
 
         self.registerNibs()
+        self.getEntries({ () -> Void in
+            self.mainTable.reloadData()
+        }, error: { () -> Void in
+            
+        })
         
     }
 
@@ -71,36 +79,47 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getCell(index: Int) -> UITableViewCell {
-        println(index)
-        if (index == 0) {
+        
+        if (self.entries[index].format == "placeholder") {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAFreetextCell") as! UAFreetextCell
-            cell.setupCell(UACompetence())
+                cell.setupCell(self.entries[index])
             
             return cell
-        } else if (index == 1) {
+        }
+        
+        if (self.entries[index].format == "input") {
             
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UASingleLineInputCell") as! UASingleLineInputCell
-            cell.setupCell(UACompetence())
+            cell.setupCell(self.entries[index])
             
             return cell
-        } else if (index == 2) {
+        }
+        
+        if (self.entries[index].format == "textarea") {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAMultipleLineInputCell") as! UAMultipleLineInputCell
-            cell.setupCell(UACompetence())
+            cell.setupCell(self.entries[index])
             
             return cell
-        } else if (index == 3) {
+        }
+        
+        if (self.entries[index].format == "options") {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
-            cell.setupCell(UACompetence())
+            cell.setupCell(self.entries[index])
             
             return cell
-        } else if (index == 4) {
+        }
+        
+        if (self.entries[index].format == "checkbox") {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UACheckboxCell") as! UACheckboxCell
-            cell.setupCell(UACompetence())
+            cell.setupCell(self.entries[index])
             
             return cell
-        } else if (index == 5) {
+        }
+        
+        
+        if (self.entries[index].format == "likert") {
             var cell = self.mainTable.dequeueReusableCellWithIdentifier("UALikertCell") as! UALikertCell
-            cell.setupCell(UACompetence())
+            cell.setupCell(self.entries[index])
             
             return cell
         }
@@ -125,7 +144,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return self.entries.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -142,5 +161,30 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10.0
+    }
+    
+    func getEntries(success: () -> Void, error: () -> Void) {
+        var url = "\(APIURL)/api/mobile/competence/get"
+        
+        Alamofire.request(.GET, url, parameters: ["project": 1])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    // error block
+                    error()
+                } else {
+                    let competenceService = CompetenceService()
+                    
+                    // get get objects from JSON
+                    var array = competenceService.getCompetencesFromJSON(JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
+
+                    // merge two arrays
+                    self.entries = self.entries + array
+                    
+                    success()
+                }
+        }
     }
 }

@@ -26,14 +26,13 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
     Register nibs
     */
     func registerNibs() {
-        // freetext
         var UAOptionsCellNib = UINib(nibName: "UAOptionsCell", bundle: nil)
         self.optionsTable.registerNib(UAOptionsCellNib, forCellReuseIdentifier: "UAOptionsCell")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UAOptionsCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
-        cell.contentLabel.text = "LIKERT OPTION \(indexPath.row)"
+        cell.setupCell(self.competence)
         return cell
     }
     
@@ -54,7 +53,10 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
     }
     
     func setupCell(competence: UACompetence) {
-        self.contentLabel.text = "likert competence"
+        self.competence = competence
+        self.contentLabel.text = competence.content
+        
+        self.optionsTable.reloadData()
     }
     
     override func validate() -> Bool {

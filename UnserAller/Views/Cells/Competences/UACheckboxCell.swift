@@ -33,7 +33,17 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
-        cell.label.text = "OPTION CHECKBOX \(indexPath.row)"
+        
+        if let option = self.competence.options[indexPath.row] as? Dictionary<String, AnyObject> {
+            if let name: String = option["name"] as? String {
+                cell.label.text = "\(name)"
+            }
+            
+            if let val: Int = option["value"] as? Int {
+                cell.label.tag = val
+            }
+        }
+        
         return cell
     }
     
@@ -45,7 +55,7 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.competence.options.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -53,7 +63,10 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupCell(competence: UACompetence) {
-        self.contentLabel.text = "a checkbox competence"
+        self.competence = competence
+        self.contentLabel.text = competence.content
+        
+        self.optionsTable.reloadData()
     }
     
     override func validate() -> Bool {

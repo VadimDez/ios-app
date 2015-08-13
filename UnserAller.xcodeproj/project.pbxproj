@@ -118,6 +118,7 @@
 		D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */; };
 		D59780D51A2B919300CEC181 /* UAPhaseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59780D41A2B919300CEC181 /* UAPhaseCell.xib */; };
 		D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59780D61A2B94CE00CEC181 /* UAPhase.swift */; };
+		D59D2DDC1B7D22270030A383 /* CompetenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59D2DDB1B7D22270030A383 /* CompetenceService.swift */; };
 		D5A3ABDC19E5D3D100B71CC7 /* UAMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */; };
 		D5A9D4E41B68137400471EC9 /* CompetenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */; };
 		D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */; };
@@ -265,6 +266,7 @@
 		D59780D21A2B917F00CEC181 /* UAPhaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhaseCell.swift; path = Views/CollectionCells/UAPhaseCell.swift; sourceTree = "<group>"; };
 		D59780D41A2B919300CEC181 /* UAPhaseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAPhaseCell.xib; path = Views/CollectionCells/UAPhaseCell.xib; sourceTree = "<group>"; };
 		D59780D61A2B94CE00CEC181 /* UAPhase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAPhase.swift; path = Models/UAPhase.swift; sourceTree = "<group>"; };
+		D59D2DDB1B7D22270030A383 /* CompetenceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompetenceService.swift; path = Services/CompetenceService.swift; sourceTree = "<group>"; };
 		D5A3ABDB19E5D3D100B71CC7 /* UAMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UAMedia.swift; sourceTree = "<group>"; };
 		D5A6A5C1197C0C1C0024903D /* UnserAller-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnserAller-Bridging-Header.h"; sourceTree = "<group>"; };
 		D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CompetenceViewController.swift; path = ViewControllers/CompetenceViewController.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 		D5812284197C08B600E3573C /* UnserAller */ = {
 			isa = PBXGroup;
 			children = (
+				D59D2DDA1B7D21FF0030A383 /* Services */,
 				12A7ABA01A7E3BEA00D50BE7 /* Delegates */,
 				D52FF94019E3218C006139E2 /* ViewModels */,
 				D555CCA519E1CEC200AB0F5F /* Views */,
@@ -573,6 +576,14 @@
 				12AE1BD71A209FD600BFE3D2 /* UACollectionViewCell.xib */,
 			);
 			name = CollectionCells;
+			sourceTree = "<group>";
+		};
+		D59D2DDA1B7D21FF0030A383 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D59D2DDB1B7D22270030A383 /* CompetenceService.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 		D5D9E65719E158AE00537FBD /* Keychain */ = {
@@ -894,6 +905,7 @@
 				12A7AB9B1A7E371400D50BE7 /* UAEditorViewController.swift in Sources */,
 				D5EFD6271AE5986B0018CE33 /* AddressTableViewCell.swift in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
+				D59D2DDC1B7D22270030A383 /* CompetenceService.swift in Sources */,
 				1270B5831A6B166100D041B9 /* UACommentViewModel.swift in Sources */,
 				D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */,
 				1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */,
