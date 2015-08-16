@@ -25,7 +25,15 @@ class UACompetenceCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func validate() -> Bool {
-        return false
+    func validate() {
+        if !self.competence.validate() {
+            self.contentLabel.backgroundColor = UIColor.yellowColor()
+        } else {
+            self.contentLabel.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    
+    func setupCell(competence: UACompetence) {
+        
     }
 }

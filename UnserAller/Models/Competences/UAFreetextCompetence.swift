@@ -12,6 +12,16 @@ class UAFreetextCompetence: UACompetence {
     
     override init() {
         super.init()
-        self.format = "placeholder"
+        self.format = CompetenceFormat.Placeholder
+        self.cellType = "UAFreetextCell"
+    }
+    
+    override func getAnswer() -> [Dictionary<String, AnyObject>] {
+        return [
+            [
+                "id": self.id,
+                "value": "read"
+            ]
+        ]
     }
 }

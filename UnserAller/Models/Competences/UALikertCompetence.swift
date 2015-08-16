@@ -11,6 +11,7 @@ import Foundation
 class UALikertCompetence: UACompetenceWithOptions {
     override init() {
         super.init()
-        self.format = "likert"
+        self.format = CompetenceFormat.Likert
+        self.cellType = "UALikertCell"
     }
 }

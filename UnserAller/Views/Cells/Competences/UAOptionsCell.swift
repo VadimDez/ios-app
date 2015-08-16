@@ -67,24 +67,10 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
         return 1
     }
     
-    func setupCell(competence: UACompetence) {
+    override func setupCell(competence: UACompetence) {
         self.competence = competence
         self.contentLabel.text = competence.content
         
         self.optionsTable.reloadData()
-    }
-    
-    override func validate() -> Bool {
-        let count = self.optionsTable.numberOfRowsInSection(0)
-        var isToggled = false
-        var i = 0
-        
-        // loop through option cells
-        while (!isToggled && i < count) {
-            isToggled = (self.competence as! UACompetenceWithOptions).options[i].isSelected
-            i++
-        }
-        
-        return isToggled
     }
 }

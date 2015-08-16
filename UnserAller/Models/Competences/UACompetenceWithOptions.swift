@@ -23,4 +23,24 @@ class UACompetenceWithOptions: UACompetence {
         
         return isSelected
     }
+    
+    
+    override func getAnswer() -> [Dictionary<String, AnyObject>] {
+        var selectedOption: UAOption!
+        let options: [UAOption] = self.options
+        let count = options.count
+        var found = false
+        var i = 0
+        
+        while (!found && i < count) {
+            if options[i].isSelected {
+                selectedOption = options[i]
+                found = true
+            }
+            
+            i++
+        }
+        
+        return [["id": self.id, "value": selectedOption.value]]
+    }
 }

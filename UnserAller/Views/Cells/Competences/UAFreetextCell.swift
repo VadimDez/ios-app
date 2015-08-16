@@ -10,7 +10,8 @@ import UIKit
 
 class UAFreetextCell: UACompetenceCell {
 
-    func setupCell(competence: UACompetence) {
+    override func setupCell(competence: UACompetence) {
+        self.competence = competence
         self.contentLabel.text = competence.content
     }
 }

@@ -8,34 +8,29 @@
 
 import UIKit
 
-class UAMultipleLineInputCell: UACompetenceCell {
+class UAMultipleLineInputCell: UACompetenceCell, UITextViewDelegate {
     
     @IBOutlet weak var input: UITextView!
 
-    func setupCell(competence: UACompetence) {
+    override func setupCell(competence: UACompetence) {
         self.competence = competence
+        self.input.delegate = self
         self.contentLabel.text = competence.content
         
         // set placeholder
         
     }
     
-    override func validate() -> Bool {
-        if (self.input.text.isEmpty) {
-            // show error
-            return false
-        }
-        
-        return true
-    }
     
     func textFieldDidEndEditing(textField: UITextField) {
+                println("edited!")
         (self.competence as! UAMultilineInputCompetence).answer = self.input.text
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         self.input.endEditing(true)
         (self.competence as! UAMultilineInputCompetence).answer = self.input.text
+        println("edited")
         super.touchesBegan(touches, withEvent: event)
     }
 }

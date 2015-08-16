@@ -12,7 +12,8 @@ class UASingleLineInputCell: UACompetenceCell, UITextFieldDelegate {
 
     @IBOutlet weak var input: UITextField!
     
-    func setupCell(competence: UACompetence) {
+    override func setupCell(competence: UACompetence) {
+        self.input.delegate = self
         self.competence = competence
         self.contentLabel.text = competence.content
         
@@ -20,22 +21,7 @@ class UASingleLineInputCell: UACompetenceCell, UITextFieldDelegate {
 //        self.input.placeholder = 
     }
     
-    override func validate() -> Bool {
-        if (self.input.text.isEmpty) {
-            // show error
-            return false
-        }
-        
-        return true
-    }
-    
-    func textFieldDidEndEditing(textField: UITextField) {
+    @IBAction func didEndEditing(sender: AnyObject) {
         (self.competence as! UASingleInputCompetence).answer = self.input.text
-    }
-
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        self.input.endEditing(true)
-        (self.competence as! UASingleInputCompetence).answer = self.input.text
-        super.touchesBegan(touches, withEvent: event)
     }
 }

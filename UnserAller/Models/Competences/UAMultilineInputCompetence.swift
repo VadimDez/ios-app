@@ -13,10 +13,14 @@ class UAMultilineInputCompetence: UACompetence {
     
     override init() {
         super.init()
-        self.format = "textarea"
+        self.format = CompetenceFormat.MultipleLineInput
+        self.cellType = "UAMultipleLineInputCell"
     }
     
     override func validate() -> Bool {
         return (count(self.answer) > 0)
+    }
+    override func getAnswer() -> [Dictionary<String, AnyObject>] {
+        return [["id": self.id, "value": self.answer]]
     }
 }

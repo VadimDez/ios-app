@@ -391,10 +391,10 @@
 				124331F81A6703F500B7190A /* UASuggestionViewController.swift */,
 				126CBE221A115A9200E22070 /* BookmarksViewController.swift */,
 				126CBE2A1A116D2700E22070 /* CreditsViewController.swift */,
-				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
 				124F8C211A1A94E7000A5812 /* ActivityViewController.swift */,
 				12B7D4771A6EE75200642D5B /* UACompanyViewController.swift */,
 				12A7AB9A1A7E371400D50BE7 /* UAEditorViewController.swift */,
+				124F8C1D1A1A8F2B000A5812 /* SettingsViewController.swift */,
 				123986971B20BD3A002EB6D7 /* NewsViewController.swift */,
 				D5A9D4E31B68137400471EC9 /* CompetenceViewController.swift */,
 			);

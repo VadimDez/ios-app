@@ -52,16 +52,10 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
         return 150.0
     }
     
-    func setupCell(competence: UACompetence) {
+    override func setupCell(competence: UACompetence) {
         self.competence = competence
         self.contentLabel.text = competence.content
         
         self.optionsTable.reloadData()
     }
-    
-    override func validate() -> Bool {
-        return (self.competence as! UAOptionsCompetence).validate()
-    }
-
-
 }

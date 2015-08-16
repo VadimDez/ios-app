@@ -14,6 +14,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var mainTable: UITableView!
     
     var entries: [UACompetence] = []
+    var checkValidation: Bool = false
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,51 +81,29 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func getCell(indexPath: NSIndexPath) -> UITableViewCell {
         
-        if (self.entries[indexPath.row].format == "placeholder") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAFreetextCell", forIndexPath: indexPath) as! UAFreetextCell
-                cell.setupCell(self.entries[indexPath.row])
-            
-            return cell
-        }
-        
-        if (self.entries[indexPath.row].format == "input") {
-            
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UASingleLineInputCell", forIndexPath: indexPath) as! UASingleLineInputCell
+        switch self.entries[indexPath.row].format as CompetenceFormat {
+        case CompetenceFormat.Placeholder:
+            fallthrough
+        case CompetenceFormat.SingleLineInput:
+            fallthrough
+        case CompetenceFormat.MultipleLineInput:
+            fallthrough
+        case CompetenceFormat.Options:
+            fallthrough
+        case CompetenceFormat.Checkbox:
+            fallthrough
+        case CompetenceFormat.Likert:
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier(self.entries[indexPath.row].cellType, forIndexPath: indexPath) as! UACompetenceCell
             cell.setupCell(self.entries[indexPath.row])
             
-            return cell
-        }
-        
-        if (self.entries[indexPath.row].format == "textarea") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAMultipleLineInputCell", forIndexPath: indexPath) as! UAMultipleLineInputCell
-            cell.setupCell(self.entries[indexPath.row])
+            if self.checkValidation {
+                cell.validate()
+            }
             
             return cell
+
+        default: return UITableViewCell()
         }
-        
-        if (self.entries[indexPath.row].format == "options") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAOptionsCell", forIndexPath: indexPath) as! UAOptionsCell
-            cell.setupCell(self.entries[indexPath.row])
-            
-            return cell
-        }
-        
-        if (self.entries[indexPath.row].format == "checkbox") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UACheckboxCell", forIndexPath: indexPath) as! UACheckboxCell
-            cell.setupCell(self.entries[indexPath.row])
-            
-            return cell
-        }
-        
-        
-        if (self.entries[indexPath.row].format == "likert") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UALikertCell", forIndexPath: indexPath) as! UALikertCell
-            cell.setupCell(self.entries[indexPath.row])
-            
-            return cell
-        }
-        
-        return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {        
@@ -159,6 +138,10 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 //        return 10.0
 //    }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+    }
+    
     func getEntries(success: () -> Void, error: () -> Void) {
         var url = "\(APIURL)/api/mobile/competence/get"
         
@@ -187,16 +170,90 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func send(sender: AnyObject) {
         let count = self.entries.count
         var isValid = true
+        var results: [Dictionary<String, AnyObject>] = []
         
         for (var i = 0; i < count; i++) {
             let competence = self.entries[i] as UACompetence
-            println(i)
-            println(competence.validate())
             if !competence.validate() {
                 isValid = false
+            } else {
+                for result in competence.getAnswer() {
+                    results.append(result)
+                }
             }
         }
         
+        if !isValid {
+            self.checkValidation = true
+            self.mainTable.reloadData()
+        }// else {
+        //    self.checkValidation = false
+        //}
+        
         println(isValid)
+        println(results)
+        
+        self.sendAnswers(results, success: { () -> Void in
+            println("sent")
+        }) { () -> Void in
+            
+        }
+    }
+    
+    func sendAnswers(answers: [Dictionary<String, AnyObject>], success: () -> Void, failure: () -> Void) {
+        let url = "\(APIURL)/api/v1/user/competence"
+        
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.HTTPMethod = "POST"
+        request.HTTPBody = encodeParameters(["competences": ["0": ["competence": 172, "value": "read"]]]).dataUsingEncoding(NSUTF8StringEncoding)
+
+        
+//        Alamofire.request(.POST, url, parameters: ["competences": ["0": ["competence": 172, "value": "read"]]], encoding: ParameterEncoding.JSON)
+        
+        Alamofire.request(request)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println("send competences error")
+                    println(errors)
+                    println(JSON)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    println(JSON)
+                    println(errors)
+                    success()
+                }
+        }
+    }
+    
+    func encodeParameters(object: AnyObject, prefix: String! = nil) -> String {
+        if let dictionary = object as? [String: AnyObject] {
+            let results = map(dictionary) { (key, value) -> String in
+                return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(key)]" : key)
+            }
+            return "&".join(results)
+        } else if let array = object as? [AnyObject] {
+            let results = map(enumerate(array)) { (index, value) -> String in
+                return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(index)]" : "\(index)")
+            }
+            return "&".join(results)
+        } else {
+            let escapedValue = escape("\(object)")
+            return prefix != nil ? "\(prefix)=\(escapedValue)" : "\(escapedValue)"
+        }
+    }
+    
+    // This is Alamofire's private `escape` function; IMHO, this should
+    // be public method, so either make public, or just re-implement it.
+    
+    func escape(string: String) -> String {
+        let legalURLCharactersToBeEscaped: CFStringRef = ":/?&=;+!@#$()',*"
+
+        return CFURLCreateStringByAddingPercentEscapes(nil, string, nil, legalURLCharactersToBeEscaped, CFStringBuiltInEncodings.UTF8.rawValue) as NSString as String
     }
 }

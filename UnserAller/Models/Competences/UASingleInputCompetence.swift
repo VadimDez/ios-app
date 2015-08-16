@@ -14,10 +14,15 @@ class UASingleInputCompetence: UACompetence {
     override init() {
         super.init()
         
-        self.format = "input"
+        self.format = CompetenceFormat.SingleLineInput
+        self.cellType = "UASingleLineInputCell"
     }
     
     override func validate() -> Bool {
         return (count(self.answer) > 0)
+    }
+    
+    override func getAnswer() -> [Dictionary<String, AnyObject>] {
+        return [["id": self.id, "value": self.answer]]
     }
 }

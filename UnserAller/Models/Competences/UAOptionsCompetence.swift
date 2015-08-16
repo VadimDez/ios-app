@@ -13,6 +13,7 @@ class UAOptionsCompetence: UACompetenceWithOptions {
     
     override init() {
         super.init()
-        self.format = "options"
+        self.format = CompetenceFormat.Options
+        self.cellType = "UAOptionsCell"
     }
 }

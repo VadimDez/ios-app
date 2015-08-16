@@ -12,6 +12,19 @@ class UACheckboxCompetence: UACompetenceWithOptions {
     
     override init() {
         super.init()
-        self.format = "checkbox"
+        self.format = CompetenceFormat.Checkbox
+        self.cellType = "UACheckboxCell"
+    }
+    
+    override func getAnswer() -> [Dictionary<String, AnyObject>] {
+        var array: [Dictionary<String, AnyObject>] = []
+        
+        for option in (self as UACompetenceWithOptions).options {
+            if (option.isSelected) {
+                array.append(["id": self.id, "value": option.value])
+            }
+        }
+        
+        return array
     }
 }
