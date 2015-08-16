@@ -33,29 +33,27 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
+        let option: UAOption = (self.competence as! UACompetenceWithOptions).options[indexPath.row]
         
-        if let option = self.competence.options[indexPath.row] as? Dictionary<String, AnyObject> {
-            if let name: String = option["name"] as? String {
-                cell.label.text = "\(name)"
-            }
-            
-            if let val: Int = option["value"] as? Int {
-                cell.label.tag = val
-            }
-        }
+        cell.toggle(option.isSelected)
+        cell.label.text = option.name
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        // toggle
-        var cell = self.optionsTable.cellForRowAtIndexPath(indexPath) as! UAOptionCell
-        cell.toggle(!cell.toggled)
+        
+        (self.competence as! UACheckboxCompetence).options[indexPath.row].isSelected = !(self.competence as! UACheckboxCompetence).options[indexPath.row].isSelected
+        
         self.optionsTable.deselectRowAtIndexPath(indexPath, animated: false)
+        self.optionsTable.reloadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.competence.options.count
+        if self.competence != nil {
+            return (self.competence as! UACheckboxCompetence).options.count
+        }
+        return 0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -76,8 +74,7 @@ class UACheckboxCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSour
         
         // loop through option cells
         while (!isToggled && i < count) {
-            let index = NSIndexPath(forRow: i, inSection: 0)
-            isToggled = (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggled
+            isToggled = (self.competence as! UACheckboxCompetence).options[i].isSelected
             i++
         }
         

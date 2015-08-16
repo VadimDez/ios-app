@@ -8,11 +8,12 @@
 
 import UIKit
 
-class UASingleLineInputCell: UACompetenceCell {
+class UASingleLineInputCell: UACompetenceCell, UITextFieldDelegate {
 
     @IBOutlet weak var input: UITextField!
     
     func setupCell(competence: UACompetence) {
+        self.competence = competence
         self.contentLabel.text = competence.content
         
         // set placeholder
@@ -27,5 +28,14 @@ class UASingleLineInputCell: UACompetenceCell {
         
         return true
     }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        (self.competence as! UASingleInputCompetence).answer = self.input.text
+    }
 
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        self.input.endEditing(true)
+        (self.competence as! UASingleInputCompetence).answer = self.input.text
+        super.touchesBegan(touches, withEvent: event)
+    }
 }

@@ -41,7 +41,7 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -60,18 +60,7 @@ class UALikertCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource
     }
     
     override func validate() -> Bool {
-        let count = self.optionsTable.numberOfRowsInSection(0)
-        var isValid = false
-        var i = 0
-        
-        // loop through option cells
-        while (!isValid && i < count) {
-            let index = NSIndexPath(forRow: i, inSection: 0)
-            isValid = (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionsCell).validate()
-            i++
-        }
-        
-        return isValid
+        return (self.competence as! UAOptionsCompetence).validate()
     }
 
 

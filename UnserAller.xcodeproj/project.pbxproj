@@ -125,6 +125,14 @@
 		D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D9E65B19E15A2500537FBD /* Keychain.swift */; };
 		D5EFD6271AE5986B0018CE33 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EFD6261AE5986B0018CE33 /* AddressTableViewCell.swift */; };
 		D5EFD62A1AE598830018CE33 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5EFD6291AE598830018CE33 /* AddressTableViewCell.xib */; };
+		D5F558881B80819E006CF3A3 /* UAFreetextCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F558871B80819E006CF3A3 /* UAFreetextCompetence.swift */; };
+		D5F5588A1B808206006CF3A3 /* UASingleInputCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F558891B808206006CF3A3 /* UASingleInputCompetence.swift */; };
+		D5F5588C1B8086CE006CF3A3 /* UAMultilineInputCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5588B1B8086CE006CF3A3 /* UAMultilineInputCompetence.swift */; };
+		D5F5588E1B808770006CF3A3 /* UAOptionsCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5588D1B808770006CF3A3 /* UAOptionsCompetence.swift */; };
+		D5F558901B80880D006CF3A3 /* UAOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5588F1B80880D006CF3A3 /* UAOption.swift */; };
+		D5F558921B808AE0006CF3A3 /* UACheckboxCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F558911B808AE0006CF3A3 /* UACheckboxCompetence.swift */; };
+		D5F558941B808BBE006CF3A3 /* UACompetenceWithOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F558931B808BBE006CF3A3 /* UACompetenceWithOptions.swift */; };
+		D5F558961B808C0D006CF3A3 /* UALikertCompetence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F558951B808C0D006CF3A3 /* UALikertCompetence.swift */; };
 		D5FE701E19E6F22F00582B84 /* UACellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE701D19E6F22F00582B84 /* UACellViewModel.swift */; };
 		D5FE702219E6F33600582B84 /* UASuggestCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5FE702119E6F33600582B84 /* UASuggestCell.xib */; };
 		D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FE702319E6FA6300582B84 /* UASuggestionCell.swift */; };
@@ -274,6 +282,14 @@
 		D5D9E65B19E15A2500537FBD /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		D5EFD6261AE5986B0018CE33 /* AddressTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddressTableViewCell.swift; path = Views/Cells/Settings/AddressTableViewCell.swift; sourceTree = "<group>"; };
 		D5EFD6291AE598830018CE33 /* AddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddressTableViewCell.xib; path = Views/Cells/Settings/AddressTableViewCell.xib; sourceTree = "<group>"; };
+		D5F558871B80819E006CF3A3 /* UAFreetextCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAFreetextCompetence.swift; path = Models/Competences/UAFreetextCompetence.swift; sourceTree = "<group>"; };
+		D5F558891B808206006CF3A3 /* UASingleInputCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASingleInputCompetence.swift; path = Models/Competences/UASingleInputCompetence.swift; sourceTree = "<group>"; };
+		D5F5588B1B8086CE006CF3A3 /* UAMultilineInputCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAMultilineInputCompetence.swift; path = Models/Competences/UAMultilineInputCompetence.swift; sourceTree = "<group>"; };
+		D5F5588D1B808770006CF3A3 /* UAOptionsCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAOptionsCompetence.swift; path = Models/Competences/UAOptionsCompetence.swift; sourceTree = "<group>"; };
+		D5F5588F1B80880D006CF3A3 /* UAOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAOption.swift; path = Models/Competences/UAOption.swift; sourceTree = "<group>"; };
+		D5F558911B808AE0006CF3A3 /* UACheckboxCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACheckboxCompetence.swift; path = Models/Competences/UACheckboxCompetence.swift; sourceTree = "<group>"; };
+		D5F558931B808BBE006CF3A3 /* UACompetenceWithOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACompetenceWithOptions.swift; path = Models/Competences/UACompetenceWithOptions.swift; sourceTree = "<group>"; };
+		D5F558951B808C0D006CF3A3 /* UALikertCompetence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UALikertCompetence.swift; path = Models/Competences/UALikertCompetence.swift; sourceTree = "<group>"; };
 		D5FE701D19E6F22F00582B84 /* UACellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACellViewModel.swift; sourceTree = "<group>"; };
 		D5FE702119E6F33600582B84 /* UASuggestCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UASuggestCell.xib; sourceTree = "<group>"; };
 		D5FE702319E6FA6300582B84 /* UASuggestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionCell.swift; path = Views/Cells/UASuggestionCell.swift; sourceTree = "<group>"; };
@@ -399,7 +415,7 @@
 				D59780D61A2B94CE00CEC181 /* UAPhase.swift */,
 				12DF1F111A5C2ABF007CA3B5 /* UANews.swift */,
 				1270B5871A6B16D400D041B9 /* UAComment.swift */,
-				D53A29E71B792CB600209FA2 /* UACompetence.swift */,
+				D5F558861B80802D006CF3A3 /* Competences */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -592,6 +608,22 @@
 				D5D9E65B19E15A2500537FBD /* Keychain.swift */,
 			);
 			name = Keychain;
+			sourceTree = "<group>";
+		};
+		D5F558861B80802D006CF3A3 /* Competences */ = {
+			isa = PBXGroup;
+			children = (
+				D5F5588F1B80880D006CF3A3 /* UAOption.swift */,
+				D53A29E71B792CB600209FA2 /* UACompetence.swift */,
+				D5F558931B808BBE006CF3A3 /* UACompetenceWithOptions.swift */,
+				D5F558871B80819E006CF3A3 /* UAFreetextCompetence.swift */,
+				D5F558891B808206006CF3A3 /* UASingleInputCompetence.swift */,
+				D5F5588B1B8086CE006CF3A3 /* UAMultilineInputCompetence.swift */,
+				D5F5588D1B808770006CF3A3 /* UAOptionsCompetence.swift */,
+				D5F558911B808AE0006CF3A3 /* UACheckboxCompetence.swift */,
+				D5F558951B808C0D006CF3A3 /* UALikertCompetence.swift */,
+			);
+			name = Competences;
 			sourceTree = "<group>";
 		};
 		E446827AA1424F9727FAA564 /* Pods */ = {
@@ -854,6 +886,7 @@
 				D59780D71A2B94CE00CEC181 /* UAPhase.swift in Sources */,
 				124331F91A6703F500B7190A /* UASuggestionViewController.swift in Sources */,
 				D53A29E81B792CB600209FA2 /* UACompetence.swift in Sources */,
+				D5F5588E1B808770006CF3A3 /* UAOptionsCompetence.swift in Sources */,
 				127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */,
 				12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */,
 				12AE1BD21A20880200BFE3D2 /* UASuggestImageCell.swift in Sources */,
@@ -861,7 +894,9 @@
 				12A328AC1A98CE0600E25D3A /* PasswordTableViewCell.swift in Sources */,
 				12CD63231A5DBE3900E2EDC4 /* UANewsCell.swift in Sources */,
 				12C528A21A0FD74000B8A50C /* UAProjectViewModel.swift in Sources */,
+				D5F5588C1B8086CE006CF3A3 /* UAMultilineInputCompetence.swift in Sources */,
 				12CD632A1A5DD37A00E2EDC4 /* UACell.swift in Sources */,
+				D5F558961B808C0D006CF3A3 /* UALikertCompetence.swift in Sources */,
 				129F4BBE1A6C1F3E00F5420D /* UASuggestionVoteView.swift in Sources */,
 				129F4BC51A6C3CEC00F5420D /* UASuggestionVoteWithImageView.swift in Sources */,
 				12620B5D1A6182A800C54124 /* FloatRatingView.swift in Sources */,
@@ -881,9 +916,11 @@
 				12CD632C1A5DD51400E2EDC4 /* UACellObject.swift in Sources */,
 				1216E5CB1B1B444B004D8F22 /* NSDateExtensions.swift in Sources */,
 				126CBE2D1A11732300E22070 /* UACredit.swift in Sources */,
+				D5F558901B80880D006CF3A3 /* UAOption.swift in Sources */,
 				D5A9D4E41B68137400471EC9 /* CompetenceViewController.swift in Sources */,
 				12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */,
 				D5C506811A2D0BBB00834A2F /* UIImage+Tint.swift in Sources */,
+				D5F5588A1B808206006CF3A3 /* UASingleInputCompetence.swift in Sources */,
 				12C33E1D1ABB68EE00ED6ADF /* User.swift in Sources */,
 				124F8C221A1A94E7000A5812 /* ActivityViewController.swift in Sources */,
 				129CD12F1A613E0F00434D67 /* UASuggestionVoteCell.swift in Sources */,
@@ -896,6 +933,7 @@
 				D537D0571B7766F500779D92 /* UAFreetextCell.swift in Sources */,
 				12A7ABA21A7E3C2F00D50BE7 /* UAEditorDelegate.swift in Sources */,
 				12AE1BD61A209FBE00BFE3D2 /* UACollectionViewCell.swift in Sources */,
+				D5F558881B80819E006CF3A3 /* UAFreetextCompetence.swift in Sources */,
 				12B7D4781A6EE75200642D5B /* UACompanyViewController.swift in Sources */,
 				12608E491B1E5140007BBEAE /* UACellSuggest.swift in Sources */,
 				129CD1361A6140D400434D67 /* UALabel.swift in Sources */,
@@ -916,12 +954,14 @@
 				D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */,
 				D53A29EB1B7935A400209FA2 /* UAOptionCell.swift in Sources */,
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
+				D5F558921B808AE0006CF3A3 /* UACheckboxCompetence.swift in Sources */,
 				D537D0691B77772700779D92 /* UACheckboxCell.swift in Sources */,
 				D537D0651B7773AF00779D92 /* UAOptionsCell.swift in Sources */,
 				12A172891A19470F000FAA54 /* UACompany.swift in Sources */,
 				1216E5C71B1B401E004D8F22 /* UIViewControllerWithMedia.swift in Sources */,
 				123986981B20BD3A002EB6D7 /* NewsViewController.swift in Sources */,
 				120803791A6BAEB100CD19E8 /* UACommentWithImageCell.swift in Sources */,
+				D5F558941B808BBE006CF3A3 /* UACompetenceWithOptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

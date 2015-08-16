@@ -15,5 +15,18 @@ class UACompetence {
     var content: String!
     var inputValue: String!
     var config: String!
-    var options: [Dictionary<String, AnyObject>] = []
+//    var options: [Dictionary<String, AnyObject>] = []
+    var isValid:Bool = true
+    
+    init() {
+        
+    }
+    
+    func validate() -> Bool {
+        return self.isValid
+    }
+    
+    func getFormat() -> String {
+        return self.format
+    }
 }

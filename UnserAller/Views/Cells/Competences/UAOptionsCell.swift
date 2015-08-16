@@ -11,7 +11,7 @@ import UIKit
 class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var optionsTable: UITableView!
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -34,16 +34,11 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
+        let option: UAOption = (self.competence as! UACompetenceWithOptions).options[indexPath.row]
         
-        if let option = self.competence.options[indexPath.row] as? Dictionary<String, AnyObject> {
-            if let name: String = option["name"] as? String {
-                cell.label.text = "\(name)"
-            }
-            
-            if let val: Int = option["value"] as? Int {
-                cell.label.tag = val
-            }
-        }
+        cell.toggle(option.isSelected)
+        cell.label.text = option.name
+        
         return cell
     }
     
@@ -52,17 +47,20 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
         
         // toggle all
         for (var i = 0; i < count; i++) {
-            let index = NSIndexPath(forRow: i, inSection: 0)
-            (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggle(false)
+            (self.competence as! UACompetenceWithOptions).options[i].isSelected = false
         }
         
         // toggle
-        (self.optionsTable.cellForRowAtIndexPath(indexPath) as! UAOptionCell).toggle(true)
+        (self.competence as! UACompetenceWithOptions).options[indexPath.row].isSelected = true
         self.optionsTable.deselectRowAtIndexPath(indexPath, animated: false)
+        self.optionsTable.reloadData()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.competence.options.count
+        if self.competence != nil {
+            return (self.competence as! UACompetenceWithOptions).options.count
+        }
+        return 0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -83,8 +81,7 @@ class UAOptionsCell: UACompetenceCell, UITableViewDelegate, UITableViewDataSourc
         
         // loop through option cells
         while (!isToggled && i < count) {
-            let index = NSIndexPath(forRow: i, inSection: 0)
-            isToggled = (self.optionsTable.cellForRowAtIndexPath(index) as! UAOptionCell).toggled
+            isToggled = (self.competence as! UACompetenceWithOptions).options[i].isSelected
             i++
         }
         

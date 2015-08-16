@@ -21,12 +21,70 @@ class CompetenceService {
     }
     
     func getCompetenceFromJSON(object: Dictionary<String, AnyObject>) -> UACompetence {
-        var competence: UACompetence = UACompetence()
+//        var competence: UACompetence = UACompetence()
+//        
+//        if let id = object["id"] as? UInt {
+//            competence.id = id
+//        }
+//
+//        if let name = object["name"] as? String {
+//            competence.name = name
+//        }
+//        
+//        if let content = object["content"] as? String {
+//            competence.content = content
+//        }
+        
+        if let format = object["format"] as? String {
+            return self.getCompetenceByType(format, object: object)
+            
+            
+//            if (format == "options" || format == "checkbox" || format == "likert") {
+//                if let config = object["config"] as? Dictionary<String, AnyObject> {
+//                    if let options = config["options"] as? [Dictionary<String, AnyObject>] {
+//                        competence.options = options
+//                    }
+//                }
+//            }
+        }
+//
+//        if let config = object["config"] as? String {
+//            competence.config = config
+//        }
+        
+        return UACompetence()
+    }
+    
+    
+    func getOptions(array: [Dictionary<String, AnyObject>]) -> [UAOption] {
+        var options: [UAOption] = []
+        
+        for option in array {
+            options.append(UAOption(name: option["name"] as! String, value: option["value"] as! String))
+        }
+        
+        return options
+    }
+    
+    func getCompetenceByType(format: String, object: Dictionary<String, AnyObject>) -> UACompetence {
+        switch format {
+            case "placeholder": return self.getPlaceholderCompetence(object)
+            case "input": return self.getSingleInputCompetence(object)
+            case "textarea": return self.getMultipleLineInputCompetence(object)
+            case "options": return self.getOptionsCompetence(object)
+            case "checkbox": return self.getCheckboxCompetence(object)
+            case "likert": return self.getLikertCompetence(object)
+            default: return UACompetence()
+        }
+    }
+    
+    func getPlaceholderCompetence(object: Dictionary<String, AnyObject>) -> UAFreetextCompetence {
+        var competence = UAFreetextCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
         }
-
+        
         if let name = object["name"] as? String {
             competence.name = name
         }
@@ -35,22 +93,115 @@ class CompetenceService {
             competence.content = content
         }
         
-        if let format = object["format"] as? String {
-            competence.format = format
-            
-            if (format == "options" || format == "checkbox" || format == "likert") {
-                if let config = object["config"] as? Dictionary<String, AnyObject> {
-                    if let options = config["options"] as? [Dictionary<String, AnyObject>] {
-                        competence.options = options
-                    }
-                }
-            }
+        return competence
+    }
+    
+    func getSingleInputCompetence(object: Dictionary<String, AnyObject>) -> UASingleInputCompetence {
+        var competence = UASingleInputCompetence()
+        
+        if let id = object["id"] as? UInt {
+            competence.id = id
         }
-
-//        if let config = object["config"] as? String {
-//            competence.config = config
-//        }
+        
+        if let name = object["name"] as? String {
+            competence.name = name
+        }
+        
+        if let content = object["content"] as? String {
+            competence.content = content
+        }
         
         return competence
     }
+    
+    func getMultipleLineInputCompetence(object: Dictionary<String, AnyObject>) -> UAMultilineInputCompetence {
+        var competence = UAMultilineInputCompetence()
+        
+        if let id = object["id"] as? UInt {
+            competence.id = id
+        }
+        
+        if let name = object["name"] as? String {
+            competence.name = name
+        }
+        
+        if let content = object["content"] as? String {
+            competence.content = content
+        }
+        
+        return competence
+    }
+    
+    func getOptionsCompetence(object: Dictionary<String, AnyObject>) -> UAOptionsCompetence {
+        var competence = UAOptionsCompetence()
+        
+        if let id = object["id"] as? UInt {
+            competence.id = id
+        }
+        
+        if let name = object["name"] as? String {
+            competence.name = name
+        }
+        
+        if let content = object["content"] as? String {
+            competence.content = content
+        }
+        
+        if let config = object["config"] as? Dictionary<String, AnyObject> {
+            if let options = config["options"] as? [Dictionary<String, AnyObject>] {
+                competence.options = self.getOptions(options)
+            }
+        }
+        
+        return competence
+    }
+    
+    func getCheckboxCompetence(object: Dictionary<String, AnyObject>) -> UACheckboxCompetence {
+        var competence = UACheckboxCompetence()
+        
+        if let id = object["id"] as? UInt {
+            competence.id = id
+        }
+        
+        if let name = object["name"] as? String {
+            competence.name = name
+        }
+        
+        if let content = object["content"] as? String {
+            competence.content = content
+        }
+        
+        if let config = object["config"] as? Dictionary<String, AnyObject> {
+            if let options = config["options"] as? [Dictionary<String, AnyObject>] {
+                competence.options = self.getOptions(options)
+            }
+        }
+        
+        return competence
+    }
+    
+    func getLikertCompetence(object: Dictionary<String, AnyObject>) -> UALikertCompetence {
+        var competence = UALikertCompetence()
+        
+        if let id = object["id"] as? UInt {
+            competence.id = id
+        }
+        
+        if let name = object["name"] as? String {
+            competence.name = name
+        }
+        
+        if let content = object["content"] as? String {
+            competence.content = content
+        }
+        
+        if let config = object["config"] as? Dictionary<String, AnyObject> {
+            if let options = config["options"] as? [Dictionary<String, AnyObject>] {
+                competence.options = self.getOptions(options)
+            }
+        }
+        
+        return competence
+    }
+    
 }

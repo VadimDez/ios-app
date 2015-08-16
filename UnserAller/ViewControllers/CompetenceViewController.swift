@@ -75,51 +75,51 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     */
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return self.getCell(indexPath.row)
+        return self.getCell(indexPath)
     }
     
-    func getCell(index: Int) -> UITableViewCell {
+    func getCell(indexPath: NSIndexPath) -> UITableViewCell {
         
-        if (self.entries[index].format == "placeholder") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAFreetextCell") as! UAFreetextCell
-                cell.setupCell(self.entries[index])
+        if (self.entries[indexPath.row].format == "placeholder") {
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAFreetextCell", forIndexPath: indexPath) as! UAFreetextCell
+                cell.setupCell(self.entries[indexPath.row])
             
             return cell
         }
         
-        if (self.entries[index].format == "input") {
+        if (self.entries[indexPath.row].format == "input") {
             
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UASingleLineInputCell") as! UASingleLineInputCell
-            cell.setupCell(self.entries[index])
-            
-            return cell
-        }
-        
-        if (self.entries[index].format == "textarea") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAMultipleLineInputCell") as! UAMultipleLineInputCell
-            cell.setupCell(self.entries[index])
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UASingleLineInputCell", forIndexPath: indexPath) as! UASingleLineInputCell
+            cell.setupCell(self.entries[indexPath.row])
             
             return cell
         }
         
-        if (self.entries[index].format == "options") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
-            cell.setupCell(self.entries[index])
+        if (self.entries[indexPath.row].format == "textarea") {
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAMultipleLineInputCell", forIndexPath: indexPath) as! UAMultipleLineInputCell
+            cell.setupCell(self.entries[indexPath.row])
             
             return cell
         }
         
-        if (self.entries[index].format == "checkbox") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UACheckboxCell") as! UACheckboxCell
-            cell.setupCell(self.entries[index])
+        if (self.entries[indexPath.row].format == "options") {
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UAOptionsCell", forIndexPath: indexPath) as! UAOptionsCell
+            cell.setupCell(self.entries[indexPath.row])
+            
+            return cell
+        }
+        
+        if (self.entries[indexPath.row].format == "checkbox") {
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UACheckboxCell", forIndexPath: indexPath) as! UACheckboxCell
+            cell.setupCell(self.entries[indexPath.row])
             
             return cell
         }
         
         
-        if (self.entries[index].format == "likert") {
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UALikertCell") as! UALikertCell
-            cell.setupCell(self.entries[index])
+        if (self.entries[indexPath.row].format == "likert") {
+            var cell = self.mainTable.dequeueReusableCellWithIdentifier("UALikertCell", forIndexPath: indexPath) as! UALikertCell
+            cell.setupCell(self.entries[indexPath.row])
             
             return cell
         }
@@ -127,11 +127,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 5 {
-            return 600.0
-        }
-        
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {        
         if (indexPath.row >= 3) {
             return 150.0
         }
@@ -154,14 +150,14 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 //        return "asd"
 //    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10.0
-    }
+//    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        return UIView()
+//    }
+//    
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 10.0
+//    }
     
     func getEntries(success: () -> Void, error: () -> Void) {
         var url = "\(APIURL)/api/mobile/competence/get"
@@ -186,5 +182,21 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                     success()
                 }
         }
+    }
+    
+    @IBAction func send(sender: AnyObject) {
+        let count = self.entries.count
+        var isValid = true
+        
+        for (var i = 0; i < count; i++) {
+            let competence = self.entries[i] as UACompetence
+            println(i)
+            println(competence.validate())
+            if !competence.validate() {
+                isValid = false
+            }
+        }
+        
+        println(isValid)
     }
 }
