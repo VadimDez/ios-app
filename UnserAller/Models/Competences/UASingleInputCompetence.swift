@@ -23,6 +23,6 @@ class UASingleInputCompetence: UACompetence {
     }
     
     override func getAnswer() -> [Dictionary<String, AnyObject>] {
-        return [["id": self.id, "value": self.answer]]
+        return [["competence": self.id, "value": self.answer]]
     }
 }

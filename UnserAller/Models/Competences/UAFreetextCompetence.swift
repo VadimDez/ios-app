@@ -19,7 +19,7 @@ class UAFreetextCompetence: UACompetence {
     override func getAnswer() -> [Dictionary<String, AnyObject>] {
         return [
             [
-                "id": self.id,
+                "competence": self.id,
                 "value": "read"
             ]
         ]

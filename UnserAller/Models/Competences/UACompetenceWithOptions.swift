@@ -41,6 +41,6 @@ class UACompetenceWithOptions: UACompetence {
             i++
         }
         
-        return [["id": self.id, "value": selectedOption.value]]
+        return [["competence": self.id, "value": selectedOption.value]]
     }
 }

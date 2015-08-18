@@ -206,8 +206,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.HTTPMethod = "POST"
-        request.HTTPBody = encodeParameters(["competences": ["0": ["competence": 172, "value": "read"]]]).dataUsingEncoding(NSUTF8StringEncoding)
-
+        request.HTTPBody = encodeParameters(["competences": answers]).dataUsingEncoding(NSUTF8StringEncoding)
         
 //        Alamofire.request(.POST, url, parameters: ["competences": ["0": ["competence": 172, "value": "read"]]], encoding: ParameterEncoding.JSON)
         

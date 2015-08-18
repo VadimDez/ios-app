@@ -21,7 +21,7 @@ class UACheckboxCompetence: UACompetenceWithOptions {
         
         for option in (self as UACompetenceWithOptions).options {
             if (option.isSelected) {
-                array.append(["id": self.id, "value": option.value])
+                array.append(["competence": self.id, "value": option.value])
             }
         }
         

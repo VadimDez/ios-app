@@ -21,6 +21,6 @@ class UAMultilineInputCompetence: UACompetence {
         return (count(self.answer) > 0)
     }
     override func getAnswer() -> [Dictionary<String, AnyObject>] {
-        return [["id": self.id, "value": self.answer]]
+        return [["competence": self.id, "value": self.answer]]
     }
 }
