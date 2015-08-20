@@ -49,6 +49,7 @@ class ProjectViewController:
     var getRequest: Alamofire.Request!
     
     override func viewWillAppear(animated: Bool) {
+        
         super.viewWillAppear(animated)
         self.registerNotifications()
     }
@@ -60,9 +61,6 @@ class ProjectViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
-        self.navigationController?.pushViewController(competenceVC, animated: true)
         
         self.setDelegates()
         // nib

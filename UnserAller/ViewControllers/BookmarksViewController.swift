@@ -117,14 +117,25 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-        
-        // set project id
-        projectVC.projectId = self.entries[indexPath.row].id
-        
-        self.navigationController?.pushViewController(projectVC, animated: true)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var competenceService = CompetenceService()
+        competenceService.getEntries(self.entries[indexPath.row].id, success: { (competences) -> Void in
+            if competences.count > 0 {
+                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                self.navigationController?.pushViewController(competenceVC, animated: true)
+                
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            } else {
+                var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                
+                // set project id
+                projectViewController.projectId = self.entries[indexPath.row].id
+                
+                self.navigationController?.pushViewController(projectViewController, animated: true)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+            }) { () -> Void in
+                
+        }
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {

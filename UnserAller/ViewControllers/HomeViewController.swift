@@ -305,12 +305,22 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      *   Present project view controller
      */
     func presentProjectViewController(projectId: UInt) {
-        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-
-        // set project id
-        projectVC.projectId = projectId
-
-        self.navigationController?.pushViewController(projectVC, animated: true)
+        var competenceService = CompetenceService()
+        competenceService.getEntries(projectId, success: { (competences) -> Void in
+            if competences.count > 0 {
+                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                self.navigationController?.pushViewController(competenceVC, animated: true)
+            } else {
+                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                
+                // set project id
+                projectVC.projectId = projectId
+                
+                self.navigationController?.pushViewController(projectVC, animated: true)
+            }
+        }) { () -> Void in
+            
+        }
     }
     
     /**

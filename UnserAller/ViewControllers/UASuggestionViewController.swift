@@ -392,12 +392,22 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     
     
     @IBAction func openProject(sender: AnyObject) {
-        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-        
-        // set project id
-        projectVC.projectId = self.suggestion.projectId
-        
-        self.navigationController?.pushViewController(projectVC, animated: true)
+        var competenceService = CompetenceService()
+        competenceService.getEntries(self.suggestion.projectId, success: { (competences) -> Void in
+            if competences.count > 0 {
+                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                self.navigationController?.pushViewController(competenceVC, animated: true)
+            } else {
+                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                
+                // set project id
+                projectVC.projectId = self.suggestion.projectId
+                
+                self.navigationController?.pushViewController(projectVC, animated: true)
+            }
+        }) { () -> Void in
+            
+        }
     }
     
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {

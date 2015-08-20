@@ -92,13 +92,26 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
         
-        // set project id
-        projectViewController.projectId = self.entries[indexPath.row].id
-        
-        self.navigationController?.pushViewController(projectViewController, animated: true)
-        self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+        var competenceService = CompetenceService()
+        competenceService.getEntries(self.entries[indexPath.row].id, success: { (competences) -> Void in
+            if competences.count > 0 {
+                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                self.navigationController?.pushViewController(competenceVC, animated: true)
+                
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+            } else {
+                var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                
+                // set project id
+                projectViewController.projectId = self.entries[indexPath.row].id
+                
+                self.navigationController?.pushViewController(projectViewController, animated: true)
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+            }
+            }) { () -> Void in
+                
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

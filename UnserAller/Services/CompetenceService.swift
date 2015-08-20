@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class CompetenceService {
     
@@ -204,4 +205,22 @@ class CompetenceService {
         return competence
     }
     
+    
+    func getEntries(project: UInt, success: (competences: [Dictionary<String, AnyObject>]) -> Void, error: () -> Void) {
+        var url = "\(APIURL)/api/mobile/competence/get"
+        
+        Alamofire.request(.GET, url, parameters: ["project": project])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    // error block
+                    error()
+                } else {
+                    
+                    success(competences: JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
+                }
+        }
+    }
 }

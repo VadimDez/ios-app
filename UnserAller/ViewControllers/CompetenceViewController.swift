@@ -15,6 +15,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var entries: [UACompetence] = []
     var checkValidation: Bool = false
+    var projectId: UInt!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -106,16 +107,8 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {        
-        if (indexPath.row >= 3) {
-            return 150.0
-        }
-        
-        if (indexPath.row >= 1) {
-            return 80.0
-        }
-        
-        return 30.0
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 150.0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
