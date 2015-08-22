@@ -121,6 +121,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         competenceService.getEntries(self.entries[indexPath.row].id, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                competenceVC.projectId = self.entries[indexPath.row].id
                 self.navigationController?.pushViewController(competenceVC, animated: true)
                 
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)

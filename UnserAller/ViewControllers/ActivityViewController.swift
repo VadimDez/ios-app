@@ -285,6 +285,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         competenceService.getEntries(projectId, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                competenceVC.projectId = projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
             } else {
                 var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController

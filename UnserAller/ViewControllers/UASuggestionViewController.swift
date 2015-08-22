@@ -396,6 +396,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         competenceService.getEntries(self.suggestion.projectId, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                competenceVC.projectId = self.suggestion.projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
             } else {
                 var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController

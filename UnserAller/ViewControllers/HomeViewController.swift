@@ -309,13 +309,13 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         competenceService.getEntries(projectId, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                competenceVC.projectId = projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
             } else {
                 var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                 
                 // set project id
                 projectVC.projectId = projectId
-                
                 self.navigationController?.pushViewController(projectVC, animated: true)
             }
         }) { () -> Void in

@@ -16,6 +16,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     var entries: [UACompetence] = []
     var checkValidation: Bool = false
     var projectId: UInt!
+    var projectStepId: UInt!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -137,8 +138,15 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func getEntries(success: () -> Void, error: () -> Void) {
         var url = "\(APIURL)/api/mobile/competence/get"
+        var params:[String: AnyObject] = [String: AnyObject]()
         
-        Alamofire.request(.GET, url, parameters: ["project": 1])
+        if (self.projectId != nil) {
+            params["project"] = self.projectId
+        } else if (self.projectStepId != nil) {
+            params["step"] = self.projectStepId
+        }
+        
+        Alamofire.request(.GET, url, parameters: params)
             .responseJSON { (_,_,JSON,errors) in
                 
                 if (errors != nil || JSON?.count == 0) {
@@ -153,7 +161,8 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                     var array = competenceService.getCompetencesFromJSON(JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
 
                     // merge two arrays
-                    self.entries = self.entries + array
+//                    self.entries = self.entries + array
+                    self.entries = array
                     
                     success()
                 }
@@ -187,7 +196,27 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         println(results)
         
         self.sendAnswers(results, success: { () -> Void in
-            println("sent")
+            self.getEntries({ () -> Void in
+
+                if (self.entries.count == 0) {
+
+                    if (self.projectId != nil) {
+                        
+                        var navigation = self.navigationController
+                        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                        
+                        // set project id
+                        projectVC.projectId = self.projectId
+                        
+                        navigation?.popToRootViewControllerAnimated(false)
+                        navigation?.pushViewController(projectVC, animated: true)
+                    }
+                } else {
+                    self.mainTable.reloadData()
+                }
+            }, error: { () -> Void in
+                
+            })
         }) { () -> Void in
             
         }
