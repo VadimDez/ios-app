@@ -208,7 +208,6 @@ class CompetenceService {
     
     func getEntries(project: UInt, projectStep: UInt, success: (competences: [Dictionary<String, AnyObject>]) -> Void, error: () -> Void) {
         var url = "\(APIURL)/api/mobile/competence/get"
-        
         var params:[String: AnyObject] = [String: AnyObject]()
         
         if (project != 0) {
@@ -218,16 +217,20 @@ class CompetenceService {
             params["step"] = projectStep
         }
         
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         Alamofire.request(.GET, url, parameters: params)
             .responseJSON { (_,_,JSON,errors) in
                 
                 if (errors != nil || JSON?.count == 0) {
                     // print error
                     println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
                 } else {
-                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(competences: JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
                 }
         }
