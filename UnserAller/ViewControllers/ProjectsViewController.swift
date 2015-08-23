@@ -16,6 +16,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     var countEntries: Int = 0
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
+    
+    var selectDisabled: Int = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,27 +94,40 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        var competenceService = CompetenceService()
-        competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
-            if competences.count > 0 {
-                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
-                competenceVC.projectId = self.entries[indexPath.row].id
-                
-                self.navigationController?.pushViewController(competenceVC, animated: true)
-                
-                self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
-            } else {
-                var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-                
-                // set project id
-                projectViewController.projectId = self.entries[indexPath.row].id
-                
-                self.navigationController?.pushViewController(projectViewController, animated: true)
-                self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+
+        if self.selectDisabled != -1 {
+            if indexPath.row != self.selectDisabled {
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
             }
-            }) { () -> Void in
+        } else {
+            self.selectDisabled = indexPath.row
+        
+            var competenceService = CompetenceService()
+            
+            // get competences
+            competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
+                if competences.count > 0 {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.entries[indexPath.row].id
+                    
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                    
+                    self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+                } else {
+                    var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    
+                    // set project id
+                    projectViewController.projectId = self.entries[indexPath.row].id
+                    
+                    self.navigationController?.pushViewController(projectViewController, animated: true)
+                    self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
+                }
                 
+                self.selectDisabled = -1
+                
+                }) { () -> Void in
+                    self.selectDisabled = -1
+            }
         }
     }
     

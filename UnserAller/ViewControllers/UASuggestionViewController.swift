@@ -17,8 +17,10 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     var suggestion: UASuggestion!
     var entries: [UAComment] = []
     var tableWidth: CGFloat!
-    var votingDisabled = false
+    var votingDisabled: Bool = false
     var newCommentContent: String!
+    
+    var openProjectDisabled: Bool = false
     
     override func viewWillAppear(animated: Bool) {
         self.tableWidth = self.mainTable.frame.width
@@ -392,22 +394,31 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     
     
     @IBAction func openProject(sender: AnyObject) {
-        var competenceService = CompetenceService()
-        competenceService.getEntries(self.suggestion.projectId, projectStep: 0, success: { (competences) -> Void in
-            if competences.count > 0 {
-                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
-                competenceVC.projectId = self.suggestion.projectId
-                self.navigationController?.pushViewController(competenceVC, animated: true)
-            } else {
-                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-                
-                // set project id
-                projectVC.projectId = self.suggestion.projectId
-                
-                self.navigationController?.pushViewController(projectVC, animated: true)
-            }
-        }) { () -> Void in
+        if !self.openProjectDisabled {
+            self.openProjectDisabled = true
             
+            var competenceService = CompetenceService()
+            
+            competenceService.getEntries(self.suggestion.projectId, projectStep: 0, success: { (competences) -> Void in
+                
+                // check if any competence to fill
+                if competences.count > 0 {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.suggestion.projectId
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                } else {
+                    var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    
+                    // set project id
+                    projectVC.projectId = self.suggestion.projectId
+                    
+                    self.navigationController?.pushViewController(projectVC, animated: true)
+                }
+                
+                self.openProjectDisabled = false
+            }) { () -> Void in
+                self.openProjectDisabled = false
+            }
         }
     }
     

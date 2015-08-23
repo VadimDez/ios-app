@@ -15,6 +15,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     var page: Int = -1
     var entries: [UAProject] = []
     var countEntries: Int = 0
+    var selectDisabled: Int = -1
     
     /** functions **/
     
@@ -117,25 +118,35 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var competenceService = CompetenceService()
-        competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
-            if competences.count > 0 {
-                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
-                competenceVC.projectId = self.entries[indexPath.row].id
-                self.navigationController?.pushViewController(competenceVC, animated: true)
-                
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            } else {
-                var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
-                
-                // set project id
-                projectViewController.projectId = self.entries[indexPath.row].id
-                
-                self.navigationController?.pushViewController(projectViewController, animated: true)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if self.selectDisabled != -1 {
+            if indexPath.row != self.selectDisabled {
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
             }
-            }) { () -> Void in
-                
+        } else {
+            self.selectDisabled = indexPath.row
+            
+            var competenceService = CompetenceService()
+            competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
+                if competences.count > 0 {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.entries[indexPath.row].id
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                    
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                } else {
+                    var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    
+                    // set project id
+                    projectViewController.projectId = self.entries[indexPath.row].id
+                    
+                    self.navigationController?.pushViewController(projectViewController, animated: true)
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                }
+                self.selectDisabled = -1
+                }) { () -> Void in
+                self.selectDisabled = -1
+            }
         }
     }
     

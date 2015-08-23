@@ -119,7 +119,13 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(suggestion.projectId)
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(suggestion.projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
         }
         return cell
     }
@@ -131,7 +137,13 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(suggestion.projectId)
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(suggestion.projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
         }
         return cell
     }
@@ -146,7 +158,14 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(self.entries[row].projectId)
+            
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(self.entries[row].projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
         }
         return cell
     }
@@ -161,7 +180,14 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
-            self.presentProjectViewController(self.entries[row].projectId)
+            
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(self.entries[row].projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
         }
         return cell
     }
@@ -279,7 +305,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     /**
     *   Present project view controller
     */
-    func presentProjectViewController(projectId: UInt) {
+    func presentProjectViewController(projectId: UInt, done: () -> Void) {
         
         var competenceService = CompetenceService()
         competenceService.getEntries(projectId, projectStep: 0, success: { (competences) -> Void in
@@ -287,6 +313,8 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
+                
+                done()
             } else {
                 var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                 
@@ -294,8 +322,11 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
                 projectVC.projectId = projectId
                 
                 self.navigationController?.pushViewController(projectVC, animated: true)
+                
+                done()
             }
             }) { () -> Void in
+                done()
                 
         }
     }
