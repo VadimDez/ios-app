@@ -24,11 +24,11 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        self.mainTable.reloadData()
-    }
+//    
+//    override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
+//        self.mainTable.reloadData()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,6 +145,8 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         var url = "\(APIURL)/api/mobile/competence/get"
         var params:[String: AnyObject] = [String: AnyObject]()
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
         if (self.projectId != nil) {
             params["project"] = self.projectId
         }
@@ -158,8 +160,12 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                 if (errors != nil || JSON?.count == 0) {
                     // print error
                     println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
                     // error block
                     error()
+                    
                 } else {
                     let competenceService = CompetenceService()
                     
@@ -170,6 +176,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 //                    self.entries = self.entries + array
                     self.entries = array
                     
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
                 }
         }
@@ -179,6 +186,8 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         let count = self.entries.count
         var isValid = true
         var results: [Dictionary<String, AnyObject>] = []
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         for (var i = 0; i < count; i++) {
             let competence = self.entries[i] as UACompetence
@@ -230,7 +239,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                 
             })
         }) { () -> Void in
-            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
     

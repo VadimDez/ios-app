@@ -53,6 +53,10 @@ class ProjectViewController:
         
         super.viewWillAppear(animated)
         self.registerNotifications()
+        
+        if self.type == "survey" && self.hasCompetences {
+            self.checkCompetences()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -223,16 +227,22 @@ class ProjectViewController:
                     
                         self.updatePhase(jsonResponse, success: { () -> Void in
                             self.entries = []
-                            self.loadSuggestions({ () -> Void in
-                                
-                                self.mainTable.pullToRefreshView.stopAnimating()
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                }, failure: { () -> Void in
-                                    println("fail load suggestions")
-                                
-                                self.mainTable.pullToRefreshView.stopAnimating()
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
+
+                            if self.type == "survey" {
+                                self.checkCompetences()
+                            } else {
+                                self.loadSuggestions({ () -> Void in
+                                    
+                                    self.mainTable.pullToRefreshView.stopAnimating()
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                    
+                                    self.mainTable.pullToRefreshView.stopAnimating()
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                })
+                            }
+                            
                         })
                     }, failure: { () -> Void in
                         
@@ -266,21 +276,26 @@ class ProjectViewController:
         self.page += 1
         
         if (!self.news) {
-            self.loadSuggestions({ () -> Void in
-                // reload data
-                self.mainTable.reloadData()
-                
-                self.mainTable.infiniteScrollingView.stopAnimating()
-                
-                // active activity indicator
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                }, failure: { () -> Void in
-                    println("Project infiniteload error")
+            
+            if self.type == "survey" {
+                self.checkCompetences()
+            } else {
+                self.loadSuggestions({ () -> Void in
+                    // reload data
+                    self.mainTable.reloadData()
                     
                     self.mainTable.infiniteScrollingView.stopAnimating()
+                    
                     // active activity indicator
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            })
+                    }, failure: { () -> Void in
+                        println("Project infiniteload error")
+                        
+                        self.mainTable.infiniteScrollingView.stopAnimating()
+                        // active activity indicator
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                })
+            }
         } else {
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
@@ -395,9 +410,7 @@ class ProjectViewController:
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-println("cell for row")
-        println(self.type)
-        println(self.hasCompetences)
+
         if self.type == "survey" {
             if self.hasCompetences {
                 var cell = UITableViewCell()
@@ -591,16 +604,7 @@ println("cell for row")
                 self.updatePhase(jsonResponse, success: { () -> Void in
                     
                     if self.type == "survey" {
-                        println(self.stepId)
-                        var competenceService = CompetenceService()
-                        println("competence")
-                        competenceService.getEntries(self.projectId, projectStep: self.stepId, success: { (competences) -> Void in
-                            self.hasCompetences = (competences.count > 0)
-                            println(competences.count)
-                            self.mainTable.reloadData()
-                        }, error: { () -> Void in
-                            
-                        })
+                        self.checkCompetences()
                     } else {
                         self.loadSuggestions({ () -> Void in
                             
@@ -978,5 +982,22 @@ println("cell for row")
                     success(json: JSON!)
                 }
         }
+    }
+    
+    func checkCompetences() {
+        var competenceService = CompetenceService()
+        // active activity indicator
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        competenceService.getEntries(self.projectId, projectStep: self.stepId, success: { (competences) -> Void in
+            self.hasCompetences = (competences.count > 0)
+
+            self.mainTable.reloadData()
+
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }, error: { () -> Void in
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
 }
