@@ -19,11 +19,16 @@ class UAMultipleLineInputCell: UACompetenceCell, UITextViewDelegate {
         
         // set placeholder
         
+        // set border
+        self.input.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).CGColor
+        self.input.layer.borderWidth = 1.0
+        self.input.layer.cornerRadius = 5
+        
     }
     
     
     func textFieldDidEndEditing(textField: UITextField) {
-                println("edited!")
+        println("edited!")
         (self.competence as! UAMultilineInputCompetence).answer = self.input.text
     }
     

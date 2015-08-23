@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -14,24 +14,24 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYn-gE-9C6">
-                        <rect key="frame" x="8" y="8" width="304" height="17"/>
+                        <rect key="frame" x="8" y="8" width="304" height="16.5"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1nV-t4-9m9">
-                        <rect key="frame" x="8" y="33" width="304" height="24"/>
+                        <rect key="frame" x="0.0" y="29" width="320" height="28.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tableView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="1nV-t4-9m9" secondAttribute="bottom" constant="-1.5" id="Cf3-tH-PCN"/>
-                    <constraint firstItem="PYn-gE-9C6" firstAttribute="trailing" secondItem="gBn-9K-Cgh" secondAttribute="trailingMargin" id="DV9-eh-Yo2"/>
-                    <constraint firstItem="1nV-t4-9m9" firstAttribute="top" secondItem="PYn-gE-9C6" secondAttribute="bottom" constant="8" id="KWR-rh-Us9"/>
-                    <constraint firstItem="PYn-gE-9C6" firstAttribute="leading" secondItem="gBn-9K-Cgh" secondAttribute="leadingMargin" id="SAS-me-cif"/>
-                    <constraint firstItem="1nV-t4-9m9" firstAttribute="trailing" secondItem="gBn-9K-Cgh" secondAttribute="trailingMargin" id="WTg-44-ZRb"/>
-                    <constraint firstItem="1nV-t4-9m9" firstAttribute="leading" secondItem="gBn-9K-Cgh" secondAttribute="leadingMargin" id="Xi3-Xb-9V9"/>
-                    <constraint firstItem="PYn-gE-9C6" firstAttribute="top" secondItem="gBn-9K-Cgh" secondAttribute="topMargin" id="iub-KZ-Wm4"/>
+                    <constraint firstItem="1nV-t4-9m9" firstAttribute="top" secondItem="PYn-gE-9C6" secondAttribute="bottom" constant="5" id="M4C-rl-h09"/>
+                    <constraint firstItem="PYn-gE-9C6" firstAttribute="trailing" secondItem="gBn-9K-Cgh" secondAttribute="trailingMargin" id="Olm-eD-cjN"/>
+                    <constraint firstItem="PYn-gE-9C6" firstAttribute="top" secondItem="gBn-9K-Cgh" secondAttribute="topMargin" id="UsP-ls-7mk"/>
+                    <constraint firstItem="PYn-gE-9C6" firstAttribute="leading" secondItem="gBn-9K-Cgh" secondAttribute="leadingMargin" id="a95-Em-0JA"/>
+                    <constraint firstItem="1nV-t4-9m9" firstAttribute="leading" secondItem="gBn-9K-Cgh" secondAttribute="leadingMargin" constant="-8" id="btm-D1-Yar"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="1nV-t4-9m9" secondAttribute="bottom" constant="-2" id="iKN-hQ-0s1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1nV-t4-9m9" secondAttribute="trailing" constant="-8" id="m7g-L6-2o3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -17,6 +17,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     var checkValidation: Bool = false
     var projectId: UInt!
     var projectStepId: UInt!
+    var previousCompetenceFormat: CompetenceFormat!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +36,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 
         self.registerNibs()
         self.getEntries({ () -> Void in
+            self.previousCompetenceFormat = nil
             self.mainTable.reloadData()
         }, error: { () -> Void in
             
@@ -101,12 +103,20 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
             fallthrough
         case CompetenceFormat.Likert:
             var cell = self.mainTable.dequeueReusableCellWithIdentifier(self.entries[indexPath.row].cellType, forIndexPath: indexPath) as! UACompetenceCell
+            
+            
+            if self.previousCompetenceFormat == CompetenceFormat.Likert && self.entries[indexPath.row].format == CompetenceFormat.Likert && self.entries[indexPath.row].content == self.entries[indexPath.row - 1].content {
+                (cell as! UALikertCell).showContent = false
+            }
+            
             cell.setupCell(self.entries[indexPath.row])
             
             if self.checkValidation {
                 cell.validate()
             }
             
+            
+            self.previousCompetenceFormat = self.entries[indexPath.row].format
             return cell
 
         default: return UITableViewCell()
@@ -114,6 +124,53 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let width = self.mainTable.frame.width
+        let font = UIFont(name: "Helvetica Neue", size: 14)
+        let competence: UACompetence = self.entries[indexPath.row]
+        
+        if competence.format == CompetenceFormat.Placeholder {
+            return 15.0 + competence.content.getHeightForView(width - 16, font: font!)
+        } else if competence.format == CompetenceFormat.SingleLineInput {
+            return 25.0 + 25.0 + competence.content.getHeightForView(width - 16, font: font!)
+        } else if competence.format == CompetenceFormat.MultipleLineInput {
+            return 25.0 + 50.0 + competence.content.getHeightForView(width - 16, font: font!)
+        } else if competence.format == CompetenceFormat.Options
+            || competence.format == CompetenceFormat.Checkbox
+            || competence.format == CompetenceFormat.Likert
+        {
+            
+            var height: CGFloat = 15.0 // base
+            
+            if competence.format == CompetenceFormat.Likert {
+                if competence.format == CompetenceFormat.Likert
+                    && self.previousCompetenceFormat != CompetenceFormat.Likert
+                    && competence.content != competence.content {
+                    // content
+                    height = height + 10.0 + competence.content.getHeightForView(width - 16, font: font!)
+                } else {
+                    height = height + 20.0
+                }
+                
+                // count question height
+                height = height + 10.0 + competence.content.getHeightForView(width - 16, font: font!)
+            } else {
+                height = height + competence.content.getHeightForView(width - 16, font: font!)
+            }
+            
+            let count = (competence as! UACompetenceWithOptions).options.count
+            
+            for (var i = 0; i < count; i++) {
+                let optionHeight = (competence as! UACompetenceWithOptions).options[i].name.getHeightForView(width - 59, font: font!)
+                
+                if optionHeight < 31 {
+                    height = height + 31
+                } else {
+                    height = height + 10.0 + optionHeight
+                }
+            }
+            
+            return height
+        }
         return 150.0
     }
     
@@ -202,6 +259,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if !isValid {
             self.checkValidation = true
+            self.previousCompetenceFormat = nil
             self.mainTable.reloadData()
         }// else {
         //    self.checkValidation = false
@@ -233,6 +291,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                     }
                 } else {
+                    self.previousCompetenceFormat = nil
                     self.mainTable.reloadData()
                 }
             }, error: { () -> Void in

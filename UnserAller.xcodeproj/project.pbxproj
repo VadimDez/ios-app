@@ -108,6 +108,7 @@
 		D53A29ED1B7935FF00209FA2 /* UAOptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53A29EC1B7935FF00209FA2 /* UAOptionCell.xib */; };
 		D56C462219E04DDE0059735A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D581228E197C08B600E3573C /* Images.xcassets */; };
 		D56C462419E04DFC0059735A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D56C462319E04DFC0059735A /* Media.xcassets */; };
+		D57236D41B8A33960076BC30 /* UACompetenceWithOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57236D31B8A33960076BC30 /* UACompetenceWithOptionsCell.swift */; };
 		D5812288197C08B600E3573C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
 		D581228A197C08B600E3573C /* InitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812289197C08B600E3573C /* InitViewController.swift */; };
 		D581228D197C08B600E3573C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D581228B197C08B600E3573C /* Main.storyboard */; };
@@ -260,6 +261,7 @@
 		D53A29EA1B7935A400209FA2 /* UAOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAOptionCell.swift; path = "Views/Cells/Competences/Table Cells/UAOptionCell.swift"; sourceTree = "<group>"; };
 		D53A29EC1B7935FF00209FA2 /* UAOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAOptionCell.xib; path = "Views/Cells/Competences/Table Cells/UAOptionCell.xib"; sourceTree = "<group>"; };
 		D56C462319E04DFC0059735A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
+		D57236D31B8A33960076BC30 /* UACompetenceWithOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACompetenceWithOptionsCell.swift; path = Views/Cells/Competences/UACompetenceWithOptionsCell.swift; sourceTree = "<group>"; };
 		D5812282197C08B600E3573C /* UnserAller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnserAller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812286197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5812287197C08B600E3573C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 			children = (
 				D53A29E91B79350600209FA2 /* Table Cells */,
 				D537D06C1B7778E200779D92 /* UACompetenceCell.swift */,
+				D57236D31B8A33960076BC30 /* UACompetenceWithOptionsCell.swift */,
 				D537D0561B7766F500779D92 /* UAFreetextCell.swift */,
 				D537D0581B77670A00779D92 /* UAFreetextCell.xib */,
 				D537D05A1B776C2E00779D92 /* UASingleLineInputCell.swift */,
@@ -946,6 +949,7 @@
 				D59D2DDC1B7D22270030A383 /* CompetenceService.swift in Sources */,
 				1270B5831A6B166100D041B9 /* UACommentViewModel.swift in Sources */,
 				D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */,
+				D57236D41B8A33960076BC30 /* UACompetenceWithOptionsCell.swift in Sources */,
 				1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */,
 				126CBE271A1160E500E22070 /* UABookmarkCell.swift in Sources */,
 				D5D9E65C19E15A2500537FBD /* Keychain.swift in Sources */,
