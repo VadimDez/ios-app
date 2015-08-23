@@ -206,10 +206,19 @@ class CompetenceService {
     }
     
     
-    func getEntries(project: UInt, success: (competences: [Dictionary<String, AnyObject>]) -> Void, error: () -> Void) {
+    func getEntries(project: UInt, projectStep: UInt, success: (competences: [Dictionary<String, AnyObject>]) -> Void, error: () -> Void) {
         var url = "\(APIURL)/api/mobile/competence/get"
         
-        Alamofire.request(.GET, url, parameters: ["project": project])
+        var params:[String: AnyObject] = [String: AnyObject]()
+        
+        if (project != 0) {
+            params["project"] = project
+        }
+        if (projectStep != 0) {
+            params["step"] = projectStep
+        }
+        
+        Alamofire.request(.GET, url, parameters: params)
             .responseJSON { (_,_,JSON,errors) in
                 
                 if (errors != nil || JSON?.count == 0) {

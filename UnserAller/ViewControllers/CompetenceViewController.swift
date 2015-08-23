@@ -25,6 +25,11 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         self.mainTable.dataSource = self
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.mainTable.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -142,7 +147,8 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if (self.projectId != nil) {
             params["project"] = self.projectId
-        } else if (self.projectStepId != nil) {
+        }
+        if (self.projectStepId != nil) {
             params["step"] = self.projectStepId
         }
         
@@ -200,16 +206,22 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 
                 if (self.entries.count == 0) {
 
-                    if (self.projectId != nil) {
+                    if self.projectId != nil {
                         
                         var navigation = self.navigationController
-                        var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                         
-                        // set project id
-                        projectVC.projectId = self.projectId
+                        if self.projectStepId == nil {
+                            var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                         
-                        navigation?.popToRootViewControllerAnimated(false)
-                        navigation?.pushViewController(projectVC, animated: true)
+                            // set project id
+                            projectVC.projectId = self.projectId
+                            
+//                            navigation?.popToRootViewControllerAnimated(false)
+                            navigation?.popViewControllerAnimated(false)
+                            navigation?.pushViewController(projectVC, animated: true)
+                        } else {
+                            navigation?.popViewControllerAnimated(true)
+                        }
                     }
                 } else {
                     self.mainTable.reloadData()

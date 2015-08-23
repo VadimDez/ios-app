@@ -306,7 +306,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      */
     func presentProjectViewController(projectId: UInt) {
         var competenceService = CompetenceService()
-        competenceService.getEntries(projectId, success: { (competences) -> Void in
+        competenceService.getEntries(projectId, projectStep: 0, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = projectId

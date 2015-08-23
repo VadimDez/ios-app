@@ -393,7 +393,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     
     @IBAction func openProject(sender: AnyObject) {
         var competenceService = CompetenceService()
-        competenceService.getEntries(self.suggestion.projectId, success: { (competences) -> Void in
+        competenceService.getEntries(self.suggestion.projectId, projectStep: 0, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = self.suggestion.projectId

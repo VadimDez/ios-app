@@ -118,7 +118,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var competenceService = CompetenceService()
-        competenceService.getEntries(self.entries[indexPath.row].id, success: { (competences) -> Void in
+        competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
             if competences.count > 0 {
                 var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = self.entries[indexPath.row].id

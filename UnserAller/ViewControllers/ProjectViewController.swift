@@ -45,6 +45,7 @@ class ProjectViewController:
     var news = false
     var votingDisabled = false
     var newsPhaseCount = 0
+    var hasCompetences: Bool = false
     
     var getRequest: Alamofire.Request!
     
@@ -364,14 +365,26 @@ class ProjectViewController:
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.type == "survey" {
+            return 1
+        }
         return self.entries.count
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (!news) {
-            var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
-            detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
-            self.navigationController?.pushViewController(detailViewController, animated: true)
+            if self.type == "survey" {
+                if self.hasCompetences {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.projectId
+                    competenceVC.projectStepId = self.stepId
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                }
+            } else {
+                var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+                detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
+                self.navigationController?.pushViewController(detailViewController, animated: true)
+            }
         } else {
             var detailViewController: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
             detailViewController.news = self.entries[indexPath.row] as! UANews
@@ -382,14 +395,28 @@ class ProjectViewController:
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
-        switch self.entries[indexPath.row].cellType {
-            case "SuggestionCell":          return self.getSuggestCellForRow(indexPath.row)
-            case "UAProjectNewsCell":       return self.getNewsCellForRow(indexPath.row)
-            case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
-            case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
-            case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
-            default: break;
+println("cell for row")
+        println(self.type)
+        println(self.hasCompetences)
+        if self.type == "survey" {
+            if self.hasCompetences {
+                var cell = UITableViewCell()
+                cell.textLabel?.text = "go to survey"
+                return cell
+            } else {
+                var cell = UITableViewCell()
+                cell.textLabel?.text = "You finished the survey"
+                return cell
+            }
+        } else {
+            switch self.entries[indexPath.row].cellType {
+                case "SuggestionCell":              return self.getSuggestCellForRow(indexPath.row)
+                case "UAProjectNewsCell":           return self.getNewsCellForRow(indexPath.row)
+                case "UASuggestImageCell":          return self.getSuggestImageCellForRow(indexPath.row)
+                case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
+                case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
+                default: break;
+            }
         }
         return self.defaultCell(indexPath.row)
     }
@@ -458,6 +485,9 @@ class ProjectViewController:
         var content: CGFloat = 0
         
         if (self.entries.count == 0) {
+            if (self.type == "survey") {
+                return 50.0
+            }
             return 0
         }
         
@@ -498,8 +528,9 @@ class ProjectViewController:
             cell.setNewsCell()
         } else {
             cell.setPhaseName(self.phasesArray[indexPath.row - 1].name)
-            
+
             let totalPhases = self.phasesArray.count
+            
             if ((totalPhases - indexPath.row) == 0) {
                 // last element
                 cell.lastElement()
@@ -522,7 +553,7 @@ class ProjectViewController:
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var size: CGSize = CGSize(width: 0, height: 50.0)
         
-        if(indexPath.row == 0) {
+        if indexPath.row == 0 {
             size.width = 70.0
         } else {
             size.width = 20.0 + self.phasesArray[indexPath.row - 1].name.getWidthForView(17.0, font: UIFont(name: "Helvetica Neue", size: 14)!);
@@ -558,15 +589,28 @@ class ProjectViewController:
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                 self.updatePhase(jsonResponse, success: { () -> Void in
-
-                    self.loadSuggestions({ () -> Void in
-                        
-                        }, failure: { () -> Void in
-                            println("fail load suggestions")
-                    })
+                    
+                    if self.type == "survey" {
+                        println(self.stepId)
+                        var competenceService = CompetenceService()
+                        println("competence")
+                        competenceService.getEntries(self.projectId, projectStep: self.stepId, success: { (competences) -> Void in
+                            self.hasCompetences = (competences.count > 0)
+                            println(competences.count)
+                            self.mainTable.reloadData()
+                        }, error: { () -> Void in
+                            
+                        })
+                    } else {
+                        self.loadSuggestions({ () -> Void in
+                            
+                            }, failure: { () -> Void in
+                                println("fail load suggestions")
+                        })
+                    }
                 })
             }, failure: { () -> Void in
-                    println("fail load phase")
+                println("fail load phase")
             })
         }
     }
