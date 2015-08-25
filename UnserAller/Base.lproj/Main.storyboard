@@ -833,6 +833,7 @@
                         <outlet property="sendSuggestionBtn" destination="KnH-1u-zml" id="NKi-5g-BQq"/>
                         <outlet property="sendSuggestionInput" destination="fHv-ei-JvJ" id="FGO-Wl-KcX"/>
                         <outlet property="tableHeader" destination="F7Q-uU-R9a" id="Wcd-zw-dLx"/>
+                        <outlet property="transparentEditorBtn" destination="thT-23-O4e" id="ezQ-Ob-Dig"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="feJ-eu-Vnc" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -32,6 +32,7 @@ class ProjectViewController:
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var bookmarkImage: UIImageView!
     @IBOutlet weak var projectNameBackground: UIView!
+    @IBOutlet weak var transparentEditorBtn: UIButton!
 
     var project: UAProject!
     var projectId: UInt = 0
@@ -92,14 +93,16 @@ class ProjectViewController:
                     self.updatePhase(jsonResponse, success: { () -> Void in
                         
                         self.entries = []
-                        self.loadSuggestions({ () -> Void in
-                            
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            }, failure: { () -> Void in
-                                println("fail load suggestions")
+                        if self.active {
+                            self.loadSuggestions({ () -> Void in
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                        })
+                                }, failure: { () -> Void in
+                                    println("fail load suggestions")
+                                    
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            })
+                        }
                     })
                     }, failure: { () -> Void in
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -228,19 +231,21 @@ class ProjectViewController:
                         self.updatePhase(jsonResponse, success: { () -> Void in
                             self.entries = []
 
-                            if self.type == "survey" {
-                                self.checkCompetences()
-                            } else {
-                                self.loadSuggestions({ () -> Void in
-                                    
-                                    self.mainTable.pullToRefreshView.stopAnimating()
-                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                    }, failure: { () -> Void in
-                                        println("fail load suggestions")
-                                    
-                                    self.mainTable.pullToRefreshView.stopAnimating()
-                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                })
+                            if self.active {
+                                if self.type == "survey" {
+                                    self.checkCompetences()
+                                } else {
+                                    self.loadSuggestions({ () -> Void in
+                                        
+                                        self.mainTable.pullToRefreshView.stopAnimating()
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                        }, failure: { () -> Void in
+                                            println("fail load suggestions")
+                                        
+                                        self.mainTable.pullToRefreshView.stopAnimating()
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    })
+                                }
                             }
                             
                         })
@@ -275,26 +280,29 @@ class ProjectViewController:
         // increment page
         self.page += 1
         
-        if (!self.news) {
-            
-            if self.type == "survey" {
-                self.checkCompetences()
-            } else {
-                self.loadSuggestions({ () -> Void in
-                    // reload data
-                    self.mainTable.reloadData()
-                    
-                    self.mainTable.infiniteScrollingView.stopAnimating()
-                    
-                    // active activity indicator
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    }, failure: { () -> Void in
-                        println("Project infiniteload error")
+        if !self.news {
+            if self.active {
+                if self.type == "survey" {
+                    self.checkCompetences()
+                } else {
+                    self.loadSuggestions({ () -> Void in
+                        // reload data
+                        self.mainTable.reloadData()
                         
                         self.mainTable.infiniteScrollingView.stopAnimating()
+                        
                         // active activity indicator
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                })
+                        }, failure: { () -> Void in
+                            println("Project infiniteload error")
+                            
+                            self.mainTable.infiniteScrollingView.stopAnimating()
+                            // active activity indicator
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
+                }
+            } else {
+                self.mainTable.infiniteScrollingView.stopAnimating()
             }
         } else {
             self.loadNews({ () -> Void in
@@ -353,6 +361,7 @@ class ProjectViewController:
         
         var startDate: String = ""
         var endDate: String = ""
+        var allowNewSuggestion = true
         
         // end date
         if (!(jsonResponse.objectForKey("endDate") is NSNull)) {
@@ -362,12 +371,18 @@ class ProjectViewController:
         if let start: AnyObject = jsonResponse.objectForKey("startDate") {
             startDate = start.objectForKey("date") as! String!
         }
-        // check active
+        
+        if let allowSuggestions: UInt = jsonResponse.objectForKey("allowNewSuggestions") as? UInt {
+            allowNewSuggestion = (allowSuggestions == 1)
+        }
+        
+        // check active step
         self.active = self.checkActive(startDate, end: endDate)
         
         // disable or enable posting suggestion
-        self.sendSuggestionBtn.enabled = self.active
-        self.sendSuggestionInput.enabled = self.active
+        self.sendSuggestionBtn.enabled = allowNewSuggestion && self.active
+        self.sendSuggestionInput.enabled = allowNewSuggestion && self.active
+        self.transparentEditorBtn.enabled = allowNewSuggestion && self.active
         
         success()
     }
@@ -592,25 +607,32 @@ class ProjectViewController:
             })
             
         } else {
+            
+            self.type = ""
+            self.entries = []
+            self.mainTable.reloadData()
+            
+            println(self.entries.count)
             // suggestions
             self.news = false
             // set active phase id
             self.actualPhaseId = self.phasesArray[indexPath.row - 1].id
             
-            self.entries = []
-            self.mainTable.reloadData()
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
+                
                 self.updatePhase(jsonResponse, success: { () -> Void in
                     
-                    if self.type == "survey" {
-                        self.checkCompetences()
-                    } else {
-                        self.loadSuggestions({ () -> Void in
-                            
-                            }, failure: { () -> Void in
-                                println("fail load suggestions")
-                        })
+                    if self.active {
+                        if self.type == "survey" {
+                            self.checkCompetences()
+                        } else {
+                            self.loadSuggestions({ () -> Void in
+                                
+                                }, failure: { () -> Void in
+                                    println("fail load suggestions")
+                            })
+                        }
                     }
                 })
             }, failure: { () -> Void in
@@ -707,7 +729,7 @@ class ProjectViewController:
         self.getRequest = Alamofire.request(.GET, url)
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     // print error
                     println("Load phase error")
                     println(errors)
