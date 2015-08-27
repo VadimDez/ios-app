@@ -481,8 +481,10 @@ class ProjectViewController:
     */
     func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
         var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
-        cell.ratingView.delegate = self
-        cell.ratingView.tag = row
+        if (self.entries[row] as! UASuggestion).isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.tag = row
+        }
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
@@ -492,8 +494,10 @@ class ProjectViewController:
     */
     func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
         var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
-        cell.ratingView.delegate = self
-        cell.ratingView.tag = row
+        if (self.entries[row] as! UASuggestion).isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.tag = row
+        }
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
@@ -809,7 +813,7 @@ class ProjectViewController:
 
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    println("HERE")
+                    
                     // reload table data
                     self.mainTable.reloadData()
                     

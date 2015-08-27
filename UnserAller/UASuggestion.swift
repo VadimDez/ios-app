@@ -22,6 +22,7 @@ class UASuggestion: UACellObject {
     var updated: NSDate     = NSDate()
     var deleted: NSDate     = NSDate()
     var type: String        = ""
+    var isReleased: Bool      = false
     
     override init() {
         super.init()
@@ -92,6 +93,12 @@ class UASuggestion: UACellObject {
             self.type = type as String
         }
         
+        
+        // set user votes
+        if let released = jsonObject.objectForKey("released") as? Int {
+            self.isReleased = (released == 1)
+        }
+        
         // set cell class type
         self.cellType = "SuggestionCell";
         
@@ -129,6 +136,7 @@ class UASuggestion: UACellObject {
                     self.likeCount = likes.integerValue
                 }
             }
+            
         }
         
         // set content
@@ -159,6 +167,11 @@ class UASuggestion: UACellObject {
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
             self.type = type as String
+        }
+
+        // set user votes
+        if let released = jsonObject.objectForKey("released") as? String {
+            self.isReleased = (released == "1")
         }
         
         // set cell class type
@@ -480,6 +493,11 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             self.content = self.content.html2String()
             
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
+            
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
@@ -741,6 +759,11 @@ class UASuggestion: UACellObject {
             self.content = suggestion["content"] as! String
             self.content = self.content.html2String()
             
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
+            
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
@@ -853,6 +876,11 @@ class UASuggestion: UACellObject {
             // set content
             self.content = suggestion["content"] as! String
             self.content = self.content.html2String()
+            
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
             
             // set updated
             self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
