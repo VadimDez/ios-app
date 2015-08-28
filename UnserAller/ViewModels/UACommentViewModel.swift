@@ -22,7 +22,7 @@ class UACommentViewModel {
         for object in data {
             comments.append(UAComment().initCommentWithJSON(object as Dictionary<String, AnyObject>))
         }
-        println(comments.count)
+        
         return comments
     }
 }

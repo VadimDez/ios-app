@@ -48,6 +48,10 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         // register nibs
         self.registerNibs()
         
+        if self.suggestion.isOwner {
+            var button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "suggestionActions")
+            navigationItem.rightBarButtonItem = button
+        }
         
         self.loadComments({ () -> Void in
             self.mainTable.reloadData()
@@ -443,5 +447,30 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                     success(json: JSON!)
                 }
         }
+    }
+    
+    
+    func suggestionActions() {
+        let optionsMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
+            println("deleting...")
+            let suggestionVM = UASuggestionViewModel()
+            
+            suggestionVM.delete(self.suggestion, success: { () -> Void in
+                println("deleted!")
+            }, error: { () -> Void in
+                println("not deleted!")                
+            })
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction!) -> Void in
+            
+        }
+        
+        optionsMenu.addAction(deleteAction)
+        optionsMenu.addAction(cancelAction)
+        
+        self.presentViewController(optionsMenu, animated: true, completion: nil)
     }
 }

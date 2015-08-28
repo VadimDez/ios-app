@@ -141,7 +141,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-
+        
         if ("SuggestionCell" == self.entries[indexPath.row].cellType) {
             cell = self.getSuggestCellForHome(entries[indexPath.row] as! UASuggestion)
         } else if ("UASuggestImageCell" == entries[indexPath.row].cellType) {
@@ -219,7 +219,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     */
     func getVoteCellForHome(suggestion: UASuggestion, row: Int) -> UASuggestionVoteCell {
         var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
-        println(suggestion.isReleased)
         
         if suggestion.isReleased {
             // rating delegate

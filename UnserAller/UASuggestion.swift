@@ -22,7 +22,8 @@ class UASuggestion: UACellObject {
     var updated: NSDate     = NSDate()
     var deleted: NSDate     = NSDate()
     var type: String        = ""
-    var isReleased: Bool      = false
+    var isReleased: Bool    = false
+    var isOwner: Bool       = false
     
     override init() {
         super.init()
@@ -71,6 +72,10 @@ class UASuggestion: UACellObject {
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
 
         // set user name
@@ -149,6 +154,11 @@ class UASuggestion: UACellObject {
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
         
         // set user name
@@ -294,6 +304,11 @@ class UASuggestion: UACellObject {
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
         
         // set user name
@@ -380,6 +395,11 @@ class UASuggestion: UACellObject {
             // set user id
             if let userId = userObject["id"] as? UInt {
                 self.userId = userId
+                
+                // set owner
+                if self.userId == UserShared.sharedInstance.id {
+                    self.isOwner = true
+                }
             }
             
             // set user name
@@ -422,6 +442,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project name
             self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
@@ -482,6 +507,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
@@ -544,6 +574,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
@@ -609,6 +644,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
@@ -696,6 +736,11 @@ class UASuggestion: UACellObject {
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
+            
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
@@ -751,6 +796,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
@@ -809,6 +859,11 @@ class UASuggestion: UACellObject {
             
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
@@ -870,6 +925,11 @@ class UASuggestion: UACellObject {
             // set user id
             self.userId = suggestion["user"]?.objectForKey("id") as! UInt
             
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
+            
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
@@ -930,6 +990,11 @@ class UASuggestion: UACellObject {
                 // user id
                 self.userId = _user["id"] as! UInt
                 
+                // set owner
+                if self.userId == UserShared.sharedInstance.id {
+                    self.isOwner = true
+                }
+                
                 self.userName = (_user["firstname"] as! String) + " " + (_user["lastname"] as! String)
             }
             
@@ -987,6 +1052,11 @@ class UASuggestion: UACellObject {
         // set user id
         self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
         
+        // set owner
+        if self.userId == UserShared.sharedInstance.id {
+            self.isOwner = true
+        }
+        
         // set project id
         self.projectId = project.id
         
@@ -1024,7 +1094,12 @@ class UASuggestion: UACellObject {
             
         // set user id
         self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
-            
+        
+        // set owner
+        if self.userId == UserShared.sharedInstance.id {
+            self.isOwner = true
+        }
+        
         // set project id
         self.projectId = project.id
         

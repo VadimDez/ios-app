@@ -265,8 +265,6 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         //    self.checkValidation = false
         //}
         
-        println(isValid)
-        println(results)
         
         self.sendAnswers(results, success: { () -> Void in
             self.getEntries({ () -> Void in
@@ -320,12 +318,10 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                     // print error
                     println("send competences error")
                     println(errors)
-                    println(JSON)
                     // error block
                     failure()
                 } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    println(JSON)
                     println(errors)
                     success()
                 }

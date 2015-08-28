@@ -61,12 +61,16 @@ class MenuTableViewController: UITableViewController {
     */
     func setProfileData() {
         var user = UAUser()
+        var sharedUser = UserShared.sharedInstance
         
         self.setupProfileImage()
         
         user.getFromAPI { (user) -> Void in
             self.userName.text = "\(user.firstname) \(user.lastname)"
             self.loadProfileImage(user.id.unsignedLongValue)
+            
+            // set user id
+            sharedUser.setId(user.id.unsignedLongValue)
         }
     }
     

@@ -109,6 +109,7 @@
 		D56C462219E04DDE0059735A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D581228E197C08B600E3573C /* Images.xcassets */; };
 		D56C462419E04DFC0059735A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D56C462319E04DFC0059735A /* Media.xcassets */; };
 		D57236D41B8A33960076BC30 /* UACompetenceWithOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57236D31B8A33960076BC30 /* UACompetenceWithOptionsCell.swift */; };
+		D57514811B90F83500539485 /* UserShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57514801B90F83500539485 /* UserShared.swift */; };
 		D5812288197C08B600E3573C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812287197C08B600E3573C /* AppDelegate.swift */; };
 		D581228A197C08B600E3573C /* InitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5812289197C08B600E3573C /* InitViewController.swift */; };
 		D581228D197C08B600E3573C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D581228B197C08B600E3573C /* Main.storyboard */; };
@@ -262,6 +263,7 @@
 		D53A29EC1B7935FF00209FA2 /* UAOptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UAOptionCell.xib; path = "Views/Cells/Competences/Table Cells/UAOptionCell.xib"; sourceTree = "<group>"; };
 		D56C462319E04DFC0059735A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = ../Media.xcassets; sourceTree = "<group>"; };
 		D57236D31B8A33960076BC30 /* UACompetenceWithOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACompetenceWithOptionsCell.swift; path = Views/Cells/Competences/UACompetenceWithOptionsCell.swift; sourceTree = "<group>"; };
+		D57514801B90F83500539485 /* UserShared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserShared.swift; sourceTree = "<group>"; };
 		D5812282197C08B600E3573C /* UnserAller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnserAller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5812286197C08B600E3573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5812287197C08B600E3573C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 				D59780D61A2B94CE00CEC181 /* UAPhase.swift */,
 				12DF1F111A5C2ABF007CA3B5 /* UANews.swift */,
 				1270B5871A6B16D400D041B9 /* UAComment.swift */,
+				D57514801B90F83500539485 /* UserShared.swift */,
 				D5F558861B80802D006CF3A3 /* Competences */,
 			);
 			name = Models;
@@ -940,6 +943,7 @@
 				12B7D4781A6EE75200642D5B /* UACompanyViewController.swift in Sources */,
 				12608E491B1E5140007BBEAE /* UACellSuggest.swift in Sources */,
 				129CD1361A6140D400434D67 /* UALabel.swift in Sources */,
+				D57514811B90F83500539485 /* UserShared.swift in Sources */,
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
 				D5FE702419E6FA6300582B84 /* UASuggestionCell.swift in Sources */,
 				D52FF94419E321F8006139E2 /* UASuggestionViewModel.swift in Sources */,

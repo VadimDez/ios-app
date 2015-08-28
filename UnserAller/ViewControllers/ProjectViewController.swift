@@ -616,7 +616,6 @@ class ProjectViewController:
             self.entries = []
             self.mainTable.reloadData()
             
-            println(self.entries.count)
             // suggestions
             self.news = false
             // set active phase id
@@ -728,7 +727,7 @@ class ProjectViewController:
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         // build url
         let url: String = "\(APIURL)/api/mobile/project/getstep/\(id)"
-        
+
         // GET
         self.getRequest = Alamofire.request(.GET, url)
             .responseJSON { (_,_,JSON,errors) in
@@ -741,6 +740,7 @@ class ProjectViewController:
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
                 } else {
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(jsonResponse: JSON!)
                 }
@@ -884,7 +884,7 @@ class ProjectViewController:
                 
                 (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
                 
-                (self.entries[ratingView.tag] as! UASuggestion).userVotes  = votes
+                (self.entries[ratingView.tag] as! UASuggestion).userVotes = votes
                 
                 // update only changed row
                 let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
@@ -965,7 +965,7 @@ class ProjectViewController:
             
             var suggestion = UASuggestion()
             self.sendSuggestionInput.text = ""
-            println(json)
+            
             if (self.type == "vote") {
                 suggestion = UASuggestion().initVoteForProjectFromJSON(json, project: self.project)
             } else {

@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Vadym Yatsyuk. All rights reserved.
 //
 
-import Foundation
+import Alamofire
 
 class UASuggestionViewModel {
     
     var suggestion: UASuggestion = UASuggestion()
-    
     
     /**
      *  Get suggestions array from JSON
@@ -178,5 +177,27 @@ class UASuggestionViewModel {
     }
     func getVoteIncludeImagesForProjectWithObject(object: AnyObject) {
         suggestion = UASuggestion().initVoteIncludeImagesForProjectWithObject(object)
+    }
+    
+    func delete(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/\(suggestion.suggestionId)"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.DELETE, url, parameters: nil)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
     }
 }
