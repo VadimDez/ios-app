@@ -58,12 +58,6 @@ class LoginViewController: UIViewController {
     }
     
     func loadRootView() {
-        // old
-//        var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-//        
-//        self.presentViewController(root, animated: false, completion: nil);
-        
-        // new
         let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
         let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
         leftSideNavController.navigationBar.hidden = true
