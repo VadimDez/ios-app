@@ -118,13 +118,13 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
                     multiplier: 1.0,
                     constant: -9.0)
                 
+                self.ratingView.removeFromSuperview()
                 self.ratingView.removeConstraints(self.ratingView.constraints())
                 self.mainView.addConstraint(rightConstrain)
-                self.ratingView.removeFromSuperview()
             }
             if self.likeLabel != nil {
-                self.likeLabel.removeConstraints(self.likeLabel.constraints())
                 self.likeLabel.removeFromSuperview()
+                self.likeLabel.removeConstraints(self.likeLabel.constraints())
             }
         }
     }
