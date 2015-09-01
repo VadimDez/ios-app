@@ -12,6 +12,7 @@ import Locksmith
 import Alamofire
 import CoreData
 
+
 class UAUser {
     var id: UInt!
     var fullName: String!
@@ -140,16 +141,19 @@ class UAUser {
     /**
     *  Get user from api
     */
-    func getFromAPI(success: (user: User) -> Void) {
-        let url: String = "\(APIURL)/api/v1/user"
+    func getFromAPI(success: (user: User, credits: Dictionary<String, AnyObject>) -> Void) {
+        let url: String = "\(APIURL)/api/mobile/profile/getuserinfo"
         
         Alamofire.request(.GET, url, parameters: nil)
             .responseJSON { ( request, response, JSON, error) in
                 if (error != nil) {
                     // error handling
                 } else {
+                    var mainUser: User!
+                    var credits: Dictionary<String, AnyObject>!
+                    
                     if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
-                        var mainUser = self.getFromDB(data["id"] as! UInt)
+                        mainUser = self.getFromDB(data["id"] as! UInt)
                         
                         mainUser.id         = data["id"] as! Int
                         mainUser.firstname  = data["firstname"] as! String
@@ -157,8 +161,12 @@ class UAUser {
                         
                         self.save()
                         
-                        success(user: mainUser)
                     }
+                    
+                    if let userCredits = JSON?.objectForKey("credits") as? Dictionary<String, AnyObject> {
+                        credits = userCredits
+                    }
+                    success(user: mainUser, credits: credits)
                 }
         }
     }

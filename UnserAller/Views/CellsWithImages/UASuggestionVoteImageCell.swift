@@ -14,6 +14,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var ratingView: FloatRatingView!
+    @IBOutlet weak var mainView: UIView!
     
     var medias: [UAMedia] = []
     
@@ -41,10 +42,37 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.titleLabel.text        = suggestion.userName
         self.subtitleLabel.text     = suggestion.projectName
         self.dateLabel.text         = suggestion.updated.getStringFromDate()
-        self.ratingView.rating      = Float(suggestion.userVotes)
-        self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
         self.medias                 = suggestion.media
+        
+        // check if released
+        if suggestion.isReleased {
+            self.ratingView.rating = Float(suggestion.userVotes)
+            self.likeLabel.text    = "\(suggestion.likeCount)"
+        } else {
+            if self.ratingView != nil {
+                //                self.commentLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+                //                self.mainView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                
+                //
+                let rightConstrain = NSLayoutConstraint(
+                    item: self.commentLabel,
+                    attribute: NSLayoutAttribute.Right,
+                    relatedBy: NSLayoutRelation.Equal,
+                    toItem: self.mainView,
+                    attribute: NSLayoutAttribute.Right,
+                    multiplier: 1.0,
+                    constant: -8.0)
+                self.ratingView.removeFromSuperview()
+                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.mainView.addConstraint(rightConstrain)
+
+            }
+            if self.likeLabel != nil {
+                self.likeLabel.removeFromSuperview()
+                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+            }
+        }
         
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
@@ -58,8 +86,6 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.titleLabel.text        = suggestion.userName
         self.subtitleLabel.text     = ""
         self.dateLabel.text         = suggestion.updated.getStringFromDate()
-        self.ratingView.rating      = Float(suggestion.userVotes)
-        self.likeLabel.text         = "\(suggestion.likeCount)"
         self.commentLabel.text      = "\(suggestion.commentCount)"
         self.medias                 = suggestion.media
         
@@ -67,6 +93,40 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         self.secondaryImage.backgroundColor = UIColor.clearColor()
         self.imageCollectionView.reloadData()
+        
+        
+        // check if released
+        if suggestion.isReleased {
+            // let length = self.ratingView.constraints().count
+            //            for var i = 0; i < length; i = i + 1 {
+            //                println((self.ratingView.constraints()[i] as! NSLayoutConstraint).description)
+            //            }
+            self.ratingView.rating = Float(suggestion.userVotes)
+            self.likeLabel.text    = "\(suggestion.likeCount)"
+        } else {
+            if self.ratingView != nil {
+                //                self.commentLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+                //                self.mainView.setTranslatesAutoresizingMaskIntoConstraints(false)
+                
+                
+                let rightConstrain = NSLayoutConstraint(
+                    item: self.commentLabel,
+                    attribute: NSLayoutAttribute.Right,
+                    relatedBy: NSLayoutRelation.Equal,
+                    toItem: self.mainView,
+                    attribute: NSLayoutAttribute.Right,
+                    multiplier: 1.0,
+                    constant: -9.0)
+                
+                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.mainView.addConstraint(rightConstrain)
+                self.ratingView.removeFromSuperview()
+            }
+            if self.likeLabel != nil {
+                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+                self.likeLabel.removeFromSuperview()
+            }
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

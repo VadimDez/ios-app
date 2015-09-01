@@ -14,6 +14,11 @@ class MenuTableViewController: UITableViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
+    // credits labels
+    @IBOutlet weak var suggesitonCredits: UILabel!
+    @IBOutlet weak var commentCredits: UILabel!
+    @IBOutlet weak var likeCredits: UILabel!
+    @IBOutlet weak var voteCredits: UILabel!
     
     
     var selectedMenuItem : Int = 0
@@ -64,13 +69,33 @@ class MenuTableViewController: UITableViewController {
         var sharedUser = UserShared.sharedInstance
         
         self.setupProfileImage()
-        
-        user.getFromAPI { (user) -> Void in
+        println("HERE")
+        user.getFromAPI { (user, credits) -> Void in
             self.userName.text = "\(user.firstname) \(user.lastname)"
             self.loadProfileImage(user.id.unsignedLongValue)
-            
+
             // set user id
             sharedUser.setId(user.id.unsignedLongValue)
+            
+            if let suggestionCredits: AnyObject = credits["suggestions"] {
+                sharedUser.setSuggestionCredits(UInt(suggestionCredits.integerValue))
+                self.suggesitonCredits.text = "\(sharedUser.suggestionCredits)"
+            }
+            
+            if let commentCredits: AnyObject = credits["comments"] {
+                sharedUser.setCommentCredits(UInt(commentCredits.integerValue))
+                self.commentCredits.text = "\(sharedUser.commentCredits)"
+            }
+            
+            if let likesCredits: AnyObject = credits["likes"] {
+                sharedUser.setSuggestionCredits(UInt(likesCredits.integerValue))
+                self.likeCredits.text = "\(sharedUser.likeCredits)"
+            }
+            
+            if let votesCredits: AnyObject = credits["votes"] {
+                sharedUser.setSuggestionCredits(UInt(votesCredits.integerValue))
+                self.voteCredits.text = "\(sharedUser.voteCredits)"
+            }
         }
     }
     

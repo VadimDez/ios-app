@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xDs-iy-Cho">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xDs-iy-Cho">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -510,8 +510,12 @@
                     <navigationItem key="navigationItem" id="d9u-nq-zJc"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="commentCredits" destination="x4X-Zx-iF5" id="pOd-8x-4Mi"/>
+                        <outlet property="likeCredits" destination="t4L-qQ-x19" id="wqU-z7-vG9"/>
                         <outlet property="profileImage" destination="cKA-8C-4tS" id="qbu-1r-MPp"/>
+                        <outlet property="suggesitonCredits" destination="i9D-AA-lP1" id="2V4-I2-0rh"/>
                         <outlet property="userName" destination="gfF-Z0-yZx" id="NJD-z9-jSP"/>
+                        <outlet property="voteCredits" destination="8VK-0F-v3z" id="LbO-un-V8y"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SR-pW-yeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -907,18 +911,18 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LAa-kG-i7g" userLabel="Title label">
-                                    <rect key="frame" x="10" y="25" width="300" height="16.5"/>
+                                    <rect key="frame" x="10" y="25" width="300" height="17"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
-                                    <rect key="frame" x="10" y="43" width="300" height="15.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
+                                    <rect key="frame" x="10" y="43" width="300" height="16"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DR0-zs-LzV">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DR0-zs-LzV">
                                     <rect key="frame" x="10" y="64" width="300" height="68"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GW3-yD-8k4">
                                         <size key="itemSize" width="50" height="50"/>
@@ -1068,7 +1072,7 @@
             </objects>
             <point key="canvasLocation" x="3005" y="1544"/>
         </scene>
-        <!--Credits View Controller-->
+        <!--Credits-->
         <scene sceneID="rLJ-vT-uQ6">
             <objects>
                 <viewController storyboardIdentifier="Credits" id="vmt-R8-DAc" customClass="CreditsViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
@@ -1093,7 +1097,7 @@
                             <constraint firstItem="pLr-bC-us5" firstAttribute="leading" secondItem="NFG-ld-A8N" secondAttribute="leadingMargin" constant="-16" id="dxU-xs-Dxp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="jSf-bf-7FP">
+                    <navigationItem key="navigationItem" title="Credits" id="jSf-bf-7FP">
                         <barButtonItem key="leftBarButtonItem" image="Menu-32" id="3Ml-bl-xkf">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -1267,7 +1271,7 @@
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Obb-cg-gEr" userLabel="backgroundImage">
                                             <rect key="frame" x="0.0" y="-24" width="320" height="235"/>
-                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mpF-NT-xQE">
                                             <rect key="frame" x="8" y="10" width="28" height="22"/>

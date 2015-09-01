@@ -226,10 +226,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
      *  Set credits
      */
     func setCredits() {
-        self.suggestionCreditsLabel.text    = "0"
-        self.commentsCreditLabel.text       = "0"
-        self.likeCreditsLabel.text          = "0"
-        self.voteCreditsLabel.text          = "0"
+        self.suggestionCreditsLabel.text    = "\(UserShared.sharedInstance.suggestionCredits)"
+        self.commentsCreditLabel.text       = "\(UserShared.sharedInstance.commentCredits)"
+        self.likeCreditsLabel.text          = "\(UserShared.sharedInstance.likeCredits)"
+        self.voteCreditsLabel.text          = "\(UserShared.sharedInstance.voteCredits)"
     }
     
     // MARK: table view

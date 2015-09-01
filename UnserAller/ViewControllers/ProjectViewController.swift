@@ -494,6 +494,7 @@ class ProjectViewController:
     */
     func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
         var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        println((self.entries[row] as! UASuggestion).isReleased)
         if (self.entries[row] as! UASuggestion).isReleased {
             cell.ratingView.delegate = self
             cell.ratingView.tag = row
