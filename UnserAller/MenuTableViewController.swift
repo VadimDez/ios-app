@@ -47,6 +47,12 @@ class MenuTableViewController: UITableViewController {
 //        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
 //        self.tableView.separatorStyle = .None
 //        self.tableView.backgroundColor = UIColor.whiteColor()
+        
+        // bg image
+        var tempImageView: UIImageView = UIImageView(image: UIImage(named: "background-1"))
+        tempImageView.frame = self.tableView.frame
+        self.tableView.backgroundView = tempImageView
+        
         self.tableView.scrollsToTop = false
         self.tableView.scrollEnabled = false
         self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
@@ -69,7 +75,7 @@ class MenuTableViewController: UITableViewController {
         var sharedUser = UserShared.sharedInstance
         
         self.setupProfileImage()
-        println("HERE")
+        
         user.getFromAPI { (user, credits) -> Void in
             self.userName.text = "\(user.firstname) \(user.lastname)"
             self.loadProfileImage(user.id.unsignedLongValue)
@@ -126,11 +132,21 @@ class MenuTableViewController: UITableViewController {
         }
         // set text color
         cell!.textLabel?.textColor = UIColor.whiteColor()
+        cell!.textLabel?.font = UIFont(name: "Helvetica Neue", size: 14.0)
         // set text
         cell!.textLabel?.text = menuItems[indexPath.row]
         // set icon
         cell?.imageView?.image = UIImage(named: menuItems[indexPath.row])
         
+//        if let imageView: UIImageView = cell?.imageView {
+//            let decrement: CGFloat = 8.0
+//            let rect = CGRect(x: imageView.frame.origin.x, y: imageView.frame.origin.y - decrement - 50, width: imageView.frame.width - decrement * 2, height: imageView.frame.height - decrement * 2)
+//            
+//            cell?.imageView?.frame = rect
+//        }
+        
+        
+        cell?.backgroundColor = UIColor.clearColor()
         
         let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
         selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.9)
