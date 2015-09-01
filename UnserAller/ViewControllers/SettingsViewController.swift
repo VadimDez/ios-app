@@ -15,12 +15,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var profileImage: UIImageView!
     
-    // credits
-    @IBOutlet weak var suggestionCreditsLabel: UILabel!
-    @IBOutlet weak var commentsCreditLabel: UILabel!
-    @IBOutlet weak var likeCreditsLabel: UILabel!
-    @IBOutlet weak var voteCreditsLabel: UILabel!
-    
     // show views
     @IBOutlet weak var informationViewBtn: UIButton!
     @IBOutlet weak var addressViewBtn: UIButton!
@@ -88,9 +82,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }, failure: { () -> Void in
             
         })
-        
-        // set credits
-        self.setCredits()
         
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -220,16 +211,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController.navigationBar.hidden = true
         
         self.presentViewController(navigationController, animated: false, completion: nil)
-    }
-    
-    /**
-     *  Set credits
-     */
-    func setCredits() {
-        self.suggestionCreditsLabel.text    = "\(UserShared.sharedInstance.suggestionCredits)"
-        self.commentsCreditLabel.text       = "\(UserShared.sharedInstance.commentCredits)"
-        self.likeCreditsLabel.text          = "\(UserShared.sharedInstance.likeCredits)"
-        self.voteCreditsLabel.text          = "\(UserShared.sharedInstance.voteCredits)"
     }
     
     // MARK: table view

@@ -149,7 +149,7 @@ class MenuTableViewController: UITableViewController {
         cell?.backgroundColor = UIColor.clearColor()
         
         let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
-        selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.9)
+        selectedBackgroundView.backgroundColor = UIColor(white: 1, alpha: 0.1)
         cell!.selectedBackgroundView = selectedBackgroundView
         
         return cell!
