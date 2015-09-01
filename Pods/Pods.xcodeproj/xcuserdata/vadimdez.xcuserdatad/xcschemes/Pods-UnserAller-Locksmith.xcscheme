@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3CE3DBA5827880B37E22F684"
+               BlueprintIdentifier = "4FC1D4CAC77B8E4555584501"
                BuildableName = "Locksmith.framework"
                BlueprintName = "Pods-UnserAller-Locksmith"
                ReferencedContainer = "container:Pods.xcodeproj">
