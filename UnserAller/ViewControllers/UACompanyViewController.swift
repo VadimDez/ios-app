@@ -110,9 +110,8 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         var companyNameHeight: CGFloat = 0.0
         let projectNameHeight = self.company.projects[indexPath.row].name.getHeightForView(288, font: UIFont(name: "Helvetica Neue", size: 17.0)!)
 
-        
         if let companyName = self.company.name {
-            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "Helvetica Neue Thin", size: 14.0)!)
+            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "HelveticaNeue-Thin", size: 14.0)!)
         }
         
         return base + projectNameHeight + companyNameHeight

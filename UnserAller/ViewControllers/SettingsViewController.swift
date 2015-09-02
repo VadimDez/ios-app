@@ -86,6 +86,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     func navigationBar() {
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
 //        self.navigationController?.navigationBar.shadowImage = UIImage()

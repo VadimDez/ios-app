@@ -101,7 +101,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         let projectNameHeight = self.entries[indexPath.row].name.getHeightForView(288, font: UIFont(name: "Helvetica Neue", size: 17.0)!)
         
         if let companyName = self.entries[indexPath.row].company!.name {
-            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "Helvetica Neue Thin", size: 14.0)!)
+            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "HelveticaNeue-Thin", size: 14.0)!)
         }
         
         return base + projectNameHeight + companyNameHeight
