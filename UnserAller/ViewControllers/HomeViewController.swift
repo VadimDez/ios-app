@@ -112,7 +112,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func infiniteLoad() {
         // increment page
         self.page += 1
-        
+
         self.getEntries({ () -> Void in
             // reload data
             self.mainTable.reloadData()
@@ -370,7 +370,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
                 // get get objects from JSON
 //                var array = SuggestionViewModel.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
                 var array = timelineViewModel.getObjectsFromJSON(JSON as! [Dictionary<String, AnyObject>])
-            
+
                 // merge two arrays
                 self.entries = self.entries + array
                 self.countEntries = self.entries.count

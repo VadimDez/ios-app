@@ -34,7 +34,7 @@ class UASuggestionViewModel {
     
     func parseSuggestion(object: Dictionary<String, AnyObject>) {
         let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
-        
+
         if object["media"] != nil {
             
             if (isSuggest) {

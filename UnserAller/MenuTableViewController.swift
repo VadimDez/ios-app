@@ -77,6 +77,7 @@ class MenuTableViewController: UITableViewController {
         self.setupProfileImage()
         
         user.getFromAPI { (user, credits) -> Void in
+            
             self.userName.text = "\(user.firstname) \(user.lastname)"
             self.loadProfileImage(user.id.unsignedLongValue)
 

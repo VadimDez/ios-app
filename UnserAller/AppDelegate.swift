@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 // GLOBAL URL FOR API
-let APIURL: String = "https://local.innosabi.net" //"192.168.0.8:8443"
+let APIURL: String = "https://192.168.0.6:8443"//"https://local.innosabi.net" //"192.168.0.8:8443"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

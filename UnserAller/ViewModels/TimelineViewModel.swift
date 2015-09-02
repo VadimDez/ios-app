@@ -17,9 +17,8 @@ class TimelineViewModel {
     
     func getObjectsFromJSON(data: [Dictionary<String, AnyObject>]) -> [UACellObject] {
         var timelineObjects: [UACellObject] = []
-        
+
         for object in data {
-            
             if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
                 timelineObjects.append(self.getSuggestion(object))
             } else {

@@ -227,6 +227,17 @@ public class Manager {
             var disposition: NSURLSessionAuthChallengeDisposition = .PerformDefaultHandling
             var credential: NSURLCredential!
 
+            //TODO: Remove this
+            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
+                let trustedDomain = "192.168.0.6"
+                if challenge.protectionSpace.host == trustedDomain {
+                    let trustedCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
+                    completionHandler(.UseCredential, trustedCredential)
+                    return
+                }
+            }
+            //TODO: No, Really Remove This
+            
             if let sessionDidReceiveChallenge = sessionDidReceiveChallenge {
                 (disposition, credential) = sessionDidReceiveChallenge(session, challenge)
             } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
@@ -284,6 +295,7 @@ public class Manager {
         }
 
         public func URLSession(session: NSURLSession, task: NSURLSessionTask, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: ((NSURLSessionAuthChallengeDisposition, NSURLCredential!) -> Void)) {
+            
             if let taskDidReceiveChallenge = taskDidReceiveChallenge {
                 completionHandler(taskDidReceiveChallenge(session, task, challenge))
             } else if let delegate = self[task] {

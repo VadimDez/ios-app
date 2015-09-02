@@ -10,7 +10,7 @@
 class UserShared {
     static let sharedInstance = UserShared()
     
-    var id: UInt!
+    var id: UInt = 0
     var suggestionCredits: UInt = 0
     var commentCredits: UInt = 0
     var mediaCredits: UInt = 0
