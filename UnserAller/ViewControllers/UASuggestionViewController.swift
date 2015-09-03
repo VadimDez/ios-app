@@ -27,11 +27,12 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         
         self.registerNotifications()
         
+        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.setViewHeader()
+        // self.setViewHeader()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -48,18 +49,21 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         // register nibs
         self.registerNibs()
         
+        
         if self.suggestion.isOwner {
             var button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "suggestionActions")
             navigationItem.rightBarButtonItem = button
         }
+        
         
         self.loadComments({ () -> Void in
             self.mainTable.reloadData()
             }, failure: { () -> Void in
                 
         })
-        
+
         self.newCommentContent = ""
+        self.setViewHeader() // issue with height, if in viewDidAppear there's no issue
     }
     
     
@@ -374,6 +378,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     func passTextBack(controller: UAEditorViewController, string: String) {
+        self.newCommentContent = string
         (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = string
     }
     

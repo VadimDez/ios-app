@@ -244,9 +244,11 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func getVoteImageCellForHome(row: Int) -> UASuggestionVoteImageCell {
         var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         
-        // rating delegate
-        cell.ratingView.delegate = self
-        cell.ratingView.tag = row
+        if (self.entries[row] as! UASuggestion).isReleased {
+            // rating delegate
+            cell.ratingView.delegate = self
+            cell.ratingView.tag = row
+        }
         cell.setCellForHome(self.entries[row] as! UASuggestion)
 
         // suggestion vc
