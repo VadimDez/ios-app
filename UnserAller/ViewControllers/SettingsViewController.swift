@@ -209,7 +209,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     Show initial view controller
     */
     func presentInitialViewController() {
-        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Initial") as! InitViewController
+        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AuthVC") as! InitViewController
         
         var navigationController = UINavigationController(rootViewController: initViewController)
         navigationController.navigationBar.hidden = true

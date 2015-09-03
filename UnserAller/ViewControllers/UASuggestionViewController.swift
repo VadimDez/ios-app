@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import KVNProgress
 
 class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSource, UITableViewDelegate, FloatRatingViewDelegate, UAEditorDelegate {
 
@@ -394,10 +395,12 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             // prepend new comment
             self.entries = array + self.entries
             
+            KVNProgress.showSuccessWithStatus("Sent")
+            
             // reload table
             self.mainTable.reloadData()
         }) { () -> () in
-            
+            KVNProgress.showError()
         }
     }
     

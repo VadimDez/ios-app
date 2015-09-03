@@ -24,7 +24,7 @@ class InitViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         
         let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
         
@@ -33,6 +33,7 @@ class InitViewController: UIViewController {
             println("Keychain Error: \(error)")
     
             super.viewWillAppear(animated)
+            self.presentAuthViewController()
         }
         
         if let dictionary = dictionary {
@@ -62,8 +63,21 @@ class InitViewController: UIViewController {
                 })
             } else {
                 super.viewWillAppear(animated)
+                self.presentAuthViewController()
             }
         }
+    }
+    
+    func presentAuthViewController() {
+//        let authViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AuthVC") as! AuthViewController
+        
+//        let navController = UINavigationController(rootViewController: authViewController)
+//        self.presentViewController(navController, animated: false, completion: nil)
+        
+        
+        let authViewController = self.storyboard?.instantiateViewControllerWithIdentifier("InitialNavigation") as! UINavigationController
+        let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+        appDelegate.window?.rootViewController = authViewController
     }
 }
 

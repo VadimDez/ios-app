@@ -18,3 +18,4 @@
 //#import "MBProgressHUD.h"
 //#import "PSTCollectionView.h"
 #import "IDMPhotoBrowser.h"
+#import <KVNProgress/KVNProgress.h>
