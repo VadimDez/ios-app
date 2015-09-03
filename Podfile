@@ -18,5 +18,5 @@ end
 
 target "UnserAllerTests" do
 pod 'Locksmith', '~> 1.2'
-pod 'Alamofire', '~> 1.2'
+pod 'Alamofire', '~> 1.3’
 end
