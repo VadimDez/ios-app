@@ -35,6 +35,13 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         self.registerNotifications()
         self.mainTable.reloadData()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.mainTable.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -49,6 +56,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         }
         
         self.mainTable.triggerInfiniteScrolling()
+        self.mainTable.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -187,6 +195,9 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
+        
+        println(cell.imageCollectionView.frame.size)
+        
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
@@ -276,13 +287,14 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 95.0
         var news: CGFloat = 0.0
-        let media: CGFloat = self.mediaHelper.getHeightForMedias(entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
+        let media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
+        
         
         if (self.entries[indexPath.row] is UANews) {
             news = (self.entries[indexPath.row] as! UANews).title.getHeightForView(self.mainTable.frame.width, font: UIFont(name: "Helvetica Neue", size: 14)!)
         }
         
-        return base + entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media + news
+        return base + self.entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media + news
     }
 
     /**
@@ -368,6 +380,10 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 //                var array = SuggestionViewModel.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
                 var array = timelineViewModel.getObjectsFromJSON(JSON as! [Dictionary<String, AnyObject>])
 
+                if self.page == 0 {
+                    self.entries = []
+                }
+                
                 // merge two arrays
                 self.entries = self.entries + array
                 self.countEntries = self.entries.count

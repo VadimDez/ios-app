@@ -23,6 +23,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+        
     }
     
     /**
@@ -80,8 +81,8 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
 //        [_collectionView setContentOffset:CGPointZero animated:NO];
 //        [_collectionView reloadData];
-        self.imageCollectionView.reloadData()
         
+        self.imageCollectionView.reloadData()
     }
     
     

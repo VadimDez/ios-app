@@ -266,6 +266,11 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
 
                     // get get objects from JSON
                     var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                    
+                    if self.page == 0 {
+                        self.entries = []
+                    }
+                    
                     // merge two arrays
                     self.entries = self.entries + array
                     println(self.entries.count)
