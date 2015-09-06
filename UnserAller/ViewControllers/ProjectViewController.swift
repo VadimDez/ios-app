@@ -47,6 +47,7 @@ class ProjectViewController:
     var votingDisabled = false
     var newsPhaseCount = 0
     var hasCompetences: Bool = false
+    var mediaHelper: MediaHelper = MediaHelper()
     
     var getRequest: Alamofire.Request!
     
@@ -58,6 +59,7 @@ class ProjectViewController:
         if self.type == "survey" && self.hasCompetences {
             self.checkCompetences()
         }
+        self.mainTable.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -524,14 +526,7 @@ class ProjectViewController:
             return 0
         }
         
-        var media:CGFloat = 0.0
-        if (self.entries[indexPath.row].media.count > 0) {
-            media = 50.0
-            let mediaCount = self.entries[indexPath.row].media.count
-            if (mediaCount > 5) {
-                media = media + CGFloat((mediaCount / 5) * 50)
-            }
-        }
+        var media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
         
         if (self.news) {
             base = 50.0

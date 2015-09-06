@@ -8,12 +8,12 @@
 
 import UIKit
 
-class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    var type:String = "suggestion"
-    var medias: [UAMedia] = []
+    var type: String = "suggestion"
+    var mediaHelper: MediaHelper!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,7 +51,6 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         self.subtitleLabel.text = suggestion.projectName
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
-        self.medias             = suggestion.media
         self.dateLabel?.text    = suggestion.updated.getStringFromDate()
         //
         self.suggestionId       = suggestion.suggestionId
@@ -78,6 +77,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         // change shape of image
         self.makeRoundCorners()
         
+        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
 //        [_collectionView setContentOffset:CGPointZero animated:NO];
 //        [_collectionView reloadData];
         self.imageCollectionView.reloadData()
@@ -87,6 +87,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     
     func setCellForPhase(suggestion: UASuggestion) {
         self.suggestion = suggestion
+//        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
         
         self.type = "suggestion";
         
@@ -97,7 +98,6 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         self.subtitleLabel.text = ""
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
-        self.medias             = suggestion.media
         self.dateLabel?.text    = suggestion.updated.getStringFromDate()
 
         // if liked - tint heart
@@ -121,12 +121,14 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         
         //        [_collectionView setContentOffset:CGPointZero animated:NO];
         //        [_collectionView reloadData];
+        
+        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
         self.imageCollectionView.reloadData()
     }
 
     // MARK: - Collection view
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return medias.count
+        return self.suggestion.media.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -135,14 +137,21 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
-        cell.setCell(self.medias[indexPath.row])
+        cell.setCell(self.suggestion.media[indexPath.row])
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.medias]
+        let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
 
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
 //    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {

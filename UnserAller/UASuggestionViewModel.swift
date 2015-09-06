@@ -179,6 +179,9 @@ class UASuggestionViewModel {
         suggestion = UASuggestion().initVoteIncludeImagesForProjectWithObject(object)
     }
     
+    /**
+     * Delete suggestion
+     */
     func delete(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
         let url: String = "\(APIURL)/api/v1/suggestion/\(suggestion.suggestionId)"
         
@@ -188,6 +191,57 @@ class UASuggestionViewModel {
             .responseJSON { (_,_,JSON,errors) in
                 
                 if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
+    }
+    
+    /**
+     * Restore suggestion
+     */
+    func restore(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/restore/\(suggestion.suggestionId)"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.POST, url, parameters: nil)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
+    }
+    
+    /**
+     * Restore suggestion
+     */
+    func update(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/update/"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.POST, url, parameters: ["id": suggestion.suggestionId, "suggestion": suggestion.content, "language": "en"])
+            .response { (_,_,answer,errors) in
+                println(errors)
+                println(answer)
+                if (errors != nil) {
                     // print error
                     println(errors)
                     

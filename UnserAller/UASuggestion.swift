@@ -19,11 +19,12 @@ class UASuggestion: UACellObject {
     var userVotes: Int      = 0
     var userName: String    = ""
     var projectName: String = ""
-    var updated: NSDate     = NSDate()
-    var deleted: NSDate     = NSDate()
+    var updated: NSDate!
+    var deleted: NSDate!
     var type: String        = ""
     var isReleased: Bool    = false
     var isOwner: Bool       = false
+    var isDeleted: Bool     = false
     
     override init() {
         super.init()

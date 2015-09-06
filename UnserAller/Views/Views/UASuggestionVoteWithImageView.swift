@@ -8,10 +8,11 @@
 
 import UIKit
 
-class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var ratingView: FloatRatingView!
+    var mediaHelper: MediaHelper!
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -22,6 +23,7 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
     */
     func setUp(suggestion: UASuggestion) {
         self.suggestion = suggestion
+        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
         
         self.registerNibs()
         
@@ -75,5 +77,13 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
         
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 }

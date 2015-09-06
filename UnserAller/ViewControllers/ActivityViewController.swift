@@ -13,9 +13,9 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
 
     @IBOutlet weak var mainTable: UITableView!
     var entries: [UASuggestion] = []
-    var countEntries: Int = 0
     var page: Int = -1
     var votingDisabled = false
+    var mediaHelper: MediaHelper = MediaHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,15 +81,14 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     
     // MARK: - Table Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countEntries
+        return self.entries.count
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-
-        switch (entries[indexPath.row].cellType) {
+        switch (self.entries[indexPath.row].cellType) {
             case "SuggestionCell": return self.getSuggestCellForActivity(self.entries[indexPath.row])
             case "UASuggestImageCell": return self.getSuggestImageCellForActivity(self.entries[indexPath.row])
             case "UASuggestionVoteCell": return self.getVoteCellForActivity(indexPath.row)
@@ -97,7 +96,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         default:
             var cell: UITableViewCell
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "\(entries[indexPath.row].cellType) cell is not defined"
+            cell.textLabel?.text = "\(self.entries[indexPath.row].cellType) cell is not defined"
             return cell
         }
     }
@@ -150,9 +149,13 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     
     func getVoteCellForActivity(row: Int) -> UASuggestionVoteCell {
         var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
-        cell.ratingView.delegate = self
-        cell.ratingView.editable = false
-        cell.ratingView.tag = row
+        
+        
+        if self.entries[row].isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.editable = false
+            cell.ratingView.tag = row
+        }
         cell.setCellForActivity(self.entries[row])
         
         // suggestion vc
@@ -172,9 +175,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     
     func getVoteWithImageCellForActivity(row: Int) -> UASuggestionVoteImageCell {
         var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
-        cell.ratingView.delegate = self
-        cell.ratingView.editable = false
-        cell.ratingView.tag = row
+        
+        if self.entries[row].isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.editable = false
+            cell.ratingView.tag = row
+        }
         cell.setCellForHome(self.entries[row])
         
         // suggestion vc
@@ -195,12 +201,9 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 110.0
         
-        var media:CGFloat = 0.0
-        if (entries[indexPath.row].media.count > 0) {
-            media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
-        }
+        var media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 30.0)
         
-        return base + entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
+        return base + self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
     }
     
     /*
@@ -210,10 +213,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         self.page += 1
         
         self.getEntries({() -> Void in
-            self.mainTable.reloadData()
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
+            
+            self.mainTable.reloadData()
+            
             }, error: {() -> Void in
                 println("Activity infinite load error")
                 
@@ -228,14 +233,15 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     func refresh() {
         self.page = 0
         self.entries = []
-        self.countEntries = 0
         
-        self.getEntries({() -> Void in
-            self.mainTable.reloadData()
+        self.getEntries({ () -> Void in
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, error: {() -> Void in
+            
+            self.mainTable.reloadData()
+            
+            }, error: { () -> Void in
                 println("Activity pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -244,10 +250,11 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
+        println("get entries is callded")
         // /api/mobile/profile/getbookmarks/
         let url: String = "\(APIURL)/api/mobile/profile/getactivity"
         
-        Alamofire.request(.GET, url, parameters: ["page": page])
+        Alamofire.request(.GET, url, parameters: ["page": self.page])
             .responseJSON { (_, _, JSON, errors) -> Void in
                 if(errors != nil || JSON?.count == 0) {
                     // print error
@@ -261,8 +268,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
                     var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
                     // merge two arrays
                     self.entries = self.entries + array
-                    self.countEntries = self.entries.count
-                    
+                    println(self.entries.count)
                     success()
                 }
         }

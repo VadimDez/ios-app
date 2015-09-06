@@ -19,6 +19,7 @@ class UASuggestionHeaderView: UIView {
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var projectButton: UIButton!
+    @IBOutlet weak var likeImage: UIImageView!
     
     var suggestion: UASuggestion!
     
@@ -91,13 +92,38 @@ class UASuggestionHeaderView: UIView {
     :param: sender
     */
     @IBAction func like(sender: AnyObject) {
+        
+        let incrementBefore: Int = self.suggestion.userVotes > 0 ? -1 : 1
+        self.updateLike(incrementBefore)
+        
         self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
             let increment = (active) ? 1 : -1;
-            self.suggestion.likeCount = self.suggestion.likeCount + increment;
-            self.likeLabel.text = "\(self.suggestion.likeCount)"
+            
+            if incrementBefore != increment {
+                
+                self.updateLike(increment - incrementBefore)
+            }
             
             }) { () -> Void in
-                
+                self.updateLike(-incrementBefore)
+        }
+    }
+    
+    func updateLike(increment: Int) {
+        self.suggestion.userVotes += increment
+        self.suggestion.likeCount = self.suggestion.likeCount + increment
+        self.likeLabel.text = "\(self.suggestion.likeCount)"
+        
+        self.toggleLikeColor()
+    }
+    
+    // toggle like color
+    func toggleLikeColor() -> Void {
+        // if liked - tint heart
+        if (suggestion.userVotes > 0) {
+            self.likeImage.image = UIImage(named: "heart_red")
+        } else {
+            self.likeImage.image = UIImage(named: "heart_black_32")
         }
     }
     

@@ -20,8 +20,13 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     var tableWidth: CGFloat!
     var votingDisabled: Bool = false
     var newCommentContent: String!
-    
     var openProjectDisabled: Bool = false
+    var editSuggestionMode: Bool = false
+    var editCommentMode: Int = 0
+    
+    
+    var commentService: UACommentService = UACommentService()
+    var suggestionService: UASuggestionViewModel = UASuggestionViewModel()
     
     override func viewWillAppear(animated: Bool) {
         self.tableWidth = self.mainTable.frame.width
@@ -33,7 +38,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // self.setViewHeader()
+        self.setViewHeader()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -52,8 +57,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         
         
         if self.suggestion.isOwner {
-            var button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "suggestionActions")
-            navigationItem.rightBarButtonItem = button
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "suggestionActions")
         }
         
         
@@ -64,7 +68,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         })
 
         self.newCommentContent = ""
-        self.setViewHeader() // issue with height, if in viewDidAppear there's no issue
+        //self.setViewHeader() // issue with height, if in viewDidAppear there's no issue
     }
     
     
@@ -123,6 +127,61 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         return base + entries[indexPath.row].content.getHeightForView(self.tableWidth, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if self.entries[indexPath.row].isOwner {
+            let optionsMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            
+            if self.entries[indexPath.row].isDeleted {
+                let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                    KVNProgress.showWithStatus("Restoring")
+                    
+                    self.commentService.restoreComment(self.entries[indexPath.row].id, success: { () -> () in
+                        self.entries[indexPath.row].isDeleted = false
+                        KVNProgress.showSuccess()
+                        self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+                        self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                        }, error: { () -> () in
+                            KVNProgress.showError()
+                            self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+                    })
+                }
+                optionsMenu.addAction(restoreAction)
+            } else {
+                let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
+                    KVNProgress.showWithStatus("Deleting")
+                    
+                    self.commentService.deleteComment(self.entries[indexPath.row].id, success: { () -> () in
+                        self.entries[indexPath.row].isDeleted = true
+                        KVNProgress.showSuccess()
+                        self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+                        self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                    }, error: { () -> () in
+                        KVNProgress.showError()
+                        self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+                    })
+                }
+                let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                    self.editCommentMode = indexPath.row //self.entries[indexPath.row].id
+                    self.openEditorWith("Edit comment", string: self.entries[indexPath.row].content)
+                }
+                optionsMenu.addAction(editAction)
+                optionsMenu.addAction(deleteAction)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction!) -> Void in
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+            
+
+            optionsMenu.addAction(cancelAction)
+            
+            self.presentViewController(optionsMenu, animated: true, completion: nil)
+        } else {
+            self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+    }
+    
     /**
      *  Load suggestion
      */
@@ -143,8 +202,6 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                     failure()
                 } else {
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
-                    let suggestionViewModel = UASuggestionViewModel()
                     
                     self.suggestion = UASuggestion().getSuggestionFromJSONForSuggestionVC(JSON?.objectAtIndex(0) as! Dictionary<String, AnyObject>)
                     
@@ -175,10 +232,9 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
 
                     if (JSON?.count > 0 && JSON?.objectForKey("comments")?.count > 0) {
-                        let commentViewModel = UACommentViewModel()
 
                         // get array
-                        var array = commentViewModel.getCommentsFromJSON(JSON?.objectForKey("comments") as! [Dictionary<String, AnyObject>])
+                        var array = self.commentService.getCommentsFromJSON(JSON?.objectForKey("comments") as! [Dictionary<String, AnyObject>])
                         
                         self.entries = self.entries + array
                     }
@@ -280,12 +336,8 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     func calculateHeaderHeight(base: CGFloat) -> CGFloat {
-        let imageSize: CGFloat = 40.0
-        var media: CGFloat = 0.0
-        
-        if (self.suggestion.media.count > 0) {
-            media = 50.0 + CGFloat((self.suggestion.media.count/5) * 50) + 10
-        }
+        let mediaHelper: MediaHelper = MediaHelper()
+        var media: CGFloat = mediaHelper.getHeightForMedias(self.suggestion.media.count, maxWidth: self.mainTable.frame.width - 5.0)
         
         return base + media + self.suggestion.content.getHeightForView(self.mainTable.frame.width - 10, font: UIFont(name: "Helvetica Neue", size: 13)!)
     }
@@ -363,29 +415,73 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     :param: sender
     */
     @IBAction func openEditor(sender: AnyObject) {
+        self.openEditorWith("New comment", string: (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text)
+    }
+    
+    func openEditorWith(title: String, string: String) {
         var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         weak var _self = self
-        editor.setEditorTitle("New comment")
+        editor.setEditorTitle(title)
         editor.delegate = _self
-        editor.string = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
+        editor.string = string
         
-//        1)
-//        self.navigationController?.pushViewController(editor, animated: true)
-//        2)
-//        self.showViewController(editor, sender: self)
-//        3)
+        //        1)
+        //        self.navigationController?.pushViewController(editor, animated: true)
+        //        2)
+        //        self.showViewController(editor, sender: self)
+        //        3)
         self.presentViewController(editor, animated: true, completion: nil)
     }
     
     func passTextBack(controller: UAEditorViewController, string: String) {
-        self.newCommentContent = string
-        (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = string
+        
+        if self.editSuggestionMode {
+            self.editSuggestionMode = false
+            
+            let oldContent = self.suggestion.content
+            self.suggestion.content = string
+            
+            // update suggestion
+            self.suggestionService.update(self.suggestion, success: { () -> Void in
+                // refresh view header
+                self.setViewHeader()
+            }, error: { () -> Void in
+                self.suggestion.content = oldContent
+            })
+        } else if self.editCommentMode != 0 {
+            let selected = self.editCommentMode
+            let oldContent = self.entries[selected].content
+            self.editCommentMode = 0
+            self.entries[selected].content = string
+            
+            // update comment
+            self.commentService.update(self.entries[selected], success: { () -> () in
+                self.mainTable.reloadData()
+            }, error: { () -> () in
+                self.entries[selected].content = oldContent
+                self.mainTable.reloadData()
+            })
+
+        } else {
+            self.newCommentContent = string
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = string
+            
+        }
     }
     
     @IBAction func sendNewComment(sender: AnyObject) {
         let newComment: String = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
 
+        if count(newComment) == 0 {
+            return
+        }
+        
+        if self.suggestion.isDeleted {
+            return
+        }
+
+        
         self.sendNewComment(newComment, success: { (json) -> () in
             (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = ""
             
@@ -403,7 +499,29 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             KVNProgress.showError()
         }
     }
-    
+    func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var url: String = "\(APIURL)/api/mobile/comment/add"
+        
+        Alamofire.request(.POST, url, parameters: [
+            "comment": comment,
+            "suggestion": self.suggestion.suggestionId])
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if(errors != nil && JSON == nil) {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    println(errors)
+                    // error block
+                    failure()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(json: JSON!)
+                }
+        }
+    }
+
     
     @IBAction func openProject(sender: AnyObject) {
         if !self.openProjectDisabled {
@@ -433,50 +551,50 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             }
         }
     }
-    
-    func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        var url: String = "\(APIURL)/api/mobile/comment/add"
 
-        Alamofire.request(.POST, url, parameters: [
-            "comment": comment,
-            "suggestion": self.suggestion.suggestionId])
-            .responseJSON { (_,_,JSON,errors) in
-                
-                if(errors != nil && JSON == nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(json: JSON!)
-                }
-        }
-    }
     
     
     func suggestionActions() {
         let optionsMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
-            println("deleting...")
-            let suggestionVM = UASuggestionViewModel()
+        if self.suggestion.isDeleted {
+            let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                KVNProgress.showWithStatus("Restoring")
+                
+                self.suggestionService.restore(self.suggestion, success: { () -> Void in
+                    self.suggestion.isDeleted = false
+                        KVNProgress.showSuccess()
+                    }, error: { () -> Void in
+                        KVNProgress.showError()
+                })
+            }
+            optionsMenu.addAction(restoreAction)
+        } else {
+            let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                self.editSuggestionMode = true
+                self.openEditorWith("Edit suggestion", string: self.suggestion.content)
+            }
             
-            suggestionVM.delete(self.suggestion, success: { () -> Void in
-                println("deleted!")
-            }, error: { () -> Void in
-                println("not deleted!")                
-            })
+            let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
+                KVNProgress.showWithStatus("Deleting")
+                let suggestionVM = UASuggestionViewModel()
+                
+                self.suggestionService.delete(self.suggestion, success: { () -> Void in
+                    self.suggestion.isDeleted = true
+                    KVNProgress.showSuccessWithStatus("Deleted")
+                }, error: { () -> Void in
+                    KVNProgress.showError()
+                })
+            }
+            
+            optionsMenu.addAction(editAction)
+            optionsMenu.addAction(deleteAction)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction!) -> Void in
             
         }
         
-        optionsMenu.addAction(deleteAction)
         optionsMenu.addAction(cancelAction)
         
         self.presentViewController(optionsMenu, animated: true, completion: nil)

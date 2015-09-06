@@ -8,10 +8,10 @@
 
 import UIKit
 
-class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    @IBOutlet weak var likeImage: UIImageView!
+    var mediaHelper: MediaHelper!
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -24,6 +24,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     func setUp(suggestion: UASuggestion) {
         
         self.suggestion = suggestion
+        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
         
         self.registerNibs()
         
@@ -47,11 +48,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
         // if liked - tint heart
-        if (suggestion.userVotes > 0) {
-            self.likeImage.image = UIImage(named: "heart_red")
-        } else {
-            self.likeImage.image = UIImage(named: "heart_black_32")
-        }
+        self.toggleLikeColor()
     }
     
     func registerNibs() {
@@ -78,5 +75,13 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
         
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
 }

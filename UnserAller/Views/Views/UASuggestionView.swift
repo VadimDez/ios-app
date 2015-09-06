@@ -9,7 +9,6 @@
 import UIKit
 
 class UASuggestionView: UASuggestionHeaderView {
-    @IBOutlet weak var likeImage: UIImageView!
 
     func setUp(suggestion: UASuggestion) {
         self.suggestion = suggestion
@@ -29,10 +28,6 @@ class UASuggestionView: UASuggestionHeaderView {
         
         
         // if liked - tint heart
-        if (suggestion.userVotes > 0) {
-            self.likeImage.image = UIImage(named: "heart_red")
-        } else {
-            self.likeImage.image = UIImage(named: "heart_black_32")
-        }
+        self.toggleLikeColor()
     }
 }

@@ -31,7 +31,7 @@
 		126CBE291A1160FF00E22070 /* UABookmarkCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 126CBE281A1160FF00E22070 /* UABookmarkCell.xib */; };
 		126CBE2B1A116D2700E22070 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2A1A116D2700E22070 /* CreditsViewController.swift */; };
 		126CBE2D1A11732300E22070 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
-		1270B5831A6B166100D041B9 /* UACommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1270B5821A6B166100D041B9 /* UACommentViewModel.swift */; };
+		1270B5831A6B166100D041B9 /* UACommentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1270B5821A6B166100D041B9 /* UACommentService.swift */; };
 		1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1270B5871A6B16D400D041B9 /* UAComment.swift */; };
 		127665721A6B9D9600E87A0E /* UACommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127665711A6B9D9600E87A0E /* UACommentCell.swift */; };
 		127665741A6B9E1700E87A0E /* UACommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 127665731A6B9E1700E87A0E /* UACommentCell.xib */; };
@@ -77,6 +77,7 @@
 		12D11BF81AD469F000CC19EF /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */; };
 		12D74B901A685951006CE23D /* UASuggestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D74B8F1A685951006CE23D /* UASuggestionView.swift */; };
 		12D74B921A6859FA006CE23D /* UASuggestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12D74B911A6859FA006CE23D /* UASuggestionView.xib */; };
+		12D79A591B9B7CE9006C61AB /* MediaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D79A581B9B7CE9006C61AB /* MediaHelper.swift */; };
 		12D8BB181ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 12D8BB161ABA0F5F00E3DC0D /* UnserAller.xcdatamodeld */; };
 		12DF1F0D1A5C2A19007CA3B5 /* UANewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */; };
 		12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F111A5C2ABF007CA3B5 /* UANews.swift */; };
@@ -187,7 +188,7 @@
 		126CBE281A1160FF00E22070 /* UABookmarkCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UABookmarkCell.xib; sourceTree = "<group>"; };
 		126CBE2A1A116D2700E22070 /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreditsViewController.swift; path = ViewControllers/CreditsViewController.swift; sourceTree = "<group>"; };
 		126CBE2C1A11732300E22070 /* UACredit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACredit.swift; sourceTree = "<group>"; };
-		1270B5821A6B166100D041B9 /* UACommentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACommentViewModel.swift; path = ViewModels/UACommentViewModel.swift; sourceTree = "<group>"; };
+		1270B5821A6B166100D041B9 /* UACommentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACommentService.swift; path = ViewModels/UACommentService.swift; sourceTree = "<group>"; };
 		1270B5871A6B16D400D041B9 /* UAComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAComment.swift; path = Models/UAComment.swift; sourceTree = "<group>"; };
 		127665711A6B9D9600E87A0E /* UACommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UACommentCell.swift; path = Views/Cells/UACommentCell.swift; sourceTree = "<group>"; };
 		127665731A6B9E1700E87A0E /* UACommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UACommentCell.xib; path = Views/Cells/UACommentCell.xib; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 		12D11BF71AD469F000CC19EF /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		12D74B8F1A685951006CE23D /* UASuggestionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UASuggestionView.swift; path = Views/Views/UASuggestionView.swift; sourceTree = "<group>"; };
 		12D74B911A6859FA006CE23D /* UASuggestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UASuggestionView.xib; path = Views/Views/UASuggestionView.xib; sourceTree = "<group>"; };
+		12D79A581B9B7CE9006C61AB /* MediaHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MediaHelper.swift; path = Helpers/MediaHelper.swift; sourceTree = "<group>"; };
 		12D8BB171ABA0F5F00E3DC0D /* UnserAller.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UnserAller.xcdatamodel; sourceTree = "<group>"; };
 		12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsViewModel.swift; path = ViewModels/UANewsViewModel.swift; sourceTree = "<group>"; };
 		12DF1F111A5C2ABF007CA3B5 /* UANews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANews.swift; path = Models/UANews.swift; sourceTree = "<group>"; };
@@ -369,6 +371,14 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		12D79A571B9B7C9B006C61AB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				12D79A581B9B7CE9006C61AB /* MediaHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
@@ -436,7 +446,6 @@
 				12C528A11A0FD74000B8A50C /* UAProjectViewModel.swift */,
 				12A1729F1A19491A000FAA54 /* UACreditViewModel.swift */,
 				12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */,
-				1270B5821A6B166100D041B9 /* UACommentViewModel.swift */,
 				12CE5E651B47158B00EC9344 /* TimelineViewModel.swift */,
 			);
 			name = ViewModels;
@@ -547,6 +556,7 @@
 		D5812284197C08B600E3573C /* UnserAller */ = {
 			isa = PBXGroup;
 			children = (
+				12D79A571B9B7C9B006C61AB /* Helpers */,
 				D59D2DDA1B7D21FF0030A383 /* Services */,
 				12A7ABA01A7E3BEA00D50BE7 /* Delegates */,
 				D52FF94019E3218C006139E2 /* ViewModels */,
@@ -607,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				D59D2DDB1B7D22270030A383 /* CompetenceService.swift */,
+				1270B5821A6B166100D041B9 /* UACommentService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -955,7 +966,7 @@
 				D5EFD6271AE5986B0018CE33 /* AddressTableViewCell.swift in Sources */,
 				D5812288197C08B600E3573C /* AppDelegate.swift in Sources */,
 				D59D2DDC1B7D22270030A383 /* CompetenceService.swift in Sources */,
-				1270B5831A6B166100D041B9 /* UACommentViewModel.swift in Sources */,
+				1270B5831A6B166100D041B9 /* UACommentService.swift in Sources */,
 				D59780CD1A2B799600CEC181 /* ProjectViewController.swift in Sources */,
 				D57236D41B8A33960076BC30 /* UACompetenceWithOptionsCell.swift in Sources */,
 				1270B5881A6B16D400D041B9 /* UAComment.swift in Sources */,
@@ -964,6 +975,7 @@
 				12CD632E1A5DDE7200E2EDC4 /* UAProjectNewsCell.swift in Sources */,
 				D537D05F1B776FFE00779D92 /* UAMultipleLineInputCell.swift in Sources */,
 				D59780D31A2B917F00CEC181 /* UAPhaseCell.swift in Sources */,
+				12D79A591B9B7CE9006C61AB /* MediaHelper.swift in Sources */,
 				D53A29EB1B7935A400209FA2 /* UAOptionCell.swift in Sources */,
 				129E9A8B1A19518F00EBF8BF /* UACreditCell.swift in Sources */,
 				D5F558921B808AE0006CF3A3 /* UACheckboxCompetence.swift in Sources */,

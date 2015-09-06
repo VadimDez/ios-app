@@ -20,6 +20,8 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 
     var votingDisabled = false
     
+    var mediaHelper = MediaHelper()
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
 
@@ -31,6 +33,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
 //        self.edgesForExtendedLayout = UIRectEdge.None
         
         self.registerNotifications()
+        self.mainTable.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -273,15 +276,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let base: CGFloat = 95.0
         var news: CGFloat = 0.0
-        
-        var media:CGFloat = 0.0
-        let mediaCount = entries[indexPath.row].media.count
-        if (mediaCount > 0) {
-            media = 50.0
-            if (mediaCount > 5) {
-                media += CGFloat((mediaCount / 5) * 50)
-            }
-        }
+        let media: CGFloat = self.mediaHelper.getHeightForMedias(entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
         
         if (self.entries[indexPath.row] is UANews) {
             news = (self.entries[indexPath.row] as! UANews).title.getHeightForView(self.mainTable.frame.width, font: UIFont(name: "Helvetica Neue", size: 14)!)
