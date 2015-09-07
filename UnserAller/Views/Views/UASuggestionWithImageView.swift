@@ -11,7 +11,7 @@ import UIKit
 class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    var mediaHelper: MediaHelper!
+    var mediaHelper: MediaHelper = MediaHelper()
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -24,7 +24,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     func setUp(suggestion: UASuggestion) {
         
         self.suggestion = suggestion
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
+        self.mediaHelper.mediaCount = self.suggestion.media.count
         
         self.registerNibs()
         
@@ -78,10 +78,20 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
         return self.mediaHelper.getSizeForIndex(indexPath.row)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        println("HERE")
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
     }
 }

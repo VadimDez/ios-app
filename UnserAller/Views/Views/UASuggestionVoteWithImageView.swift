@@ -12,7 +12,9 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet weak var ratingView: FloatRatingView!
-    var mediaHelper: MediaHelper!
+    @IBOutlet weak var viewContainer: UIView!
+    
+    var mediaHelper: MediaHelper = MediaHelper()
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -23,7 +25,7 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
     */
     func setUp(suggestion: UASuggestion) {
         self.suggestion = suggestion
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
+        self.mediaHelper.mediaCount = self.suggestion.media.count
         
         self.registerNibs()
         
@@ -31,10 +33,34 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         self.projectButton.setTitle(suggestion.projectName, forState: UIControlState.Normal)
 //        self.subtitleLabel.text = suggestion.projectName
         self.contentLabel.text  = suggestion.content
-        self.likeLabel.text     = "\(suggestion.likeCount)"
+        
         self.commentLabel.text  = "\(suggestion.commentCount)"
         self.dateLabel.text     = suggestion.updated.getStringFromDate()
-        self.ratingView.rating  = Float(suggestion.userVotes)
+        
+        if suggestion.isReleased {
+            self.ratingView.rating  = Float(suggestion.userVotes)
+            self.likeLabel.text     = "\(suggestion.likeCount)"
+        } else {
+            if self.ratingView != nil {
+                let rightConstrain = NSLayoutConstraint(
+                    item: self.commentLabel,
+                    attribute: NSLayoutAttribute.Right,
+                    relatedBy: NSLayoutRelation.Equal,
+                    toItem: self.viewContainer,
+                    attribute: NSLayoutAttribute.Right,
+                    multiplier: 1.0,
+                    constant: -8.0)
+                self.ratingView.removeFromSuperview()
+                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self
+                self.viewContainer.addConstraint(rightConstrain)
+                
+            }
+            if self.likeLabel != nil {
+                self.likeLabel.removeFromSuperview()
+                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+            }
+        }
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
@@ -80,10 +106,19 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
         return self.mediaHelper.getSizeForIndex(indexPath.row)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
     }
 }

@@ -13,7 +13,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     var type: String = "suggestion"
-    var mediaHelper: MediaHelper!
+    var mediaHelper: MediaHelper = MediaHelper()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +23,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
-        
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.frame.width
     }
     
     /**
@@ -42,6 +42,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     
     func setCellForHome(suggestion: UASuggestion) {
         self.suggestion = suggestion
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.type = "suggestion";
         
@@ -78,17 +79,13 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         // change shape of image
         self.makeRoundCorners()
         
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
-//        [_collectionView setContentOffset:CGPointZero animated:NO];
-//        [_collectionView reloadData];
-        
         self.imageCollectionView.reloadData()
     }
     
     
     func setCellForPhase(suggestion: UASuggestion) {
         self.suggestion = suggestion
-//        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.type = "suggestion";
         
@@ -120,10 +117,6 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         // change shape of image
         self.makeRoundCorners()
         
-        //        [_collectionView setContentOffset:CGPointZero animated:NO];
-        //        [_collectionView reloadData];
-        
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
         self.imageCollectionView.reloadData()
     }
 
@@ -148,6 +141,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
     }
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
         return self.mediaHelper.getSizeForIndex(indexPath.row)
     }
     
@@ -157,5 +151,13 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     
 //    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
 //        return !touch.view.isKindOfClass(UICollectionView)
-//    }
+    //    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
 }

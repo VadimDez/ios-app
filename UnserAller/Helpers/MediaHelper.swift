@@ -21,21 +21,23 @@ class MediaHelper {
     }
     
     func getSizeForIndex(index: Int) -> CGSize {
+        
         var size: CGFloat = self.frameMaxWidth
+        
         if self.mediaCount == 1 {
-            println(size)
             return CGSize(width: size, height: size)
         }
         
         if self.mediaCount == 2 {
-            return CGSize(width: (size / 2) - 2, height: (size / 2) - 2)
+            size -= 4.0
+            return CGSize(width: size / 2, height: size / 2)
         }
         
         if self.mediaCount == 3 {
             if index == 0 {
                 return CGSize(width: size, height: size)
             }
-            return CGSize(width: (size - 15) / 3, height: (size - 15) / 3)
+            return CGSize(width: size / 2, height: size / 2)
         }
         
         return CGSize(width: size, height: size)

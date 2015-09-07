@@ -196,8 +196,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
         
-        println(cell.imageCollectionView.frame.size)
-        
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
@@ -264,7 +262,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             cell.ratingView.tag = row
         }
         cell.setCellForHome(self.entries[row] as! UASuggestion)
-
+        
         // suggestion vc
         cell.onMainButton = {
             () -> Void in
@@ -306,7 +304,6 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         } else {
             self.presentSuggestionViewController(self.entries[indexPath.row] as! UASuggestion)
         }
-        
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
 

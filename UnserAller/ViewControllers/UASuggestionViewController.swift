@@ -27,6 +27,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     
     var commentService: UACommentService = UACommentService()
     var suggestionService: UASuggestionViewModel = UASuggestionViewModel()
+    let mediaHelper: MediaHelper = MediaHelper()
     
     override func viewWillAppear(animated: Bool) {
         self.tableWidth = self.mainTable.frame.width
@@ -336,8 +337,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     func calculateHeaderHeight(base: CGFloat) -> CGFloat {
-        let mediaHelper: MediaHelper = MediaHelper()
-        var media: CGFloat = mediaHelper.getHeightForMedias(self.suggestion.media.count, maxWidth: self.mainTable.frame.width - 5.0)
+        var media: CGFloat = self.mediaHelper.getHeightForMedias(self.suggestion.media.count, maxWidth: self.mainTable.frame.width - 5.0)
         
         return base + media + self.suggestion.content.getHeightForView(self.mainTable.frame.width - 10, font: UIFont(name: "Helvetica Neue", size: 13)!)
     }

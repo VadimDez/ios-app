@@ -17,7 +17,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
     @IBOutlet weak var mainView: UIView!
     
     var suggestion: UASuggestion!
-    var mediaHelper: MediaHelper!
+    var mediaHelper: MediaHelper = MediaHelper()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,7 +39,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
 
     func setCellForHome(suggestion: UASuggestion) {
         self.suggestion = suggestion
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.imageCollectionView.backgroundColor    = UIColor.clearColor()
         self.contentLabel.text      = suggestion.content
@@ -80,12 +80,13 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
+        
         self.imageCollectionView.reloadData()
     }
     
     func setCellForPhase(suggestion: UASuggestion) {
         self.suggestion = suggestion
-        self.mediaHelper = MediaHelper(maxWidth: self.imageCollectionView.frame.width, mediaCount: self.suggestion.media.count)
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.imageCollectionView.backgroundColor    = UIColor.clearColor()
         self.contentLabel.text      = suggestion.content
@@ -155,10 +156,19 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
         return self.mediaHelper.getSizeForIndex(indexPath.row)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
     }
 }
