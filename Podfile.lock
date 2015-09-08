@@ -37,6 +37,7 @@ PODS:
   - KVNProgress (2.2.1)
   - Locksmith (1.2.2)
   - pop (1.0.7)
+  - RNLoadingButton (0.0.1)
   - SVPullToRefresh (0.4.1)
   - TTTAttributedLabel (1.13.4)
 
@@ -49,6 +50,7 @@ DEPENDENCIES:
   - IDMPhotoBrowser (~> 1.7)
   - KVNProgress (~> 2.2)
   - Locksmith (~> 1.2)
+  - RNLoadingButton (~> 0.0)
   - SVPullToRefresh (~> 0.4)
   - TTTAttributedLabel (~> 1.13)
 
@@ -63,6 +65,7 @@ SPEC CHECKSUMS:
   KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
   Locksmith: c84c10bf23f99e6d04703dba65065dc38b038d88
   pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  RNLoadingButton: edcf6cd965509625f79318a8a5477b1293435698
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 

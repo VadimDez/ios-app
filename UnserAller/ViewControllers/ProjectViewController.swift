@@ -27,7 +27,7 @@ class ProjectViewController:
     @IBOutlet weak var projectName: UILabel!
     @IBOutlet weak var projectCompanyName: UIButton!
     @IBOutlet weak var sendSuggestionInput: UITextField!
-    @IBOutlet weak var sendSuggestionBtn: UIButton!
+    @IBOutlet weak var sendSuggestionBtn: RNLoadingButton!
     @IBOutlet weak var phaseContent: UILabel!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var bookmarkImage: UIImageView!
@@ -122,6 +122,11 @@ class ProjectViewController:
         
         ///
         self.projectNameBackground.layerGradient(UIColor.clearColor(), color2: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1), color3: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2), color4: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25))
+        
+        // set button with indicator
+        self.sendSuggestionBtn.hideTextWhenLoading = true
+        self.sendSuggestionBtn.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendSuggestionBtn.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
     
     /**
@@ -957,6 +962,8 @@ class ProjectViewController:
      *  Send new suggestion
      */
     @IBAction func sendNewSuggestion() {
+        self.sendSuggestionBtn.loading = true
+        
         self.sendSuggestion({ (json) -> () in
             
             var suggestion = UASuggestion()
@@ -968,13 +975,14 @@ class ProjectViewController:
                 suggestion = UASuggestion().initSuggestForProjectFromJSON(json, project: self.project)
             }
             
+            self.sendSuggestionBtn.loading = false
             var array = [suggestion]
             
             self.entries = array + self.entries
             self.mainTable.reloadData()
             
         }, failure: { () -> () in
-            
+            self.sendSuggestionBtn.loading = false
         })
     }
     

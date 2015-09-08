@@ -49,6 +49,11 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         
         // if liked - tint heart
         self.toggleLikeColor()
+        
+        // set button with indicator
+        self.sendNewCommentButton.hideTextWhenLoading = true
+        self.sendNewCommentButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendNewCommentButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
     
     func registerNibs() {

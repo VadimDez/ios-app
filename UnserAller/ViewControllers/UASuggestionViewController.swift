@@ -482,6 +482,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             return
         }
 
+        (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = true
         
         self.sendNewComment(newComment, success: { (json) -> () in
             (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = ""
@@ -492,12 +493,14 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             // prepend new comment
             self.entries = array + self.entries
             
-            KVNProgress.showSuccessWithStatus("Sent")
+//            KVNProgress.showSuccessWithStatus("Sent")
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = false
             
             // reload table
             self.mainTable.reloadData()
         }) { () -> () in
-            KVNProgress.showError()
+//            KVNProgress.showError()
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = false
         }
     }
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {

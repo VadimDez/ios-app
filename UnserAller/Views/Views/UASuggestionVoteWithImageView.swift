@@ -72,6 +72,11 @@ class UASuggestionVoteWithImageView: UASuggestionHeaderView, UICollectionViewDat
         
         // clear color
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
+        
+        // set button with indicator
+        self.sendNewCommentButton.hideTextWhenLoading = true
+        self.sendNewCommentButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendNewCommentButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
     
     func registerNibs() {

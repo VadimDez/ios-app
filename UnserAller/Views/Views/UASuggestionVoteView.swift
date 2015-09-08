@@ -33,5 +33,10 @@ class UASuggestionVoteView: UASuggestionHeaderView {
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
         self.loadProjectImage(suggestion.projectId, width: 10, height: 20)
+        
+        // set button with indicator
+        self.sendNewCommentButton.hideTextWhenLoading = true
+        self.sendNewCommentButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendNewCommentButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 }

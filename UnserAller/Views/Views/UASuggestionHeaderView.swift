@@ -25,7 +25,7 @@ class UASuggestionHeaderView: UIView {
     
     @IBOutlet weak var newCommentButton: UIButton!
     @IBOutlet weak var newCommentInput: UITextField!
-    @IBOutlet weak var sendNewCommentButton: UIButton!
+    @IBOutlet weak var sendNewCommentButton: RNLoadingButton!
     
     /*
     // Only override drawRect: if you perform custom drawing.

@@ -26,8 +26,12 @@ class UASuggestionView: UASuggestionHeaderView {
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
         self.loadProjectImage(suggestion.projectId, width: 10, height: 20)
         
-        
         // if liked - tint heart
         self.toggleLikeColor()
+        
+        // set button with indicator
+        self.sendNewCommentButton.hideTextWhenLoading = true
+        self.sendNewCommentButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendNewCommentButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 }

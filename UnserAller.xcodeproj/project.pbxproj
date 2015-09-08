@@ -83,6 +83,7 @@
 		12DF1F121A5C2ABF007CA3B5 /* UANews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12DF1F111A5C2ABF007CA3B5 /* UANews.swift */; };
 		12EA195D1A1939C000259B68 /* UACreditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EA195C1A1939C000259B68 /* UACreditTests.swift */; };
 		12EA19601A193A7400259B68 /* UACredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126CBE2C1A11732300E22070 /* UACredit.swift */; };
+		12F6CCB51B9F73430020E43E /* RNButtonWithLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F6CCB41B9F73430020E43E /* RNButtonWithLoading.swift */; };
 		12FCF47A1A11534C008B74AA /* UAProjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FCF4791A11534C008B74AA /* UAProjectCell.swift */; };
 		12FCF47E1A11536A008B74AA /* UAProjectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12FCF47D1A11536A008B74AA /* UAProjectCell.xib */; };
 		12FF8EF01B98DD810068A9AA /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FF8EEF1B98DD810068A9AA /* AuthViewController.swift */; };
@@ -236,6 +237,7 @@
 		12DF1F0C1A5C2A19007CA3B5 /* UANewsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANewsViewModel.swift; path = ViewModels/UANewsViewModel.swift; sourceTree = "<group>"; };
 		12DF1F111A5C2ABF007CA3B5 /* UANews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UANews.swift; path = Models/UANews.swift; sourceTree = "<group>"; };
 		12EA195C1A1939C000259B68 /* UACreditTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UACreditTests.swift; sourceTree = "<group>"; };
+		12F6CCB41B9F73430020E43E /* RNButtonWithLoading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNButtonWithLoading.swift; sourceTree = "<group>"; };
 		12FCF4791A11534C008B74AA /* UAProjectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UAProjectCell.swift; path = Views/Cells/UAProjectCell.swift; sourceTree = "<group>"; };
 		12FCF47D1A11536A008B74AA /* UAProjectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UAProjectCell.xib; sourceTree = "<group>"; };
 		12FF8EEF1B98DD810068A9AA /* AuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthViewController.swift; path = ViewControllers/AuthViewController.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 		D511714F19E030D2007675EE /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				12F6CCB41B9F73430020E43E /* RNButtonWithLoading.swift */,
 				12620B5C1A6182A800C54124 /* FloatRatingView.swift */,
 				D5D9E65719E158AE00537FBD /* Keychain */,
 				D5C506801A2D0BBB00834A2F /* UIImage+Tint.swift */,
@@ -957,6 +960,7 @@
 				D5F558881B80819E006CF3A3 /* UAFreetextCompetence.swift in Sources */,
 				12B7D4781A6EE75200642D5B /* UACompanyViewController.swift in Sources */,
 				12608E491B1E5140007BBEAE /* UACellSuggest.swift in Sources */,
+				12F6CCB51B9F73430020E43E /* RNButtonWithLoading.swift in Sources */,
 				129CD1361A6140D400434D67 /* UALabel.swift in Sources */,
 				D57514811B90F83500539485 /* UserShared.swift in Sources */,
 				D52FF94619E3229F006139E2 /* UASuggestion.swift in Sources */,
