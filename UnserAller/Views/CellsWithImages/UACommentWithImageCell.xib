@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -24,29 +24,30 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRp-Ho-bNi" userLabel="titleLabel">
-                                <rect key="frame" x="54" y="6" width="255" height="21"/>
+                                <rect key="frame" x="54" y="6" width="255" height="18"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="St7-6I-pFF"/>
+                                    <constraint firstAttribute="height" constant="18" id="St7-6I-pFF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="EBA-va-PLL" userLabel="dateLabel">
-                                <rect key="frame" x="54" y="28" width="255" height="17"/>
+                                <rect key="frame" x="54" y="25" width="255" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="CCn-Iy-amW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKg-zK-rHg" userLabel="content" customClass="UALabel" customModule="UnserAller" customModuleProvider="target">
-                                <rect key="frame" x="54" y="48" width="258" height="16"/>
+                                <rect key="frame" x="54" y="45" width="258" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="jGo-a3-zjh">
-                                <rect key="frame" x="54" y="65" width="258" height="50"/>
+                                <rect key="frame" x="54" y="64" width="258" height="53"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="0DQ-V6-JkF">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -58,7 +59,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eRp-Ho-bNi" secondAttribute="trailing" constant="11" id="4Ms-ZL-eRe"/>
-                            <constraint firstItem="jGo-a3-zjh" firstAttribute="top" secondItem="mKg-zK-rHg" secondAttribute="bottom" constant="1" id="6Rz-ag-Rk0"/>
+                            <constraint firstItem="jGo-a3-zjh" firstAttribute="top" secondItem="mKg-zK-rHg" secondAttribute="bottom" constant="3" id="6Rz-ag-Rk0"/>
                             <constraint firstAttribute="trailing" secondItem="mKg-zK-rHg" secondAttribute="trailing" constant="8" id="6oq-Up-xuZ"/>
                             <constraint firstItem="ku0-ke-eRy" firstAttribute="leading" secondItem="5ql-HD-R26" secondAttribute="leading" constant="6" id="A68-nK-hW4"/>
                             <constraint firstItem="EBA-va-PLL" firstAttribute="top" secondItem="eRp-Ho-bNi" secondAttribute="bottom" constant="1" id="AFo-UG-NHU"/>
@@ -70,7 +71,7 @@
                             <constraint firstAttribute="trailing" secondItem="EBA-va-PLL" secondAttribute="trailing" constant="11" id="fZ7-9H-cUC"/>
                             <constraint firstAttribute="trailing" secondItem="jGo-a3-zjh" secondAttribute="trailing" constant="8" id="kcJ-gs-RSv"/>
                             <constraint firstItem="eRp-Ho-bNi" firstAttribute="leading" secondItem="ku0-ke-eRy" secondAttribute="trailing" constant="8" id="uui-SD-OeG"/>
-                            <constraint firstAttribute="bottom" secondItem="jGo-a3-zjh" secondAttribute="bottom" constant="7" id="wGA-mo-UTi"/>
+                            <constraint firstAttribute="bottom" secondItem="jGo-a3-zjh" secondAttribute="bottom" constant="5" id="wGA-mo-UTi"/>
                             <constraint firstItem="eRp-Ho-bNi" firstAttribute="top" secondItem="5ql-HD-R26" secondAttribute="top" constant="6" id="x8i-gs-3B1"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

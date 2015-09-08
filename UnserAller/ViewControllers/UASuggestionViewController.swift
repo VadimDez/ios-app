@@ -118,12 +118,9 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = 69.0
+        let base: CGFloat = 50.0
         
-        var media:CGFloat = 0.0
-        if (entries[indexPath.row].media.count > 0) {
-            media = 60.0 + CGFloat((entries[indexPath.row].media.count/5) * 51)
-        }
+        let media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.bounds.width - 60)
         
         return base + entries[indexPath.row].content.getHeightForView(self.tableWidth, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
@@ -272,6 +269,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         var suggestionView: UASuggestionView = nib[0] as! UASuggestionView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentInput.text = self.newCommentContent
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -290,6 +288,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         var suggestionView: UASuggestionWithImageView = nib[0] as! UASuggestionWithImageView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentInput.text = self.newCommentContent
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.projectButton.addTarget(self, action: "openProject:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -308,6 +307,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         var suggestionView: UASuggestionVoteView = nib[0] as! UASuggestionVoteView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentInput.text = self.newCommentContent
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -327,6 +327,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         var suggestionView: UASuggestionVoteWithImageView = nib[0] as! UASuggestionVoteWithImageView
         
         suggestionView.setUp(self.suggestion)
+        suggestionView.newCommentInput.text = self.newCommentContent
         suggestionView.ratingView.delegate = self
         suggestionView.newCommentButton.addTarget(self, action: "openEditor:", forControlEvents: UIControlEvents.TouchUpInside)
         suggestionView.sendNewCommentButton.addTarget(self, action: "sendNewComment:", forControlEvents: UIControlEvents.TouchUpInside)
