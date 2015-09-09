@@ -13,7 +13,7 @@ class InformationTableViewCell: UITableViewCell {
     @IBOutlet weak var firstNameInput: UITextField!
     @IBOutlet weak var lastNameInput: UITextField!
     @IBOutlet weak var emailInput: UITextField!
-    @IBOutlet weak var updateProfileInfo: UIButton!
+    @IBOutlet weak var updateProfileInfo: RNLoadingButton!
     @IBOutlet weak var languageButton: UIButton!
     
     var language: String!
@@ -25,6 +25,11 @@ class InformationTableViewCell: UITableViewCell {
         // Initialization code
         
         self.emailInput.enabled = false
+        
+        // set button with indicator
+        self.updateProfileInfo.hideTextWhenLoading = true
+        self.updateProfileInfo.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.updateProfileInfo.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -32,7 +37,6 @@ class InformationTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
     func setCell(settings: Dictionary<String, AnyObject>) {
         if let firstName = settings["firstname"]?.objectForKey("value") as? String {
             self.firstNameInput.text = firstName

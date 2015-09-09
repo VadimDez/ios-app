@@ -78,7 +78,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UE-YX-XJ7">
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3UE-YX-XJ7" customClass="RNLoadingButton">
                         <rect key="frame" x="0.0" y="189" width="320" height="47"/>
                         <color key="backgroundColor" red="0.12549019610000001" green="0.75294117650000003" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -90,10 +90,10 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="emailInput" destination="u0K-j4-KL7" id="0LN-cY-ubu"/>
+                <outlet property="emailInput" destination="sw4-oS-XEs" id="2w4-z7-Md4"/>
                 <outlet property="firstNameInput" destination="BpS-MD-12g" id="S7W-XP-e5c"/>
                 <outlet property="languageButton" destination="5Ih-Lf-hf2" id="Q8F-ih-gle"/>
-                <outlet property="lastNameInput" destination="sw4-oS-XEs" id="aCV-yg-cMD"/>
+                <outlet property="lastNameInput" destination="u0K-j4-KL7" id="MaG-mE-W1c"/>
                 <outlet property="updateProfileInfo" destination="3UE-YX-XJ7" id="E6V-nV-pBI"/>
             </connections>
             <point key="canvasLocation" x="429" y="308.5"/>

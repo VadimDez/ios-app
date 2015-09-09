@@ -12,6 +12,7 @@ import Alamofire
 class CompetenceViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var mainTable: UITableView!
+    @IBOutlet weak var sendButton: RNLoadingButton!
     
     var entries: [UACompetence] = []
     var checkValidation: Bool = false
@@ -42,6 +43,10 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
             
         })
         
+        // set button with indicator
+        self.sendButton.hideTextWhenLoading = true
+        self.sendButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 
     override func didReceiveMemoryWarning() {
@@ -146,15 +151,23 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
                     && self.previousCompetenceFormat != CompetenceFormat.Likert
                     && competence.content != competence.content {
                     // content
-                    height = height + 10.0 + competence.content.getHeightForView(width - 16, font: font!)
+                    height = height + 10.0
+                        if competence.content != nil {
+                            height += competence.content.getHeightForView(width - 16, font: font!)
+                        }
                 } else {
                     height = height + 20.0
                 }
                 
                 // count question height
-                height = height + 10.0 + competence.content.getHeightForView(width - 16, font: font!)
+                height = height + 10.0
+                if competence.content != nil {
+                     height += competence.content.getHeightForView(width - 16, font: font!)
+                }
             } else {
-                height = height + competence.content.getHeightForView(width - 16, font: font!)
+                if competence.content != nil {
+                    height += competence.content.getHeightForView(width - 16, font: font!)
+                }
             }
             
             let count = (competence as! UACompetenceWithOptions).options.count
@@ -240,11 +253,13 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func send(sender: AnyObject) {
+        self.sendButton.enabled = false
+        self.sendButton.loading = true
+        
         let count = self.entries.count
         var isValid = true
         var results: [Dictionary<String, AnyObject>] = []
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         for (var i = 0; i < count; i++) {
             let competence = self.entries[i] as UACompetence
@@ -261,12 +276,17 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
             self.checkValidation = true
             self.previousCompetenceFormat = nil
             self.mainTable.reloadData()
+            
+            self.sendButton.enabled = true
+            self.sendButton.loading = false
         }// else {
         //    self.checkValidation = false
         //}
         
-        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         self.sendAnswers(results, success: { () -> Void in
+            self.sendButton.enabled = true
+            self.sendButton.loading = false
             self.getEntries({ () -> Void in
 
                 if (self.entries.count == 0) {
@@ -297,6 +317,9 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
             })
         }) { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            self.sendButton.enabled = true
+            self.sendButton.loading = false
         }
     }
     

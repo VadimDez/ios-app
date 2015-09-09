@@ -46,6 +46,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // profile image
         self.adjustProfileImage()
+        
+        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        self.view.addGestureRecognizer(singleTapRecognizer)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     override func viewDidLoad() {
@@ -270,14 +277,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     :param: sender
     */
     @IBAction func updateProfileInfo(sender: AnyObject) {
+        println(sender)
         self.view.endEditing(true)
         let cell = self.views[0] as! InformationTableViewCell
         
+        cell.updateProfileInfo.loading = true
         // save
         self.user.updateInfo(cell.firstNameInput.text, lastName: cell.lastNameInput.text, language: cell.language, success: { () -> Void in
             // success
+            cell.updateProfileInfo.loading = false
         }) { () -> Void in
             // failure
+            cell.updateProfileInfo.loading = false
         }
     }
     
@@ -289,6 +300,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
         let cell = self.views[1] as! AddressTableViewCell
+        
+        cell.updateAddressInfo.loading = true
 
         self.user.updateAddress(cell.firstNameAddressInput.text,
             lastName: cell.lastNameAddressInput.text,
@@ -299,8 +312,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             gender: cell.gender,
             success: { () -> Void in
             // success
+                cell.updateAddressInfo.loading = false
         }) { () -> Void in
             // failure
+            cell.updateAddressInfo.loading = false
         }
     }
     
@@ -314,13 +329,17 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         let cell = self.views[1] as! PasswordTableViewCell
         
+        cell.changePasswordButton.loading = true
+        
         // save
         self.user.changePassword(cell.actualPassword.text, newPassword: cell.newPassword.text, success: { () -> Void in
             // success
             cell.clear()
+            cell.changePasswordButton.loading = false
         }) { () -> Void in
             // failure
             cell.errorLabel.text = "error!!!"
+            cell.changePasswordButton.loading = false
         }
     }
     
@@ -354,8 +373,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        super.touchesBegan(touches, withEvent: event)
         self.view.endEditing(true)
     }
+    
+    
     
     
     // MARK: - show views
@@ -613,13 +635,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func textFieldDidBeginEditing(textField: UITextField) {
         activeTextField = textField
-        self.mainTable.scrollEnabled = true
+//        self.mainTable.scrollEnabled = true
 //        scrollView.scrollEnabled = true
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         activeTextField = nil
-        self.mainTable.scrollEnabled = false
+//        self.mainTable.scrollEnabled = false
 //        scrollView.scrollEnabled = false
     }
     

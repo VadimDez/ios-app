@@ -1277,7 +1277,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rS-yL-KIt">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rS-yL-KIt" customClass="RNLoadingButton">
                                             <rect key="frame" x="16" y="8" width="289" height="30"/>
                                             <state key="normal" title="Submit">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1307,6 +1307,7 @@
                     </view>
                     <connections>
                         <outlet property="mainTable" destination="Epv-9D-cQ0" id="ffW-6d-n7Q"/>
+                        <outlet property="sendButton" destination="3rS-yL-KIt" id="FCW-s3-d4M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w2n-QN-XKj" userLabel="First Responder" sceneMemberID="firstResponder"/>

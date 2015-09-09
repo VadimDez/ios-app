@@ -14,7 +14,7 @@ class NotificationsTableViewCell: UITableViewCell {
     @IBOutlet weak var projectInvitesSwitch: UISwitch!
     @IBOutlet weak var projectNewsSwitch: UISwitch!
     @IBOutlet weak var newCommentsSwitch: UISwitch!
-    @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var updateButton: RNLoadingButton!
     @IBOutlet weak var notificationIntervalButton: UIButton!
     
     var notificationInterval: String!
@@ -23,6 +23,11 @@ class NotificationsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        // set button with indicator
+        self.updateButton.hideTextWhenLoading = true
+        self.updateButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.updateButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

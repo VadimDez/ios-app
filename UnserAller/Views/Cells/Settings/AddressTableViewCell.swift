@@ -17,7 +17,7 @@ class AddressTableViewCell: UITableViewCell {
     @IBOutlet weak var streetAddressInput: UITextField!
     @IBOutlet weak var zipAddressInput: UITextField!
     @IBOutlet weak var cityAddressInput: UITextField!
-    @IBOutlet weak var updateAddressInfo: UIButton!
+    @IBOutlet weak var updateAddressInfo: RNLoadingButton!
     
     let genders = ["0": "Female", "1": "Male"]
     var gender: String = "1"
@@ -25,6 +25,11 @@ class AddressTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        // set button with indicator
+        self.updateAddressInfo.hideTextWhenLoading = true
+        self.updateAddressInfo.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.updateAddressInfo.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
