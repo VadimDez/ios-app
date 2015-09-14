@@ -923,7 +923,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAL-gf-clp">
                                 <rect key="frame" x="0.0" y="64" width="320" height="38"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h6j-ky-VN2">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="h6j-ky-VN2">
                                         <rect key="frame" x="8" y="4" width="250" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="TnF-Ek-ji5"/>

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1
     var entries: [UAProject] = []
@@ -36,6 +36,21 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         
         // take first
         self.mainTable.triggerInfiniteScrolling()
+        
+        // delegate
+        self.searchField.delegate = self
+        
+//        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+//        self.view.addGestureRecognizer(singleTapRecognizer)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.refresh()
+        return false
     }
     
     func registerNibs() {
@@ -93,7 +108,8 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+        self.searchField.resignFirstResponder()
+        
         if self.selectDisabled != -1 {
             if indexPath.row != self.selectDisabled {
                 self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
@@ -232,6 +248,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // show menu
     @IBAction func showMenu(sender: AnyObject) {
+        self.searchField.resignFirstResponder()
         self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
     }
     
