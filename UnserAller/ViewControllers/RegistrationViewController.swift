@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import KVNProgress
 
 extension String {
     func isEmail() -> Bool {
@@ -68,58 +69,66 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
     }
     
     @IBAction func registerAction(sender: AnyObject) {
-        self.createAccount()
+        self.email.resignFirstResponder()
+        self.firstName.resignFirstResponder()
+        self.lastName.resignFirstResponder()
+        self.password.resignFirstResponder()
+        
+        self.registerButton.enabled = false
+        self.registerButton.loading = true
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        self.createAccount({ () -> Void in
+            KVNProgress.showSuccess()
+            
+            self.registerButton.enabled = true
+            self.registerButton.loading = false
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+            let user = UAUser()
+            
+            // save email and password
+            user.saveEmailAndPasswordToKeychain(self.email.text, password: self.password.text)
+            
+            // present login view
+//            var login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as! LoginViewController
+//            self.presentViewController(login, animated: false, completion: nil)
+            var initVC: InitViewController = self.storyboard?.instantiateViewControllerWithIdentifier("InitVC") as! InitViewController
+            self.presentViewController(initVC, animated: true, completion: nil)
+        }, fail: { () -> Void in
+            KVNProgress.showError()
+            self.registerButton.enabled = true
+            self.registerButton.loading = false
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
     
     /**
     Create account
     */
-    func createAccount() {
-        self.registerButton.enabled = false
-        self.registerButton.loading = true
+    func createAccount(success: () -> Void, fail: () -> Void) {
         
         if (self.validateUserCredentials()) {
             self.checkAvailableEmail({ (available) -> Void in
                 if (available) {
                     self.registerNewUser({ () -> Void in
-                        
-                        println("registered")
-                        let user = UAUser()
-                        
-                        // save email and password
-                        user.saveEmailAndPasswordToKeychain(self.email.text, password: self.password.text)
-                        
-                        // present login view
-                        var login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as! LoginViewController
-                        self.presentViewController(login, animated: false, completion: nil)
-                        
-                        self.registerButton.enabled = true
-                        self.registerButton.loading = false
+                        success()
                         
                     }, failure: { () -> Void in
                         
-                        println("not registered")
-                        self.registerButton.enabled = true
-                        self.registerButton.loading = false
+                        fail()
                     })
                 } else {
-                    println("not valid")
-                    self.registerButton.enabled = true
-                    self.registerButton.loading = false
+                    fail()
                 }
                 
             }, failure: { () -> Void in
-                
-                println("not valid")
-                self.registerButton.enabled = true
-                self.registerButton.loading = false
+                fail()
                 
             })
             
         } else {
-            self.registerButton.enabled = true
-            self.registerButton.loading = false
-            println("not valid")
+            fail()
         }
     }
     

@@ -60,6 +60,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginAction(sender: UIButton) {
+        self.username.resignFirstResponder()
+        self.password.resignFirstResponder()
         self.auth(self.username.text, password: self.password.text)
     }
     

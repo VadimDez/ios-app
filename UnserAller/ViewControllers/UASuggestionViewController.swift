@@ -122,7 +122,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         
         let media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.bounds.width - 60)
         
-        return base + entries[indexPath.row].content.getHeightForView(self.tableWidth, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
+        return base + entries[indexPath.row].content.getHeightForView(self.tableWidth - 60, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -482,11 +482,13 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             return
         }
 
+        (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentButton.enabled = false
+        (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.enabled = false
         (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = true
         
         self.sendNewComment(newComment, success: { (json) -> () in
             (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text = ""
-            
+            self.suggestion.commentCount += 1
             let comment = UAComment().initCommentWithJSON(json as! Dictionary<String, AnyObject>)
             let array = [comment]
             
@@ -495,22 +497,25 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             
 //            KVNProgress.showSuccessWithStatus("Sent")
             (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = false
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentButton.enabled = true
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.enabled = true
             
             // reload table
             self.mainTable.reloadData()
         }) { () -> () in
 //            KVNProgress.showError()
             (self.mainTable.tableHeaderView as! UASuggestionHeaderView).sendNewCommentButton.loading = false
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentButton.enabled = true
+            (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.enabled = true
         }
     }
+    
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var url: String = "\(APIURL)/api/mobile/comment/add"
         
-        Alamofire.request(.POST, url, parameters: [
-            "comment": comment,
-            "suggestion": self.suggestion.suggestionId])
+        Alamofire.request(.POST, url, parameters: ["comment": comment, "suggestion": self.suggestion.suggestionId])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil && JSON == nil) {

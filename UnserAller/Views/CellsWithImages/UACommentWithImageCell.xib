@@ -13,7 +13,7 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dUc-To-GCa" id="5Me-mn-X00">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ql-HD-R26" customClass="CSAnimationView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ql-HD-R26">
                         <rect key="frame" x="0.0" y="1" width="320" height="122"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ku0-ke-eRy" userLabel="mainImage">
@@ -41,7 +41,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKg-zK-rHg" userLabel="content" customClass="UALabel" customModule="UnserAller" customModuleProvider="target">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mKg-zK-rHg" userLabel="content" customClass="UALabel" customModule="UnserAller" customModuleProvider="target">
                                 <rect key="frame" x="54" y="45" width="258" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="highlightedColor"/>
@@ -74,12 +74,6 @@
                             <constraint firstAttribute="bottom" secondItem="jGo-a3-zjh" secondAttribute="bottom" constant="5" id="wGA-mo-UTi"/>
                             <constraint firstItem="eRp-Ho-bNi" firstAttribute="top" secondItem="5ql-HD-R26" secondAttribute="top" constant="6" id="x8i-gs-3B1"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="type" value="fadeIn"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="duration">
-                                <integer key="value" value="1"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>

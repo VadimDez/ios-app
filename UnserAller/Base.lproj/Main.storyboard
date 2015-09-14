@@ -8,7 +8,7 @@
         <!--Init View Controller-->
         <scene sceneID="YfX-rK-3xz">
             <objects>
-                <viewController id="MXa-kc-Jaw" customClass="InitViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InitVC" id="MXa-kc-Jaw" customClass="InitViewController" customModule="UnserAller" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Cdr-FI-YdA"/>
                         <viewControllerLayoutGuide type="bottom" id="bBu-gm-duP"/>
@@ -273,7 +273,7 @@
                                         <rect key="frame" x="19" y="50" width="282" height="320"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Registration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Yj-nX-GjS">
-                                                <rect key="frame" x="60" y="20" width="162" height="21"/>
+                                                <rect key="frame" x="20" y="20" width="242" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="g6t-D3-PRh"/>
                                                 </constraints>
@@ -395,12 +395,12 @@
                                             <constraint firstAttribute="height" constant="320" id="2wA-aq-R9r"/>
                                             <constraint firstAttribute="trailing" secondItem="Uy6-rM-eZK" secondAttribute="trailing" constant="25" id="41a-ct-r8U"/>
                                             <constraint firstAttribute="trailing" secondItem="Bel-29-KH2" secondAttribute="trailing" constant="24" id="4dk-LY-fC6"/>
-                                            <constraint firstAttribute="trailing" secondItem="0Yj-nX-GjS" secondAttribute="trailing" constant="60" id="7bA-RB-7d8"/>
+                                            <constraint firstAttribute="trailing" secondItem="0Yj-nX-GjS" secondAttribute="trailing" constant="20" id="7bA-RB-7d8"/>
                                             <constraint firstItem="MRO-T7-boE" firstAttribute="leading" secondItem="qHd-36-HPb" secondAttribute="leading" constant="15" id="89k-ta-SLt"/>
                                             <constraint firstAttribute="trailing" secondItem="Cy7-ny-ZXR" secondAttribute="trailing" constant="17" id="BFK-Yj-zgO"/>
                                             <constraint firstItem="Bel-29-KH2" firstAttribute="leading" secondItem="qHd-36-HPb" secondAttribute="leading" constant="24" id="H02-ts-3bw"/>
                                             <constraint firstItem="Cy7-ny-ZXR" firstAttribute="top" secondItem="FDe-w5-yrf" secondAttribute="bottom" constant="10" id="Idt-Rd-cJS"/>
-                                            <constraint firstItem="0Yj-nX-GjS" firstAttribute="leading" secondItem="qHd-36-HPb" secondAttribute="leading" constant="60" id="L1X-es-gxU"/>
+                                            <constraint firstItem="0Yj-nX-GjS" firstAttribute="leading" secondItem="qHd-36-HPb" secondAttribute="leading" constant="20" id="L1X-es-gxU"/>
                                             <constraint firstAttribute="trailing" secondItem="fwu-QH-PTD" secondAttribute="trailing" constant="17" id="LfA-7e-tay"/>
                                             <constraint firstAttribute="trailing" secondItem="MRO-T7-boE" secondAttribute="trailing" constant="17" id="PLe-lQ-o8D"/>
                                             <constraint firstAttribute="trailing" secondItem="FDe-w5-yrf" secondAttribute="trailing" constant="17" id="R6H-4I-gWH"/>
@@ -929,7 +929,7 @@
                                             <constraint firstAttribute="height" constant="30" id="TnF-Ek-ji5"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DBa-9z-aTf">
                                         <rect key="frame" x="264" y="4" width="48" height="30"/>
@@ -2011,6 +2011,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="UxX-f1-X7V"/>
+        <segue reference="wQe-oA-Ena"/>
     </inferredMetricsTieBreakers>
 </document>

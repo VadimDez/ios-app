@@ -25,7 +25,7 @@ class InitViewController: UIViewController {
     }
 
     override func viewDidAppear(animated: Bool) {
-        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
         
         // if an error
@@ -41,7 +41,8 @@ class InitViewController: UIViewController {
                 let userService: UAUser = UAUser()
 
                 userService.getUserCrederntials(dictionary["UserAuthEmailToken"] as! String, password: dictionary["UserAuthPasswordToken"] as! String, success: { () -> Void in
-
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
                     let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
                     let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
                     // hide navbar
@@ -79,7 +80,7 @@ class InitViewController: UIViewController {
 //        let navController = UINavigationController(rootViewController: authViewController)
 //        self.presentViewController(navController, animated: false, completion: nil)
         
-        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         let authViewController = self.storyboard?.instantiateViewControllerWithIdentifier("InitialNavigation") as! UINavigationController
         let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         appDelegate.window?.rootViewController = authViewController

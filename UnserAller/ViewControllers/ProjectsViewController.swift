@@ -13,7 +13,6 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var mainTable: UITableView!
     var page: Int = -1
     var entries: [UAProject] = []
-    var countEntries: Int = 0
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchField: UITextField!
     
@@ -86,7 +85,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countEntries
+        return self.entries.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -180,8 +179,6 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
      */
     func refresh() {
         self.page = 0
-        self.entries = []
-        self.countEntries = 0
 //        self.mainTable.reloadData()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -221,9 +218,12 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     // get get objects from JSON
                     var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as! [Dictionary<String, AnyObject>])
                     
+                    if self.page == 0 {
+                        self.entries = []
+                    }
+                    
                     // merge two arrays
                     self.entries = self.entries + array
-                    self.countEntries = self.entries.count
                     
                     success()
                 }
