@@ -13,23 +13,23 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZUe-DE-8rg" id="66U-h5-9Ad">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xb8-t7-qEq">
-                        <rect key="frame" x="41" y="5" width="271" height="21"/>
-                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ziZ-ke-oX4">
-                        <rect key="frame" x="8" y="3" width="25" height="25"/>
+                        <rect key="frame" x="1" y="3" width="25" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="25" id="09A-jc-K4h"/>
                             <constraint firstAttribute="height" constant="25" id="PmI-tU-Agj"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xb8-t7-qEq">
+                        <rect key="frame" x="34" y="5" width="285" height="21"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="ziZ-ke-oX4" firstAttribute="leading" secondItem="66U-h5-9Ad" secondAttribute="leadingMargin" id="C63-TP-MBY"/>
-                    <constraint firstItem="Xb8-t7-qEq" firstAttribute="trailing" secondItem="66U-h5-9Ad" secondAttribute="trailingMargin" id="Hch-3b-R26"/>
+                    <constraint firstItem="ziZ-ke-oX4" firstAttribute="leading" secondItem="66U-h5-9Ad" secondAttribute="leadingMargin" constant="-7" id="C63-TP-MBY"/>
+                    <constraint firstItem="Xb8-t7-qEq" firstAttribute="trailing" secondItem="66U-h5-9Ad" secondAttribute="trailingMargin" constant="7" id="Hch-3b-R26"/>
                     <constraint firstItem="Xb8-t7-qEq" firstAttribute="leading" secondItem="ziZ-ke-oX4" secondAttribute="trailing" constant="8" id="JC7-A6-cbp"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Xb8-t7-qEq" secondAttribute="bottom" constant="-3.5" id="j2f-BG-aiK"/>
                     <constraint firstItem="Xb8-t7-qEq" firstAttribute="top" secondItem="66U-h5-9Ad" secondAttribute="topMargin" constant="-3" id="nHW-on-SV4"/>

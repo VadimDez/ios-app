@@ -60,11 +60,16 @@ class InitViewController: UIViewController {
 
                 }, error: { () -> Void in
                     
+                    super.viewWillAppear(animated)
+                    self.presentAuthViewController()
                 })
             } else {
                 super.viewWillAppear(animated)
                 self.presentAuthViewController()
             }
+        } else {
+            super.viewWillAppear(animated)
+            self.presentAuthViewController()
         }
     }
     

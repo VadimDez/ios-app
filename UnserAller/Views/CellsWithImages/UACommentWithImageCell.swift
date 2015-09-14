@@ -64,6 +64,7 @@ class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionVi
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.comment.media[indexPath.row])
         return cell
     }

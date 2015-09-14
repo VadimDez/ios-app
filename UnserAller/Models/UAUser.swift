@@ -59,7 +59,8 @@ class UAUser {
         Alamofire.request(.GET, url, parameters: ["username": email, "password": password])
             .authenticate(user: email, password: password)
             .responseJSON { (request, response, JSON, _error) in
-                print(_error)
+                println(_error)
+                println(JSON)
                 // check if no error and correct email and pass
                 if ((_error != nil) || JSON == nil || JSON?.objectForKey("auth")?.intValue != 200) {
                     error()

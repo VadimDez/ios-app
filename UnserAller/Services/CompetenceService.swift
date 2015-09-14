@@ -15,7 +15,11 @@ class CompetenceService {
         var competences: [UACompetence] = []
         
         for object in data {
-            competences.append(self.getCompetenceFromJSON(object))
+            let competence = self.getCompetenceFromJSON(object)
+            
+            if competence.id != nil {
+                competences.append(competence)
+            }
         }
         
         return competences
@@ -35,7 +39,7 @@ class CompetenceService {
 //        if let content = object["content"] as? String {
 //            competence.content = content
 //        }
-        
+
         if let format = object["format"] as? String {
             return self.getCompetenceByType(format, object: object)
             
@@ -91,7 +95,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         return competence
@@ -109,7 +113,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         return competence
@@ -127,7 +131,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         return competence
@@ -145,7 +149,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         if let config = object["config"] as? Dictionary<String, AnyObject> {
@@ -169,7 +173,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         if let config = object["config"] as? Dictionary<String, AnyObject> {
@@ -193,7 +197,7 @@ class CompetenceService {
         }
         
         if let content = object["content"] as? String {
-            competence.content = content
+            competence.content = content.html2String()
         }
         
         if let config = object["config"] as? Dictionary<String, AnyObject> {

@@ -19,7 +19,7 @@ class UAOptionCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        self.toggleView.image = UIImage(named: "heart_black_32")
+        self.toggleView.image = UIImage(named: "unchecked_checkbox-24")
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -31,9 +31,9 @@ class UAOptionCell: UITableViewCell {
     func toggle(isToggled: Bool) {
         self.toggled = isToggled
         if isToggled {
-            self.toggleView.image = UIImage(named: "heart_red")
+            self.toggleView.image = UIImage(named: "checked_checkbox-24")
         } else {
-            self.toggleView.image = UIImage(named: "heart_black_32")
+            self.toggleView.image = UIImage(named: "unchecked_checkbox-24")
         }
     }
 }

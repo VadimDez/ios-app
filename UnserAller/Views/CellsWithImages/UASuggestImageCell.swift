@@ -131,6 +131,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.suggestion.media[indexPath.row])
         return cell
     }
