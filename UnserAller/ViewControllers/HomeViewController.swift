@@ -401,26 +401,42 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
             
+            let likeCountBefore = (self.entries[ratingView.tag] as! UASuggestion).likeCount
+            let userVotesBefore = (self.entries[ratingView.tag] as! UASuggestion).userVotes
+            
             // disable for a moment
             self.votingDisabled = true
             
             // TODO: check if it's own suggestion before send
             
+            
+            (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+            
+            (self.entries[ratingView.tag] as! UASuggestion).userVotes  = votes
+            
+            // update only changed row
+            let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+            self.mainTable.beginUpdates()
+            self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+            self.mainTable.endUpdates()
+            
             self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
                 
-                (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
-                
-                (self.entries[ratingView.tag] as! UASuggestion).userVotes  = votes
-                
-                // update only changed row
-                let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
-                self.mainTable.beginUpdates()
-                self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
-                self.mainTable.endUpdates()
-                
                 self.votingDisabled = false
+                
                 }) { () -> Void in
                     self.votingDisabled = false
+                    
+                    (self.entries[ratingView.tag] as! UASuggestion).likeCount = likeCountBefore
+                    
+                    (self.entries[ratingView.tag] as! UASuggestion).userVotes  = userVotesBefore
+                    
+                    // update only changed row
+                    let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+                    self.mainTable.beginUpdates()
+                    self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+                    self.mainTable.endUpdates()
+                    
             }
         }
     }
