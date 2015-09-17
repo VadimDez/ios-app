@@ -575,17 +575,8 @@ class ProjectViewController:
             let totalPhases = self.phasesArray.count
             
             if ((totalPhases - indexPath.row) == 0) {
-                
-                println(cell.leftLine.hidden)
-                println(cell.centerBox.hidden)
-                println(cell.leftLine.backgroundColor)
-                println(cell.centerBox.backgroundColor)
                 // last element
                 cell.lastElement()
-                println(cell.leftLine.hidden)
-                println(cell.centerBox.hidden)
-                println(cell.leftLine.backgroundColor)
-                println(cell.centerBox.backgroundColor)
             }
             if ((totalPhases - indexPath.row + 1) == totalPhases) {
                 // first element

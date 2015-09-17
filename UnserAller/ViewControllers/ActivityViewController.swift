@@ -199,11 +199,12 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = 110.0
+//        let base: CGFloat = 110.0
+        let base: CGFloat = 95.0
         
-        var media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 30.0)
+        var media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 25.0)
         
-        return base + self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!) + media
+        return base + self.entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
     
     /*
@@ -250,8 +251,6 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
-        println("get entries is callded")
-        // /api/mobile/profile/getbookmarks/
         let url: String = "\(APIURL)/api/mobile/profile/getactivity"
         
         Alamofire.request(.GET, url, parameters: ["page": self.page])
