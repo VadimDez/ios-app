@@ -48,6 +48,7 @@ class ProjectViewController:
     var newsPhaseCount = 0
     var hasCompetences: Bool = false
     var mediaHelper: MediaHelper = MediaHelper()
+    var allowNewSuggesitons: Bool = false
     
     var getRequest: Alamofire.Request!
     
@@ -55,6 +56,9 @@ class ProjectViewController:
         
         super.viewWillAppear(animated)
         self.registerNotifications()
+        
+        self.sendSuggestionInput.enabled = false
+        self.sendSuggestionBtn.enabled = false
         
         if self.type == "survey" && self.hasCompetences {
             self.checkCompetences()
@@ -96,6 +100,10 @@ class ProjectViewController:
                         
                         self.entries = []
                         if self.active {
+                            self.allowNewSuggesitons = true
+                            self.sendSuggestionInput.enabled = true
+                            self.sendSuggestionBtn.enabled = true
+                            
                             self.loadSuggestions({ () -> Void in
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -119,14 +127,16 @@ class ProjectViewController:
             self.infiniteLoad()
         }
         
-        
-        ///
-        self.projectNameBackground.layerGradient(UIColor.clearColor(), color2: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1), color3: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2), color4: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25))
+        self.setProjectBg()
         
         // set button with indicator
         self.sendSuggestionBtn.hideTextWhenLoading = true
         self.sendSuggestionBtn.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
         self.sendSuggestionBtn.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
+    }
+    
+    func setProjectBg() -> Void {
+        self.projectNameBackground.layerGradient(UIColor.clearColor(), color2: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1), color3: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2), color4: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25))
     }
     
     /**
@@ -552,10 +562,10 @@ class ProjectViewController:
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
-        
-        if (self.phasesArray.count == 0) {
-            return cell
-        }
+
+//        if (self.phasesArray.count == 0) {
+//            return cell
+//        }
         
         if (indexPath.row == 0) {
             cell.setNewsCell()
@@ -565,8 +575,17 @@ class ProjectViewController:
             let totalPhases = self.phasesArray.count
             
             if ((totalPhases - indexPath.row) == 0) {
+                
+                println(cell.leftLine.hidden)
+                println(cell.centerBox.hidden)
+                println(cell.leftLine.backgroundColor)
+                println(cell.centerBox.backgroundColor)
                 // last element
                 cell.lastElement()
+                println(cell.leftLine.hidden)
+                println(cell.centerBox.hidden)
+                println(cell.leftLine.backgroundColor)
+                println(cell.centerBox.backgroundColor)
             }
             if ((totalPhases - indexPath.row + 1) == totalPhases) {
                 // first element
@@ -577,6 +596,7 @@ class ProjectViewController:
         return cell
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        println(phasesArray.count + self.newsPhaseCount)
         // +1 for "NEWS"
         return phasesArray.count + self.newsPhaseCount
     }
@@ -944,6 +964,11 @@ class ProjectViewController:
     :param: sender
     */
     @IBAction func openEditor(sender: AnyObject) {
+        
+        if !self.allowNewSuggesitons {
+            return
+        }
+        
         var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         weak var _self = self

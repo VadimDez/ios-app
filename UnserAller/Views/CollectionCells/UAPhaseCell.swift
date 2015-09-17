@@ -15,11 +15,17 @@ class UAPhaseCell: UICollectionViewCell {
     @IBOutlet weak var centerBox: UIImageView!
     @IBOutlet weak var rightLine: UIImageView!
     
+    
     override func awakeFromNib() {
         // make circle
         var imageLayer:CALayer = self.centerBox.layer;
         imageLayer.cornerRadius = 7
         imageLayer.masksToBounds = true
+        
+        
+        self.leftLine.hidden = false
+        self.centerBox.hidden = false
+        self.rightLine.hidden = false
     }
     
     func setPhaseName(name: String) {
@@ -27,9 +33,12 @@ class UAPhaseCell: UICollectionViewCell {
     }
     
     func firstElement () {
+        self.hideLines(false)
         self.leftLine.backgroundColor = UIColor.clearColor()
     }
     func lastElement () {
+        self.hideLines(false)
+        
         self.rightLine.backgroundColor = UIColor.clearColor()
     }
     
@@ -38,9 +47,13 @@ class UAPhaseCell: UICollectionViewCell {
      */
     func setNewsCell() {
         self.setPhaseName("News")
-        self.leftLine.hidden = true
-        self.centerBox.hidden = true
-        self.rightLine.hidden = true
+        self.hideLines(true)
     }
 
+    
+    func hideLines(hide: Bool) -> Void {
+        self.leftLine.hidden = hide
+        self.centerBox.hidden = hide
+        self.rightLine.hidden = hide
+    }
 }

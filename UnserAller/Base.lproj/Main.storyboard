@@ -1024,7 +1024,7 @@
                                                 <constraint firstAttribute="height" constant="70" id="pub-t8-UOr"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Osf-dJ-ebr" userLabel="contentLabel">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Osf-dJ-ebr" userLabel="contentLabel">
                                             <rect key="frame" x="8" y="243" width="304" height="18"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1040,7 +1040,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7jz-6A-k5C" userLabel="companyBtn">
-                                            <rect key="frame" x="6" y="160" width="197" height="21"/>
+                                            <rect key="frame" x="8" y="160" width="195" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="yaZ-aB-bMM"/>
                                             </constraints>
@@ -1122,7 +1122,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="7jz-6A-k5C" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="6" id="6u7-n8-sY1"/>
+                                        <constraint firstItem="7jz-6A-k5C" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" constant="8" id="6u7-n8-sY1"/>
                                         <constraint firstAttribute="bottom" secondItem="KnH-1u-zml" secondAttribute="bottom" constant="8" id="8p4-d2-bUF"/>
                                         <constraint firstItem="xCP-H7-6W4" firstAttribute="top" secondItem="7jz-6A-k5C" secondAttribute="bottom" constant="4" id="BVA-NS-9on"/>
                                         <constraint firstItem="Qa7-Nr-YKA" firstAttribute="leading" secondItem="F7Q-uU-R9a" secondAttribute="leading" id="DVW-d6-EMT"/>
@@ -1255,13 +1255,13 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iC5-L2-7Mp" userLabel="Content Label">
                                     <rect key="frame" x="10" y="43" width="300" height="16"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DR0-zs-LzV">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DR0-zs-LzV">
                                     <rect key="frame" x="10" y="64" width="300" height="68"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GW3-yD-8k4">
                                         <size key="itemSize" width="50" height="50"/>
