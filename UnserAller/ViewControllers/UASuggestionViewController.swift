@@ -359,17 +359,24 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             
             // TODO: check if it's own suggestion before send
             
+            
+            self.suggestion.likeCount = oldLikeCount - oldUserVotes + votes
+            self.suggestion.userVotes = votes
+            
+            self.updateVoteTableHeader(self.suggestion.likeCount, votes: Float(votes))
+            
             self.sendRating(self.suggestion.suggestionId, votes: votes, success: { () -> Void in
-                
-                self.suggestion.likeCount = oldLikeCount - oldUserVotes + votes
-                self.suggestion.userVotes  = votes
-                
-                self.updateVoteTableHeader(self.suggestion.likeCount, votes: Float(votes))
-                
                 self.votingDisabled = false
-                }) { () -> Void in
-                    self.votingDisabled = false
-            }
+            }, failure: { () -> Void in
+                self.votingDisabled = false
+                
+                // reset old
+                
+                self.suggestion.likeCount = oldLikeCount
+                self.suggestion.userVotes = oldUserVotes
+                
+                self.updateVoteTableHeader(self.suggestion.likeCount, votes: Float(oldUserVotes))
+            })
         }
     }
     

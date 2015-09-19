@@ -81,6 +81,7 @@ class ProjectViewController:
         self.configureLayout()
         
         self.startLoad { () -> Void in
+            
             // set news to 1
             self.newsPhaseCount = 1
             // reload collection
@@ -93,30 +94,34 @@ class ProjectViewController:
                 self.actualPhaseId = self.phasesArray[0].id
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                
+                
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                     
-                    self.updatePhase(jsonResponse, success: { () -> Void in
-                        
-                        self.entries = []
-                        if self.active {
-                            self.allowNewSuggesitons = true
-                            self.sendSuggestionInput.enabled = true
-                            self.sendSuggestionBtn.enabled = true
-                            
-                            self.loadSuggestions({ () -> Void in
+                    if jsonResponse.count > 0 {
+                        self.updatePhase(jsonResponse, success: { () -> Void in
+                            self.entries = []
+                            if self.active {
+                                self.allowNewSuggesitons = true
+                                self.sendSuggestionInput.enabled = true
+                                self.sendSuggestionBtn.enabled = true
                                 
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                }, failure: { () -> Void in
-                                    println("fail load suggestions")
+                                self.loadSuggestions({ () -> Void in
                                     
                                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
-                        }
-                    })
-                    }, failure: { () -> Void in
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                        
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                })
+                            }
+                        })
+                    }
+                }, failure: { () -> Void in
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
+                
             }
         }
         
@@ -240,14 +245,16 @@ class ProjectViewController:
         self.page = 0
         
         self.startLoad { () -> Void in
+            
             if (!self.news) {
                 
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                     
+                    if jsonResponse.count > 0 {
                         self.updatePhase(jsonResponse, success: { () -> Void in
                             self.entries = []
-
+                            
                             if self.active {
                                 if self.type == "survey" {
                                     self.checkCompetences()
@@ -256,22 +263,31 @@ class ProjectViewController:
                                         
                                         self.mainTable.pullToRefreshView.stopAnimating()
                                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                        }, failure: { () -> Void in
-                                            println("fail load suggestions")
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
                                         
                                         self.mainTable.pullToRefreshView.stopAnimating()
                                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                     })
                                 }
+                            } else {
+                                
+                                self.mainTable.pullToRefreshView.stopAnimating()
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             }
-                            
+
                         })
-                    }, failure: { () -> Void in
-                        
+                    }
+                    
+                }, failure: { () -> Void in
+                    
+                    self.mainTable.pullToRefreshView.stopAnimating()
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
                 
                 
             } else {
+                
                 self.loadNews({ () -> Void in
                     self.mainTable.reloadData()
                     
@@ -429,6 +445,7 @@ class ProjectViewController:
                 }
             } else {
                 var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+                
                 detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
                 self.navigationController?.pushViewController(detailViewController, animated: true)
             }
@@ -471,6 +488,8 @@ class ProjectViewController:
      */
     func getSuggestCellForRow(row: Int) -> UASuggestionCell {
         var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        
+        self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
@@ -480,6 +499,8 @@ class ProjectViewController:
     */
     func getSuggestImageCellForRow(row: Int) -> UASuggestImageCell {
         var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        
+        self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
@@ -489,6 +510,8 @@ class ProjectViewController:
      */
     func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
         var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as! UAProjectNewsCell
+        
+        self.setProjectToSuggestionWithIndex(row)
         cell.setCellForProjectPhase(self.entries[row] as! UANews)
         return cell
     }
@@ -502,6 +525,8 @@ class ProjectViewController:
             cell.ratingView.delegate = self
             cell.ratingView.tag = row
         }
+        
+        self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
@@ -516,8 +541,15 @@ class ProjectViewController:
             cell.ratingView.delegate = self
             cell.ratingView.tag = row
         }
+        
+        self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
+    }
+    
+    private func setProjectToSuggestionWithIndex(index: Int) {
+        (self.entries[index] as! UASuggestion).projectId = self.project.id
+        (self.entries[index] as! UASuggestion).projectName = self.project.name
     }
     
     func defaultCell(row: Int) -> UITableViewCell {
@@ -636,20 +668,23 @@ class ProjectViewController:
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                 
-                self.updatePhase(jsonResponse, success: { () -> Void in
-                    
-                    if self.active {
-                        if self.type == "survey" {
-                            self.checkCompetences()
-                        } else {
-                            self.loadSuggestions({ () -> Void in
-                                
-                                }, failure: { () -> Void in
-                                    println("fail load suggestions")
-                            })
+                if jsonResponse.count > 0 {
+                    self.updatePhase(jsonResponse, success: { () -> Void in
+                        
+                        if self.active {
+                            if self.type == "survey" {
+                                self.checkCompetences()
+                            } else {
+                                self.loadSuggestions({ () -> Void in
+                                    
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                })
+                            }
                         }
-                    }
-                })
+                    })
+                }
+                
             }, failure: { () -> Void in
                 println("fail load phase")
             })
@@ -892,22 +927,37 @@ class ProjectViewController:
             
             // TODO: check if it's own suggestion before send
             
+            
+            let likeCountBefore = (self.entries[ratingView.tag] as! UASuggestion).likeCount
+            let userVotesBefore = (self.entries[ratingView.tag] as! UASuggestion).userVotes
+            (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+            
+            (self.entries[ratingView.tag] as! UASuggestion).userVotes = votes
+            
+            // update only changed row
+            let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+            self.mainTable.beginUpdates()
+            self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+            self.mainTable.endUpdates()
+            
             self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
                 
-                (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                self.votingDisabled = false
+            }, failure: { () -> Void in
                 
-                (self.entries[ratingView.tag] as! UASuggestion).userVotes = votes
+                self.votingDisabled = false
+                
+                (self.entries[ratingView.tag] as! UASuggestion).likeCount = likeCountBefore
+                
+                (self.entries[ratingView.tag] as! UASuggestion).userVotes = userVotesBefore
                 
                 // update only changed row
                 let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
                 self.mainTable.beginUpdates()
                 self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
                 self.mainTable.endUpdates()
-                
-                self.votingDisabled = false
-                }) { () -> Void in
-                self.votingDisabled = false
-            }
+
+            })
         }
     }
     

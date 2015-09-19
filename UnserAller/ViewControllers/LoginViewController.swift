@@ -94,14 +94,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         if(userService.checkStringsWithString(email) && userService.checkStringsWithString(password)) {
             
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             userService.getUserCrederntials(email, password: password,
                 success: {
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     userService.saveEmailAndPasswordToKeychain(email, password: password)
                     self.loadRootView();
                     
                     self.loginButton.enabled = true
                     self.loginButton.loading = false
                 },error: {
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     println("Login error")
                     
                     self.loginButton.enabled = true
