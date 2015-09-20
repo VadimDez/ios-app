@@ -595,12 +595,19 @@ class ProjectViewController:
         
         var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
 
+        cell.hideLines(false)
+        cell.resetFont()
+        
 //        if (self.phasesArray.count == 0) {
 //            return cell
 //        }
-        
+
         if (indexPath.row == 0) {
             cell.setNewsCell()
+            
+            if self.news {
+                cell.setSelected()
+            }
         } else {
             cell.setPhaseName(self.phasesArray[indexPath.row - 1].name)
 
@@ -614,6 +621,14 @@ class ProjectViewController:
                 // first element
                 cell.firstElement()
             }
+            
+            
+            if !self.news && self.phasesArray[indexPath.row - 1].id == self.actualPhaseId {
+                cell.setSelected()
+            }
+            println(indexPath.row)
+            println(cell.leftLine.hidden)
+            println(cell.rightLine.hidden)
         }
         
         return cell
@@ -644,8 +659,11 @@ class ProjectViewController:
 
         if (indexPath.row == 0) {
             // news
+            self.entries = []
             self.news = true
             self.entries = []
+            
+            self.phaseCollection.reloadData()
             self.mainTable.reloadData()
             
             self.loadNews({ () -> Void in
@@ -664,6 +682,9 @@ class ProjectViewController:
             self.news = false
             // set active phase id
             self.actualPhaseId = self.phasesArray[indexPath.row - 1].id
+            
+            // upload cell
+            self.phaseCollection.reloadData()
             
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in

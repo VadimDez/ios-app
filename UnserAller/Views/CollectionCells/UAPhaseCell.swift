@@ -22,10 +22,9 @@ class UAPhaseCell: UICollectionViewCell {
         imageLayer.cornerRadius = 7
         imageLayer.masksToBounds = true
         
-        
-        self.leftLine.hidden = false
-        self.centerBox.hidden = false
-        self.rightLine.hidden = false
+        self.hideLines(false)
+        self.resetFont()
+        println("in awake")
     }
     
     func setPhaseName(name: String) {
@@ -34,12 +33,15 @@ class UAPhaseCell: UICollectionViewCell {
     
     func firstElement () {
         self.hideLines(false)
-        self.leftLine.backgroundColor = UIColor.clearColor()
+        self.resetFont()
+        
+        self.leftLine.hidden = true
     }
     func lastElement () {
         self.hideLines(false)
+        self.resetFont()
         
-        self.rightLine.backgroundColor = UIColor.clearColor()
+        self.rightLine.hidden = true
     }
     
     /**
@@ -48,6 +50,7 @@ class UAPhaseCell: UICollectionViewCell {
     func setNewsCell() {
         self.setPhaseName("News")
         self.hideLines(true)
+        self.resetFont()
     }
 
     
@@ -55,5 +58,13 @@ class UAPhaseCell: UICollectionViewCell {
         self.leftLine.hidden = hide
         self.centerBox.hidden = hide
         self.rightLine.hidden = hide
+    }
+    
+    func resetFont() {
+        self.phaseLabel.font = UIFont(name: "HelveticaNeue", size: 13.0)
+    }
+    
+    func setSelected() {
+        self.phaseLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
     }
 }
