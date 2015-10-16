@@ -26,15 +26,17 @@ class InitViewController: UIViewController {
 
     override func viewDidAppear(animated: Bool) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+        
+        let dictionary = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+//        let (dictionary, error) = Locksmith.loadDataForUserAccount("UnserAllerUser", inService: "UnserAller")
         
         // if an error
-        if let error = error {
-            println("Keychain Error: \(error)")
-    
-            super.viewWillAppear(animated)
-            self.presentAuthViewController()
-        }
+//        if let error = error {
+//            println("Keychain Error: \(error)")
+//    
+//            super.viewWillAppear(animated)
+//            self.presentAuthViewController()
+//        }
         
         if let dictionary = dictionary {
             if (dictionary["UserAuthEmailToken"] != nil && dictionary["UserAuthPasswordToken"] != nil) {
@@ -48,7 +50,7 @@ class InitViewController: UIViewController {
                     // hide navbar
                     leftSideNavController.navigationBar.hidden = true
                     
-                    var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
+                    let drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
                     drawerController.showsShadows = true
                     
                     drawerController.restorationIdentifier = "Drawer"

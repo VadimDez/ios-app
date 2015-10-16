@@ -27,7 +27,7 @@ class UACellObject {
         self.media = []
         
         for object in json {
-            var mediaObject: UAMedia = UAMedia()
+            let mediaObject: UAMedia = UAMedia()
             
             // set height
             if let height = object.objectForKey("height") as? UInt {

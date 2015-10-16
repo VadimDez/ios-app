@@ -22,7 +22,7 @@ class UACollectionViewCell: UICollectionViewCell {
             if let weakSelf = self {
                 weakSelf.image.image = image
             }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }
         

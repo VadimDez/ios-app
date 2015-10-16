@@ -25,7 +25,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         self.mainTable.delegate = self
         self.mainTable.dataSource = self
         
-        var UABookmarkCellNib = UINib(nibName: "UABookmarkCell", bundle: nil)
+//        var UABookmarkCellNib = UINib(nibName: "UABookmarkCell", bundle: nil)
         
         self.registerNibs();
         
@@ -40,7 +40,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     func registerNibs() {
 //        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
         
-        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        let UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
         self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
 
@@ -86,7 +86,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
 //        
 //        return cell
         
-        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
+        let cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -126,16 +126,16 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         } else {
             self.selectDisabled = indexPath.row
             
-            var competenceService = CompetenceService()
+            let competenceService = CompetenceService()
             competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
                 if competences.count > 0 {
-                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                     competenceVC.projectId = self.entries[indexPath.row].id
                     self.navigationController?.pushViewController(competenceVC, animated: true)
                     
                     tableView.deselectRowAtIndexPath(indexPath, animated: true)
                 } else {
-                    var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    let projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                     
                     // set project id
                     projectViewController.projectId = self.entries[indexPath.row].id
@@ -155,23 +155,29 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         let url: String = "\(APIURL)/api/mobile/profile/getbookmarks"
         
         Alamofire.request(.GET, url, parameters: ["page": page])
-        .responseJSON { (_, _, JSON, errors) -> Void in
-            if(errors != nil || JSON?.count == 0) {
-                // print error
-                println(errors)
-                // error block
-                error()
-            } else {
+        .responseJSON { _, _, result -> Void in
+            
+            switch result {
+            case .Success(let JSON) :
+                
                 let ProjectModelView = UAProjectViewModel()
                 
                 // get get objects from JSON
-                var array = ProjectModelView.getBookmarksFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                let array = ProjectModelView.getBookmarksFromJSON(JSON as! [Dictionary<String, AnyObject>])
                 
                 // merge two arrays
                 self.entries = self.entries + array
                 self.countEntries = self.entries.count
                 
                 success()
+                
+                
+            case .Failure(_, let errors):
+                // print error
+                print(errors)
+                // error block
+                error()
+                
             }
         }
     }
@@ -190,7 +196,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
             }, error: {() -> Void in
-                println("Bookmarks infinite load error")
+                print("Bookmarks infinite load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.infiniteScrollingView.stopAnimating()
@@ -210,7 +216,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
             }, error: {() -> Void in
-                println("Bookmarks pull to refresh load error")
+                print("Bookmarks pull to refresh load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.pullToRefreshView.stopAnimating()

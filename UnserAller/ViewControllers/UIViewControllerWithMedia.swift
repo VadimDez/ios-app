@@ -32,7 +32,7 @@ class UIViewControllerWithMedia: UIViewController, IDMPhotoBrowserDelegate {
                 }
                 
                 
-                var browser: IDMPhotoBrowser = IDMPhotoBrowser(photos: photos)
+                let browser: IDMPhotoBrowser = IDMPhotoBrowser(photos: photos)
                 browser.delegate = self
 //                browser.forceHideStatusBar = true // not sure
                 browser.setInitialPageIndex(cellData["actual"] as! UInt)

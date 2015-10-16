@@ -36,7 +36,7 @@ class UACell: UITableViewCell {
     }
 
     func makeRoundCorners() {
-        var imageLayer:CALayer = self.mainImage.layer
+        let imageLayer:CALayer = self.mainImage.layer
         imageLayer.cornerRadius = 20
         imageLayer.masksToBounds = true
     }
@@ -44,9 +44,9 @@ class UACell: UITableViewCell {
     /**
     Load profileImage
     
-    :param: hash   String
-    :param: width  Uint
-    :param: height Uint
+    - parameter hash:   String
+    - parameter width:  Uint
+    - parameter height: Uint
     */
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
         self.loadImage(self.mainImage, url: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
@@ -55,9 +55,9 @@ class UACell: UITableViewCell {
     /**
     Load project image
     
-    :param: hash   String
-    :param: width  Uint
-    :param: height Uint
+    - parameter hash:   String
+    - parameter width:  Uint
+    - parameter height: Uint
     */
     func loadProjectImage(projectId: UInt, width: UInt, height: UInt) {
         self.loadImage(self.secondaryImage, url: "\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
@@ -66,10 +66,10 @@ class UACell: UITableViewCell {
     func loadImage(imageView: UIImageView, url: String) {
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
-        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: {(request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
 
             imageView.image = image
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }
     }
@@ -79,7 +79,7 @@ class UACell: UITableViewCell {
     */
     func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
         
-        var url: String = "\(APIURL)/api/v1/suggestion/like"
+        let url: String = "\(APIURL)/api/v1/suggestion/like"
         if (self.likeRequest != nil) {
             self.likeRequest.suspend()
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -87,17 +87,21 @@ class UACell: UITableViewCell {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         self.likeRequest = Alamofire.request(.GET, url, parameters: ["id": id])
-            .responseJSON { (_,_,JSON,errors) in
-                
-                if(errors != nil) {
+            .responseJSON { _, _, result in
+
+                switch result {
+                case .Success(let JSON):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(active: ((JSON.objectForKey("status") as! String!) == "active"))
+                    
+                case .Failure(_, let errors):
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
-                    println(errors)
+                    print(errors)
                     // error block
                     failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(active: ((JSON?.objectForKey("status") as! String!) == "active"))
                 }
         }
     }

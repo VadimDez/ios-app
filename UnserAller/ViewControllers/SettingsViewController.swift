@@ -47,7 +47,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         // profile image
         self.adjustProfileImage()
         
-        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(singleTapRecognizer)
     }
     
@@ -105,7 +105,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func adjustProfileImage() {
-        var imageLayer:CALayer = self.profileImage.layer
+        let imageLayer:CALayer = self.profileImage.layer
         imageLayer.cornerRadius = self.profileImage.frame.width / 2
         imageLayer.masksToBounds = true
     }
@@ -134,9 +134,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 weakSelf.profileImage.image = image
                 
                 // add blur
-                var blur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+                let blur = UIBlurEffect(style: UIBlurEffectStyle.Dark)
                 
-                var blurView = UIVisualEffectView(effect: blur)
+                let blurView = UIVisualEffectView(effect: blur)
                 
                 blurView.frame = weakSelf.backgroundImage.bounds
                 // set image
@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
                 // add blur
                 weakSelf.backgroundImage.addSubview(blurView)
             }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
         }
     }
     
@@ -156,7 +156,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Update uipicker view
 
-    :param: selectedIndex int
+    - parameter selectedIndex: int
     */
     func updateUIPickerView(selectedIndex: Int) {
         var selected: String!
@@ -178,9 +178,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             selected = (self.views[3] as! NotificationsTableViewCell).notificationInterval
         }
         
-        let keys = self.pickerArray.keys.array
-
-        let position = find(keys, selected)?.hashValue ?? 0
+        var keys: [String] = []
+        for (key, _) in self.pickerArray {
+            keys.append(key)
+        }
+        
+        let position = keys.indexOf(selected)?.hashValue ?? 0
         
         // update uipicker
         (self.pickerViewTextField.inputView as! UIPickerView).reloadAllComponents()
@@ -200,7 +203,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Logout button
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func logoutAction(sender: AnyObject) {
         // logout
@@ -216,9 +219,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     Show initial view controller
     */
     func presentInitialViewController() {
-        var initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AuthVC") as! AuthViewController
+        let initViewController = self.storyboard?.instantiateViewControllerWithIdentifier("AuthVC") as! AuthViewController
         
-        var navigationController = UINavigationController(rootViewController: initViewController)
+        let navigationController = UINavigationController(rootViewController: initViewController)
         navigationController.navigationBar.hidden = true
         
         self.presentViewController(navigationController, animated: false, completion: nil)
@@ -274,16 +277,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Update account information
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func updateProfileInfo(sender: AnyObject) {
-        println(sender)
         self.view.endEditing(true)
         let cell = self.views[0] as! InformationTableViewCell
         
         cell.updateProfileInfo.loading = true
         // save
-        self.user.updateInfo(cell.firstNameInput.text, lastName: cell.lastNameInput.text, language: cell.language, success: { () -> Void in
+        self.user.updateInfo(cell.firstNameInput.text!, lastName: cell.lastNameInput.text!, language: cell.language, success: { () -> Void in
             // success
             cell.updateProfileInfo.loading = false
         }) { () -> Void in
@@ -295,7 +297,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Update postal address on button press
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func updatePostalAddressInfo(sender: AnyObject) {
         self.view.endEditing(true)
@@ -303,12 +305,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.updateAddressInfo.loading = true
 
-        self.user.updateAddress(cell.firstNameAddressInput.text,
-            lastName: cell.lastNameAddressInput.text,
-            street: cell.streetAddressInput.text,
-            city: cell.cityAddressInput.text,
-            zipCode: cell.zipAddressInput.text,
-            address: cell.addressAddressInput.text,
+        self.user.updateAddress(cell.firstNameAddressInput.text!,
+            lastName: cell.lastNameAddressInput.text!,
+            street: cell.streetAddressInput.text!,
+            city: cell.cityAddressInput.text!,
+            zipCode: cell.zipAddressInput.text!,
+            address: cell.addressAddressInput.text!,
             gender: cell.gender,
             success: { () -> Void in
             // success
@@ -322,7 +324,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
      Change account password
 
-     :param: sender 
+     - parameter sender: 
      */
     @IBAction func changePassword(sender: AnyObject) {
         self.view.endEditing(true)
@@ -332,7 +334,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.changePasswordButton.loading = true
         
         // save
-        self.user.changePassword(cell.actualPassword.text, newPassword: cell.newPassword.text, success: { () -> Void in
+        self.user.changePassword(cell.actualPassword.text!, newPassword: cell.newPassword.text!, success: { () -> Void in
             // success
             cell.clear()
             cell.changePasswordButton.loading = false
@@ -346,7 +348,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Update notifications
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func updateNotifications(sender: AnyObject) {
         self.view.endEditing(true)
@@ -372,7 +374,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return true
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesBegan(touches, withEvent: event)
         self.view.endEditing(true)
     }
@@ -406,7 +408,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.pickerViewTextField = UITextField(frame: CGRectZero)
         self.view.addSubview(self.pickerViewTextField)
         
-        var pickerView: UIPickerView = UIPickerView(frame: CGRectMake(0, 0, 0, 0))
+        let pickerView: UIPickerView = UIPickerView(frame: CGRectMake(0, 0, 0, 0))
         pickerView.showsSelectionIndicator = true
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -420,15 +422,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     /**
     Create toolbar
     
-    :returns: uitoolbar
+    - returns: uitoolbar
     */
     func createToolbarForUIPicker() -> UIToolbar {
         // create a toolbar with Cancel & Done button
-        var toolBar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 44))
+        let toolBar: UIToolbar = UIToolbar(frame: CGRectMake(0, 0, 320, 44))
         toolBar.barStyle = UIBarStyle.Default
         
-        var doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneTouched:")
-        var cancelButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelTouched:")
+        let doneButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "doneTouched:")
+        let cancelButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancelTouched:")
         
         // the middle button is to make the Done button align to right
         toolBar.setItems([cancelButton, UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil), doneButton], animated: false)
@@ -457,7 +459,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         self.pickerViewTextField.resignFirstResponder()
     
         // perform some action
-        let keys = self.pickerArray.keys.array
+        var keys: [String] = []
+        
+        for (key, _) in self.pickerArray {
+            keys.append(key)
+        }
+        
+        
         let key = keys[(self.pickerViewTextField.inputView as! UIPickerView).selectedRowInComponent(0)]
         
         if (self.selectedViewIndex == 0) {
@@ -477,10 +485,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return self.pickerArray.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
-        let keys    = self.pickerArray.keys.array
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        var keys: [String] = []
+        for (key, _) in self.pickerArray {
+            keys.append(key)
+        }
         let key     = keys[row] as String
-        return self.pickerArray[key] as! String
+        return self.pickerArray[key] as? String
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -515,7 +526,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getInformationCell() -> InformationTableViewCell {
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as! InformationTableViewCell
+        let cell = self.mainTable.dequeueReusableCellWithIdentifier("InformationTableViewCell") as! InformationTableViewCell
         
         cell.firstNameInput.delegate = self
         cell.lastNameInput.delegate = self
@@ -531,7 +542,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getAddressCell() -> AddressTableViewCell {
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("AddressTableViewCell") as! AddressTableViewCell
+        let cell = self.mainTable.dequeueReusableCellWithIdentifier("AddressTableViewCell") as! AddressTableViewCell
         
         let _address = self.settingsDictionary["address"] as! Dictionary<String, AnyObject>
         cell.setCell(_address)
@@ -553,7 +564,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     func getPasswordCell() -> PasswordTableViewCell {
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as! PasswordTableViewCell
+        let cell = self.mainTable.dequeueReusableCellWithIdentifier("PasswordTableViewCell") as! PasswordTableViewCell
         
         cell.changePasswordButton.addTarget(self, action: "changePassword:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -566,7 +577,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getNotificationCell() -> NotificationsTableViewCell {
-        var cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as! NotificationsTableViewCell
+        let cell = self.mainTable.dequeueReusableCellWithIdentifier("NotificationsTableViewCell") as! NotificationsTableViewCell
         
         // set up cell
         cell.setUpCell(self.settingsDictionary["notifications"] as! Dictionary<String, AnyObject>)

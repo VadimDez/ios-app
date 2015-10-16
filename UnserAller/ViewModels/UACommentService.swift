@@ -38,18 +38,28 @@ class UACommentService {
         let url: String = "\(APIURL)/api/v1/comment/\(commentId)"
         
         Alamofire.request(.DELETE, url, parameters: nil)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success()
+                    } else {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
+                    
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
                 }
         }
     }
@@ -63,18 +73,27 @@ class UACommentService {
         let url: String = "\(APIURL)/api/v1/comment/restore/\(commentId)"
         
         Alamofire.request(.POST, url, parameters: nil)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success()
+                    } else {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors):
+                    
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
                 }
         }
     }
@@ -87,18 +106,23 @@ class UACommentService {
         let url: String = "\(APIURL)/api/v1/comment/update/"
         
         Alamofire.request(.POST, url, parameters: ["id": comment.id, "comment": comment.content, "language": "en"])
-            .responseJSON { (_,_,answer,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(_):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                    
+                    
+                case .Failure(_, let errors):
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
+                    
                 }
         }
     }

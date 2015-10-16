@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "768E7C5CE05941B7449F9544"
+               BlueprintIdentifier = "B194855E0928154F922F2182"
                BuildableName = "RNLoadingButton.framework"
                BlueprintName = "RNLoadingButton"
                ReferencedContainer = "container:Pods.xcodeproj">

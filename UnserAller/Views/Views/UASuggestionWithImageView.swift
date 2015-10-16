@@ -57,7 +57,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     }
     
     func registerNibs() {
-        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
+        let UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
         self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
     }
     
@@ -71,7 +71,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        let cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
         
         cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.suggestion.media[indexPath.row])
@@ -91,7 +91,6 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        println("HERE")
         return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     

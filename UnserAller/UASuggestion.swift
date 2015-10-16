@@ -51,9 +51,9 @@ class UASuggestion: UACellObject {
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
-        if let _suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
-            
-        }
+//        if let _suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+//
+//        }
 
         // set like count
         if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("liked") as? Int {
@@ -213,7 +213,7 @@ class UASuggestion: UACellObject {
         }
         
         if let content = jsonObject.objectForKey("content") as? NSString {
-            if (count(articleContent) > 0) {
+            if (articleContent.characters.count > 0) {
                 articleContent = articleContent + " "
             }
             

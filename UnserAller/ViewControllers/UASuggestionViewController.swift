@@ -80,9 +80,9 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
 //        self.mainTable.registerNib(UASuggestionWithImageViewNib, forHeaderFooterViewReuseIdentifier: "UASuggestionWithImageView")
         
         
-        var UACommentCellNib = UINib(nibName: "UACommentCell", bundle: nil)
+        let UACommentCellNib = UINib(nibName: "UACommentCell", bundle: nil)
         self.mainTable.registerNib(UACommentCellNib, forCellReuseIdentifier: "UACommentCell")
-        var UACommentImageCellNib = UINib(nibName: "UACommentWithImageCell", bundle: nil)
+        let UACommentImageCellNib = UINib(nibName: "UACommentWithImageCell", bundle: nil)
         self.mainTable.registerNib(UACommentImageCellNib, forCellReuseIdentifier: "UACommentWithImageCell")
     }
 
@@ -106,11 +106,11 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if (self.entries[indexPath.row].cellType == "UACommentWithImageCell") {
-            var cell: UACommentWithImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentWithImageCell") as! UACommentWithImageCell
+            let cell: UACommentWithImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentWithImageCell") as! UACommentWithImageCell
             cell.setCell(self.entries[indexPath.row])
             return cell
         }
-        var cell: UACommentCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentCell") as! UACommentCell
+        let cell: UACommentCell = self.mainTable.dequeueReusableCellWithIdentifier("UACommentCell") as! UACommentCell
 
         cell.setCell(self.entries[indexPath.row])
         
@@ -131,7 +131,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             
             
             if self.entries[indexPath.row].isDeleted {
-                let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction) -> Void in
                     KVNProgress.showWithStatus("Restoring")
                     
                     self.commentService.restoreComment(self.entries[indexPath.row].id, success: { () -> () in
@@ -146,7 +146,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                 }
                 optionsMenu.addAction(restoreAction)
             } else {
-                let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
+                let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction) -> Void in
                     KVNProgress.showWithStatus("Deleting")
                     
                     self.commentService.deleteComment(self.entries[indexPath.row].id, success: { () -> () in
@@ -159,7 +159,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                         self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
                     })
                 }
-                let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+                let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction) -> Void in
                     self.editCommentMode = indexPath.row //self.entries[indexPath.row].id
                     self.openEditorWith("Edit comment", string: self.entries[indexPath.row].content)
                 }
@@ -167,7 +167,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
                 optionsMenu.addAction(deleteAction)
             }
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction!) -> Void in
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction) -> Void in
                 self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
             }
             
@@ -186,24 +186,28 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func getSuggestion(success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/mobile/suggestion/suggestion"
+        let url: String = "\(APIURL)/api/mobile/suggestion/suggestion"
 
         Alamofire.request(.GET, url, parameters: ["id": self.suggestion.suggestionId])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { _, _, result  in
                 
-                if (errors != nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println("get suggestion error")
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
+                switch result {
+                case .Success(let JSON):
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
-                    self.suggestion = UASuggestion().getSuggestionFromJSONForSuggestionVC(JSON?.objectAtIndex(0) as! Dictionary<String, AnyObject>)
+                    self.suggestion = UASuggestion().getSuggestionFromJSONForSuggestionVC(JSON.objectAtIndex(0) as! Dictionary<String, AnyObject>)
                     
                     success()
+                    
+                case .Failure(_, let errors):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    print("get suggestion error")
+                    print(errors)
+                    // error block
+                    failure()
                 }
         }
     }
@@ -214,29 +218,33 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func loadComments(success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/mobile/comment/suggestion"
+        let url: String = "\(APIURL)/api/mobile/comment/suggestion"
         
         Alamofire.request(.GET, url, parameters: ["id": self.suggestion.suggestionId])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { _, _, result in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(let JSON):
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println("load comments error")
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-
-                    if (JSON?.count > 0 && JSON?.objectForKey("comments")?.count > 0) {
-
+                    
+                    if (JSON.count > 0 && JSON.objectForKey("comments")?.count > 0) {
+                        
                         // get array
-                        var array = self.commentService.getCommentsFromJSON(JSON?.objectForKey("comments") as! [Dictionary<String, AnyObject>])
+                        let array = self.commentService.getCommentsFromJSON(JSON.objectForKey("comments") as! [Dictionary<String, AnyObject>])
                         
                         self.entries = self.entries + array
                     }
                     success()
+                    
+                case .Failure(_, let errors) :
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    print("load comments error")
+                    print(errors)
+                    // error block
+                    failure()
                 }
         }
     }
@@ -262,11 +270,11 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Get suggestion view
     
-    :returns: returns UASuggestionView
+    - returns: returns UASuggestionView
     */
     func getSuggestionView() -> UASuggestionView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionView", owner: self, options: nil)
-        var suggestionView: UASuggestionView = nib[0] as! UASuggestionView
+        let suggestionView: UASuggestionView = nib[0] as! UASuggestionView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentInput.text = self.newCommentContent
@@ -281,11 +289,11 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Get suggestion with image view
     
-    :returns: returns UASuggestionWithImageView
+    - returns: returns UASuggestionWithImageView
     */
     func getSuggestionWithimageView() -> UASuggestionWithImageView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionWithImageView", owner: self, options: nil)
-        var suggestionView: UASuggestionWithImageView = nib[0] as! UASuggestionWithImageView
+        let suggestionView: UASuggestionWithImageView = nib[0] as! UASuggestionWithImageView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentInput.text = self.newCommentContent
@@ -300,11 +308,11 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Get suggestion vote view
     
-    :returns: returns UASuggestionVoteView
+    - returns: returns UASuggestionVoteView
     */
     func getSuggestionVoteView() -> UASuggestionVoteView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionVoteView", owner: self, options: nil)
-        var suggestionView: UASuggestionVoteView = nib[0] as! UASuggestionVoteView
+        let suggestionView: UASuggestionVoteView = nib[0] as! UASuggestionVoteView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentInput.text = self.newCommentContent
@@ -320,11 +328,11 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Get suggestion vote with images view
     
-    :returns: returns UASuggestionVoteView
+    - returns: returns UASuggestionVoteView
     */
     func getSuggestionVoteWithImageView() -> UASuggestionVoteWithImageView {
         let nib = NSBundle.mainBundle().loadNibNamed("UASuggestionVoteWithImageView", owner: self, options: nil)
-        var suggestionView: UASuggestionVoteWithImageView = nib[0] as! UASuggestionVoteWithImageView
+        let suggestionView: UASuggestionVoteWithImageView = nib[0] as! UASuggestionVoteWithImageView
         
         suggestionView.setUp(self.suggestion)
         suggestionView.newCommentInput.text = self.newCommentContent
@@ -338,7 +346,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     func calculateHeaderHeight(base: CGFloat) -> CGFloat {
-        var media: CGFloat = self.mediaHelper.getHeightForMedias(self.suggestion.media.count, maxWidth: self.mainTable.frame.width - 5.0)
+        let media: CGFloat = self.mediaHelper.getHeightForMedias(self.suggestion.media.count, maxWidth: self.mainTable.frame.width - 5.0)
         
         return base + media + self.suggestion.content.getHeightForView(self.mainTable.frame.width - 10, font: UIFont(name: "Helvetica Neue", size: 13)!)
     }
@@ -383,8 +391,8 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Update SuggestionVote table header with new
     
-    :param: likeCount likes
-    :param: votes     user votes
+    - parameter likeCount: likes
+    - parameter votes:     user votes
     */
     func updateVoteTableHeader(likeCount: Int, votes: Float) {
         (self.mainTable.tableHeaderView as! UASuggestionVoteView).likeLabel.text = "\(likeCount)"
@@ -397,20 +405,23 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/v1/suggestion/vote"
+        let url: String = "\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { _, _, result in
                 
-                if(errors != nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
+                switch result {
+                case .Success( _):
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
+                    
+                case .Failure(_, let errors):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    print(errors)
+                    // error block
+                    failure()
                 }
         }
     }
@@ -420,14 +431,14 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     /**
     Open editor
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func openEditor(sender: AnyObject) {
-        self.openEditorWith("New comment", string: (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text)
+        self.openEditorWith("New comment", string: (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text!)
     }
     
     func openEditorWith(title: String, string: String) {
-        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
+        let editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         weak var _self = self
         editor.setEditorTitle(title)
@@ -479,9 +490,9 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     }
     
     @IBAction func sendNewComment(sender: AnyObject) {
-        let newComment: String = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text
+        let newComment: String = (self.mainTable.tableHeaderView as! UASuggestionHeaderView).newCommentInput.text!
 
-        if count(newComment) == 0 {
+        if newComment.characters.count == 0 {
             return
         }
         
@@ -520,20 +531,21 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
     func sendNewComment(comment: String, success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/mobile/comment/add"
+        let url: String = "\(APIURL)/api/mobile/comment/add"
         
         Alamofire.request(.POST, url, parameters: ["comment": comment, "suggestion": self.suggestion.suggestionId])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { _, _, result in
                 
-                if(errors != nil && JSON == nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(json: JSON!)
+                switch result {
+                    case .Success(let JSON):
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success(json: JSON)
+                    case .Failure(_, let error):
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // print error
+                        print(error)
+                        // error block
+                        failure()
                 }
         }
     }
@@ -543,17 +555,17 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         if !self.openProjectDisabled {
             self.openProjectDisabled = true
             
-            var competenceService = CompetenceService()
+            let competenceService = CompetenceService()
             
             competenceService.getEntries(self.suggestion.projectId, projectStep: 0, success: { (competences) -> Void in
                 
                 // check if any competence to fill
                 if competences.count > 0 {
-                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                     competenceVC.projectId = self.suggestion.projectId
                     self.navigationController?.pushViewController(competenceVC, animated: true)
                 } else {
-                    var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    let projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                     
                     // set project id
                     projectVC.projectId = self.suggestion.projectId
@@ -574,7 +586,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
         let optionsMenu = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         if self.suggestion.isDeleted {
-            let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+            let restoreAction = UIAlertAction(title: "Restore", style: UIAlertActionStyle.Default) { (alert: UIAlertAction) -> Void in
                 KVNProgress.showWithStatus("Restoring")
                 
                 self.suggestionService.restore(self.suggestion, success: { () -> Void in
@@ -586,14 +598,13 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             }
             optionsMenu.addAction(restoreAction)
         } else {
-            let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction!) -> Void in
+            let editAction = UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default) { (alert: UIAlertAction) -> Void in
                 self.editSuggestionMode = true
                 self.openEditorWith("Edit suggestion", string: self.suggestion.content)
             }
             
-            let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction!) -> Void in
+            let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive) { (alert: UIAlertAction) -> Void in
                 KVNProgress.showWithStatus("Deleting")
-                let suggestionVM = UASuggestionViewModel()
                 
                 self.suggestionService.delete(self.suggestion, success: { () -> Void in
                     self.suggestion.isDeleted = true
@@ -607,7 +618,7 @@ class UASuggestionViewController: UIViewControllerWithMedia, UITableViewDataSour
             optionsMenu.addAction(deleteAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction!) -> Void in
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { (alert: UIAlertAction) -> Void in
             
         }
         

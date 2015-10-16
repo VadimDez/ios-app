@@ -24,7 +24,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
         // Initialization code
         
         // register nibs
-        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
+        let UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
         self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
         
         self.imageCollectionView.delegate = self
@@ -67,13 +67,13 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
                     multiplier: 1.0,
                     constant: -8.0)
                 self.ratingView.removeFromSuperview()
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
 
             }
             if self.likeLabel != nil {
                 self.likeLabel.removeFromSuperview()
-                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+                self.likeLabel.removeConstraints(self.likeLabel.constraints)
             }
         }
         
@@ -125,12 +125,12 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
                     constant: -9.0)
                 
                 self.ratingView.removeFromSuperview()
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
             }
             if self.likeLabel != nil {
                 self.likeLabel.removeFromSuperview()
-                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+                self.likeLabel.removeConstraints(self.likeLabel.constraints)
             }
         }
     }
@@ -144,7 +144,7 @@ class UASuggestionVoteImageCell: UACell, UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        let cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
         cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.suggestion.media[indexPath.row])
         return cell

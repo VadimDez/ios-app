@@ -22,6 +22,6 @@ class UASingleLineInputCell: UACompetenceCell, UITextFieldDelegate {
     }
     
     @IBAction func didEndEditing(sender: AnyObject) {
-        (self.competence as! UASingleInputCompetence).answer = self.input.text
+        (self.competence as! UASingleInputCompetence).answer = self.input.text!
     }
 }

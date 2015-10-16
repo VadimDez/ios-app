@@ -28,14 +28,14 @@ class UAMultipleLineInputCell: UACompetenceCell, UITextViewDelegate {
     
     
     func textFieldDidEndEditing(textField: UITextField) {
-        println("edited!")
+        print("edited!")
         (self.competence as! UAMultilineInputCompetence).answer = self.input.text
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         self.input.endEditing(true)
         (self.competence as! UAMultilineInputCompetence).answer = self.input.text
-        println("edited")
+        print("edited")
         super.touchesBegan(touches, withEvent: event)
     }
 }

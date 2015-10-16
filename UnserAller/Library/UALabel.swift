@@ -22,7 +22,7 @@ class UALabel: UILabel {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = self.lineBreakMode;
             let stringTextAsNSString: NSString = stringText as NSString
-            var labelStringSize = stringTextAsNSString.boundingRectWithSize(CGSizeMake(CGRectGetWidth(self.frame), CGFloat.max),
+            let labelStringSize = stringTextAsNSString.boundingRectWithSize(CGSizeMake(CGRectGetWidth(self.frame), CGFloat.max),
                 options: NSStringDrawingOptions.UsesLineFragmentOrigin,
                 attributes: [NSFontAttributeName:self.font,NSParagraphStyleAttributeName: paragraphStyle],
                 context: nil).size

@@ -40,13 +40,13 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     Register nibs
     */
     func registerNibs() {
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        let UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        let UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        let UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
-        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        let UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
     }
     
@@ -101,7 +101,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+        let suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
         suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
         
         self.navigationController?.pushViewController(suggestionVC, animated: true)
@@ -112,7 +112,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     *  Get suggestion cell with suggestion object
     */
     func getSuggestCellForActivity(suggestion: UASuggestion) -> UASuggestionCell {
-        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        let cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
         
         // suggestion vc
@@ -130,7 +130,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
         
     func getSuggestImageCellForActivity(suggestion: UASuggestion) -> UASuggestImageCell {
-        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        let cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
         
         // suggestion vc
@@ -148,7 +148,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
     
     func getVoteCellForActivity(row: Int) -> UASuggestionVoteCell {
-        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
+        let cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         
         
         if self.entries[row].isReleased {
@@ -174,7 +174,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     }
     
     func getVoteWithImageCellForActivity(row: Int) -> UASuggestionVoteImageCell {
-        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        let cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         
         if self.entries[row].isReleased {
             cell.ratingView.delegate = self
@@ -202,7 +202,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
 //        let base: CGFloat = 110.0
         let base: CGFloat = 95.0
         
-        var media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 25.0)
+        let media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 25.0)
         
         return base + self.entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
@@ -221,7 +221,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
             self.mainTable.reloadData()
             
             }, error: {() -> Void in
-                println("Activity infinite load error")
+                print("Activity infinite load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.infiniteScrollingView.stopAnimating()
@@ -243,7 +243,7 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
             self.mainTable.reloadData()
             
             }, error: { () -> Void in
-                println("Activity pull to refresh load error")
+                print("Activity pull to refresh load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.pullToRefreshView.stopAnimating()
@@ -254,26 +254,37 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
         let url: String = "\(APIURL)/api/mobile/profile/getactivity"
         
         Alamofire.request(.GET, url, parameters: ["page": self.page])
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
-                    // print error
-                    println(errors)
-                    // error block
-                    error()
-                } else {
-                    let SuggestionViewModel = UASuggestionViewModel()
-
-                    // get get objects from JSON
-                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
-                    
-                    if self.page == 0 {
-                        self.entries = []
+            .responseJSON { (_, _, request) -> Void in
+                
+                switch request {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        let SuggestionViewModel = UASuggestionViewModel()
+                        
+                        // get get objects from JSON
+                        let array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                        
+                        if self.page == 0 {
+                            self.entries = []
+                        }
+                        
+                        // merge two arrays
+                        self.entries = self.entries + array
+                        print(self.entries.count)
+                        success()
+                    } else {
+                        
+                        // error block
+                        error()
                     }
                     
-                    // merge two arrays
-                    self.entries = self.entries + array
-                    println(self.entries.count)
-                    success()
+                    
+                case .Failure(_, let errors) :
+                    // print error
+                    print(errors)
+                    // error block
+                    error()
                 }
         }
     }
@@ -317,16 +328,16 @@ class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UI
     */
     func presentProjectViewController(projectId: UInt, done: () -> Void) {
         
-        var competenceService = CompetenceService()
+        let competenceService = CompetenceService()
         competenceService.getEntries(projectId, projectStep: 0, success: { (competences) -> Void in
             if competences.count > 0 {
-                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
                 
                 done()
             } else {
-                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                let projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                 
                 // set project id
                 projectVC.projectId = projectId

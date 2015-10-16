@@ -18,13 +18,13 @@ class UAPhaseCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         // make circle
-        var imageLayer:CALayer = self.centerBox.layer;
+        let imageLayer:CALayer = self.centerBox.layer;
         imageLayer.cornerRadius = 7
         imageLayer.masksToBounds = true
         
         self.hideLines(false)
         self.resetFont()
-        println("in awake")
+        print("in awake")
     }
     
     func setPhaseName(name: String) {

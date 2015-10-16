@@ -12,7 +12,7 @@ extension String {
     *
     */
     func getDateFromString() -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
+        let formatter:NSDateFormatter = NSDateFormatter()
         formatter.timeZone = NSTimeZone(name: "Europe/Berlin")
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
@@ -24,7 +24,7 @@ extension String {
     *
     */
     func getDateFromLongString() -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
+        let formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         
         return formatter.dateFromString(self)!
@@ -33,7 +33,7 @@ extension String {
     
     func stripHTML() -> String {
         // title
-        var str = self.stringByReplacingOccurrencesOfString("</h3>", withString: " ", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+        let str = self.stringByReplacingOccurrencesOfString("</h3>", withString: " ", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
         // rest
         return str.stringByReplacingOccurrencesOfString("<[^>]+>", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
     }
@@ -57,16 +57,26 @@ extension String {
 //            error: nil)!
 //        return attrStr.string
         
-        return NSAttributedString(data: self.dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil, error: nil)!.string
+        do {
+            return try NSAttributedString(data: self.dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType, NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding], documentAttributes: nil).string
+        } catch _ {
+            return self
+        }
+        
+//        return NSAttributedString(data: self.dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil, error: nil)!.string
     }
     var html2NSAttributedString:NSAttributedString {
-        return NSAttributedString(data: dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil, error: nil)!
+        do {
+            return try NSAttributedString(data: dataUsingEncoding(NSUTF8StringEncoding)!, options: [NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:NSUTF8StringEncoding], documentAttributes: nil)
+        } catch {
+            return NSAttributedString(string: self)
+        }
     }
     
     func getHeightForView(width: CGFloat, font: UIFont) -> CGFloat {
         // count text
-        var frame: CGRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
-        var label: UILabel = UILabel(frame: frame)
+        let frame: CGRect = CGRect(x: 0, y: 0, width: width, height: CGFloat(MAXFLOAT))
+        let label: UILabel = UILabel(frame: frame)
         
         label.text = self
         label.font = font
@@ -79,8 +89,8 @@ extension String {
     
     func getWidthForView(height: CGFloat, font: UIFont) -> CGFloat {
         // count text
-        var frame: CGRect = CGRect(x: 0, y: 0, width: CGFloat(MAXFLOAT), height: height)
-        var label: UILabel = UILabel(frame: frame)
+        let frame: CGRect = CGRect(x: 0, y: 0, width: CGFloat(MAXFLOAT), height: height)
+        let label: UILabel = UILabel(frame: frame)
         
         label.text = self
         label.font = font

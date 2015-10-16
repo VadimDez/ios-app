@@ -4,11 +4,11 @@ inhibit_all_warnings!
 use_frameworks!
 
 target "UnserAller" do
-pod 'Alamofire', '~> 1.3’
-pod 'AMScrollingNavbar', ‘~> 1.5’
+pod 'Alamofire', '~> 2.0’
+pod 'AMScrollingNavbar', ‘~> 1.5'
 pod 'Canvas', '~> 0.1'
 pod 'SVPullToRefresh', '~> 0.4'
-pod 'Locksmith', '~> 1.2'
+pod 'Locksmith', '~> 2.0'
 pod 'AFNetworking', '~> 2.6'
 pod 'DrawerController', '~> 1.0'
 pod 'TTTAttributedLabel', '~> 1.13'
@@ -18,6 +18,6 @@ pod 'RNLoadingButton', '~> 0.0'
 end
 
 target "UnserAllerTests" do
-pod 'Locksmith', '~> 1.2'
-pod 'Alamofire', '~> 1.3’
+pod 'Locksmith', '~> 2.0'
+pod 'Alamofire', '~> 2.0’
 end

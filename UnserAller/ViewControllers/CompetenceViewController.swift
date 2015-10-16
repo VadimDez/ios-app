@@ -59,22 +59,22 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     */
     func registerNibs() {
         // freetext
-        var UAFreetextCellNib = UINib(nibName: "UAFreetextCell", bundle: nil)
+        let UAFreetextCellNib = UINib(nibName: "UAFreetextCell", bundle: nil)
         self.mainTable.registerNib(UAFreetextCellNib, forCellReuseIdentifier: "UAFreetextCell")
         // single line input
-        var UASingleLineInputCellNib = UINib(nibName: "UASingleLineInputCell", bundle: nil)
+        let UASingleLineInputCellNib = UINib(nibName: "UASingleLineInputCell", bundle: nil)
         self.mainTable.registerNib(UASingleLineInputCellNib, forCellReuseIdentifier: "UASingleLineInputCell")
         // multiple line input
-        var UAMultipleLineInputCellNib = UINib(nibName: "UAMultipleLineInputCell", bundle: nil)
+        let UAMultipleLineInputCellNib = UINib(nibName: "UAMultipleLineInputCell", bundle: nil)
         self.mainTable.registerNib(UAMultipleLineInputCellNib, forCellReuseIdentifier: "UAMultipleLineInputCell")
         // options
-        var UAOptionsNib = UINib(nibName: "UAOptionsCell", bundle: nil)
+        let UAOptionsNib = UINib(nibName: "UAOptionsCell", bundle: nil)
         self.mainTable.registerNib(UAOptionsNib, forCellReuseIdentifier: "UAOptionsCell")
         // checkbox
-        var UACheckboxCellNib = UINib(nibName: "UACheckboxCell", bundle: nil)
+        let UACheckboxCellNib = UINib(nibName: "UACheckboxCell", bundle: nil)
         self.mainTable.registerNib(UACheckboxCellNib, forCellReuseIdentifier: "UACheckboxCell")
         // likert
-        var UALikertCellNib = UINib(nibName: "UALikertCell", bundle: nil)
+        let UALikertCellNib = UINib(nibName: "UALikertCell", bundle: nil)
         self.mainTable.registerNib(UALikertCellNib, forCellReuseIdentifier: "UALikertCell")
     }
     
@@ -107,7 +107,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         case CompetenceFormat.Checkbox:
             fallthrough
         case CompetenceFormat.Likert:
-            var cell = self.mainTable.dequeueReusableCellWithIdentifier(self.entries[indexPath.row].cellType, forIndexPath: indexPath) as! UACompetenceCell
+            let cell = self.mainTable.dequeueReusableCellWithIdentifier(self.entries[indexPath.row].cellType, forIndexPath: indexPath) as! UACompetenceCell
             
             
             if self.previousCompetenceFormat == CompetenceFormat.Likert && self.entries[indexPath.row].format == CompetenceFormat.Likert && self.entries[indexPath.row].content == self.entries[indexPath.row - 1].content {
@@ -124,7 +124,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
             self.previousCompetenceFormat = self.entries[indexPath.row].format
             return cell
 
-        default: return UITableViewCell()
+//        default: return UITableViewCell()
         }
     }
     
@@ -212,7 +212,7 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
-        var url = "\(APIURL)/api/mobile/competence/get"
+        let url = "\(APIURL)/api/mobile/competence/get"
         var params:[String: AnyObject] = [String: AnyObject]()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -225,29 +225,41 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         
         Alamofire.request(.GET, url, parameters: params)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        let competenceService = CompetenceService()
+                        
+                        // get get objects from JSON
+                        let array = competenceService.getCompetencesFromJSON(JSON.objectForKey("competences") as! [Dictionary<String, AnyObject>])
+                        
+                        // merge two arrays
+                        //                    self.entries = self.entries + array
+                        self.entries = array
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success()
+                    } else {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        
+                        // error block
+                        error()
+                    }
+                    
+                    
+                case .Failure(_, let errors) :
+                    
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
                     // error block
                     error()
-                    
-                } else {
-                    let competenceService = CompetenceService()
-                    
-                    // get get objects from JSON
-                    var array = competenceService.getCompetencesFromJSON(JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
-
-                    // merge two arrays
-//                    self.entries = self.entries + array
-                    self.entries = array
-                    
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
                 }
         }
     }
@@ -293,10 +305,10 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 
                     if self.projectId != nil {
                         
-                        var navigation = self.navigationController
+                        let navigation = self.navigationController
                         
                         if self.projectStepId == nil {
-                            var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                            let projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                         
                             // set project id
                             projectVC.projectId = self.projectId
@@ -334,34 +346,50 @@ class CompetenceViewController: UIViewController, UITableViewDelegate, UITableVi
 //        Alamofire.request(.POST, url, parameters: ["competences": ["0": ["competence": 172, "value": "read"]]], encoding: ParameterEncoding.JSON)
         
         Alamofire.request(request)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(_):
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                    
+                case .Failure(_, let errors) :
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
-                    println("send competences error")
-                    println(errors)
+                    print("send competences error")
+                    print(errors)
                     // error block
                     failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    println(errors)
-                    success()
                 }
         }
     }
     
     func encodeParameters(object: AnyObject, prefix: String! = nil) -> String {
+        
+        
         if let dictionary = object as? [String: AnyObject] {
-            let results = map(dictionary) { (key, value) -> String in
+            
+            let results = dictionary.map({ (key, value) -> String in
                 return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(key)]" : key)
-            }
-            return "&".join(results)
+            })
+            
+            return results.joinWithSeparator("&")
+//            let results = map(dictionary) { (key, value) -> String in
+//                return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(key)]" : key)
+//            }
+//            return "&".join(results)
+            
         } else if let array = object as? [AnyObject] {
-            let results = map(enumerate(array)) { (index, value) -> String in
+            
+            let results = array.enumerate().map({ (index, value) -> String in
                 return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(index)]" : "\(index)")
-            }
-            return "&".join(results)
+            })
+            return results.joinWithSeparator("&")
+            
+//            let results = map(enumerate(array)) { (index, value) -> String in
+//                return self.encodeParameters(value, prefix: prefix != nil ? "\(prefix)[\(index)]" : "\(index)")
+//            }
+//            return "&".join(results)
         } else {
             let escapedValue = escape("\(object)")
             return prefix != nil ? "\(prefix)=\(escapedValue)" : "\(escapedValue)"

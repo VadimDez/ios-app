@@ -22,7 +22,7 @@ class UACreditTests: XCTestCase {
     }
 
     func testInstansiate() {
-        var credit: UACredit = UACredit()
+        let credit: UACredit = UACredit()
         XCTAssert(((credit as Any) is UACredit), "Check if instansiated")
     }
 

@@ -22,7 +22,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         self.mainTable.dataSource = self
         
         // register nibs
-        var UACreditCellNib = UINib(nibName: "UACreditCell", bundle: nil)
+        let UACreditCellNib = UINib(nibName: "UACreditCell", bundle: nil)
         self.mainTable.registerNib(UACreditCellNib, forCellReuseIdentifier: "UACreditCell")
 
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
@@ -70,7 +70,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UACreditCell = self.mainTable.dequeueReusableCellWithIdentifier("UACreditCell") as! UACreditCell
+        let cell:UACreditCell = self.mainTable.dequeueReusableCellWithIdentifier("UACreditCell") as! UACreditCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -89,7 +89,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
             },error:  {() -> Void in
-                println("Credit infinite load error")
+                print("Credit infinite load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.infiniteScrollingView.stopAnimating()
@@ -109,7 +109,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
             }, error: {() -> Void in
-                println("Credit pull to refresh load error")
+                print("Credit pull to refresh load error", terminator: "")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 self.mainTable.pullToRefreshView.stopAnimating()
@@ -121,22 +121,32 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         let url: String = "\(APIURL)/api/mobile/profile/getcredits"
 
         Alamofire.request(.GET, url, parameters: ["page": page])
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
+            .responseJSON { (_, _, result) -> Void in
+                
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        let CreditViewModel = UACreditViewModel()
+                        
+                        // get get objects from JSON
+                        let array = CreditViewModel.getCreditsFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                        // merge two arrays
+                        self.entries = self.entries + array
+                        self.countEntries = self.entries.count
+                        
+                        success()
+                    } else {
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
+                    
                     // print error
-                    println(errors)
+                    print(errors)
                     // error block
                     error()
-                } else {
-                    let CreditViewModel = UACreditViewModel()
-
-                    // get get objects from JSON
-                    var array = CreditViewModel.getCreditsFromJSON(JSON as! [Dictionary<String, AnyObject>])
-                    // merge two arrays
-                    self.entries = self.entries + array
-                    self.countEntries = self.entries.count
-                    
-                    success()
                 }
         }
     }

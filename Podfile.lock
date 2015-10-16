@@ -20,51 +20,51 @@ PODS:
   - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Alamofire (1.3.1)
+  - Alamofire (2.0.2)
   - AMScrollingNavbar (1.5.1)
   - Canvas (0.1.2)
   - DACircularProgress (2.3.1)
-  - DrawerController (1.0.4):
-    - DrawerController/Core (= 1.0.4)
-    - DrawerController/DrawerVisualStates (= 1.0.4)
-  - DrawerController/Core (1.0.4)
-  - DrawerController/DrawerVisualStates (1.0.4):
+  - DrawerController (1.1.0):
+    - DrawerController/Core (= 1.1.0)
+    - DrawerController/DrawerVisualStates (= 1.1.0)
+  - DrawerController/Core (1.1.0)
+  - DrawerController/DrawerVisualStates (1.1.0):
     - DrawerController/Core
   - IDMPhotoBrowser (1.7):
     - AFNetworking
     - DACircularProgress
     - pop
   - KVNProgress (2.2.1)
-  - Locksmith (1.2.2)
-  - pop (1.0.7)
+  - Locksmith (2.0.1)
+  - pop (1.0.8)
   - RNLoadingButton (0.0.1)
   - SVPullToRefresh (0.4.1)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
-  - Alamofire (~> 1.3)
+  - Alamofire (~> 2.0)
   - AMScrollingNavbar (~> 1.5)
   - Canvas (~> 0.1)
   - DrawerController (~> 1.0)
   - IDMPhotoBrowser (~> 1.7)
   - KVNProgress (~> 2.2)
-  - Locksmith (~> 1.2)
+  - Locksmith (~> 2.0)
   - RNLoadingButton (~> 0.0)
   - SVPullToRefresh (~> 0.4)
   - TTTAttributedLabel (~> 1.13)
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  Alamofire: e4ab637e3195b645c814b87a652373439e59f2a4
+  Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   AMScrollingNavbar: 767ed2db60d927a809bddff5d01b739b7020b12b
   Canvas: eb861e3b555d032648146c8ffda1a5dea40059ca
   DACircularProgress: 4dd437c0fc3da5161cb289e07ac449493d41db71
-  DrawerController: 80b7f2bdfe67f93b6d0991ed6034cd5ce331811d
+  DrawerController: 8fd56e6238399a08c4af054fbea0ef8669cd81f3
   IDMPhotoBrowser: 1155caa03f8705b7943c074c26b55aadd43d71da
   KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
-  Locksmith: c84c10bf23f99e6d04703dba65065dc38b038d88
-  pop: 628ffc631644601567ee8bfaaaea493ebd7d0923
+  Locksmith: 2c7bdc5c3a31a97d748791ad830310b1af4b8549
+  pop: bb773ae2c791ca2629de13b347e7a8b450fa6a57
   RNLoadingButton: edcf6cd965509625f79318a8a5477b1293435698
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f

@@ -84,7 +84,7 @@ class CompetenceService {
     }
     
     func getPlaceholderCompetence(object: Dictionary<String, AnyObject>) -> UAFreetextCompetence {
-        var competence = UAFreetextCompetence()
+        let competence = UAFreetextCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -102,7 +102,7 @@ class CompetenceService {
     }
     
     func getSingleInputCompetence(object: Dictionary<String, AnyObject>) -> UASingleInputCompetence {
-        var competence = UASingleInputCompetence()
+        let competence = UASingleInputCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -120,7 +120,7 @@ class CompetenceService {
     }
     
     func getMultipleLineInputCompetence(object: Dictionary<String, AnyObject>) -> UAMultilineInputCompetence {
-        var competence = UAMultilineInputCompetence()
+        let competence = UAMultilineInputCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -138,7 +138,7 @@ class CompetenceService {
     }
     
     func getOptionsCompetence(object: Dictionary<String, AnyObject>) -> UAOptionsCompetence {
-        var competence = UAOptionsCompetence()
+        let competence = UAOptionsCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -162,7 +162,7 @@ class CompetenceService {
     }
     
     func getCheckboxCompetence(object: Dictionary<String, AnyObject>) -> UACheckboxCompetence {
-        var competence = UACheckboxCompetence()
+        let competence = UACheckboxCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -186,7 +186,7 @@ class CompetenceService {
     }
     
     func getLikertCompetence(object: Dictionary<String, AnyObject>) -> UALikertCompetence {
-        var competence = UALikertCompetence()
+        let competence = UALikertCompetence()
         
         if let id = object["id"] as? UInt {
             competence.id = id
@@ -211,7 +211,7 @@ class CompetenceService {
     
     
     func getEntries(project: UInt, projectStep: UInt, success: (competences: [Dictionary<String, AnyObject>]) -> Void, error: () -> Void) {
-        var url = "\(APIURL)/api/mobile/competence/get"
+        let url = "\(APIURL)/api/mobile/competence/get"
         var params:[String: AnyObject] = [String: AnyObject]()
         
         if (project != 0) {
@@ -224,18 +224,29 @@ class CompetenceService {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         Alamofire.request(.GET, url, parameters: params)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success(competences: JSON.objectForKey("competences") as! [Dictionary<String, AnyObject>])
+                    } else {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
+                    
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(competences: JSON?.objectForKey("competences") as! [Dictionary<String, AnyObject>])
                 }
         }
     }

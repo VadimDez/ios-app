@@ -14,7 +14,7 @@ class UANewsViewModel {
         var newsArray: [UANews] = []
         
         for object in data {
-            var news = UANews().initNewsForProjectWithObject(object)
+            let news = UANews().initNewsForProjectWithObject(object)
             newsArray.append(news)
         }
         

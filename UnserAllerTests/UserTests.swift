@@ -22,7 +22,7 @@ class UserTests: XCTestCase {
     }
     
     func testUserInitWithParams() {
-        var user: UAUser = UAUser()
+        let user: UAUser = UAUser()
         let id: UInt = 1
         let fullname = "First last"
         let profileImageURL = "profileImageURL"
@@ -34,14 +34,14 @@ class UserTests: XCTestCase {
     }
     
     func testCheckStringsWithSpace() {
-        var user: UAUser = UAUser()
-        var string: String = " "
+        let user: UAUser = UAUser()
+        let string: String = " "
         XCTAssertFalse(user.checkStringsWithString(string), "check string with space")
     }
     
     func testCheckStringsWithEmptyString() {
-        var user: UAUser = UAUser()
-        var str = ""
+        let user: UAUser = UAUser()
+        let str = ""
         XCTAssertFalse(user.checkStringsWithString(str), "check empty string")
     }
 

@@ -188,18 +188,28 @@ class UASuggestionViewModel {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         Alamofire.request(.DELETE, url, parameters: nil)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success()
+                    } else {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
+                    
                 }
         }
     }
@@ -213,18 +223,29 @@ class UASuggestionViewModel {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         Alamofire.request(.POST, url, parameters: nil)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        success()
+                    } else {
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        // error block
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block
                     error()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success()
+                    
                 }
         }
     }
@@ -239,11 +260,11 @@ class UASuggestionViewModel {
         
         Alamofire.request(.POST, url, parameters: ["id": suggestion.suggestionId, "suggestion": suggestion.content, "language": "en"])
             .response { (_,_,answer,errors) in
-                println(errors)
-                println(answer)
+                print(errors)
+                print(answer)
                 if (errors != nil) {
                     // print error
-                    println(errors)
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // error block

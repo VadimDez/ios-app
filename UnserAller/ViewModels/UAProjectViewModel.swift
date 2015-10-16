@@ -37,7 +37,7 @@ class UAProjectViewModel: NSObject {
     }
     
     func projectFromJSON(object: Dictionary<String, AnyObject>) -> UAProject {
-        var project = UAProject()
+        let project = UAProject()
         project.company = UACompany()
         
         if let id = object["id"] as? UInt {
@@ -80,7 +80,7 @@ class UAProjectViewModel: NSObject {
         var phases: [UAPhase] = []
         
         for object in json {
-            var phase: UAPhase = UAPhase()
+            let phase: UAPhase = UAPhase()
 
             if let id = object["id"] as? UInt {
                 phase.id = id
@@ -110,12 +110,12 @@ class UAProjectViewModel: NSObject {
     /**
     Get project object for project view controller
     
-    :param: json - Json
+    - parameter json: - Json
     
-    :returns: UAProject object
+    - returns: UAProject object
     */
     func getProjectForProject(json: Dictionary<String, AnyObject>) -> UAProject {
-        var project = UAProject()
+        let project = UAProject()
         
         // set id
         project.id = json["id"] as! UInt

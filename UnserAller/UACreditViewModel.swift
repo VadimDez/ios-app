@@ -16,7 +16,7 @@ class UACreditViewModel: NSObject {
         var credits: [UACredit] = []
         
         for object in data {
-            var credit: UACredit = UACredit()
+            let credit: UACredit = UACredit()
             
             if let backlink = object["backlink"] as? Dictionary<String, AnyObject> {
                 if let backlinkCredits = backlink["credits"] as? Int {

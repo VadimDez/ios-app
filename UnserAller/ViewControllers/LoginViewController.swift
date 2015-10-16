@@ -39,7 +39,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //        self.loginButtonView.duration = 0.4
         
         self.configureElements()
-        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(singleTapRecognizer)
     }
     
@@ -62,7 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginAction(sender: UIButton) {
         self.username.resignFirstResponder()
         self.password.resignFirstResponder()
-        self.auth(self.username.text, password: self.password.text)
+        self.auth(self.username.text!, password: self.password.text!)
     }
     
     @IBAction func goBackToLogin(sender: AnyObject) {
@@ -74,7 +74,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
         leftSideNavController.navigationBar.hidden = true
         
-        var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
+        let drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
         drawerController.showsShadows = true
         
         drawerController.restorationIdentifier = "Drawer"
@@ -87,7 +87,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func auth(email: String, password: String) {
-        var userService: UAUser = UAUser()
+       let userService: UAUser = UAUser()
         
         self.loginButton.enabled = false
         self.loginButton.loading = true
@@ -107,13 +107,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 },error: {
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    println("Login error")
+                    print("Login error", terminator: "")
                     
                     self.loginButton.enabled = true
                     self.loginButton.loading = false
             })
         } else {
-            println("empty login string(s)")
+            print("empty login string(s)", terminator: "")
             
             self.loginButton.enabled = true
             self.loginButton.loading = false

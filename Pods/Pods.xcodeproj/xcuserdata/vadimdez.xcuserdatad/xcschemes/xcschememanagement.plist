@@ -44,11 +44,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Locksmith-Locksmith.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Locksmith.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -92,7 +87,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>13333D1787C7547F645939080F91CFE7</key>
+		<key>205A6C9E8F8DF803E7A5B54C8C687BA4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,22 +97,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B8F2246B74407BFA590C4E329B3A95B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3DA374BB5346C86BB9E37D7D8A3F9705</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C0357F14EB626919C2312575F4C4E1E</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>652B4F4D9FA83286C2E61639AB2331ED</key>
+		<key>420065F349F146C64D6CB1D6829F807D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -127,12 +112,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7481F39B3299FDFEF0DA22DB20FCCB5A</key>
+		<key>6963E4D2BF6272BD6F5379E949A51212</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A8F1FBCDBF17BBA0D1D3C23E2499C47</key>
+		<key>702B120A6532841B947407640FD9FFF6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>73816E6913831AE77822E6489FF61F87</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>828BC388FCF3A5970890C7DB95F10DAC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,12 +137,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>875DB3DDC77D616D248B8D4A941309C7</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>931A3BE599A5223B305AA9845F9EB693</key>
+		<key>83FF11D911187368063E4574C8079D6E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -157,12 +147,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B6596EF42F8D71B2DE6984DAD3C4B8B2</key>
+		<key>C194E6E32FA2A0103AFE76D5FC008F14</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BE07D1D636FBC434CEFB314796478FBF</key>
+		<key>E657AE55775CE0EED7BEAD2DB6CF0ECE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

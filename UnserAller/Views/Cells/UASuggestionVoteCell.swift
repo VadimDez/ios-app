@@ -41,7 +41,7 @@ class UASuggestionVoteCell: UACell {
         
         // check if released
         if suggestion.isReleased {
-            let length = self.ratingView.constraints().count
+//            let length = self.ratingView.constraints.count
 //            for var i = 0; i < length; i = i + 1 {
 //                println((self.ratingView.constraints()[i] as! NSLayoutConstraint).description)
 //            }
@@ -63,7 +63,7 @@ class UASuggestionVoteCell: UACell {
                     constant: -9.0)
 
                 
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
                 self.ratingView.removeFromSuperview()
             }
@@ -101,7 +101,7 @@ class UASuggestionVoteCell: UACell {
                     constant: -9.0)
                 
                 
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
                 self.ratingView.removeFromSuperview()
             }
@@ -139,7 +139,7 @@ class UASuggestionVoteCell: UACell {
                     constant: -9.0)
                 
                 
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
                 self.ratingView.removeFromSuperview()
             }

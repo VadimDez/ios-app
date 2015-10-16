@@ -30,7 +30,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     Register all nibs
     */
     func registerNibs() {
-        var UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
+        let UACollectionViewCellNib = UINib(nibName: "UACollectionViewCell", bundle: nil)
         self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
     }
 
@@ -130,7 +130,7 @@ class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectio
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        let cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
         cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.suggestion.media[indexPath.row])
         return cell

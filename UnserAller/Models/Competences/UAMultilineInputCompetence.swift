@@ -18,7 +18,7 @@ class UAMultilineInputCompetence: UACompetence {
     }
     
     override func validate() -> Bool {
-        return (count(self.answer) > 0)
+        return (self.answer.characters.count > 0)
     }
     override func getAnswer() -> [Dictionary<String, AnyObject>] {
         return [["competence": self.id, "value": self.answer]]

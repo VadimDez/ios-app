@@ -58,7 +58,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     Register nibs
     */
     func registerNibs() {
-        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        let UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
         self.projectsTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
 
@@ -76,7 +76,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
+        let projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         projectCell.setCell(self.company.projects[indexPath.row])
         return projectCell
     }
@@ -92,11 +92,11 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     /**
     Did select project row
     
-    :param: tableView
-    :param: indexPath
+    - parameter tableView:
+    - parameter indexPath:
     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+        let projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
         
         // set project id
         projectViewController.projectId = self.company.projects[indexPath.row].id
@@ -122,7 +122,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     /**
     Load company with projects
     
-    :param: success success function
+    - parameter success: success function
     */
     func getCompanyWithProjects(success:() -> Void, error: () -> Void) {
         // build URL
@@ -130,17 +130,21 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
 
         // get entries
         Alamofire.request(.GET, url, parameters: ["id": self.company.id])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
-                    // print error
-                    println("get company error")
-                    // error block
-                    error()
-                } else {
-                    self.company.setCompanyFromJSON(JSON?.objectAtIndex(0).objectForKey("company") as! Dictionary<String, AnyObject>)
+                switch result {
+                case .Success(let JSON) :
+                    
+                    self.company.setCompanyFromJSON(JSON.objectAtIndex(0).objectForKey("company") as! Dictionary<String, AnyObject>)
                     
                     success()
+                    
+                case .Failure(_, _) :
+                    // print error
+                    print("get company error")
+                    // error block
+                    error()
+                    
                 }
         }
     }
@@ -154,7 +158,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
             if let _weak = self {
                 _weak.companyImage.image = image
             }
-            }, failure: { [weak self]
+            }, failure: {
                 (request:NSURLRequest!,response:NSHTTPURLResponse!, error:NSError!) -> Void in
                 
         })

@@ -44,7 +44,7 @@ class UAComment: UACellObject {
             self.updated = _updated.getDateFromLongString()
         }
         
-        if let _deleted = json["deleted"] as? String {
+        if let _ = json["deleted"] as? String {
             self.isDeleted = true
 //            self.deleted = _deleted.getDateFromLongString()
         }
@@ -69,7 +69,7 @@ class UAComment: UACellObject {
     *
     */
     func getDateFromString(string: String) -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
+        let formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
         return formatter.dateFromString(string)!

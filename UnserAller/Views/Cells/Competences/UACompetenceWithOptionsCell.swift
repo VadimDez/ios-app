@@ -33,12 +33,12 @@ class UACompetenceWithOptionsCell: UACompetenceCell, UITableViewDelegate, UITabl
     */
     func registerNibs() {
         // freetext
-        var UAOptionCellNib = UINib(nibName: "UAOptionCell", bundle: nil)
+        let UAOptionCellNib = UINib(nibName: "UAOptionCell", bundle: nil)
         self.optionsTable.registerNib(UAOptionCellNib, forCellReuseIdentifier: "UAOptionCell")
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
+        let cell: UAOptionCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionCell") as! UAOptionCell
         let option: UAOption = (self.competence as! UACompetenceWithOptions).options[indexPath.row]
         
         cell.toggle(option.isSelected)

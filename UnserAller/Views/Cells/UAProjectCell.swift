@@ -36,7 +36,7 @@ class UAProjectCell: UITableViewCell {
             if let weakSelf = self {
                 weakSelf.projectImage.image = image
             }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }
     }

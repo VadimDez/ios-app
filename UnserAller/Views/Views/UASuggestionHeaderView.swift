@@ -48,7 +48,7 @@ class UASuggestionHeaderView: UIView {
     }
 
     func makeRoundCorners() {
-        var imageLayer:CALayer = self.mainImage.layer
+        let imageLayer:CALayer = self.mainImage.layer
         imageLayer.cornerRadius = 20
         imageLayer.masksToBounds = true
     }
@@ -56,9 +56,9 @@ class UASuggestionHeaderView: UIView {
     /**
     Load profileImage
     
-    :param: hash   String
-    :param: width  Uint
-    :param: height Uint
+    - parameter hash:   String
+    - parameter width:  Uint
+    - parameter height: Uint
     */
     func loadMainImage(hash: UInt, width: UInt, height: UInt) {
         self.loadImage(self.mainImage, url: "\(APIURL)/media/profileimage/\(hash)/\(height)/\(width)")
@@ -67,9 +67,9 @@ class UASuggestionHeaderView: UIView {
     /**
     Load project image
     
-    :param: hash   String
-    :param: width  Uint
-    :param: height Uint
+    - parameter hash:   String
+    - parameter width:  Uint
+    - parameter height: Uint
     */
     func loadProjectImage(projectId: UInt, width: UInt, height: UInt) {
         self.loadImage(self.secondaryImage, url: "\(APIURL)/api/v1/media/project/\(projectId)/\(height)/\(width)")
@@ -78,10 +78,10 @@ class UASuggestionHeaderView: UIView {
     func loadImage(imageView: UIImageView, url: String) {
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
-        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+        imageView.setImageWithURLRequest(request, placeholderImage: nil, success: {(request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
             imageView.image = image
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }
     }
@@ -89,7 +89,7 @@ class UASuggestionHeaderView: UIView {
     /**
     Like suggestion
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func like(sender: AnyObject) {
         
@@ -133,20 +133,24 @@ class UASuggestionHeaderView: UIView {
     func sendLike(id: UInt, success: (active: Bool) -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/v1/suggestion/like"
+        let url: String = "\(APIURL)/api/v1/suggestion/like"
         
         Alamofire.request(.GET, url, parameters: ["id": id])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { _, _, result in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(let JSON):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(active: ((JSON.objectForKey("status") as! String) == "active"))
+                    
+                case .Failure(_, let errors) :
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
-                    println(errors)
+                    print(errors)
                     // error block
                     failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(active: ((JSON?.objectForKey("status") as! String) == "active"))
                 }
         }
     }

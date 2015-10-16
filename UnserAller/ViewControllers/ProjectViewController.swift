@@ -111,7 +111,7 @@ class ProjectViewController:
                                     
                                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                     }, failure: { () -> Void in
-                                        println("fail load suggestions")
+                                        print("fail load suggestions", terminator: "")
                                         
                                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 })
@@ -161,17 +161,17 @@ class ProjectViewController:
     Register all nibs
     */
     func registerNibs() {
-        var PhaseCellNib = UINib(nibName: "UAPhaseCell", bundle: nil)
+        let PhaseCellNib = UINib(nibName: "UAPhaseCell", bundle: nil)
         self.phaseCollection.registerNib(PhaseCellNib, forCellWithReuseIdentifier: "UAPhaseCell")
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        let UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        let UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
-        var UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
+        let UANewsCellNib = UINib(nibName: "UAProjectNewsCell", bundle: nil)
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UAProjectNewsCell")
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        let UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
-        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        let UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
     }
     
@@ -180,7 +180,7 @@ class ProjectViewController:
     */
     func configureLayout() {
         // configure layout
-        var flowLayout = UICollectionViewFlowLayout()
+        let flowLayout = UICollectionViewFlowLayout()
         
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
         flowLayout.itemSize = CGSize(width: 320, height: 50)// CGSizeMake(320, 50)
@@ -264,7 +264,7 @@ class ProjectViewController:
                                         self.mainTable.pullToRefreshView.stopAnimating()
                                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                     }, failure: { () -> Void in
-                                        println("fail load suggestions")
+                                        print("fail load suggestions", terminator: "")
                                         
                                         self.mainTable.pullToRefreshView.stopAnimating()
                                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -327,7 +327,7 @@ class ProjectViewController:
                         // active activity indicator
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         }, failure: { () -> Void in
-                            println("Project infiniteload error")
+                            print("Project infiniteload error", terminator: "")
                             
                             self.mainTable.infiniteScrollingView.stopAnimating()
                             // active activity indicator
@@ -347,7 +347,7 @@ class ProjectViewController:
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 
                 }, failure: { () -> Void in
-                    println("Project infiniteload error")
+                    print("Project infiniteload error", terminator: "")
                     
                     self.mainTable.infiniteScrollingView.stopAnimating()
                     
@@ -438,19 +438,19 @@ class ProjectViewController:
         if (!news) {
             if self.type == "survey" {
                 if self.hasCompetences {
-                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                     competenceVC.projectId = self.projectId
                     competenceVC.projectStepId = self.stepId
                     self.navigationController?.pushViewController(competenceVC, animated: true)
                 }
             } else {
-                var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+                let detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
                 
                 detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
                 self.navigationController?.pushViewController(detailViewController, animated: true)
             }
         } else {
-            var detailViewController: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+            let detailViewController: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
             detailViewController.news = self.entries[indexPath.row] as! UANews
             self.navigationController?.pushViewController(detailViewController, animated: true)
         }
@@ -462,11 +462,11 @@ class ProjectViewController:
 
         if self.type == "survey" {
             if self.hasCompetences {
-                var cell = UITableViewCell()
+                let cell = UITableViewCell()
                 cell.textLabel?.text = "go to survey"
                 return cell
             } else {
-                var cell = UITableViewCell()
+                let cell = UITableViewCell()
                 cell.textLabel?.text = "You finished the survey"
                 return cell
             }
@@ -487,7 +487,7 @@ class ProjectViewController:
      *  Get suggest cell without images
      */
     func getSuggestCellForRow(row: Int) -> UASuggestionCell {
-        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        let cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         
         self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
@@ -498,7 +498,7 @@ class ProjectViewController:
     *  Get suggest cell with image
     */
     func getSuggestImageCellForRow(row: Int) -> UASuggestImageCell {
-        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        let cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         
         self.setProjectToSuggestionWithIndex(row)
         cell.setCellForPhase(self.entries[row] as! UASuggestion)
@@ -509,7 +509,7 @@ class ProjectViewController:
      *  Get project news cell
      */
     func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
-        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as! UAProjectNewsCell
+        let cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as! UAProjectNewsCell
         
         self.setProjectToSuggestionWithIndex(row)
         cell.setCellForProjectPhase(self.entries[row] as! UANews)
@@ -520,7 +520,7 @@ class ProjectViewController:
     *  Get suggestion vote cell
     */
     func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
-        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
+        let cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         if (self.entries[row] as! UASuggestion).isReleased {
             cell.ratingView.delegate = self
             cell.ratingView.tag = row
@@ -535,8 +535,8 @@ class ProjectViewController:
     *  Get suggestion vote cell
     */
     func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
-        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
-        println((self.entries[row] as! UASuggestion).isReleased)
+        let cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        print((self.entries[row] as! UASuggestion).isReleased)
         if (self.entries[row] as! UASuggestion).isReleased {
             cell.ratingView.delegate = self
             cell.ratingView.tag = row
@@ -553,7 +553,7 @@ class ProjectViewController:
     }
     
     func defaultCell(row: Int) -> UITableViewCell {
-        var cell:UITableViewCell = UITableViewCell()
+        let cell:UITableViewCell = UITableViewCell()
         cell.backgroundColor = UIColor.redColor()
         cell.textLabel?.text = "\(self.entries[row].cellType) cell is not defined"
         return cell
@@ -573,7 +573,7 @@ class ProjectViewController:
             return 0
         }
         
-        var media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
+        let media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
         
         if (self.news) {
             base = 50.0
@@ -593,7 +593,7 @@ class ProjectViewController:
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
+        let cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
 
         cell.hideLines(false)
         cell.resetFont()
@@ -626,15 +626,15 @@ class ProjectViewController:
             if !self.news && self.phasesArray[indexPath.row - 1].id == self.actualPhaseId {
                 cell.setSelected()
             }
-            println(indexPath.row)
-            println(cell.leftLine.hidden)
-            println(cell.rightLine.hidden)
+            print(indexPath.row)
+            print(cell.leftLine.hidden)
+            print(cell.rightLine.hidden)
         }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        println(phasesArray.count + self.newsPhaseCount)
+        print(phasesArray.count + self.newsPhaseCount)
         // +1 for "NEWS"
         return phasesArray.count + self.newsPhaseCount
     }
@@ -669,7 +669,7 @@ class ProjectViewController:
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
                 }, failure: { () -> Void in
-                    println("fail load news")
+                    print("fail load news")
             })
             
         } else {
@@ -699,7 +699,7 @@ class ProjectViewController:
                                 self.loadSuggestions({ () -> Void in
                                     
                                     }, failure: { () -> Void in
-                                        println("fail load suggestions")
+                                        print("fail load suggestions")
                                 })
                             }
                         }
@@ -707,7 +707,7 @@ class ProjectViewController:
                 }
                 
             }, failure: { () -> Void in
-                println("fail load phase")
+                print("fail load phase")
             })
         }
     }
@@ -721,16 +721,25 @@ class ProjectViewController:
         
         // get entries
         Alamofire.request(.GET, url)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if(errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON):
+                    
+                    if JSON.count != 0 {
+                        success(json: JSON)
+                    } else {
+                        error()
+                    }
+                    
+                case .Failure(_, let errors):
+                    
                     // print error
-                    println("load project error")
-                    println(errors)
+                    print("load project error")
+                    print(errors)
                     
                     error()
-                } else {
-                    success(json: JSON!)
+                    
                 }
         }
     }
@@ -752,11 +761,11 @@ class ProjectViewController:
             if let weakSelf = self {
                 weakSelf.projectImage.image = image
             }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
         }
         
         // bookmark
-        self.bookmarkImage.image = UIImage(named: "bookmark_32")?.tintedImageWithColor((self.project.bookmarked) ? UIColor.redColor() : UIColor.grayColor(), blendMode: kCGBlendModeHue)
+        self.bookmarkImage.image = UIImage(named: "bookmark_32")?.tintedImageWithColor((self.project.bookmarked) ? UIColor.redColor() : UIColor.grayColor(), blendMode: CGBlendMode.Hue)
     }
     
     /**
@@ -768,22 +777,31 @@ class ProjectViewController:
         
         // get entries
         Alamofire.request(.GET, url)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
 
-                if(errors != nil || JSON?.count == 0) {
+                switch result {
+                case .Success(let JSON) :
+                    if JSON.count != 0 {
+                        
+                        let projectViewModel: UAProjectViewModel = UAProjectViewModel()
+                        
+                        let array = projectViewModel.getPhasesFromJSON(JSON.objectForKey("phases") as! [Dictionary<String, AnyObject>])
+                        
+                        self.phasesArray = self.phasesArray + array
+                        
+                        success()
+                    } else {
+                        
+                        error()
+                    }
+                    
+                case .Failure(_, let errors) :
+                    
                     // print error
-                    println("Load phases error")
-                    println(errors)
+                    print("Load phases error")
+                    print(errors)
                     
                     error()
-                } else {
-                    let projectViewModel: UAProjectViewModel = UAProjectViewModel()
-
-                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as! [Dictionary<String, AnyObject>])
-                    
-                    self.phasesArray = self.phasesArray + array
-                    
-                    success()
                 }
         }
     }
@@ -798,19 +816,21 @@ class ProjectViewController:
 
         // GET
         self.getRequest = Alamofire.request(.GET, url)
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(let JSON):
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(jsonResponse: JSON)
+                    
+                case .Failure(_, let errors):
                     // print error
-                    println("Load phase error")
-                    println(errors)
+                    print("Load phase error")
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
-                } else {
                     
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(jsonResponse: JSON!)
                 }
         }
     }
@@ -857,7 +877,7 @@ class ProjectViewController:
         
         // cancel previous request
         if self.getRequest != nil {
-            println("cancel news")
+            print("cancel news")
             self.getRequest.cancel()
         }
         
@@ -866,19 +886,14 @@ class ProjectViewController:
         
         // GET
         self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "newest", "page": self.page])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if(errors != nil) {
-                    // print error
-                    println("Load suggestions error")
-                    println(errors)
+                switch result {
+                case .Success(let JSON) :
                     
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    failure()
-                } else {
                     let suggestionVM = UASuggestionViewModel()
-                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as! [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
-
+                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON.objectForKey("suggestions") as! [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
+                    
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
@@ -886,6 +901,15 @@ class ProjectViewController:
                     self.mainTable.reloadData()
                     
                     success()
+                    
+                case .Failure(_, let errors):
+                    // print error
+                    print("Load suggestions error")
+                    print(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    failure()
+                    
                 }
         }
     }
@@ -901,34 +925,38 @@ class ProjectViewController:
         
         // cancel previous request
         if self.getRequest != nil {
-            println("cancel suggestions")
+            print("cancel suggestions")
             self.getRequest.cancel()
         }
         
         // GET
         self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
+                switch result {
+                    case .Success(let JSON):
+                        
+                        let newsViewModel = UANewsViewModel()
+                        
+                        // get news
+                        self.entries = self.entries + newsViewModel.getNewsForProject(JSON as! [Dictionary<String, AnyObject>])
+                        //
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        
+                        // reload table data
+                        self.mainTable.reloadData()
+                        
+                        success()
+                    
+                case .Failure(_, let errors):
+                    
                     // print error
-                    println("Load project news error")
-                    println(errors)
+                    print("Load project news error")
+                    print(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
                     failure()
-                } else {
-                    let newsViewModel = UANewsViewModel()
-                    
-                    // get news
-                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as! [Dictionary<String, AnyObject>])
-                    //
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
-                    // reload table data
-                    self.mainTable.reloadData()
-                    
-                    success()
                 }
         }
     }
@@ -940,7 +968,7 @@ class ProjectViewController:
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
         
         if (!self.votingDisabled) {
-            var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
+            let suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
 
             // disable for a moment
@@ -988,21 +1016,24 @@ class ProjectViewController:
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/v1/suggestion/vote"
+        let url: String = "\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
-            .responseJSON { (_,_,JSON,errors) in
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println("send rating error")
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
+                switch result {
+                    case .Success(_) :
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
+
+                    case .Failure(_, let errors) :
+
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    print("send rating error")
+                    print(errors)
+                    // error block
+                    failure()
                 }
         }
     }
@@ -1010,10 +1041,10 @@ class ProjectViewController:
     /**
     On company button pressed
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func showCompanyView(sender: AnyObject) {
-        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as! UACompanyViewController
+        let companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as! UACompanyViewController
         companyVC.company = self.project.company
         self.navigationController?.pushViewController(companyVC, animated: true)
 
@@ -1023,7 +1054,7 @@ class ProjectViewController:
     /**
     Open editor
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func openEditor(sender: AnyObject) {
         
@@ -1031,7 +1062,7 @@ class ProjectViewController:
             return
         }
         
-        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
+        let editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
         
         weak var _self = self
         
@@ -1063,7 +1094,7 @@ class ProjectViewController:
             }
             
             self.sendSuggestionBtn.loading = false
-            var array = [suggestion]
+            let array = [suggestion]
             
             self.entries = array + self.entries
             self.mainTable.reloadData()
@@ -1076,33 +1107,37 @@ class ProjectViewController:
     /**
     Send new suggestion
     
-    :param: success func
-    :param: failure func
+    - parameter success: func
+    - parameter failure: func
     */
     func sendSuggestion(success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "\(APIURL)/api/v1/suggestion/post"
+        let url: String = "\(APIURL)/api/v1/suggestion/post"
         
-        Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text, "phase": self.actualPhaseId])
-            .responseJSON { (_,_,JSON,errors) in
+        Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text!, "phase": self.actualPhaseId])
+            .responseJSON { (_,_, result) in
                 
-                if (errors != nil) {
+                switch result {
+                case .Success(let JSON) :
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success(json: JSON)
+                    
+                case .Failure(_, let errors):
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     // print error
-                    println("send rating error")
-                    println(errors)
+                    print("send rating error")
+                    print(errors)
                     // error block
                     failure()
-                } else {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    success(json: JSON!)
                 }
         }
     }
     
     func checkCompetences() {
-        var competenceService = CompetenceService()
+        let competenceService = CompetenceService()
         // active activity indicator
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         

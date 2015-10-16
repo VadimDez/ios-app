@@ -13,8 +13,14 @@ import KVNProgress
 
 extension String {
     func isEmail() -> Bool {
-        let regex = NSRegularExpression(pattern: "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", options: .CaseInsensitive, error: nil)
-        return regex?.firstMatchInString(self, options: nil, range: NSMakeRange(0, count(self))) != nil
+        do {
+            let regex = try NSRegularExpression(pattern: "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$", options: NSRegularExpressionOptions.CaseInsensitive)
+            
+            return regex.firstMatchInString(self, options: NSMatchingOptions.Anchored, range: NSMakeRange(0, self.characters.count)) != nil
+        } catch _ {
+            
+        }
+        return true
     }
 }
 
@@ -42,7 +48,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
         self.scrollView.delegate = self
         
         
-        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(singleTapRecognizer)
         
         self.resetInsets()
@@ -88,12 +94,12 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
             let user = UAUser()
             
             // save email and password
-            user.saveEmailAndPasswordToKeychain(self.email.text, password: self.password.text)
+            user.saveEmailAndPasswordToKeychain(self.email.text!, password: self.password.text!)
             
             // present login view
 //            var login = self.storyboard?.instantiateViewControllerWithIdentifier("Login") as! LoginViewController
 //            self.presentViewController(login, animated: false, completion: nil)
-            var initVC: InitViewController = self.storyboard?.instantiateViewControllerWithIdentifier("InitVC") as! InitViewController
+            let initVC: InitViewController = self.storyboard?.instantiateViewControllerWithIdentifier("InitVC") as! InitViewController
             self.presentViewController(initVC, animated: true, completion: nil)
         }, fail: { () -> Void in
             KVNProgress.showError()
@@ -133,7 +139,7 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
     }
     
     func validateUserCredentials() -> Bool {
-        if (!self.email.text.isEmail() || self.firstName.text.isEmpty || self.lastName.text.isEmpty || self.password.text.isEmpty) {
+        if (!self.email.text!.isEmail() || self.firstName.text!.isEmpty || self.lastName.text!.isEmpty || self.password.text!.isEmpty) {
             return false
         }
         
@@ -152,22 +158,27 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
         let url: String = "\(APIURL)/api/mobile/auth/checkemail"
         
         // get entries
-        Alamofire.request(.GET, url, parameters: ["email": self.email.text])
-            .responseJSON { (_, _, JSON, error) in
-
-                if(error != nil) {
-                    // print error
-                    println(error)
-                    // error block
-                    failure()
-                } else {
+        Alamofire.request(.GET, url, parameters: ["email": self.email.text!])
+            .responseJSON { (_, _, result) in
+                
+                switch result {
+                case .Success(let JSON) :
+                    
                     var isAvailable = false
-                    if let answer = JSON?.objectForKey("available") as? String {
+                    if let answer = JSON.objectForKey("available") as? String {
                         if (answer == "yes") {
                             isAvailable = true
                         }
                     }
                     success(available: isAvailable)
+                    
+                    
+                case .Failure(_, let error) :
+                    // print error
+                    print(error)
+                    // error block
+                    failure()
+                    
                 }
         }
     }
@@ -182,18 +193,15 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
         let url: String = "\(APIURL)/api/mobile/auth/register"
         
         // get entries
-        Alamofire.request(.POST, url, parameters: ["email": self.email.text, "password": self.password.text, "firstname": self.firstName.text, "lastname": self.lastName.text])
-            .responseJSON { (_, _, JSON, error) in
+        Alamofire.request(.POST, url, parameters: ["email": self.email.text!, "password": self.password.text!, "firstname": self.firstName.text!, "lastname": self.lastName.text!])
+            .responseJSON { (_, _, result) in
                 
-                if(error != nil) {
-                    // print error
-                    println(error)
-                    // error block
-                    failure()
-                } else {
+                switch result {
+                case .Success(let JSON) :
+                    
                     var isRegistered = false
-
-                    if let answer = JSON?.objectForKey("registered") as? String {
+                    
+                    if let answer = JSON.objectForKey("registered") as? String {
                         isRegistered = (answer == "true") ? true : false
                     }
                     
@@ -202,6 +210,13 @@ class RegistrationViewController: UIViewController, UITextFieldDelegate, UIScrol
                     } else {
                         failure()
                     }
+                    
+                    
+                case .Failure(_, let error) :
+                    // print error
+                    print(error)
+                    // error block
+                    failure()
                 }
         }
     }

@@ -49,7 +49,7 @@ class MenuTableViewController: UITableViewController {
 //        self.tableView.backgroundColor = UIColor.whiteColor()
         
         // bg image
-        var tempImageView: UIImageView = UIImageView(image: UIImage(named: "background-1"))
+        let tempImageView: UIImageView = UIImageView(image: UIImage(named: "background-1"))
         tempImageView.frame = self.tableView.frame
         self.tableView.backgroundView = tempImageView
         
@@ -62,7 +62,7 @@ class MenuTableViewController: UITableViewController {
     *  Setup profile image
     */
     func setupProfileImage() {
-        var imageLayer:CALayer = self.profileImage.layer
+        let imageLayer:CALayer = self.profileImage.layer
         imageLayer.cornerRadius = 30
         imageLayer.masksToBounds = true
     }
@@ -71,8 +71,8 @@ class MenuTableViewController: UITableViewController {
     Set profile data
     */
     func setProfileData() {
-        var user = UAUser()
-        var sharedUser = UserShared.sharedInstance
+        let user = UAUser()
+        let sharedUser = UserShared.sharedInstance
         
         self.setupProfileImage()
         
@@ -125,7 +125,7 @@ class MenuTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell") as? UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("MenuCell")
         
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MenuCell")
@@ -224,7 +224,7 @@ class MenuTableViewController: UITableViewController {
             if let weakSelf = self {
                 weakSelf.profileImage.image = image
             }
-            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+            }) { (request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
                 
         }
     }

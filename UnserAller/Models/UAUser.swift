@@ -58,14 +58,21 @@ class UAUser {
         
         Alamofire.request(.GET, url, parameters: ["username": email, "password": password])
             .authenticate(user: email, password: password)
-            .responseJSON { (request, response, JSON, _error) in
-                println(_error)
-                println(JSON)
-                // check if no error and correct email and pass
-                if ((_error != nil) || JSON == nil || JSON?.objectForKey("auth")?.intValue != 200) {
+            .responseJSON { (_, _, result) in
+                
+                switch result {
+                case .Success(let JSON):
+                    
+                    // check if no error and correct email and pass
+                    if (JSON.objectForKey("auth")?.intValue != 200) {
+                        error()
+                    } else {
+                        success()
+                    }
+                    
+                case .Failure(_, _):
                     error()
-                } else {
-                    success()
+                    
                 }
                 
         }
@@ -78,10 +85,14 @@ class UAUser {
     :param: password password string
     */
     func saveEmailAndPasswordToKeychain(email: String, password: String) {
-        // delete old
-        Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
-        // save new
-        Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forUserAccount: "UnserAllerUser", inService: "UnserAller")
+        do {
+            // delete old
+            try Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+            // save new
+            try Locksmith.saveData(["UserAuthEmailToken": email, "UserAuthPasswordToken": password], forUserAccount: "UnserAllerUser", inService: "UnserAller")
+        } catch _ {
+            
+        }
     }
     
     func encode(string: String) -> NSData {
@@ -131,8 +142,11 @@ class UAUser {
                 if (error != nil) {
                     failure()
                 } else {
-                    let error = Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
-                    
+                    do {
+                        try Locksmith.deleteDataForUserAccount("UnserAllerUser", inService: "UnserAller")
+                    } catch _ {
+                        
+                    }
                     success()
                 }
                 
@@ -146,14 +160,14 @@ class UAUser {
         let url: String = "\(APIURL)/api/mobile/profile/getuserinfo"
         
         Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { ( request, response, JSON, error) in
-                if (error != nil) {
-                    // error handling
-                } else {
+            .responseJSON { ( request, response, result) in
+                
+                switch result {
+                case .Success(let JSON):
                     var mainUser: User!
                     var credits: Dictionary<String, AnyObject>!
                     
-                    if let data = JSON?.objectForKey("user") as? Dictionary<String, AnyObject> {
+                    if let data = JSON.objectForKey("user") as? Dictionary<String, AnyObject> {
                         mainUser = self.getFromDB(data["id"] as! UInt)
                         
                         mainUser.id         = data["id"] as! Int
@@ -164,10 +178,14 @@ class UAUser {
                         
                     }
                     
-                    if let userCredits = JSON?.objectForKey("credits") as? Dictionary<String, AnyObject> {
+                    if let userCredits = JSON.objectForKey("credits") as? Dictionary<String, AnyObject> {
                         credits = userCredits
                     }
                     success(user: mainUser, credits: credits)
+                    
+                    
+                case .Failure(_, let errors):
+                    print(errors)
                 }
         }
     }
@@ -176,8 +194,6 @@ class UAUser {
     *  Get user from db
     */
     func getFromDB(id: UInt) -> User {
-        var error: NSError?
-        var user: User
         
         // fetch request
         let fetchRequest = NSFetchRequest(entityName: "User")
@@ -189,30 +205,31 @@ class UAUser {
         fetchRequest.predicate = predicate
         
         // perform fetch
-        if let results = self.managedContext.executeFetchRequest(fetchRequest, error: &error) as? [User] {
-            
-            // create new
-            if (results.count == 0) {
-                user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as! User
-            } else {
-                user = results[0]
+        do {
+            if let results = try self.managedContext.executeFetchRequest(fetchRequest) as? [User] {
+                
+                // create new
+                if (results.count == 0) {
+                    return NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: self.managedContext) as! User
+                }
+                
+                return results[0]
             }
-        } else {
-            println("Could not fetch \(error)")
-            user = User()
+        } catch let error {
+            print("Could not fetch \(error)")
         }
         
-        return user
+        return User()
     }
     
     /**
     *  Save
     */
     func save() {
-        var error: NSError?
-        
-        if !self.managedContext.save(&error) {
-            println("Could not save \(error)")
+        do {
+            try self.managedContext.save()
+        } catch let error {
+            print("Could not save \(error)")
         }
     }
     
@@ -228,7 +245,7 @@ class UAUser {
                 
                 if(errors != nil || response?.statusCode >= 400) {
                     // print error
-                    println(errors)
+                    print(errors)
                     failure()
                 } else {
                     success()
@@ -255,7 +272,7 @@ class UAUser {
                 
                 if(errors != nil || response?.statusCode >= 400) {
                     // print error
-                    println(errors)
+                    print(errors)
                     failure()
                 } else {
                     success()
@@ -280,7 +297,7 @@ class UAUser {
                 
                 if(errors != nil || response?.statusCode >= 400) {
                     // print error
-                    println(errors)
+                    print(errors)
                     failure()
                 } else {
                     success()
@@ -292,13 +309,19 @@ class UAUser {
         let url: String = "\(APIURL)/api/mobile/profile/saveuserinfo"
         
         Alamofire.request(.POST, url, parameters: ["firstname": firstName, "lastname": lastName, "language": language])
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
+            .responseJSON { (_, _, result) -> Void in
+                
+                switch result {
+                case .Success(let JSON):
+                    if JSON.count != 0 {
+                        success()
+                    }
+                    
+                case .Failure(_, let errors):
                     // print error
-                    println(errors)
+                    print(errors)
                     failure()
-                } else {
-                    success()
+                    
                 }
         }
     }
@@ -313,14 +336,18 @@ class UAUser {
         let url: String = "\(APIURL)/api/mobile/profile/getsettings"
         
         Alamofire.request(.GET, url, parameters: nil)
-            .responseJSON { (_, _, JSON, errors) -> Void in
-                if(errors != nil || JSON?.count == 0) {
+            .responseJSON { (_, _, result) -> Void in
+                
+                switch result {
+                case .Success(let JSON):
+                    if JSON.count != 0 {
+                        success(settings: JSON  as! Dictionary<String, AnyObject>)
+                    }
+                case .Failure(_, let errors):
                     // print error
-                    println(errors)
+                    print(errors)
                     // error block
                     failure()
-                } else {
-                    success(settings: JSON  as! Dictionary<String, AnyObject>)
                 }
         }
     }

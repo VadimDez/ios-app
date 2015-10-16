@@ -26,12 +26,12 @@ class UALikertCell: UACompetenceWithOptionsCell {
     Register nibs
     */
     override func registerNibs() {
-        var UAOptionsCellNib = UINib(nibName: "UAOptionsCell", bundle: nil)
+        let UAOptionsCellNib = UINib(nibName: "UAOptionsCell", bundle: nil)
         self.optionsTable.registerNib(UAOptionsCellNib, forCellReuseIdentifier: "UAOptionsCell")
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UAOptionsCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
+        let cell: UAOptionsCell = self.optionsTable.dequeueReusableCellWithIdentifier("UAOptionsCell") as! UAOptionsCell
         
         cell.setupCell(self.competence)
         

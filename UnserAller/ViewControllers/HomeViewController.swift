@@ -66,19 +66,19 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     
     func registerNibs() {
         // suggest
-        var UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
+        let UASuggestCellNib = UINib(nibName: "UASuggestCell", bundle: nil)
         self.mainTable.registerNib(UASuggestCellNib, forCellReuseIdentifier: "UASuggestionCell")
         // suggest with image
-        var UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
+        let UASuggestImageCellNib = UINib(nibName: "UASuggestImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestImageCellNib, forCellReuseIdentifier: "UASuggestImageCell")
         // news
-        var UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
+        let UANewsCellNib = UINib(nibName: "UANewsCell", bundle: nil)
         self.mainTable.registerNib(UANewsCellNib, forCellReuseIdentifier: "UANewsCell")
         // suggestion vote
-        var UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
+        let UASuggestionVoteCellNib = UINib(nibName: "UASuggestionVoteCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
         // suggestion vote with image
-        var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
+        let UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
     }
     
@@ -108,7 +108,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             // active activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }, error: { () -> Void in
-            println("Homepage refresh error")
+            print("Homepage refresh error", terminator: "")
             
             self.mainTable.pullToRefreshView.stopAnimating()
             
@@ -133,7 +133,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
             // active activity indicator
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }, error: { () -> Void in
-            println("Homepage infiniteload error")
+            print("Homepage infiniteload error", terminator: "")
             
             self.mainTable.infiniteScrollingView.stopAnimating()
             // active activity indicator
@@ -176,7 +176,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      *  Get suggestion cell with suggestion object
      */
     func getSuggestCellForHome(suggestion: UASuggestion) -> UASuggestionCell {
-        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        let cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
         // suggestion vc
         cell.onMainButton = {
@@ -193,7 +193,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     }
     
     func getSuggestImageCellForHome(suggestion: UASuggestion) -> UASuggestImageCell {
-        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        let cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
         
         // suggestion vc
@@ -212,7 +212,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      *  Get news cell without images
      */
     func getNewsCellForHome(news: UANews) -> UANewsCell {
-        var cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as! UANewsCell
+        let cell: UANewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UANewsCell") as! UANewsCell
         cell.setCellForHome(news)
 
         cell.onMainButton = {
@@ -230,7 +230,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     *  Get suggestion vote cell
     */
     func getVoteCellForHome(suggestion: UASuggestion, row: Int) -> UASuggestionVoteCell {
-        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
+        let cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
         
         if suggestion.isReleased {
             // rating delegate
@@ -254,7 +254,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      *  Get vote image cell
      */
     func getVoteImageCellForHome(row: Int) -> UASuggestionVoteImageCell {
-        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        let cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
         
         if (self.entries[row] as! UASuggestion).isReleased {
             // rating delegate
@@ -311,7 +311,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      * Present suggestion view controller with suggestion
      */
     func presentSuggestionViewController(suggestion: UASuggestion) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+        let suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
         suggestionVC.suggestion = suggestion
 
         self.navigationController?.pushViewController(suggestionVC, animated: true)
@@ -322,7 +322,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      * Present news view controller with news
      */
     func presentNewsViewController(news: UANews) {
-        var newsVC: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+        let newsVC: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
         
         newsVC.news = news
 
@@ -333,15 +333,15 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
      *   Present project view controller
      */
     func presentProjectViewController(projectId: UInt, done: () -> Void) {
-        var competenceService = CompetenceService()
+        let competenceService = CompetenceService()
         competenceService.getEntries(projectId, projectStep: 0, success: { (competences) -> Void in
             if competences.count > 0 {
-                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                 competenceVC.projectId = projectId
                 self.navigationController?.pushViewController(competenceVC, animated: true)
                 done()
             } else {
-                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                let projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                 
                 // set project id
                 projectVC.projectId = projectId
@@ -362,30 +362,35 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
         
         // get entries
         Alamofire.request(.GET, url, parameters: ["page": page])
-        .responseJSON { (_,_,JSON,errors) in
+        .responseJSON { (_,_, result) in
             
-            if (errors != nil || JSON?.count == 0 || JSON?.objectAtIndex(0).count == 0) {
-                // print error
-                println(errors)
-                // error block
-                error()
-            } else {
-//                let SuggestionViewModel = UASuggestionViewModel()
-                let timelineViewModel = TimelineViewModel()
-
-                // get get objects from JSON
-//                var array = SuggestionViewModel.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
-                var array = timelineViewModel.getObjectsFromJSON(JSON as! [Dictionary<String, AnyObject>])
-
-                if self.page == 0 {
-                    self.entries = []
+            switch result {
+            case .Success(let JSON):
+                if JSON.count != 0 && JSON.objectAtIndex(0).count != 0 {
+                    //                let SuggestionViewModel = UASuggestionViewModel()
+                    let timelineViewModel = TimelineViewModel()
+                    
+                    // get get objects from JSON
+                    //                var array = SuggestionViewModel.getSuggestionsFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                    let array = timelineViewModel.getObjectsFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                    
+                    if self.page == 0 {
+                        self.entries = []
+                    }
+                    
+                    // merge two arrays
+                    self.entries = self.entries + array
+                    self.countEntries = self.entries.count
+                    
+                    success()
                 }
                 
-                // merge two arrays
-                self.entries = self.entries + array
-                self.countEntries = self.entries.count
                 
-                success()
+            case .Failure(_, let errors):
+                // print error
+                print(errors)
+                // error block
+                error()
             }
         }
     }
@@ -398,7 +403,7 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
         
         if (!self.votingDisabled) {
-            var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
+            let suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
             
             let likeCountBefore = (self.entries[ratingView.tag] as! UASuggestion).likeCount
@@ -447,20 +452,24 @@ class HomeViewController: UIViewControllerWithMedia, UITableViewDelegate, UITabl
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
 
-        var url: String = "\(APIURL)/api/v1/suggestion/vote"
+        let url: String = "\(APIURL)/api/v1/suggestion/vote"
 
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
-            .responseJSON { (_, _, JSON, errors) in
-
-                if (errors != nil) {
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    // print error
-                    println(errors)
-                    // error block
-                    failure()
-                } else {
+            .responseJSON { (_, _, result) in
+                
+                switch result {
+                case .Success(_):
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success()
+                    
+                case .Failure(_, let errors):
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // print error
+                    print(errors)
+                    // error block
+                    failure()
+                    
                 }
         }
     }

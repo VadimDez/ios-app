@@ -18,7 +18,7 @@ class UACellSuggest: UACell {
     /**
     Like suggestion
     
-    :param: sender
+    - parameter sender:
     */
     @IBAction func like(sender: AnyObject) {
         let active: Bool = !(suggestion.userVotes > 0)
@@ -42,7 +42,7 @@ class UACellSuggest: UACell {
     /**
     Set image for like image view based on state
     
-    :param: active  state
+    - parameter active:  state
     */
     func tintLike(active: Bool) {
         // if liked - tint heart

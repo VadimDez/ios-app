@@ -47,13 +47,13 @@ class UASuggestionVoteView: UASuggestionHeaderView {
                     multiplier: 1.0,
                     constant: -8.0)
                 self.ratingView.removeFromSuperview()
-                self.ratingView.removeConstraints(self.ratingView.constraints())
+                self.ratingView.removeConstraints(self.ratingView.constraints)
                 self.mainView.addConstraint(rightConstrain)
                 
             }
             if self.likeLabel != nil {
                 self.likeLabel.removeFromSuperview()
-                self.likeLabel.removeConstraints(self.likeLabel.constraints())
+                self.likeLabel.removeConstraints(self.likeLabel.constraints)
             }
         }
         

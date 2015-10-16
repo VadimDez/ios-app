@@ -54,7 +54,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func registerNibs() {
-        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        let UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
         self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
     
@@ -117,19 +117,19 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             self.selectDisabled = indexPath.row
         
-            var competenceService = CompetenceService()
+            let competenceService = CompetenceService()
             
             // get competences
             competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
                 if competences.count > 0 {
-                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    let competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
                     competenceVC.projectId = self.entries[indexPath.row].id
                     
                     self.navigationController?.pushViewController(competenceVC, animated: true)
                     
                     self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
                 } else {
-                    var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    let projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
                     
                     // set project id
                     projectViewController.projectId = self.entries[indexPath.row].id
@@ -147,7 +147,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
+        let cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -184,7 +184,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             self.mainTable.infiniteScrollingView.stopAnimating()
         }, error: { () -> Void in
             
-            println("Projects infinite load error")
+            print("Projects infinite load error", terminator: "")
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
@@ -205,7 +205,7 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
         }, error: {() -> Void in
-            println("Projects pull to refresh load error")
+            print("Projects pull to refresh load error", terminator: "")
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
@@ -218,21 +218,19 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
     func getEntries(success: () -> Void, error: () -> Void) {
         // url
         let url: String = "\(APIURL)/api/mobile/project/"
-
-        // get entries
-        Alamofire.request(.GET, url, parameters: ["page": page, "filter": ["searchString": self.searchField.text]])
-            .responseJSON { (_,_,JSON,errors) in
+        
+        Alamofire.request(.GET, url, parameters: ["page": self.page, "filter": ["searchString": self.searchField.text!]])
+        .responseJSON { _, _, result -> Void in
+            
+            switch result {
+            case .Success(let JSON):
                 
-                if (errors != nil || JSON?.count == 0) {
-                    // print error
-                    println(errors)
-                    // error block
-                    error()
-                } else {
+                if JSON.count != 0 {
+                    
                     let ProjectModelView = UAProjectViewModel()
                     
                     // get get objects from JSON
-                    var array = ProjectModelView.getProjectsFromJSON(JSON?.objectForKey("projects") as! [Dictionary<String, AnyObject>])
+                    let array = ProjectModelView.getProjectsFromJSON(JSON.objectForKey("projects") as! [Dictionary<String, AnyObject>])
                     
                     if self.page == 0 {
                         self.entries = []
@@ -242,7 +240,19 @@ class ProjectsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.entries = self.entries + array
                     
                     success()
+                } else {
+                    // error block
+                    error()
                 }
+                
+                
+            case .Failure(_, let errors):
+                
+                // print error
+                print(errors)
+                // error block
+                error()
+            }
         }
     }
     

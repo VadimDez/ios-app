@@ -46,12 +46,12 @@ class UACompany {
     /**
     Add project objects
     
-    :param: json - JSON
+    - parameter json: - JSON
     */
     func addProjects(json: NSDictionary) {
 
-        for (key,object) in json {
-            var project = UAProject()
+        for (_,object) in json {
+            let project = UAProject()
 
             // id
             project.id = object["id"] as! UInt
@@ -78,9 +78,9 @@ class UACompany {
     /**
     Find and return company logo hash
     
-    :param: media [Dictionary<String, AnyObject>]
+    - parameter media: [Dictionary<String, AnyObject>]
     
-    :returns: hash
+    - returns: hash
     */
     func getCompanyImageHash(media: [Dictionary<String, AnyObject>]) -> String {
         if (media.count > 0) {
