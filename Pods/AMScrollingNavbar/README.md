@@ -1,9 +1,10 @@
-AMScrollingNavbar
-=================
+<p align="center">
+  <img width="640" height="240" src="assets/logo.png"/>
+</p>
 
-[![Cocoapods](https://cocoapod-badges.herokuapp.com/v/AMScrollingNavbar/badge.png)](http://www.cocoapods.org/?q=amscrollingnavbar)
-[![Build Status](https://travis-ci.org/andreamazz/AMScrollingNavbar.png)](https://travis-ci.org/andreamazz/AMScrollingNavbar)
-[![Analytics](https://ga-beacon.appspot.com/UA-42282237-8/AMScrollingNavbar/README)](https://github.com/igrigorik/ga-beacon)
+[![Cocoapods](https://cocoapod-badges.herokuapp.com/v/AMScrollingNavbar/badge.svg)](http://www.cocoapods.org/?q=amscrollingnavbar)
+[![Build Status](https://travis-ci.org/andreamazz/AMScrollingNavbar.svg)](https://travis-ci.org/andreamazz/AMScrollingNavbar)
+[![Join the chat at https://gitter.im/andreamazz/AMScrollingNavbar](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/andreamazz/AMScrollingNavbar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Scrollable UINavigationBar that follows the scrolling of a UIScrollView or similar view (e.g. UITableView or UIWebView). 
 It works like the navigation bar in Chrome or Facebook's app for iOS7.  
@@ -12,7 +13,7 @@ I also wrote about this control in [this article](http://andreamazz.github.io/bl
 
 #Screenshot
 
-![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/screenshot.gif)
+![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/assets/screenshot.gif)
 
 #Setup
 
@@ -28,6 +29,13 @@ I also wrote about this control in [this article](http://andreamazz.github.io/bl
 	[self showNavBarAnimated:NO];
 }
 
+```
+* Make sure to stop the scrolling on `dealloc`:
+```objc
+- (void)dealloc 
+{
+      [self stopFollowingScrollView];
+}
 ```
 
 #Enable the scrolling with Autolayout
@@ -62,11 +70,26 @@ Set the view constraints
 --------------------
 Make sure to set your scrollview's constraint properly. Please note that the library changes the scrollview's superview frame.
 
-![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/constraints.png)
+![AMScrollingNavbar](https://raw.githubusercontent.com/andreamazz/AMScrollingNavbar/master/assets/constraints.png)
 
 Quick Setup Video
 --------------------
 You can find a video with the full setup [here](https://vimeo.com/92721470)
+
+Using it with UITableViewController or UICollectionViewController
+--------------------
+If you are not using a plain `UIViewController` you have to enable this property:
+```objc
+[self setUseSuperview:NO];
+```
+
+Delegate
+--------------------
+You can implement the `AMScrollingNavbarDelegate` protocol to receive these messages:
+```objc
+- (void)navigationBarDidChangeToCollapsed:(BOOL)collapsed;
+- (void)navigationBarDidChangeToExpanded:(BOOL)expanded;
+```
 
 MIT License
 --------------------

@@ -8,11 +8,12 @@
 
 import UIKit
 
-class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionViewDelegate {
+class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     var comment: UAComment!
+    var mediaHelper: MediaHelper = MediaHelper()
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,6 +21,7 @@ class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionVi
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+        self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
         self.registerNibs()
     }
@@ -42,9 +44,11 @@ class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionVi
     */
     func setCell(comment: UAComment) {
         self.comment = comment
+        self.mediaHelper.mediaCount = comment.media.count
+        
         self.titleLabel?.text   = comment.user.fullName
         self.contentLabel?.text = comment.content
-        self.dateLabel?.text    = self.getStringFromDate(comment.updated)
+        self.dateLabel?.text    = comment.updated.getStringFromDate()
         
         self.makeRoundCorners()
         self.loadMainImage(comment.user.id, width: 35, height: 35)
@@ -59,7 +63,8 @@ class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as UACollectionViewCell
+        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.comment.media[indexPath.row])
         return cell
     }
@@ -68,5 +73,22 @@ class UACommentWithImageCell: UACell, UICollectionViewDataSource, UICollectionVi
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.comment.media]
         
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
     }
 }

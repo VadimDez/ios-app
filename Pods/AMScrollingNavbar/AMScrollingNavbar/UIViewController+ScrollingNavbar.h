@@ -6,8 +6,30 @@
 //  Copyright (c) 2014 Andrea Mazzini. All rights reserved.
 //
 
-@import Foundation;
-@import UIKit;
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+/**-----------------------------------------------------------------------------
+ * @name AMScrollingNavbarDelegate
+ * -----------------------------------------------------------------------------
+ */
+
+@protocol AMScrollingNavbarDelegate <NSObject>
+@optional
+
+/** Navbar collapsed
+ *
+ * Called when the navbar change its state to collapsed
+ */
+- (void)navigationBarDidChangeToCollapsed:(BOOL)collapsed;
+
+/** Navbar expanded
+ *
+ * Called when the navbar change its state to expanded
+ */
+- (void)navigationBarDidChangeToExpanded:(BOOL)expanded;
+
+@end
 
 @interface UIViewController (ScrollingNavbar) <UIGestureRecognizerDelegate>
 
@@ -25,7 +47,7 @@
  * @param scrollableView The UIView where the scrolling is performed.
  * @param delay The delay of the downward scroll gesture
  */
-- (void)followScrollView:(UIView*)scrollableView withDelay:(float)delay;
+- (void)followScrollView:(UIView *)scrollableView withDelay:(float)delay;
 
 /** Scrolling init method with Autolayout
  *
@@ -36,7 +58,7 @@
  * @param scrollableView The UIView where the scrolling is performed.
  * @param constraint The top constraint of the first view below the navbar
  */
-- (void)followScrollView:(UIView*)scrollableView usingTopConstraint:(NSLayoutConstraint *)constraint;
+- (void)followScrollView:(UIView *)scrollableView usingTopConstraint:(NSLayoutConstraint *)constraint;
 
 /** Scrolling init method with Autolayout
  *
@@ -49,7 +71,7 @@
  * @param constraint The top constraint of the first view below the navbar
  * @param delay The delay of the downward scroll gesture
  */
-- (void)followScrollView:(UIView*)scrollableView usingTopConstraint:(NSLayoutConstraint *)constraint withDelay:(float)delay;
+- (void)followScrollView:(UIView *)scrollableView usingTopConstraint:(NSLayoutConstraint *)constraint withDelay:(float)delay;
 
 /** Scrolling init method
  *
@@ -58,7 +80,7 @@
  *
  * @param scrollableView The UIView where the scrolling is performed.
  */
-- (void)followScrollView:(UIView*)scrollableView;
+- (void)followScrollView:(UIView *)scrollableView;
 
 /** Navbar slide down
  *
@@ -73,6 +95,20 @@
  * @param animated Animates the navbar scrolling
  */
 - (void)showNavBarAnimated:(BOOL)animated;
+
+/** Navbar slide down
+ *
+ * Manually show the navbar
+ */
+- (void)hideNavbar;
+
+/** Navbar slide up
+ *
+ * Manually hide the navbar
+ *
+ * @param animated Animates the navbar scrolling
+ */
+- (void)hideNavbarAnimated:(BOOL)animated;
 
 /** Remove the scrollview tracking
  *
@@ -92,6 +128,42 @@
  * content size of the scroll view is smaller than its height.
  */
 - (void)setShouldScrollWhenContentFits:(BOOL)enabled;
+
+/** Add scrolling to a custom view
+ *
+ * Enables the scrolling of a generic UIView placed underneath the navbar (e.g.: a custom header)
+ * It requires the top constraint of the first view below the navbar.
+ *
+ * @param constraint The top constraint of the first view below the navbar
+ * @param delay The height of the custom view
+ */
+- (void)setScrollableViewConstraint:(NSLayoutConstraint *)constraint withOffset:(CGFloat)offset;
+
+/** AMScrollingNavbarDelegate setter
+ *
+ * Sets the AMScrollingNavbarDelegate
+ *
+ * @param scrollingNavbarDelegate The delegate
+ */
+- (void)setScrollingNavbarDelegate:(id <AMScrollingNavbarDelegate>)scrollingNavbarDelegate;
+
+/** Use superview as container view
+ *
+ * Set the scrollable view's superview as main container.
+ * Default to YES, set it to NO when using a UITableViewController or a UICollectionViewController subclasses
+ *
+ * @param useSuperview The BOOL flag.
+ */
+- (void)setUseSuperview:(BOOL)useSuperview;
+
+/** Expand on active
+ *
+ * Determines if the navbar should expand when the app becomes active (e.g. after being sent to background)
+ * Default to YES
+ *
+ * @param expandOnActive The BOOL flag.
+ */
+- (void)setExpandOnActive:(BOOL)expandOnActive;
 
 @end
 

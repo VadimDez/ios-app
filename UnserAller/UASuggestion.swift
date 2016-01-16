@@ -19,9 +19,12 @@ class UASuggestion: UACellObject {
     var userVotes: Int      = 0
     var userName: String    = ""
     var projectName: String = ""
-    var updated: NSDate     = NSDate()
-    var deleted: NSDate     = NSDate()
+    var updated: NSDate!
+    var deleted: NSDate!
     var type: String        = ""
+    var isReleased: Bool    = false
+    var isOwner: Bool       = false
+    var isDeleted: Bool     = false
     
     override init() {
         super.init()
@@ -41,7 +44,8 @@ class UASuggestion: UACellObject {
         // set content
 //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
+            self.content = self.content.html2String()
         }
 
         // set project id
@@ -63,17 +67,21 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
+            self.updated = (updated as String).getDateFromString()
         }
         
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
 
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
 
         // set user votes
@@ -83,12 +91,18 @@ class UASuggestion: UACellObject {
 
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
 
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
+        }
+        
+        
+        // set user votes
+        if let released = jsonObject.objectForKey("released") as? Int {
+            self.isReleased = (released == 1)
         }
         
         // set cell class type
@@ -119,7 +133,7 @@ class UASuggestion: UACellObject {
             
             // set updated
             if let updated = suggestion["date"]?.objectForKey("date") as? NSString {
-                self.updated = self.getDateFromString(updated)
+                self.updated = (updated as String).getDateFromString()
             }
             
             // set user votes
@@ -128,22 +142,29 @@ class UASuggestion: UACellObject {
                     self.likeCount = likes.integerValue
                 }
             }
+            
         }
         
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
+            self.content = self.content.html2String()
         }
         
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
         
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
         
         // set project id
@@ -151,12 +172,17 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
+        }
+
+        // set user votes
+        if let released = jsonObject.objectForKey("released") as? String {
+            self.isReleased = (released == "1")
         }
         
         // set cell class type
@@ -167,20 +193,42 @@ class UASuggestion: UACellObject {
     
     func initNews(jsonObject: AnyObject) -> UASuggestion {
         
-        // set content
-        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+        if let pageArticle = jsonObject.objectForKey("pageArticle") as? Dictionary<String, AnyObject> {
+            if let pageArticleId = pageArticle["id"] as? UInt {
+                self.suggestionId = pageArticleId
+            }
+            
+            if let created = pageArticle["created"] as? Dictionary<String, String> {
+                let createdString: String = created["date"]!
+                self.updated = createdString.getDateFromString()
+            }
         }
         
+        // set content
+        //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        var articleContent: String = ""
+        
+        if let title = jsonObject.objectForKey("title") as? String {
+            articleContent = title
+        }
+        
+        if let content = jsonObject.objectForKey("content") as? NSString {
+            if (count(articleContent) > 0) {
+                articleContent = articleContent + " "
+            }
+            
+            articleContent = articleContent + (content as String)
+        }
+        
+        self.content = articleContent
+        self.content = self.content.html2String()
+
         // set project id
-//        if let projectId = jsonObject.objectForKey("project") as? NSNumber {
-//            self.projectId = projectId
-//        }
+        self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
 
         // set cell class type
@@ -194,7 +242,8 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
+            self.content = self.content.html2String()
         }
         
         // set project id
@@ -202,12 +251,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -231,7 +280,8 @@ class UASuggestion: UACellObject {
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
+            self.content = self.content.html2String()
         }
         
         // set project id
@@ -249,17 +299,22 @@ class UASuggestion: UACellObject {
         
         // set updated
         if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
+            self.updated = (updated as String).getDateFromString()
         }
         
         // set user id
         if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
             self.userId = userId
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
         }
         
         // set user name
         if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
+            self.userName = userName as String
         }
         
         // set user votes
@@ -269,12 +324,12 @@ class UASuggestion: UACellObject {
         
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -293,58 +348,72 @@ class UASuggestion: UACellObject {
     
     func initVoteIncludingImages(jsonObject: AnyObject) -> UASuggestion {
         
-        // set id
-        if let suggestionId = jsonObject.objectForKey("suggestion")?.objectForKey("id") as? UInt {
-            self.suggestionId = suggestionId
+        if let suggestionObject = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
+            // set id
+            if let suggestionId = suggestionObject["id"] as? UInt {
+                self.suggestionId = suggestionId
+            }
+            
+            // set like count
+            if (!(suggestionObject["like"] is NSNull)) {
+                if let _likeCount: AnyObject = suggestionObject["like"] {
+                    self.likeCount = _likeCount.integerValue
+                }
+            }
+            
+            // set comment count
+            if let commentCount = suggestionObject["comment"] as? UInt {
+                self.commentCount = commentCount
+            }
+            
+            // set updated
+            if let updated = suggestionObject["date"]?.objectForKey("date") as? NSString {
+                self.updated = (updated as String).getDateFromString()
+            }
+            
+            // set user votes
+            if let userVotes = suggestionObject["userVote"] as? Int {
+                self.userVotes = userVotes
+            }
         }
         
         // set content
         //        self.content = [[[object objectForKey:@"content"] stripHtml] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if let content = jsonObject.objectForKey("content") as? NSString {
-            self.content = content
+            self.content = content as String
+            self.content = self.content.html2String()
         }
         
         // set project id
         self.projectId = UInt((jsonObject.objectForKey("project") as AnyObject!).integerValue)
         
-        // set like count
-        if let likeCount = jsonObject.objectForKey("suggestion")?.objectForKey("like") as? Int {
-            self.likeCount = likeCount
-        }
-        
-        // set comment count
-        if let commentCount = jsonObject.objectForKey("suggestion")?.objectForKey("comment") as? UInt {
-            self.commentCount = commentCount
-        }
-        
-        // set updated
-        if let updated = jsonObject.objectForKey("suggestion")?.objectForKey("date")?.objectForKey("date") as? NSString {
-            self.updated = self.getDateFromString(updated)
-        }
-        
-        // set user id
-        if let userId = jsonObject.objectForKey("user")?.objectForKey("id") as? UInt {
-            self.userId = userId
-        }
-        
-        // set user name
-        if let userName = jsonObject.objectForKey("user")?.objectForKey("name") as? NSString {
-            self.userName = userName
-        }
-        
-        // set user votes
-        if let userVotes = jsonObject.objectForKey("suggestion")?.objectForKey("userVote") as? Int {
-            self.userVotes = userVotes
-        }
-        
         // set project name
         if let projectName = jsonObject.objectForKey("projectName") as? NSString {
-            self.projectName = projectName
+            self.projectName = projectName as String
         }
+        
+        if let userObject = jsonObject.objectForKey("user") as? Dictionary<String, AnyObject> {
+            // set user id
+            if let userId = userObject["id"] as? UInt {
+                self.userId = userId
+                
+                // set owner
+                if self.userId == UserShared.sharedInstance.id {
+                    self.isOwner = true
+                }
+            }
+            
+            // set user name
+            if let userName = userObject["name"] as? NSString {
+                self.userName = userName as String
+            }
+        }
+        
+        
         
         // set type
         if let type = jsonObject.objectForKey("type") as? NSString {
-            self.type = type
+            self.type = type as String
         }
         
         // set cell class type
@@ -362,7 +431,7 @@ class UASuggestion: UACellObject {
         // set user name
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -373,25 +442,31 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
         }
         
         // set comment count
-        if (!(jsonObject.objectForKey("comments") is NSNull)) {
-            if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
+        if (!(jsonObject.objectForKey("commentCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentCount") {
                 self.commentCount = UInt(_commentCount.integerValue)
             }
         }
@@ -400,6 +475,13 @@ class UASuggestion: UACellObject {
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
                 self.likeCount = _likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
             }
         }
         
@@ -414,7 +496,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String,AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -425,30 +507,46 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
+            
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
         
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
+
+        // set comment count
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.unsignedIntValue)
+            }
         }
         
-        // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
-        }
         // set like count
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
@@ -466,7 +564,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -476,29 +574,35 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
 
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }
-        
+
         // set comment count
-        if (!(jsonObject.objectForKey("comments") is NSNull)) {
-            if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
                 self.commentCount = UInt(_commentCount.integerValue)
             }
         }
@@ -510,6 +614,12 @@ class UASuggestion: UACellObject {
             }
         }
         
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
         
         // set type
         self.type = "suggestionMedia";
@@ -524,7 +634,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -534,37 +644,53 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set project name
-            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as String
+            self.projectName = suggestion["phase"]?.objectForKey("project")?.objectForKey("name") as! String
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
                 self.addMediaToSuggestionWithJSON(media)
             }
         }
+        
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("likeCount") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("likeCount") {
+                self.likeCount = likeCount.integerValue
+            }
         }
+        
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
+        
         // set type
         self.type = "project";
         
@@ -582,11 +708,12 @@ class UASuggestion: UACellObject {
         }
         // created
         if let created = jsonObject.objectForKey("created") as? String {
-            self.updated = self.getDateFromString(created)
+            self.updated = created.getDateFromString()
         }
         // content
         if let content = jsonObject.objectForKey("content") as? String {
             self.content = content
+            self.content = self.content.html2String()
         }
         
         self.cellType = "NewsCell"
@@ -597,7 +724,7 @@ class UASuggestion: UACellObject {
         // set user name
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -608,26 +735,43 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let _commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(_commentCount.integerValue)
+            }
         }
         
         // set like count
-        if let votes = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = votes
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
         
         // set cell type
@@ -641,7 +785,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String,AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
@@ -652,16 +796,27 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
+            
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
         }
 
         // set user votes
@@ -672,9 +827,12 @@ class UASuggestion: UACellObject {
         }
 
         // set comment count
-        if let _commentCount: AnyObject = jsonObject.objectForKey("comments") {
-            self.commentCount = UInt(_commentCount.integerValue)
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
         if (!(jsonObject.objectForKey("votes") is NSNull)) {
             if let _likeCount: AnyObject = jsonObject.objectForKey("votes") {
@@ -691,7 +849,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -701,16 +859,22 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -718,14 +882,25 @@ class UASuggestion: UACellObject {
             }
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
-        }
-        // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
         
+        // set like count
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
+        }
+        
+        // set user votes count
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
+        }
         
         // set type
         self.type = "suggestionMedia";
@@ -739,7 +914,7 @@ class UASuggestion: UACellObject {
         if let suggestion = jsonObject.objectForKey("suggestion") as? Dictionary<String, AnyObject> {
             
             // set suggestion id
-            self.suggestionId = suggestion["id"] as UInt
+            self.suggestionId = suggestion["id"] as! UInt
             // set user name
             if let firstname = suggestion["user"]?.objectForKey("firstname") as? String {
                 self.userName = firstname
@@ -749,16 +924,27 @@ class UASuggestion: UACellObject {
             }
             
             // set user id
-            self.userId = suggestion["user"]?.objectForKey("id") as UInt
+            self.userId = suggestion["user"]?.objectForKey("id") as! UInt
+            
+            // set owner
+            if self.userId == UserShared.sharedInstance.id {
+                self.isOwner = true
+            }
             
             // set project id
             self.projectId = UInt((suggestion["phase"]?.objectForKey("project")?.objectForKey("id") as AnyObject!).integerValue)
             
             // set content
-            self.content = suggestion["content"] as String
+            self.content = suggestion["content"] as! String
+            self.content = self.content.html2String()
+            
+            // set released
+            if let released = suggestion["released"] as? UInt {
+                self.isReleased = (released == 1)
+            }
             
             // set updated
-            self.updated = self.getDateFromString(suggestion["created"]?.objectForKey("date") as String)
+            self.updated = (suggestion["created"]?.objectForKey("date") as! String).getDateFromString()
             
             // add media
             if let media = suggestion["mediaSuggestion"] as? [AnyObject] {
@@ -766,17 +952,26 @@ class UASuggestion: UACellObject {
             }
         }
         // set comment count
-        if let commentCount = jsonObject.objectForKey("comments") as? UInt {
-            self.commentCount = commentCount
+        if (!(jsonObject.objectForKey("commentsCount") is NSNull)) {
+            if let commentCount: AnyObject = jsonObject.objectForKey("commentsCount") {
+                self.commentCount = UInt(commentCount.integerValue)
+            }
         }
+        
         // set like count
-        if let likeCount = jsonObject.objectForKey("votes") as? Int {
-            self.likeCount = likeCount
+        if (!(jsonObject.objectForKey("votes") is NSNull)) {
+            if let likeCount: AnyObject = jsonObject.objectForKey("votes") {
+                self.likeCount = likeCount.integerValue
+            }
         }
+        
         // set user votes
-        if let userVotes = jsonObject.objectForKey("userVotes") as? Int {
-            self.userVotes = userVotes
+        if (!(jsonObject.objectForKey("userVotes") is NSNull)) {
+            if let userVotes: AnyObject = jsonObject.objectForKey("userVotes") {
+                self.userVotes = userVotes.integerValue
+            }
         }
+        
         // set type
         self.type = "project";
         
@@ -794,19 +989,25 @@ class UASuggestion: UACellObject {
             
             if let _user = _suggestion["user"] as? Dictionary<String, AnyObject> {
                 // user id
-                self.userId = _user["id"] as UInt
+                self.userId = _user["id"] as! UInt
                 
-                self.userName = (_user["firstname"] as String) + " " + (_user["lastname"] as String)
+                // set owner
+                if self.userId == UserShared.sharedInstance.id {
+                    self.isOwner = true
+                }
+                
+                self.userName = (_user["firstname"] as! String) + " " + (_user["lastname"] as! String)
             }
             
-            self.content = _suggestion["content"] as String
+            self.content = _suggestion["content"] as! String
+            self.content = self.content.html2String()
             
             if let _media = _suggestion["mediaSuggestion"] as? [Dictionary<String, String>] {
                 self.addMediaToSuggestionWithJSON(_media)
             }
             
             if let _created = _suggestion["created"] as? Dictionary<String, String> {
-                self.updated = self.getDateFromString(_created["date"]!)
+                self.updated = _created["date"]!.getDateFromString()
             }
         }
         
@@ -820,7 +1021,7 @@ class UASuggestion: UACellObject {
         // set project name
 //        self.projectName = json["projectName"] as String
         
-        self.type = json["suggestionType"] as String
+        self.type = json["suggestionType"] as! String
         
         if (!(json["votes"] is NSNull)) {
             if let _votes: Int = json["votes"] as? Int {
@@ -839,7 +1040,7 @@ class UASuggestion: UACellObject {
     
     func initSuggestForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
         // set suggestion id
-        self.suggestionId = jsonObject.objectForKey("id") as UInt
+        self.suggestionId = jsonObject.objectForKey("id") as! UInt
         
         // set user name
         if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
@@ -850,16 +1051,22 @@ class UASuggestion: UACellObject {
         }
         
         // set user id
-        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
+        
+        // set owner
+        if self.userId == UserShared.sharedInstance.id {
+            self.isOwner = true
+        }
         
         // set project id
         self.projectId = project.id
         
         // set content
-        self.content = jsonObject.objectForKey("content") as String
+        self.content = jsonObject.objectForKey("content") as! String
+        self.content = self.content.html2String()
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("updated") as String)
+        self.updated = (jsonObject.objectForKey("updated") as! String).getDateFromLongString()
 
         // set comment count
         self.commentCount = 0
@@ -876,7 +1083,7 @@ class UASuggestion: UACellObject {
     func initVoteForProjectFromJSON(jsonObject: AnyObject, project: UAProject) -> UASuggestion {
             
         // set suggestion id
-        self.suggestionId = jsonObject.objectForKey("id") as UInt
+        self.suggestionId = jsonObject.objectForKey("id") as! UInt
             
         // set user name
         if let firstname = jsonObject.objectForKey("user")?.objectForKey("firstname") as? String {
@@ -887,16 +1094,22 @@ class UASuggestion: UACellObject {
         }
             
         // set user id
-        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as UInt
-            
+        self.userId = jsonObject.objectForKey("user")?.objectForKey("id") as! UInt
+        
+        // set owner
+        if self.userId == UserShared.sharedInstance.id {
+            self.isOwner = true
+        }
+        
         // set project id
         self.projectId = project.id
         
         // set content
-        self.content = jsonObject.objectForKey("content") as String
+        self.content = jsonObject.objectForKey("content") as! String
+        self.content = self.content.html2String()
         
         // set updated
-        self.updated = self.getDateFromLongString(jsonObject.objectForKey("created") as String)
+        self.updated = (jsonObject.objectForKey("created") as! String).getDateFromLongString()
 
         // set user votes
         self.userVotes = 0

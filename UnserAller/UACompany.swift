@@ -18,24 +18,29 @@ class UACompany {
     init () {
         self.id = 0
     }
+
+    init(id: UInt, name: String) {
+        self.id = id
+        self.name = name
+    }
     
     func setCompanyFromJSON(json: Dictionary<String, AnyObject>) {
 //        println(json)
         
         // set id
-        self.id = json["id"] as UInt
+        self.id = json["id"] as! UInt
         
         // set name
-        self.name = json["name"] as String
+        self.name = json["name"] as! String
         
         if let media = json["media"] as? [Dictionary<String, AnyObject>] {
             self.imageHash = self.getCompanyImageHash(media)
         }
-        
-        if (!(json["project"] is NSNull)) {
-            self.addProjects(json["project"] as NSDictionary)
-        }
+
         // add projects
+        if (!(json["project"] is NSNull)) {
+            self.addProjects(json["project"] as! NSDictionary)
+        }
     }
     
     /**
@@ -49,17 +54,23 @@ class UACompany {
             var project = UAProject()
 
             // id
-            project.id = object["id"] as UInt
+            project.id = object["id"] as! UInt
 
             // name
-            project.name = object["name"] as String
+            project.name = object["name"] as! String
             
             // title
-            project.title = object["title"] as String
+            project.title = object["title"] as! String
             
             // closed community
-            project.closedCommunity = ((object["closedCommunity"] as Int) == 1)
-            
+            project.closedCommunity = ((object["closedCommunity"] as! Int) == 1)
+
+            // set company
+            project.company = UACompany(id: self.id, name: self.name)
+
+            // set media
+            project.imageUrl = "\(APIURL)/api/v1/media/project/\(project.id)"
+
             self.projects.append(project)
         }
     }
@@ -74,8 +85,8 @@ class UACompany {
     func getCompanyImageHash(media: [Dictionary<String, AnyObject>]) -> String {
         if (media.count > 0) {
             for image in media {
-                if ((image["category"] as String) == "companyLogo") {
-                    return image["hash"] as String
+                if ((image["category"] as! String) == "companyLogo") {
+                    return image["hash"] as! String
                 }
             }
         }

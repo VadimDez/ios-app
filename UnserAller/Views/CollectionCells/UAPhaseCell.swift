@@ -15,11 +15,16 @@ class UAPhaseCell: UICollectionViewCell {
     @IBOutlet weak var centerBox: UIImageView!
     @IBOutlet weak var rightLine: UIImageView!
     
+    
     override func awakeFromNib() {
         // make circle
         var imageLayer:CALayer = self.centerBox.layer;
         imageLayer.cornerRadius = 7
         imageLayer.masksToBounds = true
+        
+        self.hideLines(false)
+        self.resetFont()
+        println("in awake")
     }
     
     func setPhaseName(name: String) {
@@ -27,10 +32,16 @@ class UAPhaseCell: UICollectionViewCell {
     }
     
     func firstElement () {
-        self.leftLine.backgroundColor = UIColor.clearColor()
+        self.hideLines(false)
+        self.resetFont()
+        
+        self.leftLine.hidden = true
     }
     func lastElement () {
-        self.rightLine.backgroundColor = UIColor.clearColor()
+        self.hideLines(false)
+        self.resetFont()
+        
+        self.rightLine.hidden = true
     }
     
     /**
@@ -38,9 +49,22 @@ class UAPhaseCell: UICollectionViewCell {
      */
     func setNewsCell() {
         self.setPhaseName("News")
-        self.leftLine.hidden = true
-        self.centerBox.hidden = true
-        self.rightLine.hidden = true
+        self.hideLines(true)
+        self.resetFont()
     }
 
+    
+    func hideLines(hide: Bool) -> Void {
+        self.leftLine.hidden = hide
+        self.centerBox.hidden = hide
+        self.rightLine.hidden = hide
+    }
+    
+    func resetFont() {
+        self.phaseLabel.font = UIFont(name: "HelveticaNeue", size: 13.0)
+    }
+    
+    func setSelected() {
+        self.phaseLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
+    }
 }

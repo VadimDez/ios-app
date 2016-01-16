@@ -70,7 +70,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:UACreditCell = self.mainTable.dequeueReusableCellWithIdentifier("UACreditCell") as UACreditCell
+        var cell:UACreditCell = self.mainTable.dequeueReusableCellWithIdentifier("UACreditCell") as! UACreditCell
         
         cell.setCell(self.entries[indexPath.row])
         
@@ -88,7 +88,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-            }, {() -> Void in
+            },error:  {() -> Void in
                 println("Credit infinite load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -108,7 +108,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Credit pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -118,7 +118,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func getEntries(success: () -> Void, error: () -> Void) {
         // /api/mobile/profile/getbookmarks/
-        let url: String = "https://\(APIURL)/api/mobile/profile/getcredits"
+        let url: String = "\(APIURL)/api/mobile/profile/getcredits"
 
         Alamofire.request(.GET, url, parameters: ["page": page])
             .responseJSON { (_, _, JSON, errors) -> Void in
@@ -131,7 +131,7 @@ class CreditsViewController: UIViewController, UITableViewDataSource, UITableVie
                     let CreditViewModel = UACreditViewModel()
 
                     // get get objects from JSON
-                    var array = CreditViewModel.getCreditsFromJSON(JSON as [Dictionary<String, AnyObject>])
+                    var array = CreditViewModel.getCreditsFromJSON(JSON as! [Dictionary<String, AnyObject>])
                     // merge two arrays
                     self.entries = self.entries + array
                     self.countEntries = self.entries.count

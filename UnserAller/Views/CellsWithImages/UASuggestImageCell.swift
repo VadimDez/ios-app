@@ -8,17 +8,12 @@
 
 import UIKit
 
-class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestImageCell: UACellSuggest, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    @IBOutlet weak var likeLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
-    var suggestionId: UInt = 0
-    var projectId: UInt = 0
-    var type:String = "suggestion"
-    var medias: [UAMedia] = []
-    var suggestion: UASuggestion!
+    var type: String = "suggestion"
+    var mediaHelper: MediaHelper = MediaHelper()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +23,7 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.frame.width
     }
     
     /**
@@ -44,26 +40,11 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         // Configure the view for the selected state
     }
     
-    /**
-    Like suggestion
-    
-    :param: sender
-    */
-    @IBAction func like(sender: AnyObject) {
-        self.sendLike(self.suggestion.suggestionId, success: { (active) -> Void in
-            let increment = (active) ? 1 : -1;
-            self.suggestion.likeCount = self.suggestion.likeCount + increment;
-            self.likeLabel.text = "\(self.suggestion.likeCount)"
-            }) { () -> Void in
-                
-        }
-    }
-    
     func setCellForHome(suggestion: UASuggestion) {
         self.suggestion = suggestion
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.type = "suggestion";
-        //    _collectionDataDictionary = data;
         
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
@@ -72,66 +53,57 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         self.subtitleLabel.text = suggestion.projectName
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
-        self.medias             = suggestion.media
-        self.dateLabel?.text = self.getStringFromDate(suggestion.updated)
+        self.dateLabel?.text    = suggestion.updated.getStringFromDate()
+        //
+        self.suggestionId       = suggestion.suggestionId
+        self.projectId          = suggestion.projectId
         
         // if liked - tint heart
-        var color:UIColor
         if (suggestion.userVotes > 0) {
-            color = UIColor.redColor()
+            self.likeImage.image = UIImage(named: "heart_red")
         } else {
-            color = UIColor.grayColor()
+            self.likeImage.image = UIImage(named: "heart_black_32")
         }
-//        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
-//        [_likeButton setTintColor:color];
         
         //    imageList = [dictionary objectForKey:@"media"];
         //    _imageCollectionView.backgroundColor = [UIColor greenColor];
         
         
-        self.suggestionId        = suggestion.suggestionId
-        self.projectId           = suggestion.projectId
         
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
+        // load project image
+        self.loadProjectImage(suggestion.projectId, width: 20, height: 20)
+        
         // change shape of image
         self.makeRoundCorners()
         
-//        [_collectionView setContentOffset:CGPointZero animated:NO];
-//        [_collectionView reloadData];
+        self.imageCollectionView.reloadData()
     }
     
     
     func setCellForPhase(suggestion: UASuggestion) {
         self.suggestion = suggestion
+        self.mediaHelper.mediaCount = suggestion.media.count
         
         self.type = "suggestion";
-        //    _collectionDataDictionary = data;
         
         self.imageCollectionView.backgroundColor = UIColor.clearColor()
         
         self.contentLabel.text  = suggestion.content
         self.titleLabel.text    = suggestion.userName
-        self.subtitleLabel.text = self.getStringFromDate(suggestion.updated)
+        self.subtitleLabel.text = ""
         self.likeLabel.text     = "\(suggestion.likeCount)"
         self.commentLabel.text  = "\(suggestion.commentCount)"
-        self.medias             = suggestion.media
-        self.dateLabel?.text = ""
-        
+        self.dateLabel?.text    = suggestion.updated.getStringFromDate()
+
         // if liked - tint heart
-        var color:UIColor
         if (suggestion.userVotes > 0) {
-            color = UIColor.redColor()
+            self.likeImage.image = UIImage(named: "heart_red")
         } else {
-            color = UIColor.grayColor()
+            self.likeImage.image = UIImage(named: "heart_black_32")
         }
-        //        [_likeButton setImage:[[UIImage imageNamed:@"heart_black_32"] tintedImageWithColor:color] forState:UIControlStateNormal];
-        //        [_likeButton setTintColor:color];
-        
-        //    imageList = [dictionary objectForKey:@"media"];
-        //    _imageCollectionView.backgroundColor = [UIColor greenColor];
-        
         
         self.suggestionId        = suggestion.suggestionId
         self.projectId           = suggestion.projectId
@@ -139,15 +111,18 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
         // load profile image
         self.loadMainImage(suggestion.userId, width: 35, height: 35)
         
+        // clear project image
+        self.secondaryImage.backgroundColor = UIColor.clearColor()
+        
         // change shape of image
         self.makeRoundCorners()
         
-        //        [_collectionView setContentOffset:CGPointZero animated:NO];
-        //        [_collectionView reloadData];
+        self.imageCollectionView.reloadData()
     }
 
+    // MARK: - Collection view
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return medias.count
+        return self.suggestion.media.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -155,14 +130,35 @@ class UASuggestImageCell: UACell, UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as UACollectionViewCell
-        cell.setCell(self.medias[indexPath.row])
+        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
+        cell.setCell(self.suggestion.media[indexPath.row])
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.medias]
+        let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
 
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+//    override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+//        return !touch.view.isKindOfClass(UICollectionView)
+    //    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0.0
     }
 }

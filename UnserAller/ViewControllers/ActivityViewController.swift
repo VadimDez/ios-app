@@ -9,14 +9,13 @@
 import UIKit
 import Alamofire
 
-class ActivityViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MWPhotoBrowserDelegate, FloatRatingViewDelegate {
+class ActivityViewController: UIViewControllerWithMedia, UITableViewDelegate, UITableViewDataSource, FloatRatingViewDelegate {
 
     @IBOutlet weak var mainTable: UITableView!
     var entries: [UASuggestion] = []
-    var countEntries: Int = 0
     var page: Int = -1
-    var photos: [MWPhotoObj] = []
     var votingDisabled = false
+    var mediaHelper: MediaHelper = MediaHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,15 +81,14 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Table Delegates
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countEntries
+        return self.entries.count
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-
-        switch (entries[indexPath.row].cellType) {
+        switch (self.entries[indexPath.row].cellType) {
             case "SuggestionCell": return self.getSuggestCellForActivity(self.entries[indexPath.row])
             case "UASuggestImageCell": return self.getSuggestImageCellForActivity(self.entries[indexPath.row])
             case "UASuggestionVoteCell": return self.getVoteCellForActivity(indexPath.row)
@@ -98,12 +96,12 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             var cell: UITableViewCell
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell")
-            cell.textLabel?.text = "\(entries[indexPath.row].cellType) cell is not defined"
+            cell.textLabel?.text = "\(self.entries[indexPath.row].cellType) cell is not defined"
             return cell
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
+        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
         suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
         
         self.navigationController?.pushViewController(suggestionVC, animated: true)
@@ -114,56 +112,99 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     *  Get suggestion cell with suggestion object
     */
     func getSuggestCellForActivity(suggestion: UASuggestion) -> UASuggestionCell {
-        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
+        var cell:UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
         cell.setCellForHome(suggestion)
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(suggestion.projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
+        }
         return cell
     }
         
     func getSuggestImageCellForActivity(suggestion: UASuggestion) -> UASuggestImageCell {
-        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
+        var cell:UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
         cell.setCellForHome(suggestion)
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(suggestion.projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
+        }
         return cell
     }
     
     func getVoteCellForActivity(row: Int) -> UASuggestionVoteCell {
-        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
-        cell.ratingView.delegate = self
-        cell.ratingView.editable = false
-        cell.ratingView.tag = row
+        var cell:UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
+        
+        
+        if self.entries[row].isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.editable = false
+            cell.ratingView.tag = row
+        }
         cell.setCellForActivity(self.entries[row])
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(self.entries[row].projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
+        }
         return cell
     }
     
     func getVoteWithImageCellForActivity(row: Int) -> UASuggestionVoteImageCell {
-        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
-        cell.ratingView.delegate = self
-        cell.ratingView.editable = false
-        cell.ratingView.tag = row
+        var cell:UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        
+        if self.entries[row].isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.editable = false
+            cell.ratingView.tag = row
+        }
         cell.setCellForHome(self.entries[row])
+        
+        // suggestion vc
+        cell.onMainButton = {
+            () -> Void in
+            
+            // disable button
+            cell.mainButton.enabled = false
+            
+            self.presentProjectViewController(self.entries[row].projectId, done: { () -> Void in
+                // re-enable button
+                cell.mainButton.enabled = true
+            })
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = 110.0
+//        let base: CGFloat = 110.0
+        let base: CGFloat = 95.0
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = 290
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
+        var media:CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 25.0)
         
-        label.text = entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
-        var media:CGFloat = 0.0
-        if (entries[indexPath.row].media.count > 0) {
-            media = 50.0 + CGFloat((entries[indexPath.row].media.count/5) * 50)
-        }
-        
-        return base + label.frame.size.height + media
+        return base + self.entries[indexPath.row].content.getHeightForView(self.mainTable.frame.width - 20, font: UIFont(name: "Helvetica Neue", size: 13)!) + media
     }
     
     /*
@@ -173,11 +214,13 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
         self.page += 1
         
         self.getEntries({() -> Void in
-            self.mainTable.reloadData()
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-            }, {() -> Void in
+            
+            self.mainTable.reloadData()
+            
+            }, error: {() -> Void in
                 println("Activity infinite load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -191,14 +234,15 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     func refresh() {
         self.page = 0
         self.entries = []
-        self.countEntries = 0
         
-        self.getEntries({() -> Void in
-            self.mainTable.reloadData()
+        self.getEntries({ () -> Void in
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, {() -> Void in
+            
+            self.mainTable.reloadData()
+            
+            }, error: { () -> Void in
                 println("Activity pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -207,10 +251,9 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
-        // /api/mobile/profile/getbookmarks/
-        let url: String = "https://\(APIURL)/api/mobile/profile/getactivity"
+        let url: String = "\(APIURL)/api/mobile/profile/getactivity"
         
-        Alamofire.request(.GET, url, parameters: ["page": page])
+        Alamofire.request(.GET, url, parameters: ["page": self.page])
             .responseJSON { (_, _, JSON, errors) -> Void in
                 if(errors != nil || JSON?.count == 0) {
                     // print error
@@ -221,48 +264,17 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
                     let SuggestionViewModel = UASuggestionViewModel()
 
                     // get get objects from JSON
-                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as [Dictionary<String, AnyObject>])
+                    var array = SuggestionViewModel.getSuggestionsForActivityFromJSON(JSON as! [Dictionary<String, AnyObject>])
+                    
+                    if self.page == 0 {
+                        self.entries = []
+                    }
+                    
                     // merge two arrays
                     self.entries = self.entries + array
-                    self.countEntries = self.entries.count
-                    
+                    println(self.entries.count)
                     success()
                 }
-        }
-    }
-    
-    // MARK: MWPhotoBrowser delegates
-    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        return UInt(self.photos.count)
-    }
-    
-    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        if (Int(index) < self.photos.count) {
-            return self.photos[Int(index)];
-        }
-        return nil;
-    }
-    
-    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
-        self.photos = []
-        
-        if (!cellData.isEmpty) {
-            
-            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
-                
-                for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
-                    self.photos.append(photo)
-                }
-                
-                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
-                
-                browser.showPreviousPhotoAnimated(true)
-                browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
-                self.navigationController?.pushViewController(browser, animated: false)
-            }
         }
     }
     
@@ -297,6 +309,35 @@ class ActivityViewController: UIViewController, UITableViewDelegate, UITableView
 //                }) { () -> Void in
 //                    self.votingDisabled = false
 //            }
+        }
+    }
+    
+    /**
+    *   Present project view controller
+    */
+    func presentProjectViewController(projectId: UInt, done: () -> Void) {
+        
+        var competenceService = CompetenceService()
+        competenceService.getEntries(projectId, projectStep: 0, success: { (competences) -> Void in
+            if competences.count > 0 {
+                var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                competenceVC.projectId = projectId
+                self.navigationController?.pushViewController(competenceVC, animated: true)
+                
+                done()
+            } else {
+                var projectVC: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                
+                // set project id
+                projectVC.projectId = projectId
+                
+                self.navigationController?.pushViewController(projectVC, animated: true)
+                
+                done()
+            }
+            }) { () -> Void in
+                done()
+                
         }
     }
 }

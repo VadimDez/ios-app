@@ -8,25 +8,102 @@
 
 
 import UIKit
+import CoreData
 
 class MenuTableViewController: UITableViewController {
+    
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    // credits labels
+    @IBOutlet weak var suggesitonCredits: UILabel!
+    @IBOutlet weak var commentCredits: UILabel!
+    @IBOutlet weak var likeCredits: UILabel!
+    @IBOutlet weak var voteCredits: UILabel!
+    
+    
     var selectedMenuItem : Int = 0
     let menuItems: [String] = ["Wall", "Projects", "Credits", "Bookmarks","Activity", "Settings"]
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         
-        // Customize apperance of table view
-        tableView.contentInset = UIEdgeInsetsMake(64.0, 0, 0, 0) //
-        tableView.separatorStyle = .None
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.scrollsToTop = false
-        self.tableView.scrollEnabled = false
-        
+        self.setupTableView()
         // Preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
-        tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
+        self.setProfileData()
+        
+        super.viewDidLoad()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    /**
+     *  Setup table view
+     */
+    func setupTableView() {
+        // Customize apperance of table view
+//        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0) //
+//        self.tableView.separatorStyle = .None
+//        self.tableView.backgroundColor = UIColor.whiteColor()
+        
+        // bg image
+        var tempImageView: UIImageView = UIImageView(image: UIImage(named: "background-1"))
+        tempImageView.frame = self.tableView.frame
+        self.tableView.backgroundView = tempImageView
+        
+        self.tableView.scrollsToTop = false
+        self.tableView.scrollEnabled = false
+        self.tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedMenuItem, inSection: 0), animated: false, scrollPosition: .Middle)
+    }
+    
+    /**
+    *  Setup profile image
+    */
+    func setupProfileImage() {
+        var imageLayer:CALayer = self.profileImage.layer
+        imageLayer.cornerRadius = 30
+        imageLayer.masksToBounds = true
+    }
+    
+    /**
+    Set profile data
+    */
+    func setProfileData() {
+        var user = UAUser()
+        var sharedUser = UserShared.sharedInstance
+        
+        self.setupProfileImage()
+        
+        user.getFromAPI { (user, credits) -> Void in
+            
+            self.userName.text = "\(user.firstname) \(user.lastname)"
+            self.loadProfileImage(user.id.unsignedLongValue)
+
+            // set user id
+            sharedUser.setId(user.id.unsignedLongValue)
+            
+            if let suggestionCredits: AnyObject = credits["suggestions"] {
+                sharedUser.setSuggestionCredits(UInt(suggestionCredits.integerValue))
+                self.suggesitonCredits.text = "\(sharedUser.suggestionCredits)"
+            }
+            
+            if let commentCredits: AnyObject = credits["comments"] {
+                sharedUser.setCommentCredits(UInt(commentCredits.integerValue))
+                self.commentCredits.text = "\(sharedUser.commentCredits)"
+            }
+            
+            if let likesCredits: AnyObject = credits["likes"] {
+                sharedUser.setSuggestionCredits(UInt(likesCredits.integerValue))
+                self.likeCredits.text = "\(sharedUser.likeCredits)"
+            }
+            
+            if let votesCredits: AnyObject = credits["votes"] {
+                sharedUser.setSuggestionCredits(UInt(votesCredits.integerValue))
+                self.voteCredits.text = "\(sharedUser.voteCredits)"
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,14 +129,29 @@ class MenuTableViewController: UITableViewController {
         
         if (cell == nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "MenuCell")
-            cell!.backgroundColor = UIColor.clearColor()
-            cell!.textLabel?.textColor = UIColor.darkGrayColor()
-            let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
-            selectedBackgroundView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.2)
-            cell!.selectedBackgroundView = selectedBackgroundView
+            
         }
+        // set text color
+        cell!.textLabel?.textColor = UIColor.whiteColor()
+        cell!.textLabel?.font = UIFont(name: "Helvetica Neue", size: 14.0)
+        // set text
+        cell!.textLabel?.text = menuItems[indexPath.row]
+        // set icon
+        cell?.imageView?.image = UIImage(named: menuItems[indexPath.row])
         
-        cell!.textLabel?.text = menuItems[indexPath.row]// "ViewController #\(indexPath.row+1)"
+//        if let imageView: UIImageView = cell?.imageView {
+//            let decrement: CGFloat = 8.0
+//            let rect = CGRect(x: imageView.frame.origin.x, y: imageView.frame.origin.y - decrement - 50, width: imageView.frame.width - decrement * 2, height: imageView.frame.height - decrement * 2)
+//            
+//            cell?.imageView?.frame = rect
+//        }
+        
+        
+        cell?.backgroundColor = UIColor.clearColor()
+        
+        let selectedBackgroundView = UIView(frame: CGRectMake(0, 0, cell!.frame.size.width, cell!.frame.size.height))
+        selectedBackgroundView.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        cell!.selectedBackgroundView = selectedBackgroundView
         
         return cell!
     }
@@ -71,6 +163,7 @@ class MenuTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if (indexPath.row == selectedMenuItem) { // if already selected - toggle
+            
             self.evo_drawerController?.toggleDrawerSide(.Left, animated: true, completion: nil)
             return
         }
@@ -80,29 +173,33 @@ class MenuTableViewController: UITableViewController {
         var destViewController : UIViewController
         switch (indexPath.row) {
         case 0:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("initNavigation")
             break
         case 1:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("projectsNavi") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("projectsNavi")
             break
         case 2:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("creditsNavi") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("creditsNavi")
             break
         case 3:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("bookmarksNavi") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("bookmarksNavi")
             break
         case 4:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("activityNavi") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("activityNavi")
             break
         case 5:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("settingsNavi") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("settingsNavi")
             break
         default:
-            destViewController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
+            destViewController = self.getNavigationByIdentifier("initNavigation")
             break
         }
         
         self.evo_drawerController?.setCenterViewController(destViewController, withCloseAnimation: true, completion: nil)
+    }
+    
+    func getNavigationByIdentifier(identifier: String) -> UINavigationController {
+        return self.storyboard?.instantiateViewControllerWithIdentifier(identifier) as! UINavigationController
     }
     
     
@@ -115,4 +212,20 @@ class MenuTableViewController: UITableViewController {
     // Pass the selected object to the new view controller.
     }
     */
+    
+    /**
+     * Load profile image
+     */
+    func loadProfileImage(id: UInt) {
+        // load profile image
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/profileimage/\(id)/80/80")!)
+        self.profileImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
+            // test
+            if let weakSelf = self {
+                weakSelf.profileImage.image = image
+            }
+            }) { [weak self](request: NSURLRequest!, response: NSURLResponse!, error: NSError!) -> Void in
+                
+        }
+    }
 }

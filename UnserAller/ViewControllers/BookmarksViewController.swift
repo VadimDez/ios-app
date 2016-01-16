@@ -15,6 +15,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     var page: Int = -1
     var entries: [UAProject] = []
     var countEntries: Int = 0
+    var selectDisabled: Int = -1
     
     /** functions **/
     
@@ -26,7 +27,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         
         var UABookmarkCellNib = UINib(nibName: "UABookmarkCell", bundle: nil)
         
-        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
+        self.registerNibs();
         
         self.mainTable.addInfiniteScrollingWithActionHandler { () -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -34,6 +35,13 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         self.mainTable.triggerInfiniteScrolling()
+    }
+    
+    func registerNibs() {
+//        self.mainTable.registerNib(UABookmarkCellNib, forCellReuseIdentifier: "UABookmarkCell")
+        
+        var UAProjectCellNib = UINib(nibName: "UAProjectCell", bundle: nil)
+        self.mainTable.registerNib(UAProjectCellNib, forCellReuseIdentifier: "UAProjectCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +78,35 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
 //        
 //        return cell!
         
-        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as UABookmarkCell
+        
+        // bookmark
+//        var cell:UABookmarkCell = self.mainTable.dequeueReusableCellWithIdentifier("UABookmarkCell") as! UABookmarkCell
+//        
+//        cell.setCell(self.entries[indexPath.row])
+//        
+//        return cell
+        
+        var cell:UAProjectCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         
         cell.setCell(self.entries[indexPath.row])
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let base: CGFloat = 169.0
+        var companyNameHeight: CGFloat = 0.0
+        
+        let projectNameHeight = self.entries[indexPath.row].name.getHeightForView(288, font: UIFont(name: "Helvetica Neue", size: 17.0)!)
+        
+        if let companyName = self.entries[indexPath.row].company!.name {
+            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "HelveticaNeue-Thin", size: 14.0)!)
+        }
+        
+        return base + projectNameHeight + companyNameHeight
+        
+        //        return 206
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -86,12 +118,41 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if self.selectDisabled != -1 {
+            if indexPath.row != self.selectDisabled {
+                self.mainTable.deselectRowAtIndexPath(indexPath, animated: true)
+            }
+        } else {
+            self.selectDisabled = indexPath.row
+            
+            var competenceService = CompetenceService()
+            competenceService.getEntries(self.entries[indexPath.row].id, projectStep: 0, success: { (competences) -> Void in
+                if competences.count > 0 {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.entries[indexPath.row].id
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                    
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                } else {
+                    var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
+                    
+                    // set project id
+                    projectViewController.projectId = self.entries[indexPath.row].id
+                    
+                    self.navigationController?.pushViewController(projectViewController, animated: true)
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                }
+                self.selectDisabled = -1
+                }) { () -> Void in
+                self.selectDisabled = -1
+            }
+        }
     }
     
     func getEntries(success: () -> Void, error: () -> Void) {
         // /api/mobile/profile/getbookmarks/
-        let url: String = "https://\(APIURL)/api/mobile/profile/getbookmarks"
+        let url: String = "\(APIURL)/api/mobile/profile/getbookmarks"
         
         Alamofire.request(.GET, url, parameters: ["page": page])
         .responseJSON { (_, _, JSON, errors) -> Void in
@@ -104,7 +165,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
                 let ProjectModelView = UAProjectViewModel()
                 
                 // get get objects from JSON
-                var array = ProjectModelView.getBookmarksFromJSON(JSON as [Dictionary<String, AnyObject>])
+                var array = ProjectModelView.getBookmarksFromJSON(JSON as! [Dictionary<String, AnyObject>])
                 
                 // merge two arrays
                 self.entries = self.entries + array
@@ -128,7 +189,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.infiniteScrollingView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Bookmarks infinite load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -148,7 +209,7 @@ class BookmarksViewController: UIViewController, UITableViewDataSource, UITableV
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.mainTable.pullToRefreshView.stopAnimating()
-            }, {() -> Void in
+            }, error: {() -> Void in
                 println("Bookmarks pull to refresh load error")
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false

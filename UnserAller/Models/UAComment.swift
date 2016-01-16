@@ -13,26 +13,40 @@ class UAComment: UACellObject {
     var user: UAUser!
     var language: String!
     var updated: NSDate!
+    var isDeleted: Bool = false
+    var isOwner: Bool = false
     
     
     func initCommentWithJSON(json: Dictionary<String, AnyObject>) -> UAComment {
 
         if let _user = json["user"] as? Dictionary<String, AnyObject> {
-            let firstName = _user["firstname"] as String
-            let lastName = _user["lastname"] as String
+            let firstName = _user["firstname"] as! String
+            let lastName = _user["lastname"] as! String
+            let userId = UInt((_user["id"] as AnyObject!).integerValue)
             
-            self.user = UAUser(id: UInt((_user["id"] as AnyObject!).integerValue), fullName: "\(firstName) \(lastName)")
+            self.user = UAUser(id: userId, fullName: "\(firstName) \(lastName)")
+            
+            self.isOwner = (userId == UserShared.sharedInstance.id)
+        }
+        
+        if let commentId = json["id"] as? UInt {
+            self.id = commentId
         }
         
         // set content
-        self.content = json["content"] as String
+        self.content = json["content"] as! String
 
         // set lang
-        self.language = json["language"] as String
+        self.language = json["language"] as! String
 
         // set updated
-        if let _updated = json["updated"] as? NSString {
-            self.updated = self.getDateFromString("2014-11-22T09:49:56+01:00")
+        if let _updated = json["updated"] as? String {
+            self.updated = _updated.getDateFromLongString()
+        }
+        
+        if let _deleted = json["deleted"] as? String {
+            self.isDeleted = true
+//            self.deleted = _deleted.getDateFromLongString()
         }
         
         // cell type
@@ -54,7 +68,7 @@ class UAComment: UACellObject {
     *  Get NSDate from string
     *
     */
-    override func getDateFromString(string: String) -> NSDate {
+    func getDateFromString(string: String) -> NSDate {
         var formatter:NSDateFormatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 

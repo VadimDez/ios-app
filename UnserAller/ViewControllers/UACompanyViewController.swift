@@ -25,6 +25,10 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         // register all nibs
         self.registerNibs()
 
+//        let btn = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem., target: nil, action: nil)
+//        self.navigationItem.leftBarButtonItem = btn
+//        self.navigationItem.backBarButtonItem = btn
+        
         self.getCompanyWithProjects({ () -> Void in
             self.loadCompanyImage()
             
@@ -32,6 +36,12 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
         }, error: { () -> Void in
             
         })
+    }
+
+    override func viewWillAppear(animated: Bool) {
+        self.navigationItem.title = self.company.name
+        
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +76,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: table view delegates
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as UAProjectCell
+        var projectCell: UAProjectCell = self.projectsTable.dequeueReusableCellWithIdentifier("UAProjectCell") as! UAProjectCell
         projectCell.setCell(self.company.projects[indexPath.row])
         return projectCell
     }
@@ -86,15 +96,26 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     :param: indexPath
     */
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as ProjectViewController
+        var projectViewController: ProjectViewController = self.storyboard?.instantiateViewControllerWithIdentifier("Project") as! ProjectViewController
         
         // set project id
         projectViewController.projectId = self.company.projects[indexPath.row].id
         
         self.navigationController?.pushViewController(projectViewController, animated: true)
+        self.projectsTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
     
-    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let base: CGFloat = 169.0
+        var companyNameHeight: CGFloat = 0.0
+        let projectNameHeight = self.company.projects[indexPath.row].name.getHeightForView(288, font: UIFont(name: "Helvetica Neue", size: 17.0)!)
+
+        if let companyName = self.company.name {
+            companyNameHeight = companyName.getHeightForView(288, font: UIFont(name: "HelveticaNeue-Thin", size: 14.0)!)
+        }
+        
+        return base + projectNameHeight + companyNameHeight
+    }
     
     // MARK: load functions
     
@@ -105,8 +126,8 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     */
     func getCompanyWithProjects(success:() -> Void, error: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/company/get/"
-        
+        let url: String = "\(APIURL)/api/mobile/company/get/"
+
         // get entries
         Alamofire.request(.GET, url, parameters: ["id": self.company.id])
             .responseJSON { (_,_,JSON,errors) in
@@ -117,7 +138,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
                     // error block
                     error()
                 } else {
-                    self.company.setCompanyFromJSON(JSON?.objectAtIndex(0).objectForKey("company") as Dictionary<String, AnyObject>)
+                    self.company.setCompanyFromJSON(JSON?.objectAtIndex(0).objectForKey("company") as! Dictionary<String, AnyObject>)
                     
                     success()
                 }
@@ -126,7 +147,7 @@ class UACompanyViewController: UIViewController, UITableViewDataSource, UITableV
     
     func loadCompanyImage() {
         // load profile image
-        let url = "https://\(APIURL)/media/scale/\(self.company.imageHash)/180/320";
+        let url = "\(APIURL)/media/scale/\(self.company.imageHash)/180/320"
         let request = NSURLRequest(URL: NSURL(string: url)!)
         
         self.companyImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self] (request:NSURLRequest!,response:NSHTTPURLResponse!, image:UIImage!) -> Void in

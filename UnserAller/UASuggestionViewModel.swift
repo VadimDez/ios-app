@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Vadym Yatsyuk. All rights reserved.
 //
 
-import Foundation
+import Alamofire
 
 class UASuggestionViewModel {
     
     var suggestion: UASuggestion = UASuggestion()
-    
     
     /**
      *  Get suggestions array from JSON
@@ -23,43 +22,34 @@ class UASuggestionViewModel {
         for object in data {
             // clean
             suggestion = UASuggestion()
-
-            // check if empty
-            // TODO: needs to be validated
-            if (object["suggestion"] != nil && !(object["suggestion"] is NSNull)) {
-
-                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
-                
-                if object["media"] != nil {
-                    
-                    if (isSuggest) {
-                        self.getSuggestIncludingImages(object)
-                    } else {
-                        self.getVoteIncludeImagesWithObject(object)
-                    }
-                } else {
-                    
-                    if (isSuggest) {
-                        self.getSuggestion(object)
-                    } else {
-                        self.getVote(object)
-                    }
-                }
-                
-            } else {
-                
-                if (object["media"] != nil) {
-                    self.getNewsIncludeImages(object)
-                } else {
-                    self.getNews(object)
-                }
-            }
+            
+            self.parseSuggestion(object)
             
             // add suggestion object to array
             suggestions.append(suggestion)
         }
         
         return suggestions
+    }
+    
+    func parseSuggestion(object: Dictionary<String, AnyObject>) {
+        let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
+
+        if object["media"] != nil {
+            
+            if (isSuggest) {
+                self.getSuggestIncludingImages(object)
+            } else {
+                self.getVoteIncludeImagesWithObject(object)
+            }
+        } else {
+            
+            if (isSuggest) {
+                self.getSuggestion(object)
+            } else {
+                self.getVote(object)
+            }
+        }
     }
     
     
@@ -94,7 +84,7 @@ class UASuggestionViewModel {
             // check if empty
             // TODO: needs to be validated
             if object["suggestion"] != nil {
-                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as String) == "suggest") ? true : false
+                let isSuggest = ((object["suggestion"]?.objectForKey("phaseType") as! String) == "suggest") ? true : false
                 
                 if object["suggestion"]?.objectForKey("mediaSuggestion") != nil && object["suggestion"]?.objectForKey("mediaSuggestion")?.count > 0 {
                     
@@ -187,5 +177,81 @@ class UASuggestionViewModel {
     }
     func getVoteIncludeImagesForProjectWithObject(object: AnyObject) {
         suggestion = UASuggestion().initVoteIncludeImagesForProjectWithObject(object)
+    }
+    
+    /**
+     * Delete suggestion
+     */
+    func delete(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/\(suggestion.suggestionId)"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.DELETE, url, parameters: nil)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
+    }
+    
+    /**
+     * Restore suggestion
+     */
+    func restore(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/restore/\(suggestion.suggestionId)"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.POST, url, parameters: nil)
+            .responseJSON { (_,_,JSON,errors) in
+                
+                if (errors != nil || JSON?.count == 0) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
+    }
+    
+    /**
+     * Restore suggestion
+     */
+    func update(suggestion: UASuggestion, success: () -> Void, error: () -> Void) {
+        let url: String = "\(APIURL)/api/v1/suggestion/update/"
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        Alamofire.request(.POST, url, parameters: ["id": suggestion.suggestionId, "suggestion": suggestion.content, "language": "en"])
+            .response { (_,_,answer,errors) in
+                println(errors)
+                println(answer)
+                if (errors != nil) {
+                    // print error
+                    println(errors)
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    // error block
+                    error()
+                } else {
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    success()
+                }
+        }
     }
 }

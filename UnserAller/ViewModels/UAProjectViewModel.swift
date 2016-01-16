@@ -16,19 +16,8 @@ class UAProjectViewModel: NSObject {
         var projects: [UAProject] = []
         
         for object in data {
-            var project: UAProject = UAProject()
-            
-            // check if has id
-            if let id = object["id"] as? UInt {
-                // check if has a name
-                if let name = object["name"] as? String {
-                    // set params
-                    project.initWithParams(id, name: name)
-                    
-                    // add project to project list
-                    projects.append(project)
-                }
-            }
+            // add project to project list
+            projects.append(self.projectFromJSON(object))
         }
         
         return projects
@@ -47,7 +36,7 @@ class UAProjectViewModel: NSObject {
         return projects
     }
     
-    func projectFromJSON(object:Dictionary<String, AnyObject>) -> UAProject {
+    func projectFromJSON(object: Dictionary<String, AnyObject>) -> UAProject {
         var project = UAProject()
         project.company = UACompany()
         
@@ -60,8 +49,25 @@ class UAProjectViewModel: NSObject {
         if let title = object["title"] as? String {
             project.title = title
         }
-        if let company = object["company"] as? String {
-            project.company.name = company
+
+        // save company
+        if let company = object["company"] as? Dictionary<String, AnyObject> {
+            
+            if let companyId = company["id"] as? UInt {
+                project.company.id = companyId
+            }
+            
+            if let companyName = company["name"] as? String {
+                project.company.name = companyName
+            }
+        }
+        
+        if let images = object["images"] as? Dictionary<String, AnyObject> {
+            if let projectImage = images["projectImage"] as? Dictionary<String, AnyObject> {
+                if let link = projectImage["link"] as? Dictionary<String, String> {
+                    project.imageUrl = link["href"]!
+                }
+            }
         }
         
         return project
@@ -86,6 +92,15 @@ class UAProjectViewModel: NSObject {
                 phase.type = type
             }
             
+            // if old phase - take phase type as name
+            if (phase.name == nil) {
+                if (phase.type != nil) {
+                    phase.name = phase.type
+                } else {
+                    phase.name = ""
+                }
+            }
+            
             phases.append(phase)
         }
         
@@ -103,15 +118,15 @@ class UAProjectViewModel: NSObject {
         var project = UAProject()
         
         // set id
-        project.id = json["id"] as UInt
+        project.id = json["id"] as! UInt
         
         // set name
         project.name = json["name"] as? String
         
         // set image hash
-        if let img = json["image"] as? String {
-            project.imageHash = img
-        }
+//        if let img = json["image"] as? String {
+//            project.imageHash = img
+//        }
         
         // set bookmarked value
         project.bookmarked = ((json["bookmarked"] as? Int) == 1)
@@ -122,7 +137,7 @@ class UAProjectViewModel: NSObject {
         // set company
         project.company = UACompany()
         if let company = json["company"] as? Dictionary<String, AnyObject> {
-            project.company.id = company["id"] as UInt
+            project.company.id = company["id"] as! UInt
             project.company.name = company["name"] as? String
         }
         

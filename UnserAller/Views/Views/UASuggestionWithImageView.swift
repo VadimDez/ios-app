@@ -8,9 +8,10 @@
 
 import UIKit
 
-class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate {
+class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
+    var mediaHelper: MediaHelper = MediaHelper()
     
     /*
     // Only override drawRect: if you perform custom drawing.
@@ -23,21 +24,36 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     func setUp(suggestion: UASuggestion) {
         
         self.suggestion = suggestion
+        self.mediaHelper.mediaCount = self.suggestion.media.count
         
         self.registerNibs()
         
         self.imageCollectionView.delegate = self
         self.imageCollectionView.dataSource = self
         
-        self.titleLabel.text = suggestion.userName
-        self.subtitleLabel.text = suggestion.projectName
-        self.contentLabel.text = suggestion.content
-        self.likeLabel.text = "\(suggestion.likeCount)"
-        self.commentLabel.text = "\(suggestion.commentCount)"
+        self.titleLabel.text    = suggestion.userName
+        self.projectButton.setTitle(suggestion.projectName, forState: UIControlState.Normal)
+//        self.subtitleLabel.text = suggestion.projectName
+        self.contentLabel.text  = suggestion.content
+        self.likeLabel.text     = "\(suggestion.likeCount)"
+        self.commentLabel.text  = "\(suggestion.commentCount)"
+        self.dateLabel.text     = suggestion.updated.getStringFromDate()
         
         self.adjustHeight(suggestion.content, imageQuantity: suggestion.media.count)
         self.makeRoundCorners()
         self.loadMainImage(suggestion.userId, width: 40, height: 40)
+        self.loadProjectImage(suggestion.projectId, width: 10, height: 20)
+        
+        // clear color
+        self.imageCollectionView.backgroundColor = UIColor.clearColor()
+        
+        // if liked - tint heart
+        self.toggleLikeColor()
+        
+        // set button with indicator
+        self.sendNewCommentButton.hideTextWhenLoading = true
+        self.sendNewCommentButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendNewCommentButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
     }
     
     func registerNibs() {
@@ -45,6 +61,7 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         self.imageCollectionView.registerNib(UACollectionViewCellNib, forCellWithReuseIdentifier: "UACollectionViewCell")
     }
     
+    // MARK: - collection view
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.suggestion.media.count
     }
@@ -54,8 +71,11 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as UACollectionViewCell
+        var cell: UACollectionViewCell = self.imageCollectionView.dequeueReusableCellWithReuseIdentifier("UACollectionViewCell", forIndexPath: indexPath) as! UACollectionViewCell
+        
+        cell.size = self.mediaHelper.getSizeForIndex(indexPath.row)
         cell.setCell(self.suggestion.media[indexPath.row])
+        
         return cell
     }
     
@@ -63,5 +83,23 @@ class UASuggestionWithImageView: UASuggestionHeaderView, UICollectionViewDataSou
         let object: Dictionary<String, AnyObject> = ["actual": indexPath.row, "media": self.suggestion.media]
         
         NSNotificationCenter.defaultCenter().postNotificationName("didSelectItemFromCollectionView", object: object)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        self.mediaHelper.frameMaxWidth = self.imageCollectionView.bounds.width
+        return self.mediaHelper.getSizeForIndex(indexPath.row)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        println("HERE")
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        return 0
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "05F1BC04FE0D4E7BB37229B2"
-               BuildableName = "libPods-UnserAller-IDMPhotoBrowser.a"
+               BlueprintIdentifier = "93D69C035229A4ACB51FA402"
+               BuildableName = "IDMPhotoBrowser.framework"
                BlueprintName = "Pods-UnserAller-IDMPhotoBrowser"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

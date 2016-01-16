@@ -9,7 +9,16 @@
 import UIKit
 import Alamofire
 
-class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MWPhotoBrowserDelegate, FloatRatingViewDelegate, UAEditorDelegate {
+class ProjectViewController:
+        UIViewControllerWithMedia,
+        UITableViewDelegate,
+        UITableViewDataSource,
+        UICollectionViewDelegate,
+        UICollectionViewDataSource,
+        UICollectionViewDelegateFlowLayout,
+        FloatRatingViewDelegate,
+        UAEditorDelegate
+{
     
     @IBOutlet weak var mainTable: UITableView!
     @IBOutlet weak var tableHeader: UIView!
@@ -18,10 +27,12 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var projectName: UILabel!
     @IBOutlet weak var projectCompanyName: UIButton!
     @IBOutlet weak var sendSuggestionInput: UITextField!
-    @IBOutlet weak var sendSuggestionBtn: UIButton!
+    @IBOutlet weak var sendSuggestionBtn: RNLoadingButton!
     @IBOutlet weak var phaseContent: UILabel!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var bookmarkImage: UIImageView!
+    @IBOutlet weak var projectNameBackground: UIView!
+    @IBOutlet weak var transparentEditorBtn: UIButton!
 
     var project: UAProject!
     var projectId: UInt = 0
@@ -33,48 +44,84 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     var type: String = ""
     var active: Bool = false
     var news = false
-    var photos: [MWPhotoObj] = []
     var votingDisabled = false
+    var newsPhaseCount = 0
+    var hasCompetences: Bool = false
+    var mediaHelper: MediaHelper = MediaHelper()
+    var allowNewSuggesitons: Bool = false
+    
+    var getRequest: Alamofire.Request!
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        self.registerNotifications()
+        
+        self.sendSuggestionInput.enabled = false
+        self.sendSuggestionBtn.enabled = false
+        
+        if self.type == "survey" && self.hasCompetences {
+            self.checkCompetences()
+        }
+        self.mainTable.reloadData()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeNotifications()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setDelegates()
         // nib
         self.registerNibs()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "didSelectItemFromCollectionView:", name: "didSelectItemFromCollectionView", object: nil)
-        
         self.configureLayout()
         
-        
         self.startLoad { () -> Void in
+            
+            // set news to 1
+            self.newsPhaseCount = 1
+            // reload collection
+            self.phaseCollection.reloadData()
+            
             // check if there's at least one phase
             if (self.phasesArray.count > 0) {
-                // reload collection
-                self.phaseCollection.reloadData()
                 
                 // set first phase as actial one
                 self.actualPhaseId = self.phasesArray[0].id
                 
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                
+                
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                     
-                    self.updatePhase(jsonResponse, success: { () -> Void in
-                        
-                        self.entries = []
-                        self.loadSuggestions({ () -> Void in
-                            
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            }, failure: { () -> Void in
+                    if jsonResponse.count > 0 {
+                        self.updatePhase(jsonResponse, success: { () -> Void in
+                            self.entries = []
+                            if self.active {
+                                self.allowNewSuggesitons = true
+                                self.sendSuggestionInput.enabled = true
+                                self.sendSuggestionBtn.enabled = true
                                 
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                self.loadSuggestions({ () -> Void in
+                                    
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                        
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                })
+                            }
                         })
-                    })
-                    }, failure: { () -> Void in
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    }
+                }, failure: { () -> Void in
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
+                
             }
         }
         
@@ -84,6 +131,17 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             self.infiniteLoad()
         }
+        
+        self.setProjectBg()
+        
+        // set button with indicator
+        self.sendSuggestionBtn.hideTextWhenLoading = true
+        self.sendSuggestionBtn.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.sendSuggestionBtn.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.Gray, forState: UIControlState.Disabled)
+    }
+    
+    func setProjectBg() -> Void {
+        self.projectNameBackground.layerGradient(UIColor.clearColor(), color2: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.1), color3: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2), color4: UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.25))
     }
     
     /**
@@ -115,7 +173,6 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.mainTable.registerNib(UASuggestionVoteCellNib, forCellReuseIdentifier: "UASuggestionVoteCell")
         var UASuggestionVoteImageCellNib = UINib(nibName: "UASuggestionVoteImageCell", bundle: nil)
         self.mainTable.registerNib(UASuggestionVoteImageCellNib, forCellReuseIdentifier: "UASuggestionVoteImageCell")
-
     }
     
     /**
@@ -148,11 +205,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             let projectViewModel = UAProjectViewModel()
-            self.project = projectViewModel.getProjectForProject(json.objectForKey("project") as Dictionary<String, AnyObject>)
+            self.project = projectViewModel.getProjectForProject(json.objectForKey("project") as! Dictionary<String, AnyObject>)
             
             // update project info
             self.updateProjectInfo()
-            
             
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             // get phases
@@ -183,34 +239,55 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
     }
-    
+
+
     func refresh() {
         self.page = 0
         
         self.startLoad { () -> Void in
+            
             if (!self.news) {
                 
                 // load phase
                 self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
                     
+                    if jsonResponse.count > 0 {
                         self.updatePhase(jsonResponse, success: { () -> Void in
                             self.entries = []
-                            self.loadSuggestions({ () -> Void in
+                            
+                            if self.active {
+                                if self.type == "survey" {
+                                    self.checkCompetences()
+                                } else {
+                                    self.loadSuggestions({ () -> Void in
+                                        
+                                        self.mainTable.pullToRefreshView.stopAnimating()
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                        
+                                        self.mainTable.pullToRefreshView.stopAnimating()
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    })
+                                }
+                            } else {
                                 
                                 self.mainTable.pullToRefreshView.stopAnimating()
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            }, failure: { () -> Void in
-                                
-                                self.mainTable.pullToRefreshView.stopAnimating()
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
+                            }
+
                         })
-                    }, failure: { () -> Void in
-                        
+                    }
+                    
+                }, failure: { () -> Void in
+                    
+                    self.mainTable.pullToRefreshView.stopAnimating()
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
                 
                 
             } else {
+                
                 self.loadNews({ () -> Void in
                     self.mainTable.reloadData()
                     
@@ -219,6 +296,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // active activity indicator
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
+                    }, failure: { () -> Void in
+                        
+                    self.mainTable.pullToRefreshView.stopAnimating()
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 })
             }
         }
@@ -232,31 +313,46 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         // increment page
         self.page += 1
         
-        if (!self.news) {
-            self.loadSuggestions({ () -> Void in
-                // reload data
+        if !self.news {
+            if self.active {
+                if self.type == "survey" {
+                    self.checkCompetences()
+                } else {
+                    self.loadSuggestions({ () -> Void in
+                        // reload data
+                        self.mainTable.reloadData()
+                        
+                        self.mainTable.infiniteScrollingView.stopAnimating()
+                        
+                        // active activity indicator
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        }, failure: { () -> Void in
+                            println("Project infiniteload error")
+                            
+                            self.mainTable.infiniteScrollingView.stopAnimating()
+                            // active activity indicator
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
+                }
+            } else {
+                self.mainTable.infiniteScrollingView.stopAnimating()
+            }
+        } else {
+            self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
                 
                 self.mainTable.infiniteScrollingView.stopAnimating()
                 
                 // active activity indicator
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
                 }, failure: { () -> Void in
                     println("Project infiniteload error")
                     
                     self.mainTable.infiniteScrollingView.stopAnimating()
+                    
                     // active activity indicator
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            })
-        } else {
-            self.loadNews({ () -> Void in
-                self.mainTable.reloadData()
-                
-                self.mainTable.pullToRefreshView.stopAnimating()
-                
-                // active activity indicator
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                
             })
         }
     }
@@ -279,13 +375,14 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         
         // get step text
-        var phaseText = ""
+        var phaseText: String = ""
         if let shortText = jsonResponse.objectForKey("shortText") as? String {
             phaseText = "\(shortText)"
         }
         if let text = jsonResponse.objectForKey("text") as? String {
             phaseText = "\(phaseText)\(text)"
         }
+        phaseText = phaseText.html2String()
         
         self.phaseContent.text = phaseText
         self.adjustTableHeader()
@@ -297,21 +394,28 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var startDate: String = ""
         var endDate: String = ""
+        var allowNewSuggestion = true
         
         // end date
         if (!(jsonResponse.objectForKey("endDate") is NSNull)) {
-            endDate = jsonResponse.objectForKey("endDate")?.objectForKey("date") as String!
+            endDate = jsonResponse.objectForKey("endDate")?.objectForKey("date") as! String!
         }
         // start date
         if let start: AnyObject = jsonResponse.objectForKey("startDate") {
-            startDate = start.objectForKey("date") as String!
+            startDate = start.objectForKey("date") as! String!
         }
-        // check active
+        
+        if let allowSuggestions: UInt = jsonResponse.objectForKey("allowNewSuggestions") as? UInt {
+            allowNewSuggestion = (allowSuggestions == 1)
+        }
+        
+        // check active step
         self.active = self.checkActive(startDate, end: endDate)
         
         // disable or enable posting suggestion
-        self.sendSuggestionBtn.enabled = self.active
-        self.sendSuggestionInput.enabled = self.active
+        self.sendSuggestionBtn.enabled = allowNewSuggestion && self.active
+        self.sendSuggestionInput.enabled = allowNewSuggestion && self.active
+        self.transparentEditorBtn.enabled = allowNewSuggestion && self.active
         
         success()
     }
@@ -322,25 +426,59 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.type == "survey" {
+            return 1
+        }
         return self.entries.count
     }
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var suggestionVC: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as UASuggestionViewController
-        suggestionVC.suggestion = self.entries[indexPath.row] as UASuggestion
-        
-        self.navigationController?.pushViewController(suggestionVC, animated: true)
+        if (!news) {
+            if self.type == "survey" {
+                if self.hasCompetences {
+                    var competenceVC = self.storyboard?.instantiateViewControllerWithIdentifier("CompetenceVC") as! CompetenceViewController
+                    competenceVC.projectId = self.projectId
+                    competenceVC.projectStepId = self.stepId
+                    self.navigationController?.pushViewController(competenceVC, animated: true)
+                }
+            } else {
+                var detailViewController: UASuggestionViewController = self.storyboard?.instantiateViewControllerWithIdentifier("SuggestionVC") as! UASuggestionViewController
+                
+                detailViewController.suggestion = self.entries[indexPath.row] as! UASuggestion
+                self.navigationController?.pushViewController(detailViewController, animated: true)
+            }
+        } else {
+            var detailViewController: NewsViewController = self.storyboard?.instantiateViewControllerWithIdentifier("NewsVC") as! NewsViewController
+            detailViewController.news = self.entries[indexPath.row] as! UANews
+            self.navigationController?.pushViewController(detailViewController, animated: true)
+        }
+
         self.mainTable.deselectRowAtIndexPath(indexPath, animated: false)
     }
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        switch self.entries[indexPath.row].cellType {
-            case "SuggestionCell":          return self.getSuggestCellForRow(indexPath.row)
-            case "UAProjectNewsCell":       return self.getNewsCellForRow(indexPath.row)
-            case "UASuggestImageCell":      return self.getSuggestImageCellForRow(indexPath.row)
-            case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
-            case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
-        default: break;
+        if self.type == "survey" {
+            if self.hasCompetences {
+                var cell = UITableViewCell()
+                cell.textLabel?.text = "go to survey"
+                return cell
+            } else {
+                var cell = UITableViewCell()
+                cell.textLabel?.text = "You finished the survey"
+                return cell
+            }
+        } else {
+            switch self.entries[indexPath.row].cellType {
+                case "SuggestionCell":              return self.getSuggestCellForRow(indexPath.row)
+                case "UAProjectNewsCell":           return self.getNewsCellForRow(indexPath.row)
+                case "UASuggestImageCell":          return self.getSuggestImageCellForRow(indexPath.row)
+                case "UASuggestionVoteCell":        return self.getVoteCellForRow(indexPath.row)
+                case "UASuggestionVoteImageCell":   return self.getVoteImageCellForRow(indexPath.row)
+                default: break;
+            }
         }
         return self.defaultCell(indexPath.row)
     }
@@ -349,8 +487,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      *  Get suggest cell without images
      */
     func getSuggestCellForRow(row: Int) -> UASuggestionCell {
-        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as UASuggestionCell
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        var cell: UASuggestionCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionCell") as! UASuggestionCell
+        
+        self.setProjectToSuggestionWithIndex(row)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -358,8 +498,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggest cell with image
     */
     func getSuggestImageCellForRow(row: Int) -> UASuggestImageCell {
-        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as UASuggestImageCell
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        var cell: UASuggestImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestImageCell") as! UASuggestImageCell
+        
+        self.setProjectToSuggestionWithIndex(row)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -367,8 +509,10 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      *  Get project news cell
      */
     func getNewsCellForRow(row: Int) -> UAProjectNewsCell {
-        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as UAProjectNewsCell
-        cell.setCellForProjectPhase(self.entries[row] as UANews)
+        var cell: UAProjectNewsCell = self.mainTable.dequeueReusableCellWithIdentifier("UAProjectNewsCell") as! UAProjectNewsCell
+        
+        self.setProjectToSuggestionWithIndex(row)
+        cell.setCellForProjectPhase(self.entries[row] as! UANews)
         return cell
     }
     
@@ -376,10 +520,14 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggestion vote cell
     */
     func getVoteCellForRow(row: Int) -> UASuggestionVoteCell {
-        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as UASuggestionVoteCell
-        cell.ratingView.delegate = self
-        cell.ratingView.tag = row
-        cell.setCellForPhase(self.entries[row] as UASuggestion)
+        var cell: UASuggestionVoteCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteCell") as! UASuggestionVoteCell
+        if (self.entries[row] as! UASuggestion).isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.tag = row
+        }
+        
+        self.setProjectToSuggestionWithIndex(row)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
     }
     
@@ -387,11 +535,21 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     *  Get suggestion vote cell
     */
     func getVoteImageCellForRow(row: Int) -> UASuggestionVoteImageCell {
-        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as UASuggestionVoteImageCell
-        cell.ratingView.delegate = self
-        cell.ratingView.tag = row
-        cell.setCellForHome(self.entries[row] as UASuggestion)
+        var cell: UASuggestionVoteImageCell = self.mainTable.dequeueReusableCellWithIdentifier("UASuggestionVoteImageCell") as! UASuggestionVoteImageCell
+        println((self.entries[row] as! UASuggestion).isReleased)
+        if (self.entries[row] as! UASuggestion).isReleased {
+            cell.ratingView.delegate = self
+            cell.ratingView.tag = row
+        }
+        
+        self.setProjectToSuggestionWithIndex(row)
+        cell.setCellForPhase(self.entries[row] as! UASuggestion)
         return cell
+    }
+    
+    private func setProjectToSuggestionWithIndex(index: Int) {
+        (self.entries[index] as! UASuggestion).projectId = self.project.id
+        (self.entries[index] as! UASuggestion).projectName = self.project.name
     }
     
     func defaultCell(row: Int) -> UITableViewCell {
@@ -405,48 +563,56 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      * Define height for cell
      */
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let base: CGFloat = (news) ? 45.0 : 110.0
+        let base: CGFloat!
+        var content: CGFloat = 0
         
         if (self.entries.count == 0) {
-            return base
+            if (self.type == "survey") {
+                return 50.0
+            }
+            return 0
         }
         
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = 290
-        frame.size.height = CGFloat(MAXFLOAT)
+        var media: CGFloat = self.mediaHelper.getHeightForMedias(self.entries[indexPath.row].media.count, maxWidth: self.mainTable.frame.width - 24.0)
         
-        var label: UILabel = UILabel(frame: frame)
-        label.text = self.entries[indexPath.row].content
-        label.font = UIFont(name: "Helvetica Neue", size: 14)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
-        
-        var media:CGFloat = 0.0
-        if (self.entries[indexPath.row].media.count > 0) {
-            media = 50.0 + CGFloat((self.entries[indexPath.row].media.count/5) * 50)
+        if (self.news) {
+            base = 50.0
+            content = self.entries[indexPath.row].content.getHeightForView(280, font: UIFont(name: "Helvetica Neue", size: 14)!)
+            content += (self.entries[indexPath.row] as! UANews).title.getHeightForView(280, font: UIFont(name: "Helvetica Neue", size: 16)!)
+        } else {
+            base = 110.0
+            content = self.entries[indexPath.row].content.getHeightForView(290, font: UIFont(name: "Helvetica Neue", size: 14)!)
         }
         
-        return base + label.frame.size.height + media
+        return base + content + media
     }
     
-    /**
-     * Collection view delegates
-     */
+    // MARK: Collection view delegates
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(0, 0, 0, 0)
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
-        var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as UAPhaseCell
+        var cell:UAPhaseCell = self.phaseCollection.dequeueReusableCellWithReuseIdentifier("UAPhaseCell", forIndexPath: indexPath) as! UAPhaseCell
+
+        cell.hideLines(false)
+        cell.resetFont()
         
+//        if (self.phasesArray.count == 0) {
+//            return cell
+//        }
+
         if (indexPath.row == 0) {
             cell.setNewsCell()
-        } else {
-            cell.setPhaseName(phasesArray[indexPath.row - 1].name)
             
+            if self.news {
+                cell.setSelected()
+            }
+        } else {
+            cell.setPhaseName(self.phasesArray[indexPath.row - 1].name)
+
             let totalPhases = self.phasesArray.count
+            
             if ((totalPhases - indexPath.row) == 0) {
                 // last element
                 cell.lastElement()
@@ -455,13 +621,22 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 // first element
                 cell.firstElement()
             }
+            
+            
+            if !self.news && self.phasesArray[indexPath.row - 1].id == self.actualPhaseId {
+                cell.setSelected()
+            }
+            println(indexPath.row)
+            println(cell.leftLine.hidden)
+            println(cell.rightLine.hidden)
         }
         
         return cell
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        println(phasesArray.count + self.newsPhaseCount)
         // +1 for "NEWS"
-        return phasesArray.count + 1
+        return phasesArray.count + self.newsPhaseCount
     }
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
@@ -469,90 +644,71 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var size: CGSize = CGSize(width: 0, height: 50.0)
         
-        if(indexPath.row == 0) {
+        if indexPath.row == 0 {
             size.width = 70.0
         } else {
-            
-            // count text
-            var frame: CGRect = CGRect()
-            frame.size.height = 17.0
-            frame.size.width = CGFloat(MAXFLOAT)
-            var label: UILabel = UILabel(frame: frame)
-            
-            label.text = self.phasesArray[indexPath.row - 1].name
-            label.font = UIFont(name: "Helvetica Neue", size: 14)
-            label.numberOfLines = 1
-            label.sizeToFit()
-            
-            
-            size.width = 20.0 + label.frame.width;
+            size.width = 20.0 + self.phasesArray[indexPath.row - 1].name.getWidthForView(17.0, font: UIFont(name: "Helvetica Neue", size: 14)!);
         }
         return size;
     }
+
+    /**
+     * did select
+     */
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+
         if (indexPath.row == 0) {
             // news
+            self.entries = []
             self.news = true
             self.entries = []
             
+            self.phaseCollection.reloadData()
+            self.mainTable.reloadData()
+            
             self.loadNews({ () -> Void in
                 self.mainTable.reloadData()
+                }, failure: { () -> Void in
+                    println("fail load news")
             })
             
         } else {
+            
+            self.type = ""
+            self.entries = []
+            self.mainTable.reloadData()
+            
             // suggestions
             self.news = false
             // set active phase id
             self.actualPhaseId = self.phasesArray[indexPath.row - 1].id
             
+            // upload cell
+            self.phaseCollection.reloadData()
+            
             // load phase/step info
             self.loadPhase(self.actualPhaseId, success: { (jsonResponse) -> Void in
-                self.updatePhase(jsonResponse, success: { () -> Void in
-                    
-                    self.entries = []
-                    self.loadSuggestions({ () -> Void in
+                
+                if jsonResponse.count > 0 {
+                    self.updatePhase(jsonResponse, success: { () -> Void in
                         
-                        }, failure: { () -> Void in
-                            
+                        if self.active {
+                            if self.type == "survey" {
+                                self.checkCompetences()
+                            } else {
+                                self.loadSuggestions({ () -> Void in
+                                    
+                                    }, failure: { () -> Void in
+                                        println("fail load suggestions")
+                                })
+                            }
+                        }
                     })
-                })
-            }, failure: { () -> Void in
-                
-            })
-        }
-    }
-    /**
-    * MWPhotoBrowser delegates
-    */
-    func numberOfPhotosInPhotoBrowser(photoBrowser: MWPhotoBrowser) -> UInt {
-        return UInt(self.photos.count)
-    }
-    
-    func photoBrowser(photoBrowser: MWPhotoBrowser!, photoAtIndex index: UInt) -> MWPhoto! {
-        if (Int(index) < self.photos.count) {
-            return self.photos[Int(index)];
-        }
-        return nil;
-    }
-    func didSelectItemFromCollectionView(notification: NSNotification) -> Void {
-        let cellData: Dictionary<String, AnyObject> = notification.object as Dictionary<String, AnyObject>
-        self.photos = []
-        if (!cellData.isEmpty) {
-            
-            if let medias: [UAMedia] = cellData["media"] as? [UAMedia] {
-                
-                for media: UAMedia in medias {
-                    let photo: MWPhotoObj = MWPhotoObj.photoWithURL(NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/\(media.width)/\(media.height)"))
-                    self.photos.append(photo)
                 }
                 
-                var browser: MWPhotoBrowser = MWPhotoBrowser(delegate: self)
-                
-                browser.showPreviousPhotoAnimated(true)
-                browser.showNextPhotoAnimated(true)
-                browser.setCurrentPhotoIndex(cellData["actual"] as UInt)
-                self.navigationController?.pushViewController(browser, animated: false)
-            }
+            }, failure: { () -> Void in
+                println("fail load phase")
+            })
         }
     }
     
@@ -561,7 +717,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      */
     func loadProject(success: (json: AnyObject) -> Void, error: () -> Void) {
         // build URL
-        let url: String = "https://\(APIURL)/api/mobile/project/get/\(self.projectId)"
+        let url: String = "\(APIURL)/api/mobile/project/get/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -588,7 +744,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.projectName.text = self.project.name
         self.navigationItem.title = self.project.name
         
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(self.project.imageHash)/320/188")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/api/v1/media/project/\(self.project.id)/width/320/height/188")!)
 
         self.projectImage.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             
@@ -608,7 +764,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     */
     func loadPhases(success: () -> Void, error: () -> Void) {
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
+        let url: String = "\(APIURL)/api/mobile/project/getphases/\(self.projectId)"
         
         // get entries
         Alamofire.request(.GET, url)
@@ -623,7 +779,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                 } else {
                     let projectViewModel: UAProjectViewModel = UAProjectViewModel()
 
-                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as [Dictionary<String, AnyObject>])
+                    let array = projectViewModel.getPhasesFromJSON(JSON?.objectForKey("phases") as! [Dictionary<String, AnyObject>])
+                    
                     self.phasesArray = self.phasesArray + array
                     
                     success()
@@ -637,13 +794,13 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func loadPhase(id: UInt, success: (jsonResponse: AnyObject) -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getstep/\(id)"
-        
+        let url: String = "\(APIURL)/api/mobile/project/getstep/\(id)"
+
         // GET
-        Alamofire.request(.GET, url)
+        self.getRequest = Alamofire.request(.GET, url)
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     // print error
                     println("Load phase error")
                     println(errors)
@@ -651,22 +808,11 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     failure()
                 } else {
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     success(jsonResponse: JSON!)
                 }
         }
-    }
-    
-    /**
-    *  Get NSDate from string
-    *
-    */
-    func getDateFromString(string: String) -> NSDate {
-        var formatter:NSDateFormatter = NSDateFormatter()
-        formatter.timeZone = NSTimeZone(name: "Europe/Berlin")
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        return formatter.dateFromString(string)!
     }
     
     /**
@@ -675,8 +821,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      * 3 Cases
      */
     func checkActive(start: String, end: String) -> Bool {
-        let endDate: NSDate = (end.isEmpty) ? NSDate(timeIntervalSinceNow: 1000) : self.getDateFromString(end)
-        let startDate: NSDate = self.getDateFromString(start)
+        let endDate: NSDate = (end.isEmpty) ? NSDate(timeIntervalSinceNow: 1000) : end.getDateFromString()
+        let startDate: NSDate = start.getDateFromString()
         let now: NSDate = NSDate()
         
         if (endDate.compare(now) == NSComparisonResult.OrderedDescending && now.compare(startDate) == NSComparisonResult.OrderedDescending) {
@@ -696,21 +842,9 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
      */
     func adjustTableHeader() {
         var mainFrame = self.mainTable.tableHeaderView?.frame
-
-        // count text
-        var frame: CGRect = CGRect()
-        frame.size.width = self.phaseContent.frame.width
-        frame.size.height = CGFloat(MAXFLOAT)
-        var label: UILabel = UILabel(frame: frame)
-        
-        label.text = self.phaseContent.text
-        label.font = UIFont(name: "Helvetica Neue", size: 15)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.sizeToFit()
         
         // set frame height
-        mainFrame?.size.height = label.frame.size.height + 290.0
+        mainFrame?.size.height = self.phaseContent.text!.getHeightForView(self.phaseContent.frame.width, font: UIFont(name: "Helvetica Neue", size: 15)!) + 290.0
         self.mainTable.tableHeaderView?.frame = mainFrame!
         self.mainTable.tableHeaderView = self.mainTable.tableHeaderView
     }
@@ -721,11 +855,17 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func loadSuggestions(success: () -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
+        // cancel previous request
+        if self.getRequest != nil {
+            println("cancel news")
+            self.getRequest.cancel()
+        }
+        
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/suggestions"
+        let url: String = "\(APIURL)/api/mobile/project/suggestions"
         
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "top", "page": self.page])
+        self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "step": self.stepId, "order": "newest", "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
                 if(errors != nil) {
@@ -737,8 +877,8 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     failure()
                 } else {
                     let suggestionVM = UASuggestionViewModel()
-                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
-                    
+                    self.entries = self.entries + suggestionVM.getSuggestionsForProjectFromJSON(JSON?.objectForKey("suggestions") as! [Dictionary<String, AnyObject>], isNews: self.news, type: self.type)
+
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
@@ -753,27 +893,35 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     /**
      *  Load project news
      */
-    func loadNews(success: () -> Void) -> Void {
+    func loadNews(success: () -> Void, failure: () -> Void) -> Void {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         // build url
-        let url: String = "https://\(APIURL)/api/mobile/project/getnews"
+        let url: String = "\(APIURL)/api/mobile/project/getnews"
+        
+        // cancel previous request
+        if self.getRequest != nil {
+            println("cancel suggestions")
+            self.getRequest.cancel()
+        }
         
         // GET
-        Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
+        self.getRequest = Alamofire.request(.GET, url, parameters: ["id": self.projectId, "page": self.page])
             .responseJSON { (_,_,JSON,errors) in
                 
-                if(errors != nil) {
+                if (errors != nil) {
                     // print error
                     println("Load project news error")
                     println(errors)
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    failure()
                 } else {
                     let newsViewModel = UANewsViewModel()
                     
                     // get news
-                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as [Dictionary<String, AnyObject>])
+                    self.entries = self.entries + newsViewModel.getNewsForProject(JSON as! [Dictionary<String, AnyObject>])
                     //
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     
@@ -792,7 +940,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func floatRatingView(ratingView: FloatRatingView, didUpdate rating: Float) {
         
         if (!self.votingDisabled) {
-            var suggestion: UASuggestion = self.entries[ratingView.tag] as UASuggestion
+            var suggestion: UASuggestion = self.entries[ratingView.tag] as! UASuggestion
             let votes: Int = (suggestion.userVotes == Int(rating)) ? 0 : Int(rating)
 
             // disable for a moment
@@ -800,22 +948,37 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             // TODO: check if it's own suggestion before send
             
+            
+            let likeCountBefore = (self.entries[ratingView.tag] as! UASuggestion).likeCount
+            let userVotesBefore = (self.entries[ratingView.tag] as! UASuggestion).userVotes
+            (self.entries[ratingView.tag] as! UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+            
+            (self.entries[ratingView.tag] as! UASuggestion).userVotes = votes
+            
+            // update only changed row
+            let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
+            self.mainTable.beginUpdates()
+            self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+            self.mainTable.endUpdates()
+            
             self.sendRating(suggestion.suggestionId, votes: votes, success: { () -> Void in
                 
-                (self.entries[ratingView.tag] as UASuggestion).likeCount = suggestion.likeCount - suggestion.userVotes + votes
+                self.votingDisabled = false
+            }, failure: { () -> Void in
                 
-                (self.entries[ratingView.tag] as UASuggestion).userVotes  = votes
+                self.votingDisabled = false
+                
+                (self.entries[ratingView.tag] as! UASuggestion).likeCount = likeCountBefore
+                
+                (self.entries[ratingView.tag] as! UASuggestion).userVotes = userVotesBefore
                 
                 // update only changed row
                 let indexPath: NSIndexPath = NSIndexPath(forRow: ratingView.tag, inSection: 0)
                 self.mainTable.beginUpdates()
                 self.mainTable.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
                 self.mainTable.endUpdates()
-                
-                self.votingDisabled = false
-                }) { () -> Void in
-                self.votingDisabled = false
-            }
+
+            })
         }
     }
     
@@ -825,7 +988,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func sendRating(id: UInt, votes: Int, success: () -> Void, failure: () -> Void) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "https://\(APIURL)/api/v1/suggestion/vote"
+        var url: String = "\(APIURL)/api/v1/suggestion/vote"
         
         Alamofire.request(.GET, url, parameters: ["id": id, "votes": votes])
             .responseJSON { (_,_,JSON,errors) in
@@ -850,49 +1013,63 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     :param: sender
     */
     @IBAction func showCompanyView(sender: AnyObject) {
-        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as UACompanyViewController
+        var companyVC: UACompanyViewController = self.storyboard?.instantiateViewControllerWithIdentifier("CompanyVC") as! UACompanyViewController
         companyVC.company = self.project.company
         self.navigationController?.pushViewController(companyVC, animated: true)
+
     }
     
-    
+    // MARK: new suggestion editor delegates
     /**
     Open editor
     
     :param: sender
     */
     @IBAction func openEditor(sender: AnyObject) {
-        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as UAEditorViewController
         
-        editor.delegate = self
+        if !self.allowNewSuggesitons {
+            return
+        }
+        
+        var editor: UAEditorViewController = self.storyboard?.instantiateViewControllerWithIdentifier("EditorVC") as! UAEditorViewController
+        
+        weak var _self = self
+        
+        editor.setEditorTitle("New suggestion")
+        editor.delegate = _self
         editor.string = self.sendSuggestionInput.text
         self.presentViewController(editor, animated: true, completion: nil)
-
     }
-    
+
     func passTextBack(controller: UAEditorViewController, string: String) {
         self.sendSuggestionInput.text = string
     }
-    
+
+    /**
+     *  Send new suggestion
+     */
     @IBAction func sendNewSuggestion() {
+        self.sendSuggestionBtn.loading = true
+        
         self.sendSuggestion({ (json) -> () in
             
             var suggestion = UASuggestion()
             self.sendSuggestionInput.text = ""
-            println(json)
+            
             if (self.type == "vote") {
                 suggestion = UASuggestion().initVoteForProjectFromJSON(json, project: self.project)
             } else {
                 suggestion = UASuggestion().initSuggestForProjectFromJSON(json, project: self.project)
             }
             
+            self.sendSuggestionBtn.loading = false
             var array = [suggestion]
             
             self.entries = array + self.entries
             self.mainTable.reloadData()
             
         }, failure: { () -> () in
-            
+            self.sendSuggestionBtn.loading = false
         })
     }
     
@@ -905,7 +1082,7 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func sendSuggestion(success: (json: AnyObject) -> (), failure: () -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        var url: String = "https://\(APIURL)/api/v1/suggestion/post"
+        var url: String = "\(APIURL)/api/v1/suggestion/post"
         
         Alamofire.request(.POST, url, parameters: ["suggestion": self.sendSuggestionInput.text, "phase": self.actualPhaseId])
             .responseJSON { (_,_,JSON,errors) in
@@ -922,5 +1099,22 @@ class ProjectViewController: UIViewController, UITableViewDelegate, UITableViewD
                     success(json: JSON!)
                 }
         }
+    }
+    
+    func checkCompetences() {
+        var competenceService = CompetenceService()
+        // active activity indicator
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        competenceService.getEntries(self.projectId, projectStep: self.stepId, success: { (competences) -> Void in
+            self.hasCompetences = (competences.count > 0)
+
+            self.mainTable.reloadData()
+
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            }, error: { () -> Void in
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
 }

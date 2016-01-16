@@ -24,7 +24,13 @@ class UACommentCell: UACell {
     func setCell(comment: UAComment) {
         self.titleLabel?.text   = comment.user.fullName
         self.contentLabel?.text = comment.content
-        self.dateLabel?.text    = self.getStringFromDate(comment.updated)
+        self.dateLabel?.text    = comment.updated.getStringFromDate()
+        
+        if comment.isDeleted {
+            self.titleLabel.textColor = UIColor.lightGrayColor()
+            self.contentLabel.textColor = UIColor.lightGrayColor()
+            self.dateLabel.textColor = UIColor.lightGrayColor()
+        }
         
         self.makeRoundCorners()
         self.loadMainImage(comment.user.id, width: 35, height: 35)

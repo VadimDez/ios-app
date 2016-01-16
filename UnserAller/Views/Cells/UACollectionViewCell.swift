@@ -12,10 +12,11 @@ class UACollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var image: UIImageView!
     
+    var size = CGSize(width: 35.0, height: 35.0)
+    
     func setCell(media: UAMedia) {
-        
         // load profile image
-        let request = NSURLRequest(URL: NSURL(string: "https://\(APIURL)/media/crop/\(media.hash)/35/35")!)
+        let request = NSURLRequest(URL: NSURL(string: "\(APIURL)/media/crop/\(media.hash)/\(UInt(self.size.height))/\(UInt(self.size.height))")!)
         self.image.setImageWithURLRequest(request, placeholderImage: nil, success: { [weak self](request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
             // test
             if let weakSelf = self {

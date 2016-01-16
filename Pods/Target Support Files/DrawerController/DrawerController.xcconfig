@@ -1,0 +1,1 @@
+DRAWERCONTROLLER_OTHER_LDFLAGS = -framework "QuartzCore"

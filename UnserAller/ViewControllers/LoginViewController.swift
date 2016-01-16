@@ -8,16 +8,23 @@
 
 import Foundation
 import UIKit
+import DrawerController
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet var username: UITextField!;
-    @IBOutlet var password: UITextField!;
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var password: UITextField!
 //    @IBOutlet var loginButtonView: CSAnimationView!
+    @IBOutlet weak var loginButton: RNLoadingButton!
     
     override func viewDidLoad()  {
-        super.viewDidLoad();
+        super.viewDidLoad()
         
+        
+        self.loginButton.hideTextWhenLoading = true
+        self.loginButton.setActivityIndicatorAlignment(RNLoadingButtonAlignmentCenter)
+        self.loginButton.setActivityIndicatorStyle(UIActivityIndicatorViewStyle.White, forState: UIControlState.Disabled)
     }
     
     override func didReceiveMemoryWarning()  {
@@ -31,10 +38,30 @@ class LoginViewController: UIViewController {
 //        self.loginButtonView.type = "CSAnimationTypeShake"
 //        self.loginButtonView.duration = 0.4
         
+        self.configureElements()
+        var singleTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        self.view.addGestureRecognizer(singleTapRecognizer)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent//UIStatusBarStyle.Black
+    }
+    
+    func configureElements() {
+//        self.containerView.layer.cornerRadius = 7
+//        self.containerView.layer.borderWidth = 0.5
+//        self.containerView.layer.borderColor = UIColor.whiteColor().CGColor
         
+//        self.loginButton.layer.cornerRadius = 4
     }
     
     @IBAction func loginAction(sender: UIButton) {
+        self.username.resignFirstResponder()
+        self.password.resignFirstResponder()
         self.auth(self.username.text, password: self.password.text)
     }
     
@@ -43,14 +70,8 @@ class LoginViewController: UIViewController {
     }
     
     func loadRootView() {
-        // old
-//        var root: UINavigationController! = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-//        
-//        self.presentViewController(root, animated: false, completion: nil);
-        
-        // new
-        let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as UINavigationController
-        let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as UINavigationController
+        let navigationController = self.storyboard?.instantiateViewControllerWithIdentifier("initNavigation") as! UINavigationController
+        let leftSideNavController = self.storyboard?.instantiateViewControllerWithIdentifier("menuNavi") as! UINavigationController
         leftSideNavController.navigationBar.hidden = true
         
         var drawerController: DrawerController = DrawerController(centerViewController: navigationController, leftDrawerViewController: leftSideNavController, rightDrawerViewController: nil)
@@ -58,7 +79,7 @@ class LoginViewController: UIViewController {
         
         drawerController.restorationIdentifier = "Drawer"
         drawerController.maximumLeftDrawerWidth = 240.0
-        drawerController.openDrawerGestureModeMask = .All
+        drawerController.openDrawerGestureModeMask = OpenDrawerGestureMode.BezelPanningCenterView
         drawerController.closeDrawerGestureModeMask = .All
         drawerController.drawerVisualStateBlock = DrawerVisualState.parallaxVisualStateBlock(CGFloat(1.0))
         
@@ -66,18 +87,41 @@ class LoginViewController: UIViewController {
     }
     
     func auth(email: String, password: String) {
-        var userService: UAUser = UAUser();
+        var userService: UAUser = UAUser()
+        
+        self.loginButton.enabled = false
+        self.loginButton.loading = true
+        
         if(userService.checkStringsWithString(email) && userService.checkStringsWithString(password)) {
             
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
             userService.getUserCrederntials(email, password: password,
                 success: {
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     userService.saveEmailAndPasswordToKeychain(email, password: password)
                     self.loadRootView();
+                    
+                    self.loginButton.enabled = true
+                    self.loginButton.loading = false
                 },error: {
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     println("Login error")
+                    
+                    self.loginButton.enabled = true
+                    self.loginButton.loading = false
             })
         } else {
             println("empty login string(s)")
+            
+            self.loginButton.enabled = true
+            self.loginButton.loading = false
         }
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }
